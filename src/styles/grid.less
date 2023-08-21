@@ -1,0 +1,1218 @@
+@import url('./common');
+
+@grid-border-color: @gray-4;
+@grid-background-color: @gray-2;
+@grid-corner-color: @gray-5;
+
+@grid-mini-font-size: 10px;
+@grid-small-font-size: 12px;
+@grid-normal-font-size: 14px;
+@grid-large-font-size: 16px;
+@grid-x-large-font-size: 18px;
+@grid-xx-large-font-size: 20px;
+@grid-xxx-large-font-size: 22px;
+
+@grid-default-color: @gray-7;
+@grid-primary-color: @blue;
+@grid-success-color: @green;
+@grid-warning-color: @orange;
+@grid-danger-color: @red;
+
+@grid-resize-bar-default-color: @gray-7;
+@grid-resize-bar-primary-color: @blue;
+@grid-resize-bar-success-color: @green;
+@grid-resize-bar-warning-color: @orange;
+@grid-resize-bar-danger-color: @red;
+
+.cell-background(@bg) {
+  background-position: right top, right bottom;
+  background-repeat: no-repeat;
+  background-size: 1px 100%, 100% 1px;
+  background-image: linear-gradient(@bg, @bg), linear-gradient(@bg, @bg);
+}
+
+.vma-formula-grid {
+  position: relative;
+  overflow: hidden;
+  font-family: @base-font-family;
+  border: 1px solid @grid-default-color;
+  border-radius: 2px;
+  line-height: normal;
+
+  table {
+    display: table;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: separate;
+  }
+
+  tr {
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  tr:nth-child(2n) {
+    background-color: inherit;
+  }
+
+  td {
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  th {
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  .cell-editor {
+    position: absolute;
+    z-index: 10;
+    display: none;
+    //background-color: @grid-cell-border-current-background-color;
+    opacity: 1;
+
+    textarea {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &.mini {
+    font-size: @grid-mini-font-size;
+  }
+
+  &.small {
+    font-size: @grid-small-font-size;
+  }
+
+  &.normal {
+    font-size: @grid-normal-font-size;
+  }
+
+  &.large {
+    font-size: @grid-large-font-size;
+  }
+
+  &.x-large {
+    font-size: @grid-x-large-font-size;
+  }
+
+  &.xx-large {
+    font-size: @grid-xx-large-font-size;
+  }
+
+  &.xxx-large {
+    font-size: @grid-xxx-large-font-size;
+  }
+
+  &.default {
+    border: 1px solid @grid-default-color;
+  }
+
+  &.primary {
+    border: 1px solid @grid-primary-color;
+  }
+
+  &.success {
+    border: 1px solid @grid-success-color;
+  }
+
+  &.warning {
+    border: 1px solid @grid-warning-color;
+  }
+
+  &.danger {
+    border: 1px solid @grid-danger-color;
+  }
+
+  .column-resize-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    display: none;
+    width: 1px;
+    height: 100%;
+    cursor: col-resize;
+
+    &::before {
+      display: block;
+      width: 1px;
+      height: 100%;
+      content: '';
+      //background-color: @grid-resize-bar-default-color;
+    }
+
+    &.default {
+      background-color: @grid-default-color;
+    }
+
+    &.primary {
+      background-color: @grid-primary-color;
+    }
+
+    &.success {
+      background-color: @grid-success-color;
+    }
+
+    &.warning {
+      background-color: @grid-warning-color;
+    }
+
+    &.danger {
+      background-color: @grid-danger-color;
+    }
+  }
+
+  .row-resize-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 15;
+    display: none;
+    width: 100%;
+    height: 1px;
+    cursor: row-resize;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 1px;
+      //background-color: @grid-resize-bar-default-color;
+    }
+
+    &.default {
+      background-color: @grid-default-color;
+    }
+
+    &.primary {
+      background-color: @grid-primary-color;
+    }
+
+    &.success {
+      background-color: @grid-success-color;
+    }
+
+    &.warning {
+      background-color: @grid-warning-color;
+    }
+
+    &.danger {
+      background-color: @grid-danger-color;
+    }
+  }
+
+  .header-wrapper {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-position: 0 0, 0 0;
+    background-repeat: no-repeat;
+    background-size: calc(100% - 1px) 100%, 100% calc(100% - 1px);
+    user-select: none;
+    background-image: linear-gradient(
+            @grid-background-color,
+            @grid-background-color
+    ),
+    linear-gradient(@grid-background-color, @grid-background-color);
+
+    &.left {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+    }
+
+    &.right {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .header {
+      grid-layout: fixed;
+
+      th.grid-corner {
+        position: relative;
+        overflow: hidden;
+        padding: 0;
+        margin: 2px;
+        height: inherit;
+        font-size: inherit;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        transition: none;
+        font-weight: normal;
+        cursor: default;
+        word-break: keep-all;
+        .cell-background(@grid-border-color);
+
+        .corner {
+          float: right;
+          margin-right: 6px;
+          width: 0;
+          height: 0;
+          border: 5px solid;
+          border-color: transparent @grid-corner-color @grid-corner-color
+          transparent;
+        }
+      }
+
+      th.column-indicator {
+        position: relative;
+        overflow: hidden;
+        padding: 0;
+        margin: 2px;
+        height: inherit;
+        font-size: inherit;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        transition: none;
+        font-weight: normal;
+        cursor: pointer;
+        word-break: keep-all;
+        .cell-background(@grid-border-color);
+
+        &.column-indicator-active {
+          background-position: right top, right bottom, left top;
+          background-repeat: no-repeat;
+          background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
+          background-image: linear-gradient(
+                  @grid-border-color,
+                  @grid-border-color
+          ),
+          linear-gradient(@grid-primary-color, @grid-primary-color),
+          linear-gradient(
+                  darken(@grid-border-color, 5%),
+                  darken(@grid-border-color, 5%)
+          );
+
+          &.default {
+            background-image: linear-gradient(
+                    @grid-border-color,
+                    @grid-border-color
+            ),
+            linear-gradient(@grid-default-color, @grid-default-color),
+            linear-gradient(
+                    darken(@grid-border-color, 5%),
+                    darken(@grid-border-color, 5%)
+            );
+          }
+
+          &.primary {
+            background-image: linear-gradient(
+                    @grid-border-color,
+                    @grid-border-color
+            ),
+            linear-gradient(@grid-primary-color, @grid-primary-color),
+            linear-gradient(
+                    darken(@grid-border-color, 5%),
+                    darken(@grid-border-color, 5%)
+            );
+          }
+
+          &.success {
+            background-image: linear-gradient(
+                    @grid-border-color,
+                    @grid-border-color
+            ),
+            linear-gradient(@grid-success-color, @grid-success-color),
+            linear-gradient(
+                    darken(@grid-border-color, 5%),
+                    darken(@grid-border-color, 5%)
+            );
+          }
+
+          &.warning {
+            background-image: linear-gradient(
+                    @grid-border-color,
+                    @grid-border-color
+            ),
+            linear-gradient(@grid-warning-color, @grid-warning-color),
+            linear-gradient(
+                    darken(@grid-border-color, 5%),
+                    darken(@grid-border-color, 5%)
+            );
+          }
+
+          &.danger {
+            background-image: linear-gradient(
+                    @grid-border-color,
+                    @grid-border-color
+            ),
+            linear-gradient(@grid-danger-color, @grid-danger-color),
+            linear-gradient(
+                    darken(@grid-border-color, 5%),
+                    darken(@grid-border-color, 5%)
+            );
+          }
+        }
+
+        .column-resize-handler {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          z-index: 1;
+          width: 6px;
+          height: 100%;
+          text-align: center;
+          cursor: col-resize;
+
+          &:hover {
+            &.default {
+              background-color: lighten(@grid-default-color, 15%);
+            }
+
+            &.primary {
+              background-color: lighten(@grid-primary-color, 15%);
+            }
+
+            &.success {
+              background-color: lighten(@grid-success-color, 15%);
+            }
+
+            &.warning {
+              background-color: lighten(@grid-warning-color, 15%);
+            }
+
+            &.danger {
+              background-color: lighten(@grid-danger-color, 15%);
+            }
+          }
+        }
+
+        .column-hide-info-backward {
+          position: absolute;
+          top: 12px;
+          right: 4px;
+          opacity: 0.2;
+
+          &:hover {
+            opacity: 0.9;
+            cursor: pointer;
+          }
+        }
+
+        .column-hide-info-frontward {
+          position: absolute;
+          top: 12px;
+          left: 2px;
+          opacity: 0.2;
+
+          &:hover {
+            opacity: 0.9;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  .body-wrapper {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: auto;
+    user-select: none;
+    //height: 100%;
+    background: white;
+
+    &.normal {
+      //z-index: 10;
+    }
+
+    &.left {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 12;
+      overflow-x: hidden;
+      overflow-y: hidden;
+
+      .fixed-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: inherit;
+        border: 0;
+
+        .vma-formula-grid--header-wrapper {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 3;
+          overflow: hidden;
+        }
+
+        .vma-formula-grid--body-wrapper {
+          position: absolute;
+          top: 29px;
+          left: 0;
+          overflow-x: hidden;
+          overflow-y: auto;
+          background-color: #fff;
+        }
+
+        &.border--shadow {
+          box-shadow: 2px 0 4px -2px rgb(0 0 0 / 60%);
+        }
+
+        &.border--full {
+        }
+
+        &.border--normal {
+          border: none;
+        }
+
+        &.border--outer {
+          border: none;
+        }
+
+        &.border--inner {
+        }
+
+        &.border--none {
+          border: none;
+        }
+      }
+    }
+
+    &.left-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: none;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    &.right {
+      position: absolute;
+      right: 0;
+      display: none;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    &.top {
+      position: absolute;
+      top: 0;
+      display: none;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .current-cell-border {
+      position: absolute;
+      display: none;
+      background-color: @grid-primary-color;
+
+      &.default {
+        background-color: @grid-default-color;
+      }
+
+      &.primary {
+        background-color: @grid-primary-color;
+      }
+
+      &.success {
+        background-color: @grid-success-color;
+      }
+
+      &.warning {
+        background-color: @grid-warning-color;
+      }
+
+      &.danger {
+        background-color: @grid-danger-color;
+      }
+
+      &.left {
+        width: 1px;
+        height: 0;
+      }
+
+      &.top {
+        width: 0;
+        height: 1px;
+      }
+
+      &.right {
+        width: 1px;
+        height: 0;
+      }
+
+      &.bottom {
+        width: 0;
+        height: 1px;
+      }
+
+      &.corner {
+        width: 6px;
+        height: 6px;
+      }
+    }
+
+    .current-area-border {
+      position: absolute;
+      display: none;
+      background-color: @grid-primary-color;
+
+      &.default {
+        background-color: @grid-default-color;
+      }
+
+      &.primary {
+        background-color: @grid-primary-color;
+      }
+
+      &.success {
+        background-color: @grid-success-color;
+      }
+
+      &.warning {
+        background-color: @grid-warning-color;
+      }
+
+      &.danger {
+        background-color: @grid-danger-color;
+      }
+
+      &.left {
+        width: 1px;
+        height: 0;
+      }
+
+      &.top {
+        width: 0;
+        height: 1px;
+      }
+
+      &.right {
+        width: 1px;
+        height: 0;
+      }
+
+      &.bottom {
+        width: 0;
+        height: 1px;
+      }
+
+      &.corner {
+        width: 6px;
+        height: 6px;
+      }
+    }
+
+    .body {
+      grid-layout: fixed;
+
+      td.normal {
+        position: relative;
+        padding: 0;
+        margin: 2px;
+        height: inherit;
+        font-size: inherit;
+        transition: none;
+        font-weight: normal;
+        cursor: default;
+
+        &.cell-bg-0 {
+          .cell-background(@grid-border-color);
+          //&::after {
+          //  content: "";
+          //  position: absolute;
+          //  top: 0;
+          //  left: 0;
+          //  min-width: calc(200% - 2px);
+          //  height: calc(200% - 2px);
+          //  border: 1px solid @grid-border-color;
+          //  transform-origin: 0 0;
+          //  transform: scale(.5, .5);
+          //}
+          &.cell-active {
+            background-position: right top, right bottom, left top;
+            background-repeat: no-repeat;
+            background-size: 1px 100%, 100% 1px,
+            calc(100% - 1px) calc(100% - 1px);
+            background-image: linear-gradient(
+                    @grid-border-color,
+                    @grid-border-color
+            ),
+            linear-gradient(@grid-border-color, @grid-border-color),
+            linear-gradient(
+                    lighten(@grid-border-color, 10%),
+                    lighten(@grid-border-color, 10%)
+            );
+          }
+        }
+
+        &.cell-bg-1 {
+          .cell-background(@grid-border-color);
+
+          background-position: right top, right bottom;
+          background-repeat: no-repeat;
+          background-size: 1px 100%, 100% 1px;
+          background-image: linear-gradient(
+                  @grid-border-color,
+                  @grid-border-color
+          ),
+          linear-gradient(@gray-8, @gray-8);
+
+          &.cell-active {
+            background-position: right top, right bottom, left top;
+            background-repeat: no-repeat;
+            background-size: 1px 100%, 100% 1px,
+            calc(100% - 1px) calc(100% - 1px);
+            background-image: linear-gradient(
+                    @grid-border-color,
+                    @grid-border-color
+            ),
+            linear-gradient(@gray-8, @gray-8),
+            linear-gradient(
+                    lighten(@grid-border-color, 10%),
+                    lighten(@grid-border-color, 10%)
+            );
+          }
+        }
+
+        &.cell-bg-2 {
+          .cell-background(@grid-border-color);
+
+          background-position: right top, right bottom;
+          background-repeat: no-repeat;
+          background-size: 1px 100%, 100% 1px;
+          background-image: linear-gradient(@gray-8, @gray-8),
+          linear-gradient(@grid-border-color, @grid-border-color);
+
+          &.cell-active {
+            background-position: right top, right bottom, left top;
+            background-repeat: no-repeat;
+            background-size: 1px 100%, 100% 1px,
+            calc(100% - 1px) calc(100% - 1px);
+            background-image: linear-gradient(@gray-8, @gray-8),
+            linear-gradient(@grid-border-color, @grid-border-color),
+            linear-gradient(
+                    lighten(@grid-border-color, 10%),
+                    lighten(@grid-border-color, 10%)
+            );
+          }
+        }
+
+        &.cell-bg-3 {
+          .cell-background(@grid-border-color);
+
+          background-position: right top, right bottom;
+          background-repeat: no-repeat;
+          background-size: 1px 100%, 100% 1px;
+          background-image: linear-gradient(@gray-8, @gray-8),
+          linear-gradient(@gray-8, @gray-8);
+
+          &.cell-active {
+            background-position: right top, right bottom, left top;
+            background-repeat: no-repeat;
+            background-size: 1px 100%, 100% 1px,
+            calc(100% - 1px) calc(100% - 1px);
+            background-image: linear-gradient(@gray-8, @gray-8),
+            linear-gradient(@gray-8, @gray-8),
+            linear-gradient(
+                    lighten(@grid-border-color, 10%),
+                    lighten(@grid-border-color, 10%)
+            );
+          }
+        }
+
+        &.cell-bg-8 {
+          .cell-background(@grid-border-color);
+
+          background-position: right top, right bottom, left top;
+          background-repeat: no-repeat;
+          background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
+          background-image: linear-gradient(
+                  @grid-border-color,
+                  @grid-border-color
+          ),
+          linear-gradient(@grid-border-color, @grid-border-color),
+          linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+
+          &.cell-active {
+            background-position: right top, right bottom, left top;
+            background-repeat: no-repeat;
+            background-size: 1px 100%, 100% 1px,
+            calc(100% - 1px) calc(100% - 1px);
+            opacity: 0.6;
+            background-image: linear-gradient(
+                    @grid-border-color,
+                    @grid-border-color
+            ),
+            linear-gradient(@grid-border-color, @grid-border-color),
+            linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
+        }
+
+        &.cell-bg-9 {
+          .cell-background(@grid-border-color);
+
+          background-position: right top, right bottom, left top;
+          background-repeat: no-repeat;
+          background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
+          background-image: linear-gradient(
+                  @grid-border-color,
+                  @grid-border-color
+          ),
+          linear-gradient(@gray-8, @gray-8),
+          linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+
+          &.cell-active {
+            background-position: right top, right bottom, left top;
+            background-repeat: no-repeat;
+            background-size: 1px 100%, 100% 1px,
+            calc(100% - 1px) calc(100% - 1px);
+            opacity: 0.6;
+            background-image: linear-gradient(
+                    @grid-border-color,
+                    @grid-border-color
+            ),
+            linear-gradient(@gray-8, @gray-8),
+            linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
+        }
+
+        &.cell-bg-10 {
+          .cell-background(@grid-border-color);
+
+          background-position: right top, right bottom, left top;
+          background-repeat: no-repeat;
+          background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
+          background-image: linear-gradient(@gray-8, @gray-8),
+          linear-gradient(@grid-border-color, @grid-border-color),
+          linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+
+          &.cell-active {
+            background-position: right top, right bottom, left top;
+            background-repeat: no-repeat;
+            background-size: 1px 100%, 100% 1px,
+            calc(100% - 1px) calc(100% - 1px);
+            opacity: 0.6;
+            background-image: linear-gradient(@gray-8, @gray-8),
+            linear-gradient(@grid-border-color, @grid-border-color),
+            linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
+        }
+
+        &.cell-bg-11 {
+          .cell-background(@grid-border-color);
+
+          background-position: right top, right bottom, left top;
+          background-repeat: no-repeat;
+          background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
+          background-image: linear-gradient(@gray-8, @gray-8),
+          linear-gradient(@gray-8, @gray-8),
+          linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+
+          &.cell-active {
+            background-position: right top, right bottom, left top;
+            background-repeat: no-repeat;
+            background-size: 1px 100%, 100% 1px,
+            calc(100% - 1px) calc(100% - 1px);
+            opacity: 0.6;
+            background-image: linear-gradient(@gray-8, @gray-8),
+            linear-gradient(@gray-8, @gray-8),
+            linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
+        }
+
+        .cell {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+          width: 100%;
+          height: inherit;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          word-break: keep-all;
+        }
+      }
+
+      td.row-indicator {
+        position: relative;
+        padding: 0;
+        margin: 2px;
+        //white-space:nowrap;overflow:hidden;word-break:keep-all;text-overflow:ellipsis;
+        height: inherit;
+        font-size: inherit;
+        transition: none;
+        font-weight: normal;
+        cursor: pointer;
+        .cell-background(@grid-border-color);
+
+        &.row-indicator-active {
+          background-position: right top, right bottom, left top;
+          background-repeat: no-repeat;
+          background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
+          background-image: linear-gradient(
+                  @grid-primary-color,
+                  @grid-primary-color
+          ),
+          linear-gradient(@grid-border-color, @grid-border-color),
+          linear-gradient(
+                  darken(@grid-border-color, 5%),
+                  darken(@grid-border-color, 5%)
+          );
+
+          &.default {
+            background-image: linear-gradient(
+                    @grid-default-color,
+                    @grid-default-color
+            ),
+            linear-gradient(@grid-border-color, @grid-border-color),
+            linear-gradient(
+                    darken(@grid-border-color, 5%),
+                    darken(@grid-border-color, 5%)
+            );
+          }
+
+          &.primary {
+            background-image: linear-gradient(
+                    @grid-primary-color,
+                    @grid-primary-color
+            ),
+            linear-gradient(@grid-border-color, @grid-border-color),
+            linear-gradient(
+                    darken(@grid-border-color, 5%),
+                    darken(@grid-border-color, 5%)
+            );
+          }
+
+          &.success {
+            background-image: linear-gradient(
+                    @grid-success-color,
+                    @grid-success-color
+            ),
+            linear-gradient(@grid-border-color, @grid-border-color),
+            linear-gradient(
+                    darken(@grid-border-color, 5%),
+                    darken(@grid-border-color, 5%)
+            );
+          }
+
+          &.warning {
+            background-image: linear-gradient(
+                    @grid-warning-color,
+                    @grid-warning-color
+            ),
+            linear-gradient(@grid-border-color, @grid-border-color),
+            linear-gradient(
+                    darken(@grid-border-color, 5%),
+                    darken(@grid-border-color, 5%)
+            );
+          }
+
+          &.danger {
+            background-image: linear-gradient(
+                    @grid-danger-color,
+                    @grid-danger-color
+            ),
+            linear-gradient(@grid-border-color, @grid-border-color),
+            linear-gradient(
+                    darken(@grid-border-color, 5%),
+                    darken(@grid-border-color, 5%)
+            );
+          }
+        }
+
+        .cell {
+          //line-height: 1.5;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+          //white-space: pre-line;
+          //word-break: break-all;
+          width: 100%;
+          height: inherit;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          word-break: keep-all;
+          //&.column--current {
+          //  background-color: @grid-column-current-background-color;
+          //}
+          //&.cell--current {
+          //  //background-color: @grid-cell-current-background-color;
+          //  background-image: linear-gradient(@grid-cell-current-background-color, @grid-cell-current-background-color), linear-gradient(@grid-cell-current-background-color, @grid-cell-current-background-color);
+          //  background-repeat: no-repeat;
+          //  background-size: calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) calc(100% - 5px);
+          //  background-position:  0 0, 0 0;
+          //}
+        }
+
+        .row-resize-handler {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          z-index: 1;
+          width: 100%;
+          height: 6px;
+          text-align: center;
+          cursor: row-resize;
+
+          &:hover {
+            &.default {
+              background-color: lighten(@grid-default-color, 15%);
+            }
+
+            &.primary {
+              background-color: lighten(@grid-primary-color, 15%);
+            }
+
+            &.success {
+              background-color: lighten(@grid-success-color, 15%);
+            }
+
+            &.warning {
+              background-color: lighten(@grid-warning-color, 15%);
+            }
+
+            &.danger {
+              background-color: lighten(@grid-danger-color, 15%);
+            }
+          }
+        }
+
+        .row-hide-info-upward {
+          position: absolute;
+          top: 1px;
+          right: 1px;
+          opacity: 0.2;
+
+          &:hover {
+            opacity: 0.9;
+            cursor: pointer;
+          }
+        }
+
+        .row-hide-info-downward {
+          position: absolute;
+          right: 1px;
+          bottom: 1px;
+          opacity: 0.2;
+
+          &:hover {
+            opacity: 0.9;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  .body-wrapper.center {
+    .body {
+      td.row-indicator div span {
+        visibility: hidden;
+      }
+    }
+  }
+}
+
+@textarea-mini-size: 12px;
+@textarea-mini-font-size: 12px;
+@textarea-small-size: 14px;
+@textarea-small-font-size: 14px;
+@textarea-normal-size: 16px;
+@textarea-normal-font-size: 16px;
+@textarea-large-size: 18px;
+@textarea-large-font-size: 18px;
+@textarea-x-large-size: 20px;
+@textarea-x-large-font-size: 20px;
+@textarea-xx-large-size: 22px;
+@textarea-xx-large-font-size: 22px;
+@textarea-xxx-large-size: 24px;
+@textarea-xxx-large-font-size: 24px;
+@textarea-default-color: @gray-7;
+@textarea-primary-color: @blue;
+@textarea-success-color: @green;
+@textarea-danger-color: @red;
+@textarea-warning-color: @orange;
+@textarea-disabled-color: @gray-5;
+@textarea-disabled-background-color: @gray-4;
+
+.vma-textarea {
+  position: relative;
+  display: block;
+  text-align: left;
+  border-radius: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+  line-height: normal;
+
+  .count-helper {
+    position: absolute;
+    width: auto;
+    min-width: 1px;
+    height: auto;
+    visibility: hidden;
+  }
+
+  &.is--disabled {
+    .prefix,
+    .suffix {
+      cursor: no-drop;
+    }
+  }
+
+  &:not(.is--disabled) {
+    .clear-icon {
+      cursor: pointer;
+    }
+
+    &.is--active {
+      &.default {
+        .inner-textarea {
+          border-top: 1px solid @textarea-default-color;
+          border-bottom: 1px solid @textarea-default-color;
+          border-right: 1px solid @textarea-default-color;
+          border-left: 1px solid @textarea-default-color;
+        }
+      }
+
+      &.primary {
+        .inner-textarea {
+          border-top: 1px solid @textarea-primary-color;
+          border-bottom: 1px solid @textarea-primary-color;
+          border-right: 1px solid @textarea-primary-color;
+          border-left: 1px solid @textarea-primary-color;
+        }
+      }
+
+      &.success {
+        .inner-textarea {
+          border-top: 1px solid @textarea-success-color;
+          border-bottom: 1px solid @textarea-success-color;
+          border-right: 1px solid @textarea-success-color;
+          border-left: 1px solid @textarea-success-color;
+        }
+      }
+
+      &.warning {
+        .inner-textarea {
+          border-top: 1px solid @textarea-warning-color;
+          border-bottom: 1px solid @textarea-warning-color;
+          border-right: 1px solid @textarea-warning-color;
+          border-left: 1px solid @textarea-warning-color;
+        }
+      }
+
+      &.danger {
+        .inner-textarea {
+          border-top: 1px solid @textarea-danger-color;
+          border-bottom: 1px solid @textarea-danger-color;
+          border-right: 1px solid @textarea-danger-color;
+          border-left: 1px solid @textarea-danger-color;
+        }
+      }
+    }
+  }
+
+  &.xxx-large {
+    font-size: @textarea-xxx-large-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-xxx-large-size;
+    }
+  }
+
+  &.xx-large {
+    font-size: @textarea-xx-large-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-xx-large-size;
+    }
+  }
+
+  &.x-large {
+    font-size: @textarea-x-large-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-x-large-size;
+    }
+  }
+
+  &.large {
+    font-size: @textarea-large-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-large-size;
+    }
+  }
+
+  &.normal {
+    font-size: @textarea-normal-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-normal-size;
+    }
+  }
+
+  &.small {
+    font-size: @textarea-small-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-small-size;
+    }
+  }
+
+  &.mini {
+    font-size: @textarea-mini-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-mini-size;
+    }
+  }
+
+  .inner-textarea {
+    overflow: auto;
+    padding: 1px;
+    margin: 0;
+    width: 100%;
+    font-size: inherit;
+    color: @gray-8;
+    background-color: #fff;
+    border: 1px solid @gray-4;
+    border-radius: 0;
+    outline: 0;
+    box-shadow: none;
+    line-height: inherit;
+
+    &::placeholder {
+      color: @gray-5;
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+      color: @textarea-disabled-color;
+      background-color: @textarea-disabled-background-color;
+    }
+
+    &--wrap {
+      white-space: pre-wrap;
+    }
+
+    &--nowrap {
+      white-space: pre;
+    }
+  }
+}
+
