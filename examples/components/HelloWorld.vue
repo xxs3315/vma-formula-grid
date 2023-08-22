@@ -62,7 +62,7 @@ export default defineComponent({
         v: 5
       }, {
         p: 'B1',
-        v: '= A1 + 2'
+        v: '= A1 + 123456789012345678901234567890'
       }, {
         p: 'B2',
         v: '= A2 + 2'

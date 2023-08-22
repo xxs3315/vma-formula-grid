@@ -82,9 +82,9 @@ export default defineComponent({
         }
 
         const getCellContent = () => {
-            const c = currentSheetData[props.row][props.col]
-            if (c && c.mv) {
-                return renderCellContentWithFormat(c.mv)
+            const c = currentSheetData[props.row][props.col + 1]
+            if (c && c.v) {
+                return renderCellContentWithFormat(c.v)
             }
             return null
         }
@@ -323,15 +323,11 @@ export default defineComponent({
                     rowspan: props.rowSpan,
                     colspan: props.colSpan,
                     row: props.row,
-                    column: props.col,
+                    col: props.col,
                     class: [
                         props.cat,
                         `${props.type}`,
-                        /*`cell-bg-${
-                            props.cat === 'normal' && props.col && currentSheetData[props.row!][props.col! - 1] && currentSheetData[props.row!][props.col! - 1].bgt
-                                ? currentSheetData[props.row!][props.col! - 1].bgt
-                                : '0'
-                        }`,*/
+                        `cell-bg-0`,
                         // {
                         //     'column-indicator-active':
                         //         props.cat === 'column-indicator' &&
