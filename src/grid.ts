@@ -303,7 +303,7 @@ export default defineComponent({
                 )
 
                 const offsetItem = {
-                    startColIndex: Math.max(0, visibleIndex + 1 - 5),
+                    startColIndex: Math.max(-1, visibleIndex + 1 - 5),
                     endColIndex: visibleIndex + visibleSize + 1 + 5,
                 }
 
@@ -368,7 +368,9 @@ export default defineComponent({
             const leftList: any = []
             const otherList: any = []
 
-            if (gridReactiveData.xStart === -1) {
+            console.log({'gridReactiveData.xStart': gridReactiveData.xStart})
+
+            if (gridReactiveData.xStart !== -1) {
                 firstList.push(gridReactiveData.colConfs[0])
             }
 
@@ -392,6 +394,8 @@ export default defineComponent({
                 leftList,
                 otherList,
             })
+
+            console.log({'gridReactiveData.columns': gridReactiveData.columns})
 
             nextTick(() => {
                 calcColumnWidth()
@@ -440,6 +444,8 @@ export default defineComponent({
                 .concat(leftList)
                 .reduce((previous: any, column: any) => previous + (column.visible ? (typeof column.width === 'string' ? renderDefaultColWidth.value : column.width) : 0), 0)
 
+            console.log({'gridReactiveData.gridLeftFixedHeaderWidth': gridReactiveData.gridLeftFixedHeaderWidth})
+
             gridReactiveData.gridBodyWidth = gridReactiveData.gridWidth
             gridReactiveData.gridBodyHeight = gridReactiveData.gridHeight - gridReactiveData.gridHeaderHeight
             gridReactiveData.isOverflowX = bodyOffsetWidth > bodyClientWidth
@@ -461,9 +467,57 @@ export default defineComponent({
                 {'gridReactiveData.scrollbarHeight': gridReactiveData.scrollbarHeight}
             )
 
+            const { colConfs, scrollbarWidth } = gridReactiveData
+            if (refGridHeaderTableColgroup.value.children && refGridHeaderTableColgroup.value.children.length) {
+                Array.from(refGridHeaderTableColgroup.value.children).forEach((colgroupElem: any, _: number) => {
+                    const idx = parseInt(colgroupElem.attributes.idx.value)
+                    if (idx === -1) {
+                        colgroupElem.style.width = `${rowIndicatorElWidth.value}px`
+                    } else if (idx + 1 < colConfs.length) {
+                        colgroupElem.style.width = `${colConfs[idx + 1].visible ? (typeof colConfs[idx + 1].width === 'string' ? renderDefaultColWidth.value : colConfs[idx + 1].width) : 0}px`
+                    } else {
+                        colgroupElem.style.width = `${scrollbarWidth}px`
+                    }
+                })
+                Array.from(refGridBodyTableColgroup.value.children).forEach((colgroupElem: any, _: number) => {
+                    const idx = parseInt(colgroupElem.attributes.idx.value)
+                    if (idx === -1) {
+                        colgroupElem.style.width = `${rowIndicatorElWidth.value}px`
+                    } else if (idx + 1 < colConfs.length) {
+                        colgroupElem.style.width = `${colConfs[idx + 1].visible ? (typeof colConfs[idx + 1].width === 'string' ? renderDefaultColWidth.value : colConfs[idx + 1].width) : 0}px`
+                    }
+                })
+            }
+            if (refGridHeaderLeftFixedTableColgroup.value.children && refGridHeaderLeftFixedTableColgroup.value.children.length) {
+                Array.from(refGridHeaderLeftFixedTableColgroup.value.children).forEach((colgroupElem: any, _: number) => {
+                    const idx = parseInt(colgroupElem.attributes.idx.value)
+                    if (idx === -1) {
+                        colgroupElem.style.width = `${rowIndicatorElWidth.value}px`
+                    } else if (idx + 1 < colConfs.length) {
+                        colgroupElem.style.width = `${colConfs[idx + 1].visible ? (typeof colConfs[idx + 1].width === 'string' ? renderDefaultColWidth.value : colConfs[idx + 1].width) : 0}px`
+                    } else {
+                        colgroupElem.style.width = `${scrollbarWidth}px`
+                    }
+                })
+                Array.from(refGridBodyLeftFixedTableColgroup.value.children).forEach((colgroupElem: any, _: number) => {
+                    const idx = parseInt(colgroupElem.attributes.idx.value)
+                    if (idx === -1) {
+                        colgroupElem.style.width = `${rowIndicatorElWidth.value}px`
+                    } else if (idx + 1 < colConfs.length) {
+                        colgroupElem.style.width = `${colConfs[idx + 1].visible ? (typeof colConfs[idx + 1].width === 'string' ? renderDefaultColWidth.value : colConfs[idx + 1].width) : 0}px`
+                    }
+                })
+            }
+
             refGridHeaderLeftFixedTable.value.style.width = `${gridReactiveData.gridWidth + gridReactiveData.scrollbarWidth}px`
             refGridBodyLeftFixedTableWrapperDiv.value.style.width = `${gridReactiveData.gridLeftFixedHeaderWidth}px`
             refGridBodyLeftFixedTableWrapperDiv.value.style.height = `${gridReactiveData.gridBodyHeight - gridReactiveData.scrollbarHeight}px`
+
+            console.log({'rowIndicatorElWidth.value': rowIndicatorElWidth.value},
+                {'gridReactiveData.colConfs.length': gridReactiveData.colConfs.length},
+                {'renderDefaultColWidth.value': renderDefaultColWidth.value},
+                {'gridReactiveData.columnWidthsChanged': gridReactiveData.columnWidthsChanged},
+                {'gridReactiveData.columnHidesChanged': gridReactiveData.columnHidesChanged})
 
             refGridBodyLeftFixedXLineDiv.value.style.width = `${getWidth(
                 rowIndicatorElWidth.value,
@@ -475,6 +529,8 @@ export default defineComponent({
             refGridHeaderLeftFixedXLineDiv.value.style.width = `${
                 getWidth(rowIndicatorElWidth.value, gridReactiveData.colConfs.length, renderDefaultColWidth.value, gridReactiveData.columnWidthsChanged, gridReactiveData.columnHidesChanged) + gridReactiveData.scrollbarWidth
             }px`
+
+            console.log({'refGridBodyLeftFixedXLineDiv.value.style.width': refGridBodyLeftFixedXLineDiv.value.style.width})
             refGridBodyLeftFixedYLineDiv.value.style.height = `${getHeight(gridReactiveData.rowConfs.length, renderDefaultRowHeight.value, gridReactiveData.rowHeightsChanged, gridReactiveData.rowHidesChanged)}px`
             refGridBodyXLineDiv.value.style.width = refGridBodyLeftFixedXLineDiv.value.style.width
             refGridBodyYLineDiv.value.style.height = refGridBodyLeftFixedYLineDiv.value.style.height

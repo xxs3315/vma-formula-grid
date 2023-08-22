@@ -92,7 +92,7 @@ export default defineComponent({
         const renderCellContent = () => {
             let text = ''
             if (props.cat === 'column-indicator') {
-                text = getColumnSymbol(props.col.valueOf())
+                text = getColumnSymbol(props.col.valueOf() + 1)
             }
             if (props.cat === 'row-indicator') {
                 text = (props.row + 1).toString()

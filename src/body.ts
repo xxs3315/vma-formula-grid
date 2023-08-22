@@ -134,7 +134,7 @@ export default defineComponent({
                 const rf: any = $vmaFormulaGrid.reactiveData.rowConfs[index]
 
                 const cols: any = []
-                if ($vmaFormulaGrid.reactiveData.xStart === -1) {
+                if ($vmaFormulaGrid.reactiveData.xStart !== -1) {
                     cols.push(
                         h(GridCellComponent, {
                             cat: 'row-indicator',
@@ -148,14 +148,14 @@ export default defineComponent({
                     if (indexCol > $vmaFormulaGrid.reactiveData.colConfs.length - 1) {
                         break
                     }
-                    if (indexCol === 0) {
+                    if (indexCol === -1) {
                         cols.push(
                             h(GridCellComponent, {
                                 cat: 'row-indicator',
                                 type: `${$vmaFormulaGrid.props.type}`,
                                 row: rf.index,
-                                col: 0,
-                                id: `${rf.index}_0`,
+                                col: -1,
+                                id: `${rf.index}_-1`,
                             })
                         )
                     } else {
@@ -191,10 +191,10 @@ export default defineComponent({
 
         const renderBodyColgroup = () => {
             const cols: any = []
-            if ($vmaFormulaGrid.reactiveData.xStart !== 0) {
+            if ($vmaFormulaGrid.reactiveData.xStart !== -1) {
                 cols.push(
                     h('col', {
-                        idx: 0,
+                        idx: -1,
                     })
                 )
             }

@@ -49,10 +49,10 @@ export default defineComponent({
         const renderHeaderColgroup = () => {
             const cols: any = []
             if ($vmaFormulaGrid.reactiveData.colConfs.length > 0) {
-                if ($vmaFormulaGrid.reactiveData.xStart === -1) {
+                if ($vmaFormulaGrid.reactiveData.xStart !== -1) {
                     cols.push(
                         h('col', {
-                            idx: 0,
+                            idx: -1,
                             style: {
                                 width: `${$vmaFormulaGrid.reactiveData.colConfs[0].width}px`,
                             },
@@ -80,7 +80,7 @@ export default defineComponent({
             const tr = []
 
             const cols: any = []
-            if ($vmaFormulaGrid.reactiveData.xStart === -1) {
+            if ($vmaFormulaGrid.reactiveData.xStart !== -1) {
                 cols.push(
                     h(GridCellComponent, {
                         cat: 'grid-corner',
