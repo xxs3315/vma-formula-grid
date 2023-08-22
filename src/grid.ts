@@ -223,7 +223,12 @@ export default defineComponent({
                 ref: refGridDiv,
                 class: [
                     'vma-formula-grid',
-                    `${props.size}`
+                    `${props.size}`,
+                    `${props.type}`,
+                    {
+                        'overflow-x': gridReactiveData.isOverflowX,
+                        'overflow-y': gridReactiveData.isOverflowY,
+                    },
                 ]
             }, [
                 props.columnResizable

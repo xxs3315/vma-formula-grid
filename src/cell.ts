@@ -400,11 +400,11 @@ export default defineComponent({
                 document.onmouseup = domMouseup
                 resizeBarElem.style.display = 'none'
                 if (dragBtnElem.parentElement!.getAttribute('col')) {
-                    const columnConfig = $vmaFormulaGrid.reactiveData.colConfs.find(item => item.index === parseInt(dragBtnElem.parentElement!.getAttribute('column')!, 10))
+                    const columnConfig = $vmaFormulaGrid.reactiveData.colConfs.find(item => item.index === parseInt(dragBtnElem.parentElement!.getAttribute('col')!, 10))
                     if (columnConfig) {
-                        columnConfig.renderWidth = Math.max(dragBtnElem.parentElement!.clientWidth + dragLeft - dragPosLeft, 6)
-                        $vmaFormulaGrid.reactiveData.columnWidthsChanged[`${columnConfig.index}`] = columnConfig.renderWidth
-                        $vmaFormulaGrid.reactiveData.gridWidth += columnConfig.renderWidth - columnWidth
+                        columnConfig.width = Math.max(dragBtnElem.parentElement!.clientWidth + dragLeft - dragPosLeft, 6)
+                        $vmaFormulaGrid.reactiveData.columnWidthsChanged[`${columnConfig.index}`] = columnConfig.width
+                        $vmaFormulaGrid.reactiveData.gridWidth += columnConfig.width - columnWidth
                     }
                 }
 
