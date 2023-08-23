@@ -37,6 +37,7 @@ import {
 import {Column} from "./internals/column.ts";
 import {Row} from "./internals/row.ts";
 import {Cell} from "./internals/cell.ts";
+import {debounce} from "./utils/debounce.ts";
 
 export default defineComponent({
     name: "VmaFormulaGrid",
@@ -171,10 +172,10 @@ export default defineComponent({
                 firstList: [],
                 leftList: [],
                 otherList: [],
-            }/*,
-            renderDefaultColWidth: renderDefaultColWidth,
-            renderDefaultRowHeight: renderDefaultRowHeight,
-            rowIndicatorElWidth: rowIndicatorElWidth*/
+            },
+            lastScrollLeft: 0,
+            lastScrollTop: 0,
+            lastScrollTime: 0
         }) as VmaFormulaGridReactiveData
 
         const gridRefs: VmaFormulaGridRefs = {
@@ -223,6 +224,37 @@ export default defineComponent({
                 return computeScrollLoad()
             }
         } as VmaFormulaGridMethods
+
+        const gridPrivateMethods = {
+            // getParentElem() {
+            //     const el = refTableDiv.value
+            //     if ($vmaFormulaTable) {
+            //         const gridEl = $vmaFormulaTable.getRefs().refTableDiv.value
+            //         return gridEl ? (gridEl.parentNode as HTMLElement) : null
+            //     }
+            //     return el ? (el.parentNode as HTMLElement) : null
+            // },
+            triggerScrollXEvent: (event: Event) => {
+                const scrollBodyElem = (event.currentTarget || event.target) as HTMLDivElement
+                debounceScrollX(scrollBodyElem)
+            },
+            triggerScrollYEvent: (event: Event) => {
+                const scrollBodyElem = (event.currentTarget || event.target) as HTMLDivElement
+                debounceScrollY(scrollBodyElem)
+            },
+        } as VmaFormulaGridPrivateMethods
+
+        const debounceScrollX = debounce((scrollBodyElem: HTMLDivElement) => {
+            calcScrollSizeX(scrollBodyElem).then(() => {
+                arrangeColumnWidth()
+            })
+        }, 20)
+
+        const debounceScrollY = debounce((scrollBodyElem: HTMLDivElement) => {
+            calcScrollSizeY(scrollBodyElem).then(() => {
+                updateStyle()
+            })
+        }, 20)
 
 
 
@@ -667,6 +699,7 @@ export default defineComponent({
         } as unknown as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods
 
         Object.assign($vmaFormulaGrid, gridMethods)
+        Object.assign($vmaFormulaGrid, gridPrivateMethods)
 
         provide('$vmaFormulaGrid', $vmaFormulaGrid)
 

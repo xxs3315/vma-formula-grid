@@ -102,6 +102,10 @@ export interface VmaFormulaGridReactiveData {
         leftList: any[]
         otherList: any[]
     }
+
+    lastScrollLeft: number
+    lastScrollTop: number
+    lastScrollTime: number
 }
 
 export interface VmaFormulaGridProps {
@@ -122,6 +126,8 @@ export interface VmaFormulaGridMethods {
 }
 
 interface VmaFormulaGridPrivateMethods {
+    triggerScrollXEvent(event: Event): void
+    triggerScrollYEvent(event: Event): void
 }
 
 export interface VmaFormulaGridConstructor extends VmaComponentInstance, VmaFormulaGridMethods, VmaFormulaGridPrivateMethods {
