@@ -31,8 +31,28 @@
     </div>
   </fieldset>
 
+  <fieldset class="fieldset">
+    <legend>Select a theme type:</legend>
+    <div>
+      <input type="radio" id="themeTypePrimary" v-model="themeType" value="primary" checked/>
+      <label for="themeTypePrimary">Primary</label>
+    </div>
+    <div>
+      <input type="radio" id="themeTypeSuccess" v-model="themeType" value="success"/>
+      <label for="themeTypeSuccess">Success</label>
+    </div>
+    <div>
+      <input type="radio" id="themeTypeWarning" v-model="themeType" value="warning"/>
+      <label for="themeTypeWarning">Warning</label>
+    </div>
+    <div>
+      <input type="radio" id="themeTypeDanger" v-model="themeType" value="danger"/>
+      <label for="themeTypeDanger">Danger</label>
+    </div>
+  </fieldset>
 
-  <vma-formula-grid style="width: 100%; height: 800px;" :data="data" :size="size"/>
+
+  <vma-formula-grid style="width: 100vw; height: 800px;" :data="data" :size="size" :type="themeType" />
 </template>
 
 <script lang="ts">
@@ -43,6 +63,7 @@ export default defineComponent({
   setup(props, context) {
     const datasource = ref('map');
     const size = ref('normal');
+    const themeType = ref('primary');
 
     const mapData = reactive({
       data: [{
@@ -112,7 +133,8 @@ export default defineComponent({
     return {
       datasource,
       data,
-      size
+      size,
+      themeType
     }
   }
 })

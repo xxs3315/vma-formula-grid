@@ -91,6 +91,14 @@ export default defineComponent({
             deep: true
         })
 
+        watch(() => props.size, () => {
+            $vmaFormulaGrid.recalculate(false)
+        })
+
+        watch(() => props.type, () => {
+            $vmaFormulaGrid.recalculate(false)
+        })
+
         const FormulaGridHeaderComponent = resolveComponent('VmaFormulaGridHeader') as ComponentOptions
         const FormulaGridBodyComponent = resolveComponent('VmaFormulaGridBody') as ComponentOptions
 
