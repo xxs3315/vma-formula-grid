@@ -136,7 +136,7 @@ export default defineComponent({
         const renderDefaultRowHeight = computed(() => getRenderDefaultRowHeight(props.defaultRowHeight, props.size))
 
         const rowIndicatorElWidth = computed(
-            () => Math.max(getRenderRowIndicatorWidth(props.size) + gridReactiveData.yEnd.toString().length * getRenderRowIndicatorWidth(props.size), 40)
+            () => Math.max(getRenderRowIndicatorWidth(props.size) + gridReactiveData.yEnd.toString().length * getRenderRowIndicatorWidth(props.size), 50)
         )
 
         const gridReactiveData = reactive({
@@ -224,14 +224,6 @@ export default defineComponent({
         } as VmaFormulaGridMethods
 
         const gridPrivateMethods = {
-            // getParentElem() {
-            //     const el = refTableDiv.value
-            //     if ($vmaFormulaTable) {
-            //         const gridEl = $vmaFormulaTable.getRefs().refTableDiv.value
-            //         return gridEl ? (gridEl.parentNode as HTMLElement) : null
-            //     }
-            //     return el ? (el.parentNode as HTMLElement) : null
-            // },
             triggerScrollXEvent: (event: Event) => {
                 const scrollBodyElem = (event.currentTarget || event.target) as HTMLDivElement
                 debounceScrollX(scrollBodyElem)
@@ -416,7 +408,7 @@ export default defineComponent({
             }
 
             for (let index = gridReactiveData.xStart; index <= gridReactiveData.xEnd; index++) {
-                if (index > gridReactiveData.colConfs.length - 1) {
+                if (index >= gridReactiveData.colConfs.length - 1) {
                     break
                 }
                 const cf = gridReactiveData.colConfs[index + 1]
@@ -445,12 +437,10 @@ export default defineComponent({
             let gridWidth = 0
 
             const { firstList, otherList } = gridReactiveData.columns
-            // 第一列
             firstList.forEach((column: any) => {
                 gridWidth += rowIndicatorElWidth.value
                 column.width = rowIndicatorElWidth.value
             })
-            // 其他列
             otherList.forEach((column: any) => {
                 gridWidth += column.visible ? (typeof column.width === 'string' ? renderDefaultColWidth.value : column.width) : 0
             })

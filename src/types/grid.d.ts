@@ -84,9 +84,7 @@ export interface VmaFormulaGridReactiveData {
     frozenColumnCount: number
     frozenRowCount: number
 
-    // 列定义
     colConfs: any[]
-    // 行定义
     rowConfs: any[]
 
     currentSheetData: Cell[][]
