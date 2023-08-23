@@ -52,7 +52,7 @@
   </fieldset>
 
 
-  <vma-formula-grid style="width: 100vw; height: 800px;" :data="data" :size="size" :type="themeType" />
+  <vma-formula-grid style="width: 100%; height: 800px;" :data="data" :size="size" :type="themeType" />
 </template>
 
 <script lang="ts">
