@@ -116,7 +116,6 @@ export default defineComponent({
     })
 
     watch(() => datasource.value, () => {
-      console.log(datasource.value)
       data.type = datasource.value
     })
 

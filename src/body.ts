@@ -1,11 +1,21 @@
-import {ComponentOptions, createCommentVNode, defineComponent, nextTick, onMounted, resolveComponent} from "vue";
-import {h, inject, PropType, reactive} from "vue";
 import {
-    VmaFormulaGridConstructor,
+    ComponentOptions,
+    createCommentVNode,
+    defineComponent,
+    h,
+    inject,
+    nextTick,
+    onMounted,
+    PropType,
+    reactive,
+    resolveComponent
+} from "vue";
+import {
     VmaFormulaGridBodyConstructor,
     VmaFormulaGridBodyMethods,
     VmaFormulaGridBodyPrivateMethods,
     VmaFormulaGridBodyPropTypes,
+    VmaFormulaGridConstructor,
     VmaFormulaGridMethods,
     VmaFormulaGridPrivateMethods
 } from "./types/grid";
@@ -357,15 +367,13 @@ export default defineComponent({
             handleSmooth()
         }
 
-        const $vmaFormulaGridBody = {
+        return {
             uId: Guid.create().toString(),
             props,
             context,
             reactiveData: gridBodyReactiveData,
             renderVN: renderVN,
         } as unknown as VmaFormulaGridBodyConstructor & VmaFormulaGridBodyMethods & VmaFormulaGridBodyPrivateMethods
-
-        return $vmaFormulaGridBody
     },
     render() {
         return this.renderVN()

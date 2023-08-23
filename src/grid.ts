@@ -75,7 +75,6 @@ export default defineComponent({
 
         onMounted(() => {
             loadData().then(() => {
-                console.log('data loaded.')
                 $vmaFormulaGrid.recalculate(true)
             })
         })
@@ -83,7 +82,6 @@ export default defineComponent({
         watch(() => props.data, () => {
             reset().then(() => {
                 loadData().then(() => {
-                    console.log('data reloaded.')
                     $vmaFormulaGrid.recalculate(true)
                 })
             })
@@ -413,8 +411,6 @@ export default defineComponent({
             const leftList: any = []
             const otherList: any = []
 
-            console.log({'gridReactiveData.xStart': gridReactiveData.xStart})
-
             if (gridReactiveData.xStart !== -1) {
                 firstList.push(gridReactiveData.colConfs[0])
             }
@@ -440,8 +436,6 @@ export default defineComponent({
                 otherList,
             })
 
-            console.log({'gridReactiveData.columns': gridReactiveData.columns})
-
             nextTick(() => {
                 calcColumnWidth()
             })
@@ -462,8 +456,6 @@ export default defineComponent({
             })
 
             gridReactiveData.gridWidth = gridWidth
-
-            console.log({'gridReactiveData.gridWidth': gridReactiveData.gridWidth})
 
             nextTick(() => {
                 updateStyle()
@@ -489,8 +481,6 @@ export default defineComponent({
                 .concat(leftList)
                 .reduce((previous: any, column: any) => previous + (column.visible ? (typeof column.width === 'string' ? renderDefaultColWidth.value : column.width) : 0), 0)
 
-            console.log({'gridReactiveData.gridLeftFixedHeaderWidth': gridReactiveData.gridLeftFixedHeaderWidth})
-
             gridReactiveData.gridBodyWidth = gridReactiveData.gridWidth
             gridReactiveData.gridBodyHeight = gridReactiveData.gridHeight - gridReactiveData.gridHeaderHeight
             gridReactiveData.isOverflowX = bodyOffsetWidth > bodyClientWidth
@@ -498,19 +488,6 @@ export default defineComponent({
 
             gridReactiveData.scrollbarWidth = Math.max(bodyOffsetWidth - bodyClientWidth, 0)
             gridReactiveData.scrollbarHeight = Math.max(bodyOffsetHeight - bodyClientHeight, 0)
-
-            console.log(
-                {'gridReactiveData.gridWidth': gridReactiveData.gridWidth},
-                {'gridReactiveData.gridHeight': gridReactiveData.gridHeight},
-                {'gridReactiveData.gridHeaderWidth': gridReactiveData.gridHeaderWidth},
-                {'gridReactiveData.gridHeaderHeight': gridReactiveData.gridHeaderHeight},
-                {'gridReactiveData.gridBodyWidth': gridReactiveData.gridBodyWidth},
-                {'gridReactiveData.gridBodyHeight': gridReactiveData.gridBodyHeight},
-                {'gridReactiveData.isOverflowX': gridReactiveData.isOverflowX},
-                {'gridReactiveData.isOverflowY': gridReactiveData.isOverflowY},
-                {'gridReactiveData.scrollbarWidth': gridReactiveData.scrollbarWidth},
-                {'gridReactiveData.scrollbarHeight': gridReactiveData.scrollbarHeight}
-            )
 
             const { colConfs, scrollbarWidth } = gridReactiveData
             if (refGridHeaderTableColgroup.value.children && refGridHeaderTableColgroup.value.children.length) {
@@ -558,12 +535,6 @@ export default defineComponent({
             refGridBodyLeftFixedTableWrapperDiv.value.style.width = `${gridReactiveData.gridLeftFixedHeaderWidth}px`
             refGridBodyLeftFixedTableWrapperDiv.value.style.height = `${gridReactiveData.gridBodyHeight - gridReactiveData.scrollbarHeight}px`
 
-            console.log({'rowIndicatorElWidth.value': rowIndicatorElWidth.value},
-                {'gridReactiveData.colConfs.length': gridReactiveData.colConfs.length},
-                {'renderDefaultColWidth.value': renderDefaultColWidth.value},
-                {'gridReactiveData.columnWidthsChanged': gridReactiveData.columnWidthsChanged},
-                {'gridReactiveData.columnHidesChanged': gridReactiveData.columnHidesChanged})
-
             refGridBodyLeftFixedXLineDiv.value.style.width = `${getWidth(
                 rowIndicatorElWidth.value,
                 gridReactiveData.colConfs.length,
@@ -575,7 +546,6 @@ export default defineComponent({
                 getWidth(rowIndicatorElWidth.value, gridReactiveData.colConfs.length, renderDefaultColWidth.value, gridReactiveData.columnWidthsChanged, gridReactiveData.columnHidesChanged) + gridReactiveData.scrollbarWidth
             }px`
 
-            console.log({'refGridBodyLeftFixedXLineDiv.value.style.width': refGridBodyLeftFixedXLineDiv.value.style.width})
             refGridBodyLeftFixedYLineDiv.value.style.height = `${getHeight(gridReactiveData.rowConfs.length, renderDefaultRowHeight.value, gridReactiveData.rowHeightsChanged, gridReactiveData.rowHidesChanged)}px`
             refGridBodyXLineDiv.value.style.width = refGridBodyLeftFixedXLineDiv.value.style.width
             refGridBodyYLineDiv.value.style.height = refGridBodyLeftFixedYLineDiv.value.style.height
@@ -605,7 +575,6 @@ export default defineComponent({
 
                 if (props.data) {
                     if (props.data.type === 'map') {
-                        console.log(props.data.mapData)
                         if (props.data.mapData && props.data.mapData.data && props.data.mapData.data.length > 0) {
                             props.data.mapData.data.forEach((item: any) => {
                                 if (item.p) {
@@ -620,7 +589,6 @@ export default defineComponent({
                                 }
                             })
                         }
-                        console.log(gridReactiveData.xDim, gridReactiveData.yDim)
                         gridReactiveData.xStart = -1
                         gridReactiveData.xEnd = gridReactiveData.xDim - 1
                         gridReactiveData.yStart = 0
@@ -636,7 +604,6 @@ export default defineComponent({
                                 }
                             })
                         }
-                        console.log(gridReactiveData.xDim, gridReactiveData.yDim)
                         gridReactiveData.xStart = -1
                         gridReactiveData.xEnd = gridReactiveData.xDim - 1
                         gridReactiveData.yStart = 0
@@ -678,11 +645,6 @@ export default defineComponent({
                         })
                     })
 
-                    console.log(
-                        {'gridReactiveData.colConfs': gridReactiveData.colConfs},
-                        {'gridReactiveData.rowConfs': gridReactiveData.rowConfs},
-                        {'gridReactiveData.currentSheetData': gridReactiveData.currentSheetData}
-                    )
                 }
 
                 resolve()
