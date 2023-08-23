@@ -245,7 +245,6 @@ export default defineComponent({
             } else if (props.fixed === 'left') {
                 refGridBodyTableWrapperDiv.value.scrollTop = refGridBodyLeftFixedScrollWrapperDiv.value.scrollTop
             }
-            // TODO event.target ?
             $vmaFormulaGrid.triggerScrollXEvent(event)
             $vmaFormulaGrid.triggerScrollYEvent(event)
         }
@@ -367,13 +366,15 @@ export default defineComponent({
             handleSmooth()
         }
 
-        return {
+        const $vmaFormulaGridBody = {
             uId: Guid.create().toString(),
             props,
             context,
             reactiveData: gridBodyReactiveData,
             renderVN: renderVN,
         } as unknown as VmaFormulaGridBodyConstructor & VmaFormulaGridBodyMethods & VmaFormulaGridBodyPrivateMethods
+
+        return $vmaFormulaGridBody
     },
     render() {
         return this.renderVN()

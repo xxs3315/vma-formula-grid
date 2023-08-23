@@ -462,9 +462,9 @@ export default defineComponent({
                 if (dragBtnElem.parentElement!.getAttribute('row')) {
                     const rowConfig = $vmaFormulaGrid.reactiveData.rowConfs.find(item => item.index === parseInt(dragBtnElem.parentElement!.getAttribute('row')!, 10))
                     if (rowConfig) {
-                        rowConfig.renderHeight = Math.max(dragBtnElem.parentElement!.clientHeight + dragTop - dragPosTop, 6)
-                        $vmaFormulaGrid.reactiveData.rowHeightsChanged[`${rowConfig.index}`] = rowConfig.renderHeight
-                        $vmaFormulaGrid.reactiveData.gridHeight += rowConfig.renderHeight - rowHeight
+                        rowConfig.height = Math.max(dragBtnElem.parentElement!.clientHeight + dragTop - dragPosTop, 6)
+                        $vmaFormulaGrid.reactiveData.rowHeightsChanged[`${rowConfig.index}`] = rowConfig.height
+                        $vmaFormulaGrid.reactiveData.gridHeight += rowConfig.height - rowHeight
                     }
                 }
 
