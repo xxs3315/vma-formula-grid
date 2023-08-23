@@ -634,7 +634,7 @@ export default defineComponent({
                                     }
                                 } else {
                                     if (props.data.arrayData && props.data.arrayData.length > 0 && rowIndex + 1 <= props.data.arrayData.length && colIndex <= props.data.arrayData[rowIndex].length) {
-                                        cellData = props.data.arrayData[rowIndex][colIndex]
+                                        cellData = props.data.arrayData[rowIndex][colIndex - 1]
                                     }
                                 }
                             }
