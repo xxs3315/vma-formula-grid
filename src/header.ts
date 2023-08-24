@@ -179,7 +179,7 @@ export default defineComponent({
                         $vmaFormulaGrid.reactiveData.scrollbarWidth
                             ? [
                                 h('col', {
-                                    idx: $vmaFormulaGrid.reactiveData.colConfs.length,
+                                    idx: $vmaFormulaGrid.reactiveData.colConfs.length - 1,
                                     style: {
                                         width: `${$vmaFormulaGrid.reactiveData.scrollbarWidth}px`,
                                     },

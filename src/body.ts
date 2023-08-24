@@ -226,7 +226,7 @@ export default defineComponent({
                 )
             }
             for (let index = $vmaFormulaGrid.reactiveData.xStart; index <= $vmaFormulaGrid.reactiveData.xEnd; index++) {
-                if (index > $vmaFormulaGrid.reactiveData.colConfs.length - 1) {
+                if (index >= $vmaFormulaGrid.reactiveData.colConfs.length - 1) {
                     break
                 }
                 cols.push(
