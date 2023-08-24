@@ -178,7 +178,7 @@ export const getColumnCount = (symbol: string): number => {
 export const getIndexFromColumnWidths = (scrollLeft: number, columnWidth: number, changedColumnWidths: Record<string, number>, changedColumnHides: Record<string, number>): number => {
     if (Object.keys(changedColumnWidths).length && Object.keys(changedColumnHides).length) {
         // 配置中既有列宽定义，又有列隐藏定义
-        let sidx = 0
+        let sidx = 1
         let x = 0
         do {
             if (changedColumnHides[`${sidx}`] === 0) {
@@ -199,7 +199,7 @@ export const getIndexFromColumnWidths = (scrollLeft: number, columnWidth: number
     }
     if (Object.keys(changedColumnWidths).length) {
         // 配置中只有列宽定义
-        let sidx = 0
+        let sidx = 1
         let x = 0
         do {
             x += changedColumnWidths[`${sidx}`] ? changedColumnWidths[`${sidx}`] : columnWidth
@@ -209,7 +209,7 @@ export const getIndexFromColumnWidths = (scrollLeft: number, columnWidth: number
     }
     if (Object.keys(changedColumnHides).length) {
         // 配置中只有列隐藏定义
-        let sidx = 0
+        let sidx = 1
         let x = 0
         do {
             x += changedColumnHides[`${sidx}`] === 0 ? 0 : columnWidth
@@ -240,7 +240,7 @@ export const getRealVisibleWidthSize = (
 export const getIndexFromRowHeights = (scrollTop: number, rowHeight: number, changedRowHeights: Record<string, number>, changedRowHides: Record<string, number>): number => {
     if (Object.keys(changedRowHeights).length && Object.keys(changedRowHides).length) {
         // 配置中既有行高定义，又有行隐藏定义
-        let sidy = 0
+        let sidy = 1
         let y = 0
         do {
             // y += changedRowHeights[`${sidy}`] && changedRowHides[`${sidy}`]
@@ -264,7 +264,7 @@ export const getIndexFromRowHeights = (scrollTop: number, rowHeight: number, cha
     }
     if (Object.keys(changedRowHeights).length) {
         // 配置中只有行高定义
-        let sidy = 0
+        let sidy = 1
         let y = 0
         do {
             y += changedRowHeights[`${sidy}`] ? changedRowHeights[`${sidy}`] : rowHeight
@@ -274,7 +274,7 @@ export const getIndexFromRowHeights = (scrollTop: number, rowHeight: number, cha
     }
     if (Object.keys(changedRowHides).length) {
         // 配置中只有行隐藏定义
-        let sidy = 0
+        let sidy = 1
         let y = 0
         do {
             y += changedRowHides[`${sidy}`] === 0 ? 0 : rowHeight

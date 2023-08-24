@@ -403,7 +403,7 @@ export default defineComponent({
                     const columnConfig = $vmaFormulaGrid.reactiveData.colConfs.find(item => item.index === parseInt(dragBtnElem.parentElement!.getAttribute('col')!, 10))
                     if (columnConfig) {
                         columnConfig.width = Math.max(dragBtnElem.parentElement!.clientWidth + dragLeft - dragPosLeft, 6)
-                        $vmaFormulaGrid.reactiveData.columnWidthsChanged[`${columnConfig.index}`] = columnConfig.width
+                        $vmaFormulaGrid.reactiveData.columnWidthsChanged[`${columnConfig.index + 1}`] = columnConfig.width
                         $vmaFormulaGrid.reactiveData.gridWidth += columnConfig.width - columnWidth
                     }
                 }
@@ -413,6 +413,7 @@ export default defineComponent({
                     nextTick(() => {
                         // $vmaFormulaGrid.calcCurrentCellPosition()
                         // $vmaFormulaGrid.calcCurrentCellDisplay()
+                        console.log('columnWidthsChanged', $vmaFormulaGrid.reactiveData.columnWidthsChanged)
                     })
                 })
             }
@@ -463,7 +464,7 @@ export default defineComponent({
                     const rowConfig = $vmaFormulaGrid.reactiveData.rowConfs.find(item => item.index === parseInt(dragBtnElem.parentElement!.getAttribute('row')!, 10))
                     if (rowConfig) {
                         rowConfig.height = Math.max(dragBtnElem.parentElement!.clientHeight + dragTop - dragPosTop, 6)
-                        $vmaFormulaGrid.reactiveData.rowHeightsChanged[`${rowConfig.index}`] = rowConfig.height
+                        $vmaFormulaGrid.reactiveData.rowHeightsChanged[`${rowConfig.index + 1}`] = rowConfig.height
                         $vmaFormulaGrid.reactiveData.gridHeight += rowConfig.height - rowHeight
                     }
                 }
@@ -473,6 +474,7 @@ export default defineComponent({
                     nextTick(() => {
                         // $vmaFormulaGrid.calcCurrentCellPosition()
                         // $vmaFormulaGrid.calcCurrentCellDisplay()
+                        console.log('rowHeightsChanged', $vmaFormulaGrid.reactiveData.rowHeightsChanged)
                     })
                 })
             }

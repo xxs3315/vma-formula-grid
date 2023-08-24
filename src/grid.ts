@@ -653,6 +653,8 @@ export default defineComponent({
                         gridReactiveData.colConfs.push(new Column(index - 1, colWidth || 'default', colVisible))
                     })
 
+                    console.log('columnWidthsChanged', gridReactiveData.columnWidthsChanged)
+
                     const rows = [...Array<Record<string, unknown>>(gridReactiveData.yDim.valueOf())]
                     rows.forEach((_, index) => {
                         let rowHeight = null
@@ -677,6 +679,8 @@ export default defineComponent({
                         }
                         gridReactiveData.rowConfs.push(new Row(index, rowHeight || 'default', rowVisible))
                     })
+
+                    console.log('rowHeightsChanged', gridReactiveData.rowHeightsChanged)
 
 
                     gridReactiveData.currentSheetData = new Array(rows.length).fill(null).map(() => new Array(columns.length).fill(null))
