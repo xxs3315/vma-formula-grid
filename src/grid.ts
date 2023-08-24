@@ -478,6 +478,9 @@ export default defineComponent({
         }
 
         const updateStyle = () => {
+            if (refGridDiv.value === null || refGridDiv.value === undefined) {
+                return
+            }
             const gridDivClientWidth = refGridDiv.value.clientWidth
             const gridDivClientHeight = refGridDiv.value.clientHeight
 
