@@ -124,6 +124,7 @@ export interface VmaFormulaGridMethods {
 }
 
 interface VmaFormulaGridPrivateMethods {
+    getParentElem(): Element | null
     triggerScrollXEvent(event: Event): void
     triggerScrollYEvent(event: Event): void
 }

@@ -38,6 +38,7 @@ import {Column} from "./internals/column.ts";
 import {Row} from "./internals/row.ts";
 import {Cell} from "./internals/cell.ts";
 import {debounce} from "./utils/debounce.ts";
+import {createResizeEvent} from "./utils/resize.ts";
 
 export default defineComponent({
     name: "VmaFormulaGrid",
@@ -73,9 +74,25 @@ export default defineComponent({
     emits: ['update:data', 'change'] as VmaFormulaGridEmits,
     setup(props, context) {
 
+        let resizeObserver: ResizeObserver
+
         onMounted(() => {
             loadData().then(() => {
-                $vmaFormulaGrid.recalculate(true)
+                $vmaFormulaGrid
+                    .recalculate(true)
+                    .then(() => {
+                        const el = refGridDiv.value
+                        const parentEl = $vmaFormulaGrid.getParentElem()
+                        resizeObserver = createResizeEvent(() => {
+                            $vmaFormulaGrid.recalculate(true)
+                        })
+                        if (el) {
+                            resizeObserver.observe(el)
+                        }
+                        if (parentEl) {
+                            resizeObserver.observe(parentEl)
+                        }
+                    })
             })
         })
 
@@ -224,6 +241,14 @@ export default defineComponent({
         } as VmaFormulaGridMethods
 
         const gridPrivateMethods = {
+            getParentElem() {
+                const el = refGridDiv.value
+                if ($vmaFormulaGrid) {
+                    const gridEl = $vmaFormulaGrid.getRefs().refGridDiv.value
+                    return gridEl ? (gridEl.parentNode as HTMLElement) : null
+                }
+                return el ? (el.parentNode as HTMLElement) : null
+            },
             triggerScrollXEvent: (event: Event) => {
                 const scrollBodyElem = (event.currentTarget || event.target) as HTMLDivElement
                 debounceScrollX(scrollBodyElem)
