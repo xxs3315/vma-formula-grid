@@ -31,7 +31,7 @@ import {
     getRenderRowIndicatorWidth,
     getWidth,
     getXSpaceFromColumnWidths,
-    getYSpaceFromRowHeights,
+    getYSpaceFromRowHeights, isNumeric,
     isObject
 } from "./utils";
 import {Column} from "./internals/column.ts";
@@ -627,12 +627,52 @@ export default defineComponent({
 
                     const columns = [...Array<Record<string, unknown>>(gridReactiveData.xDim.valueOf() + 1)]
                     columns.forEach((_, index) => {
-                        gridReactiveData.colConfs.push(new Column(index - 1, 'default', true))
+                        let colWidth = null
+                        let colVisible = true
+                        if (props.data && props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('colWidth') && props.data.conf.colWidth.length) {
+                            for (let i = 0; i < props.data.conf.colWidth.length; i++) {
+                                if (getColumnCount(props.data.conf.colWidth[i].col) === index && isNumeric(props.data.conf.colWidth[i].width)) {
+                                    colWidth = props.data.conf.colWidth[i].width
+                                    gridReactiveData.columnWidthsChanged[`${index}`] = props.data.conf.colWidth[i].width
+                                    break
+                                }
+                            }
+                        }
+                        if (props.data && props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('colHide') && props.data.conf.colHide.length) {
+                            for (let i = 0; i < props.data.conf.colHide.length; i++) {
+                                if (getColumnCount(props.data.conf.colHide[i]) === index) {
+                                    colVisible = false
+                                    gridReactiveData.columnHidesChanged[`${index}`] = 0
+                                    break
+                                }
+                            }
+                        }
+                        gridReactiveData.colConfs.push(new Column(index - 1, colWidth || 'default', colVisible))
                     })
 
                     const rows = [...Array<Record<string, unknown>>(gridReactiveData.yDim.valueOf())]
                     rows.forEach((_, index) => {
-                        gridReactiveData.rowConfs.push(new Row(index, 'default', true))
+                        let rowHeight = null
+                        let rowVisible = true
+                        if (props.data && props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('rowHeight') && props.data.conf.rowHeight.length) {
+                            for (let i = 0; i < props.data.conf.rowHeight.length; i++) {
+                                if (props.data.conf.rowHeight[i].row === index + 1 && isNumeric(props.data.conf.rowHeight[i].height)) {
+                                    rowHeight = props.data.conf.rowHeight[i].height
+                                    gridReactiveData.rowHeightsChanged[`${index + 1}`] = props.data.conf.rowHeight[i].height
+                                    break
+                                }
+                            }
+                        }
+                        if (props.data && props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('rowHide') && props.data.conf.rowHide.length) {
+                            for (let i = 0; i < props.data.conf.rowHide.length; i++) {
+                                if (props.data.conf.rowHide[i] === index + 1) {
+                                    rowVisible = false
+                                    gridReactiveData.rowHidesChanged[`${index + 1}`] = 0
+                                    break
+                                }
+                            }
+                        }
+                        gridReactiveData.rowConfs.push(new Row(index, rowHeight || 'default', rowVisible))
                     })
 
 

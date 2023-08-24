@@ -29,6 +29,7 @@
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "@vue/compiler-sfc": "^3.3.4",
+    "immutable": "^4.3.3",
     "jest": "^29.4.1",
     "jest-junit": "^15.0.0",
     "less": "^4.1.3",

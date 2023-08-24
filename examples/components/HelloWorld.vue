@@ -56,14 +56,20 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive, ref, watch} from "vue";
+import {defineComponent, onMounted, reactive, ref, watch} from "vue";
+import Immutable from 'immutable';
+import {getColumnSymbol} from "../../src/utils";
 
 export default defineComponent({
   name: "HelloWorld",
-  setup(props, context) {
+  setup() {
     const datasource = ref('map');
     const size = ref('normal');
     const themeType = ref('primary');
+
+    onMounted(() => {
+      console.log(data)
+    })
 
     const mapData = reactive({
       data: [{
@@ -109,7 +115,29 @@ export default defineComponent({
       ],
     ])
 
+    const confs = reactive({
+      rowHeight: [{
+        row: 2,
+        height: 48,
+      }, {
+        row: 4,
+        height: 96,
+      }],
+      colWidth: [{
+        col: 'B',
+        width: 200,
+      }, {
+        col: 'H',
+        width: 200,
+      }],
+      rowHide: [9, ...Immutable.Range(15, 21).toArray()],
+      colHide: ['D', ...Immutable.Range(6, 8).map((value, _) => {
+        return getColumnSymbol(value)
+      }).toArray()]
+    })
+
     const data = reactive({
+      conf: confs,
       type: 'map', // array or map, default value is array
       arrayData: arrayData, // default data
       mapData: mapData
