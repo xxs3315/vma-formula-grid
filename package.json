@@ -16,14 +16,14 @@
   "dependencies": {
     "bahttext": "^2.3.0",
     "bessel": "^1.0.2",
-    "chevrotain": "^10.4.2",
+    "chevrotain": "^10.5.0",
     "jstat": "^1.9.6",
     "vue": "^3.3.4"
   },
   "peerDependencies": {
     "bahttext": "^2.3.0",
     "bessel": "^1.0.2",
-    "chevrotain": "^10.4.2",
+    "chevrotain": "^10.5.0",
     "jstat": "^1.9.6",
     "vue": "^3.3.4"
   },
