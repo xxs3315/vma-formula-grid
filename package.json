@@ -7,8 +7,6 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "test": "jest",
-    "test:unit": "jest test/*/unit",
-    "test:integration": "jest test/*/integration",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
