@@ -467,3 +467,624 @@ export const getHeight = (total: number, rowHeight: number, changedRowHeights: R
 
     return total * rowHeight + changeSum
 }
+
+type ttf<nd> = (data: nd, index: number, list: ll<nd>) => boolean
+
+type tmf<nd> = (data: any, index: number, list: ll<nd>) => any
+
+export class ll<nd = any> {
+    public head: lln<nd> | null
+    public tail: lln<nd> | null
+    private size: number
+
+    constructor(...args: nd[]) {
+        this.head = null
+        this.tail = null
+        this.size = 0
+
+        for (let i = 0; i < args.length; i++) {
+            this.append(args[i])
+        }
+    }
+
+    public get length(): number {
+        return this.size
+    }
+
+    public static from<T>(iterable: Iterable<T>): ll<T> {
+        return new ll(...iterable)
+    }
+
+    public get(index: number): nd | undefined {
+        const node = this.getNode(index)
+        return node !== undefined ? node.data : undefined
+    }
+
+    public getNode(index: number): lln<nd> | undefined {
+        if (this.head === null || index < 0 || index >= this.length) {
+            return undefined
+        }
+        const asc = index < this.length / 2
+        const stopAt = asc ? index : this.length - index - 1
+        const nextNode = asc ? 'next' : 'prev'
+        let currentNode = asc ? this.head : this.tail
+        for (let currentIndex = 0; currentIndex < stopAt; currentIndex++) {
+            currentNode = currentNode![nextNode]
+        }
+        return currentNode!
+    }
+
+    public findNodeIndex(f: ttf<nd>):
+        | {
+        node: lln<nd>
+        index: number
+    }
+        | undefined {
+        let currentIndex = 0
+        let currentNode = this.head
+        while (currentNode) {
+            if (f(currentNode.data, currentIndex, this)) {
+                return {
+                    index: currentIndex,
+                    node: currentNode
+                }
+            }
+            currentNode = currentNode.next
+            currentIndex += 1
+        }
+        return undefined
+    }
+
+    public findNode(f: ttf<nd>): lln<nd> | undefined {
+        const nodeIndex = this.findNodeIndex(f)
+        return nodeIndex !== undefined ? nodeIndex.node : undefined
+    }
+
+    public find(f: ttf<nd>): nd | undefined {
+        const nodeIndex = this.findNodeIndex(f)
+        return nodeIndex !== undefined ? nodeIndex.node.data : undefined
+    }
+
+    public findIndex(f: ttf<nd>): number {
+        const nodeIndex = this.findNodeIndex(f)
+        return nodeIndex !== undefined ? nodeIndex.index : -1
+    }
+
+    public append(...args: nd[]): ll<nd> {
+        for (const data of args) {
+            const node = new lln(data, this.tail, null, this)
+            if (this.head === null) {
+                this.head = node
+            }
+            if (this.tail !== null) {
+                this.tail.next = node
+            }
+            this.tail = node
+            this.size += 1
+        }
+        return this
+    }
+
+    public push(...args: nd[]): number {
+        this.append(...args)
+        return this.length
+    }
+
+    public prepend(...args: nd[]): ll<nd> {
+        const reverseArgs = Array.from(args).reverse()
+        for (const data of reverseArgs) {
+            const node = new lln(data, null, this.head, this)
+            if (this.tail === null) {
+                this.tail = node
+            }
+            if (this.head !== null) {
+                this.head.prev = node
+            }
+            this.head = node
+            this.size += 1
+        }
+        return this
+    }
+
+    public insertAt(index: number, data: nd): ll<nd> {
+        if (this.head === null) {
+            return this.append(data)
+        }
+        if (index <= 0) {
+            return this.prepend(data)
+        }
+
+        let currentNode = this.head
+        let currentIndex = 0
+        while (currentIndex < index - 1 && currentNode.next !== null) {
+            currentIndex += 1
+            currentNode = currentNode.next
+        }
+        currentNode.insertAfter(data)
+        return this
+    }
+
+    public removeNode(node: lln<nd>): lln<nd> {
+        if (node.list !== this) {
+            throw new ReferenceError('Node does not belong to this list')
+        }
+
+        if (node.prev !== null) {
+            node.prev.next = node.next
+        }
+
+        if (node.next !== null) {
+            node.next.prev = node.prev
+        }
+
+        if (this.head === node) {
+            this.head = node.next
+        }
+
+        if (this.tail === node) {
+            this.tail = node.prev
+        }
+
+        this.size -= 1
+        node.next = null
+        node.prev = null
+        node.list = null
+        return node
+    }
+
+    public removeAt(index: number): lln<nd> | undefined {
+        const node = this.getNode(index)
+        return node !== undefined ? this.removeNode(node) : undefined
+    }
+
+    public insertBefore(rn: lln<nd>, data: nd): ll<nd> {
+        const node = new lln(data, rn.prev, rn, this)
+        if (rn.prev === null) {
+            this.head = node
+        }
+        if (rn.prev !== null) {
+            rn.prev.next = node
+        }
+        rn.prev = node
+        this.size += 1
+        return this
+    }
+
+    public sort(compare: (a: nd, b: nd) => boolean): ll<nd> {
+        if (this.head === null || this.tail === null) {
+            return this
+        }
+        if (this.length < 2) {
+            return this
+        }
+
+        const quicksort = (start: lln<nd>, end: lln<nd>) => {
+            if (start === end) {
+                return
+            }
+            const pivotData = end.data
+            let current: lln | null = start
+            let split: lln = start
+            while (current && current !== end) {
+                const sort = compare(current.data, pivotData)
+                if (sort) {
+                    if (current !== split) {
+                        const temp = split.data
+                        split.data = current.data
+                        current.data = temp
+                    }
+                    split = split.next!
+                }
+                current = current.next
+            }
+            end.data = split.data
+            split.data = pivotData
+
+            if (start.next === end.prev) {
+                return
+            }
+
+            if (split.prev && split !== start) {
+                quicksort(start, split.prev)
+            }
+            if (split.next && split !== end) {
+                quicksort(split.next, end)
+            }
+        }
+
+        quicksort(this.head, this.tail)
+        return this
+    }
+
+    public insertAfter(rn: lln<nd>, data: nd): ll<nd> {
+        const node = new lln(data, rn, rn.next, this)
+        if (rn.next === null) {
+            this.tail = node
+        }
+        if (rn.next !== null) {
+            rn.next.prev = node
+        }
+        rn.next = node
+        this.size += 1
+        return this
+    }
+
+    public shift(): nd | undefined {
+        return this.removeFromAnyEnd(this.head)
+    }
+
+    public pop(): nd | undefined {
+        return this.removeFromAnyEnd(this.tail)
+    }
+
+    public merge(list: ll<nd>): void {
+        if (this.tail !== null) {
+            this.tail.next = list.head
+        }
+        if (list.head !== null) {
+            list.head.prev = this.tail
+        }
+        this.head = this.head || list.head
+        this.tail = list.tail || this.tail
+        this.size += list.size
+        list.size = this.size
+        list.head = this.head
+        list.tail = this.tail
+    }
+
+    public clear() {
+        this.head = null
+        this.tail = null
+        this.size = 0
+        return this
+    }
+
+    public slice(start: number, end?: number): ll<nd | Record<string | number | symbol, unknown>> {
+        const list = new ll()
+        let finish = end
+
+        if (this.head === null || this.tail === null) {
+            return list
+        }
+        if (finish === undefined || finish < start) {
+            finish = this.length
+        }
+
+        let head: lln<nd> | null | undefined = this.getNode(start)
+        for (let i = 0; i < finish - start && head !== null && head !== undefined; i++) {
+            list.append(head.data)
+            head = head.next
+        }
+        return list
+    }
+
+    public reverse(): ll<nd> {
+        let currentNode = this.head
+        while (currentNode) {
+            const next = currentNode.next
+            currentNode.next = currentNode.prev
+            currentNode.prev = next
+            currentNode = currentNode.prev
+        }
+        const tail = this.tail
+        this.tail = this.head
+        this.head = tail
+        return this
+    }
+
+    public forEach(f: tmf<nd>, reverse = false): void {
+        let currentIndex = reverse ? this.length - 1 : 0
+        let currentNode = reverse ? this.tail : this.head
+        const modifier = reverse ? -1 : 1
+        const nextNode = reverse ? 'prev' : 'next'
+        while (currentNode) {
+            f(currentNode.data, currentIndex, this)
+            currentNode = currentNode[nextNode]
+            currentIndex += modifier
+        }
+    }
+
+    public map(f: tmf<nd>, reverse = false): ll<nd | Record<string | number | symbol, unknown>> {
+        const list = new ll()
+        this.forEach((data, index) => list.append(f(data, index, this)), reverse)
+        return list
+    }
+
+    public filter(f: ttf<nd>, reverse = false): ll<nd | Record<string | number | symbol, unknown>> {
+        const list = new ll()
+        this.forEach((data, index) => {
+            if (f(data, index, this)) {
+                list.append(data)
+            }
+        }, reverse)
+        return list
+    }
+
+    public reduce(f: (accumulator: any, currentNode: nd, index: number, list: ll<nd>) => any, start?: any, reverse = false): any {
+        let currentIndex = reverse ? this.length - 1 : 0
+        const modifier = reverse ? -1 : 1
+        const nextNode = reverse ? 'prev' : 'next'
+        let currentElement = reverse ? this.tail : this.head
+        let result
+
+        if (start !== undefined) {
+            result = start
+        } else if (currentElement) {
+            result = currentElement.data
+            currentElement = currentElement[nextNode]
+        } else {
+            throw new TypeError('Reduce of empty ll with no initial value')
+        }
+
+        while (currentElement) {
+            result = f(result, currentElement.data, currentIndex, this)
+            currentIndex += modifier
+            currentElement = currentElement[nextNode]
+        }
+
+        return result
+    }
+
+    public toArray(): nd[] {
+        return [...this]
+    }
+
+    public toString(separator = ' '): string {
+        return this.reduce((s, data) => `${s}${separator}${data}`)
+    }
+
+    public* [Symbol.iterator](): IterableIterator<nd> {
+        let element = this.head
+
+        while (element !== null) {
+            yield element.data
+            element = element.next
+        }
+    }
+
+    private removeFromAnyEnd(node: lln<nd> | null) {
+        return node !== null ? this.removeNode(node).data : undefined
+    }
+}
+
+
+export class lln<nd = any> {
+    constructor(
+        public data: nd,
+        public prev: lln<nd> | null,
+        public next: lln<nd> | null,
+        public list: ll<nd> | null
+    ) {
+    }
+
+    public get value() {
+        return this.data
+    }
+
+    public get index() {
+        if (!this.list) {
+            return undefined
+        }
+        return this.list.findIndex(value => value === this.value)
+    }
+
+    public insertBefore(data: nd): ll<nd> {
+        return this.list !== null ? this.list.insertBefore(this, data) : new ll(data, this.data)
+    }
+
+    public insertAfter(data: nd): ll<nd> {
+        return this.list !== null ? this.list.insertAfter(this, data) : new ll(this.data, data)
+    }
+
+    public remove(): lln<nd> {
+        if (this.list === null) {
+            throw new ReferenceError('Node does not belong to any list')
+        }
+        return this.list.removeNode(this)
+    }
+}
+
+
+export class d {
+    constructor(g: Record<string, any>) {
+        this._g = g
+        const gks = Object.keys(this._g)
+        this._v = gks.length
+        this._e = 0
+        this._aj = ll.from([...Array.from({length: this._v}, () => new ll<number>())])
+        this._aj.forEach((_, index) => {
+            this._g[gks[index]].children.forEach((item: any) => {
+                this.ae(index, gks.indexOf(item))
+            })
+        })
+    }
+
+    private _v: number
+
+    get v(): number {
+        return this._v
+    }
+
+    set v(value: number) {
+        this._v = value
+    }
+
+    private _e: number
+
+    get e(): number {
+        return this._e
+    }
+
+    set e(value: number) {
+        this._e = value
+    }
+
+    private _g: Record<string, any>
+
+    get g(): Record<string, any> {
+        return this._g
+    }
+
+    set g(value: Record<string, any>) {
+        this._g = value
+    }
+
+    private _aj: ll<ll<number>>
+
+    get aj(): ll<ll<number>> {
+        return this._aj
+    }
+
+    set aj(value: ll<ll<number>>) {
+        this._aj = value
+    }
+
+    private ae = (v: number, w: number) => {
+        this._aj.get(v)!.append(w)
+        this._e++
+    }
+}
+
+export default class dc {
+    constructor(dg: d) {
+        this._m = Array.from({length: dg.v})
+        this._et = Array.from({length: dg.v})
+        this._os = Array.from({length: dg.v})
+
+        for (let i = 0; i < dg.v; i++) {
+            if (!this._m[i]) this.dfp(dg, i)
+        }
+    }
+
+    private _m: boolean[]
+
+    get m(): boolean[] {
+        return this._m
+    }
+
+    set m(value: boolean[]) {
+        this._m = value
+    }
+
+    private _et: number[]
+
+    get et(): number[] {
+        return this._et
+    }
+
+    set et(value: number[]) {
+        this._et = value
+    }
+
+    private _cy: number[] = []
+
+    get c(): number[] {
+        return this._cy
+    }
+
+    set c(value: number[]) {
+        this._cy = value
+    }
+
+    private _os: boolean[]
+
+    get os(): boolean[] {
+        return this._os
+    }
+
+    set os(value: boolean[]) {
+        this._os = value
+    }
+
+    hc = (): boolean => this._cy !== null && this._cy !== undefined && this._cy.length > 0
+
+    private dfp = (dg: d, v: number) => {
+        this._m[v] = true
+        this._os[v] = true
+        if (dg.aj.get(v)) {
+            dg.aj.get(v)!.forEach((item: number) => {
+                if (this._cy === null || this._cy === undefined || this._cy.length === 0) {
+                    if (!this._m[item]) {
+                        this._et[item] = v
+                        this.dfp(dg, item)
+                    } else if (this._os[item]) {
+                        for (let x = v; x !== item; x = this._et[x]) {
+                            this._cy.push(x)
+                        }
+                        this._cy.push(item)
+                        this._cy.push(v)
+                    }
+                }
+            })
+        }
+        this._os[v] = false
+    }
+}
+
+
+export class dfo {
+    constructor(dg: d) {
+        this._f = new ll<number>()
+        this._b = new ll<number>()
+        this._rb = new ll<number>()
+        this._m = Array.from({length: dg.v})
+
+        for (let i = 0; i < dg.v; i++) {
+            if (!this._m[i]) this.dfp(dg, i)
+        }
+    }
+
+    private _m: boolean[]
+
+    get m(): boolean[] {
+        return this._m
+    }
+
+    set m(value: boolean[]) {
+        this._m = value
+    }
+
+    private _f: ll<number>
+
+    get f(): ll<number> {
+        return this._f
+    }
+
+    set f(value: ll<number>) {
+        this._f = value
+    }
+
+    private _b: ll<number>
+
+    get b(): ll<number> {
+        return this._b
+    }
+
+    set b(value: ll<number>) {
+        this._b = value
+    }
+
+    private _rb: ll<number>
+
+    get rb(): ll<number> {
+        return this._rb
+    }
+
+    set rb(value: ll<number>) {
+        this._rb = value
+    }
+
+    private dfp = (dg: d, v: number) => {
+        this._f.append(v)
+        this._m[v] = true
+        if (dg.aj.get(v)) {
+            dg.aj.get(v)!.forEach((item: number) => {
+                if (!this._m[item]) {
+                    this.dfp(dg, item)
+                }
+            })
+        }
+        this._b.append(v)
+        this._rb.push(v)
+    }
+}

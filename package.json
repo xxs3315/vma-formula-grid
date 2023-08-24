@@ -14,9 +14,17 @@
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
+    "bahttext": "^2.3.0",
+    "bessel": "^1.0.2",
+    "chevrotain": "^10.4.2",
+    "jstat": "^1.9.6",
     "vue": "^3.3.4"
   },
   "peerDependencies": {
+    "bahttext": "^2.3.0",
+    "bessel": "^1.0.2",
+    "chevrotain": "^10.4.2",
+    "jstat": "^1.9.6",
     "vue": "^3.3.4"
   },
   "devDependencies": {

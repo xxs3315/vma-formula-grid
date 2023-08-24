@@ -4,6 +4,9 @@ import VmaFormulaGridBody from './body.ts'
 import VmaFormulaGridCell from './cell.ts'
 import {ComponentOptions} from "vue";
 
+import dc, {dfo, d} from "./utils";
+import { FormulaParser, MAX_ROW, MAX_COLUMN, SSF, DepParser, FormulaError, FormulaHelpers, Types, ReversedTypes, Factorials, WildCard, Criteria, Address } from './formula'
+
 // `Vue.use` automatically prevents you from using
 // the same plugin more than once,
 // so calling it multiple times on the same plugin
@@ -28,4 +31,6 @@ if (typeof window !== "undefined" && window.Vue) {
 }
 
 // To allow use as module (npm/webpack/etc.) export component
+export { dc, dfo, d }
+export { FormulaParser, MAX_ROW, MAX_COLUMN, SSF, DepParser, FormulaError, FormulaHelpers, Types, ReversedTypes, Factorials, WildCard, Criteria, Address }
 export default VmaFormulaGrid
