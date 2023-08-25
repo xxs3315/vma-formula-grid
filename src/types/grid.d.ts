@@ -104,6 +104,12 @@ export interface VmaFormulaGridReactiveData {
     lastScrollLeft: number
     lastScrollTop: number
     lastScrollTime: number
+
+    cells: {
+        eMap: Record<string, any>
+        cMap: Record<string, any>
+        ncMap: Record<string, any>
+    }
 }
 
 export interface VmaFormulaGridProps {
@@ -120,6 +126,7 @@ export interface VmaFormulaGridProps {
 export type VmaFormulaGridOptions = VmaFormulaGridProps
 
 export interface VmaFormulaGridMethods {
+    calc(): void
     recalculate(refresh: boolean): Promise<any>
 }
 

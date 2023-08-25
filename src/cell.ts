@@ -64,27 +64,16 @@ export default defineComponent({
 
         const {currentSheetData} = $vmaFormulaGrid.reactiveData
 
-        const renderCellContentWithFormat = (mv: any) => {
-            // const c = currentSheetData[props.row!][props.col! - 1]
-            // if (c.cf && c.cf.t && c.cf.t !== 'g') {
-            //     const beforeTextNumber = Number(c.mv)
-            //     try {
-            //         if (isNaN(beforeTextNumber)) {
-            //             mv = SSF.format(c.cf.fd, c.mv)
-            //         } else {
-            //             mv = SSF.format(c.cf.fd, beforeTextNumber)
-            //         }
-            //     } catch (e) {
-            //         console.error(e)
-            //     }
-            // }
-            return mv
+        const renderCellContentWithFormat = () => {
+            const c = currentSheetData[props.row][props.col + 1]
+            // 加入数据格式处理
+            return c.mv
         }
 
         const getCellContent = () => {
             const c = currentSheetData[props.row][props.col + 1]
             if (c && c.v) {
-                return renderCellContentWithFormat(c.v)
+                return renderCellContentWithFormat()
             }
             return null
         }

@@ -20,6 +20,8 @@ import {
 } from "./types/grid";
 import {Guid} from "./utils/guid.ts";
 import {
+    calcVertexes,
+    filterVertexes,
     getColumnCount,
     getHeight,
     getIndexFromColumnWidths,
@@ -39,6 +41,7 @@ import {Row} from "./internals/row.ts";
 import {Cell} from "./internals/cell.ts";
 import {debounce} from "./utils/debounce.ts";
 import {createResizeEvent} from "./utils/resize.ts";
+import {DepParser, FormulaParser} from "./formula";
 
 export default defineComponent({
     name: "VmaFormulaGrid",
@@ -92,14 +95,16 @@ export default defineComponent({
                         if (parentEl) {
                             resizeObserver.observe(parentEl)
                         }
-                    })
+                    }).finally(() => {
+                    $vmaFormulaGrid.calc()
+                })
             })
         })
 
         watch(() => props.data, () => {
             reset().then(() => {
                 loadData().then(() => {
-                    $vmaFormulaGrid.recalculate(true)
+                    $vmaFormulaGrid.recalculate(true).finally(() => {$vmaFormulaGrid.calc()})
                 })
             })
 
@@ -190,7 +195,12 @@ export default defineComponent({
             },
             lastScrollLeft: 0,
             lastScrollTop: 0,
-            lastScrollTime: 0
+            lastScrollTime: 0,
+            cells: {
+                eMap: {},
+                cMap: {},
+                ncMap: {},
+            },
         }) as VmaFormulaGridReactiveData
 
         const gridRefs: VmaFormulaGridRefs = {
@@ -228,6 +238,183 @@ export default defineComponent({
         }
 
         const gridMethods = {
+            calc: () => {
+                const calcCells: Cell[] = []
+                gridReactiveData.cells = {
+                    eMap: {},
+                    cMap: {},
+                    ncMap: {},
+                }
+                const position = {
+                    row: 1,
+                    col: 1,
+                    sheet: 'calc',
+                }
+                const depParser = new DepParser({})
+                const errorKeyList: any = []
+
+                gridReactiveData.currentSheetData.forEach((row: any[]) => {
+                    row.forEach((item: Cell) => {
+                        let isFormulaCell = false
+                        let isFormulaCellDepParseError = true
+                        let se = null
+                        let formulaCellDepParseResult = null
+                        if (item && item.v && typeof item.v === 'string' && item.v.trim().startsWith('=')) {
+                            isFormulaCell = true
+                            se = '#DEPPARSEERROR!'
+                            try {
+                                formulaCellDepParseResult = depParser.parse(item.v.trim().substring(1), position)
+                                isFormulaCellDepParseError = false
+                                se = null
+                            } catch (e) {
+                                console.error(`parse error: ${item.col!}_${item.row}`)
+                            }
+                            if (isFormulaCellDepParseError) {
+                                errorKeyList.push(`${item.col}_${item.row}`)
+                            }
+                            // 检查是否有引用错误（例如，超出范围的单元格引用）
+                            if (formulaCellDepParseResult !== null) {
+                                const errorRefCell = formulaCellDepParseResult.find((item: any) => item.row > gridReactiveData.rowConfs.length || item.col > gridReactiveData.colConfs.length)
+                                if (errorRefCell) {
+                                    se = '#REFERROR!'
+                                    errorKeyList.push(`${item.col}_${item.row}`)
+                                    isFormulaCellDepParseError = true
+                                    formulaCellDepParseResult = null
+                                }
+                            }
+                            item.mv = isFormulaCell ? (isFormulaCellDepParseError ? se : null) : item && item.v ? item.v : null
+                            item.fd = isFormulaCell ? (isFormulaCellDepParseError ? null : formulaCellDepParseResult) : null
+                            item.se = se
+                            calcCells.push(item)
+                        } else {
+                            item.mv = item.v
+                        }
+                    })
+
+                })
+                const vertexes: Record<string, any> = {}
+                calcCells.forEach(item => {
+                    if (errorKeyList.indexOf(`${item.col}_${item.row}`) >= 0) {
+                        gridReactiveData.cells.eMap[`${item.col}_${item.row}`] = {
+                            c: item.col,
+                            r: item.row,
+                            children: [],
+                            ref: item,
+                        }
+                    } else {
+                        vertexes[`${item.col}_${item.row}`] = {
+                            c: item.col,
+                            r: item.row,
+                            children: [],
+                            ref: item,
+                        }
+                        if (item.fd && item.fd.length > 0) {
+                            item.fd.forEach((fdItem: any) => {
+                                if (fdItem.hasOwnProperty('from') || fdItem.hasOwnProperty('to')) {
+                                    for (let r = fdItem.from.row; r <= fdItem.to.row; r++) {
+                                        for (let c = fdItem.from.col; c <= fdItem.to.col; c++) {
+                                            if (!vertexes.hasOwnProperty(`${c - 1}_${r - 1}`)) {
+                                                if (errorKeyList.indexOf(`${c - 1}_${r - 1}`) < 0) {
+                                                    vertexes[`${c - 1}_${r - 1}`] = {
+                                                        c: c - 1,
+                                                        r: r - 1,
+                                                        children: [],
+                                                        ref: gridReactiveData.currentSheetData[r - 1][c - 1],
+                                                    }
+                                                }
+                                            }
+                                            if (vertexes[`${item.col}_${item.row}`].children.indexOf(`${c - 1}_${r - 1}`) < 0) {
+                                                vertexes[`${item.col}_${item.row}`].children.push(`${c - 1}_${r - 1}`)
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (!vertexes.hasOwnProperty(`${fdItem.col - 1}_${fdItem.row - 1}`)) {
+                                        if (errorKeyList.indexOf(`${fdItem.col - 1}_${fdItem.row - 1}`) < 0) {
+                                            vertexes[`${fdItem.col - 1}_${fdItem.row - 1}`] = {
+                                                c: fdItem.col - 1,
+                                                r: fdItem.row - 1,
+                                                children: [],
+                                                ref: gridReactiveData.currentSheetData[fdItem.row - 1][fdItem.col - 1],
+                                            }
+                                        }
+                                    }
+                                    if (vertexes[`${item.col}_${item.row}`].children.indexOf(`${fdItem.col - 1}_${fdItem.row - 1}`) < 0) {
+                                        vertexes[`${item.col}_${item.row}`].children.push(`${fdItem.col - 1}_${fdItem.row - 1}`)
+                                    }
+                                }
+                            })
+                        }
+                    }
+                })
+
+                const { noErrorVertexes } = filterVertexes(vertexes, gridReactiveData.cells.eMap)
+
+                const errorMapKeys = Object.keys(gridReactiveData.cells.eMap)
+                if (errorMapKeys.length > 0) {
+                    for (let i = 0; i < errorMapKeys.length; i++) {
+                        if (gridReactiveData.cells.eMap[errorMapKeys[i]].ref.se !== null) {
+                            gridReactiveData.cells.eMap[errorMapKeys[i]].ref.mv = gridReactiveData.cells.eMap[errorMapKeys[i]].ref.se
+                        } else {
+                            gridReactiveData.cells.eMap[errorMapKeys[i]].ref.mv = '#REFERROR!'
+                            gridReactiveData.cells.eMap[errorMapKeys[i]].ref.se = '#REFERROR!'
+                        }
+                    }
+                }
+                const { topological, noCycleVertexes, cycleVertexes } = calcVertexes(noErrorVertexes, {})
+                gridReactiveData.cells.cMap = cycleVertexes
+                gridReactiveData.cells.ncMap = noCycleVertexes
+
+                const cycleVertexKeys = Object.keys(cycleVertexes)
+                for (let i = 0; i < cycleVertexKeys.length; i++) {
+                    cycleVertexes[cycleVertexKeys[i]].ref.mv = '#CYCLEERROR!'
+                }
+
+                const parser = new FormulaParser({
+                    // functions: props.functions, // TODO
+                    onCell: (ref: any) => gridReactiveData.currentSheetData[ref.row - 1][ref.col - 1].mv,
+                    onRange: (ref: any) => {
+                        const arr = []
+                        for (let row = ref.from.row - 1; row < ref.to.row; row++) {
+                            const innerArr = []
+                            for (let col = ref.from.col - 1; col < ref.to.col; col++) {
+                                innerArr.push(gridReactiveData.currentSheetData[row][col].mv)
+                            }
+                            arr.push(innerArr)
+                        }
+                        return arr
+                    },
+                })
+                for (let i = 0; i < topological.length; i++) {
+                    if (
+                        noCycleVertexes[topological[i]] &&
+                        noCycleVertexes[topological[i]].ref &&
+                        noCycleVertexes[topological[i]].ref.v &&
+                        typeof noCycleVertexes[topological[i]].ref.v === 'string' &&
+                        noCycleVertexes[topological[i]].ref.v.trim().startsWith('=')
+                    ) {
+                        let isParseError = true
+                        try {
+                            let result = parser.parse(noCycleVertexes[topological[i]].ref.v.trim().substring(1), { row: 1, col: 1 })
+                            if (result && result.result) {
+                                result = result.result
+                            }
+                            if (typeof result === 'number' || typeof result === 'string') {
+                                noCycleVertexes[topological[i]].ref.mv = result
+                            } else {
+                                noCycleVertexes[topological[i]].ref.mv = `${result}`
+                            }
+                            isParseError = false
+                        } catch (e) {
+                            console.error(topological[i], e)
+                        }
+                        if (isParseError) {
+                            noCycleVertexes[topological[i]].ref.mv = '#ERROR!'
+                            noCycleVertexes[topological[i]].ref.se = '#ERROR!'
+                        }
+                    }
+                }
+            },
             recalculate: (refresh: boolean) => {
                 arrangeColumnWidth()
                 if (refresh) {
@@ -701,9 +888,17 @@ export default defineComponent({
                                     }
                                 }
                             }
-                            gridReactiveData.currentSheetData[rowIndex][colIndex] = new Cell(rowIndex, colIndex - 1, 1, 1,
+                            gridReactiveData.currentSheetData[rowIndex][colIndex] = new Cell(
+                                rowIndex,
+                                colIndex - 1,
+                                1,
+                                1,
                                 props.data && props.data.type === 'map' ? (cellData && cellData.v ? cellData.v : null) : isObject(cellData) ? (cellData && cellData.v ? cellData.v : null) : cellData,
-                                null
+                                null,
+                                null,
+                                null,
+                                false,
+                                -1,
                             )
                         })
                     })

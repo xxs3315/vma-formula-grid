@@ -1088,3 +1088,54 @@ export class dfo {
         this._rb.push(v)
     }
 }
+
+
+export function filterVertexes(vertexes: Record<string, any>, errorMap: Record<string, any>) {
+    const vertexKeys = Object.keys(vertexes)
+    if (vertexKeys.length === 0) {
+        return { noErrorVertexes: vertexes, errorMap }
+    }
+    const errorMapKeys = Object.keys(errorMap)
+    let hasErrorDep = false
+    for (let i = 0; i < vertexKeys.length; i++) {
+        if (vertexes.hasOwnProperty(vertexKeys[i]) && vertexes[vertexKeys[i]].children && vertexes[vertexKeys[i]].children.length > 0) {
+            const dp = vertexes[vertexKeys[i]].children.find((item: any) => errorMapKeys.indexOf(item) >= 0)
+            if (dp) {
+                hasErrorDep = true
+                errorMap[vertexKeys[i]] = vertexes[vertexKeys[i]]
+                delete vertexes[vertexKeys[i]]
+                break
+            }
+        }
+        if (hasErrorDep) {
+            filterVertexes(vertexes, errorMap)
+        }
+    }
+    return { noErrorVertexes: vertexes, errorMap }
+}
+
+export function calcVertexes(vertexes: Record<string, any>, cycleVertexes: Record<string, any>): any {
+    const vertexKeys = Object.keys(vertexes)
+    let result
+    const g = new d(vertexes)
+    const dcs = new dc(g)
+    if (dcs.hc()) {
+        for (let i = 0; i < dcs.c.length; i++) {
+            if (!cycleVertexes.hasOwnProperty(vertexKeys[dcs.c[i]])) {
+                cycleVertexes[vertexKeys[dcs.c[i]]] = [vertexes[vertexKeys[dcs.c[i]]]].concat()[0]
+                delete vertexes[vertexKeys[dcs.c[i]]]
+            }
+        }
+        result = calcVertexes(vertexes, cycleVertexes)
+    } else {
+        const dfos = new dfo(g)
+        const topological: any = []
+        if (dfos.rb && dfos.rb.length > 0) {
+            dfos.rb.forEach((item: any) => {
+                topological.push(vertexKeys[item])
+            })
+        }
+        result = { g, topological, noCycleVertexes: vertexes, cycleVertexes }
+    }
+    return result
+}
