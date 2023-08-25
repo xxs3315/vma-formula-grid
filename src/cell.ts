@@ -390,7 +390,6 @@ export default defineComponent({
                 const left = dragPosLeft + offsetX
                 dragLeft = Math.max(left, dragMinLeft)
                 resizeBarElem.style.left = `${dragLeft}px`
-                resizeBarElem.style.display = 'block'
             }
 
             document.onmousemove = updateEvent
@@ -451,7 +450,6 @@ export default defineComponent({
                 const top = dragPosTop + offsetY
                 dragTop = Math.max(top, dragMinTop)
                 resizeBarElem.style.top = `${dragTop + refGridHeaderTableWrapperDiv.value.clientHeight}px`
-                resizeBarElem.style.display = 'block'
             }
 
             document.onmousemove = updateEvent
