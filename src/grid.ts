@@ -294,17 +294,17 @@ export default defineComponent({
                 })
                 const vertexes: Record<string, any> = {}
                 calcCells.forEach(item => {
-                    if (errorKeyList.indexOf(`${item.col}_${item.row}`) >= 0) {
-                        gridReactiveData.cells.eMap[`${item.col}_${item.row}`] = {
-                            c: item.col,
-                            r: item.row,
+                    if (errorKeyList.indexOf(`${item.col + 1}_${item.row + 1}`) >= 0) {
+                        gridReactiveData.cells.eMap[`${item.col + 1}_${item.row +1}`] = {
+                            c: item.col + 1,
+                            r: item.row + 1,
                             children: [],
                             ref: item,
                         }
                     } else {
-                        vertexes[`${item.col}_${item.row}`] = {
-                            c: item.col,
-                            r: item.row,
+                        vertexes[`${item.col + 1}_${item.row + 1}`] = {
+                            c: item.col + 1,
+                            r: item.row + 1,
                             children: [],
                             ref: item,
                         }
@@ -313,34 +313,34 @@ export default defineComponent({
                                 if (fdItem.hasOwnProperty('from') || fdItem.hasOwnProperty('to')) {
                                     for (let r = fdItem.from.row; r <= fdItem.to.row; r++) {
                                         for (let c = fdItem.from.col; c <= fdItem.to.col; c++) {
-                                            if (!vertexes.hasOwnProperty(`${c - 1}_${r - 1}`)) {
-                                                if (errorKeyList.indexOf(`${c - 1}_${r - 1}`) < 0) {
-                                                    vertexes[`${c - 1}_${r - 1}`] = {
-                                                        c: c - 1,
-                                                        r: r - 1,
+                                            if (!vertexes.hasOwnProperty(`${c}_${r}`)) {
+                                                if (errorKeyList.indexOf(`${c}_${r}`) < 0) {
+                                                    vertexes[`${c}_${r}`] = {
+                                                        c: c,
+                                                        r: r,
                                                         children: [],
-                                                        ref: gridReactiveData.currentSheetData[r - 1][c - 1],
+                                                        ref: gridReactiveData.currentSheetData[r - 1][c],
                                                     }
                                                 }
                                             }
-                                            if (vertexes[`${item.col}_${item.row}`].children.indexOf(`${c - 1}_${r - 1}`) < 0) {
-                                                vertexes[`${item.col}_${item.row}`].children.push(`${c - 1}_${r - 1}`)
+                                            if (vertexes[`${item.col + 1}_${item.row + 1}`].children.indexOf(`${c}_${r}`) < 0) {
+                                                vertexes[`${item.col + 1}_${item.row + 1}`].children.push(`${c}_${r}`)
                                             }
                                         }
                                     }
                                 } else {
-                                    if (!vertexes.hasOwnProperty(`${fdItem.col - 1}_${fdItem.row - 1}`)) {
-                                        if (errorKeyList.indexOf(`${fdItem.col - 1}_${fdItem.row - 1}`) < 0) {
-                                            vertexes[`${fdItem.col - 1}_${fdItem.row - 1}`] = {
-                                                c: fdItem.col - 1,
-                                                r: fdItem.row - 1,
+                                    if (!vertexes.hasOwnProperty(`${fdItem.col}_${fdItem.row}`)) {
+                                        if (errorKeyList.indexOf(`${fdItem.col}_${fdItem.row}`) < 0) {
+                                            vertexes[`${fdItem.col}_${fdItem.row}`] = {
+                                                c: fdItem.col,
+                                                r: fdItem.row,
                                                 children: [],
-                                                ref: gridReactiveData.currentSheetData[fdItem.row - 1][fdItem.col - 1],
+                                                ref: gridReactiveData.currentSheetData[fdItem.row - 1][fdItem.col],
                                             }
                                         }
                                     }
-                                    if (vertexes[`${item.col}_${item.row}`].children.indexOf(`${fdItem.col - 1}_${fdItem.row - 1}`) < 0) {
-                                        vertexes[`${item.col}_${item.row}`].children.push(`${fdItem.col - 1}_${fdItem.row - 1}`)
+                                    if (vertexes[`${item.col + 1}_${item.row + 1}`].children.indexOf(`${fdItem.col}_${fdItem.row}`) < 0) {
+                                        vertexes[`${item.col + 1}_${item.row + 1}`].children.push(`${fdItem.col}_${fdItem.row}`)
                                     }
                                 }
                             })
@@ -362,6 +362,7 @@ export default defineComponent({
                     }
                 }
                 const { topological, noCycleVertexes, cycleVertexes } = calcVertexes(noErrorVertexes, {})
+
                 gridReactiveData.cells.cMap = cycleVertexes
                 gridReactiveData.cells.ncMap = noCycleVertexes
 
@@ -372,13 +373,13 @@ export default defineComponent({
 
                 const parser = new FormulaParser({
                     // functions: props.functions, // TODO
-                    onCell: (ref: any) => gridReactiveData.currentSheetData[ref.row - 1][ref.col - 1].mv,
+                    onCell: (ref: any) => gridReactiveData.currentSheetData[ref.row - 1][ref.col].mv,
                     onRange: (ref: any) => {
                         const arr = []
-                        for (let row = ref.from.row - 1; row < ref.to.row; row++) {
+                        for (let row = ref.from.row; row <= ref.to.row; row++) {
                             const innerArr = []
-                            for (let col = ref.from.col - 1; col < ref.to.col; col++) {
-                                innerArr.push(gridReactiveData.currentSheetData[row][col].mv)
+                            for (let col = ref.from.col; col <= ref.to.col; col++) {
+                                innerArr.push(gridReactiveData.currentSheetData[row - 1][col].mv)
                             }
                             arr.push(innerArr)
                         }
