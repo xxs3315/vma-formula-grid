@@ -363,13 +363,14 @@ export default defineComponent({
                 )
 
                 const offsetItem = {
-                    startColIndex: Math.max(-1, visibleIndex + 1 - 5),
-                    endColIndex: visibleIndex + visibleSize + 1 + 5,
+                    startColIndex: Math.max(-1, visibleIndex + 1 - 20),
+                    endColIndex: visibleIndex + visibleSize + 1 + 20,
                 }
 
                 const { startColIndex: offsetStartColIndex, endColIndex: offsetEndColIndex } = offsetItem
                 const { xStart, xEnd } = gridReactiveData
-                if (visibleIndex <= 0 || visibleIndex >= offsetEndColIndex - visibleSize - 1 - 5) {
+
+                if (visibleIndex <= 0 || visibleIndex >= offsetEndColIndex - visibleSize - 20) {
                     if (xStart !== offsetStartColIndex || xEnd !== offsetEndColIndex) {
                         gridReactiveData.xStart = offsetStartColIndex
                         gridReactiveData.xEnd = offsetEndColIndex
@@ -390,13 +391,13 @@ export default defineComponent({
                 )
 
                 const offsetItem = {
-                    startIndex: Math.max(0, visibleIndex + 1 - 5),
-                    endIndex: visibleIndex + visibleSize + 1 + 5,
+                    startIndex: Math.max(0, visibleIndex + 1 - 20),
+                    endIndex: visibleIndex + visibleSize + 1 + 20,
                 }
 
                 const { startIndex: offsetStartIndex, endIndex: offsetEndIndex } = offsetItem
                 const { yStart, yEnd } = gridReactiveData
-                if (visibleIndex <= 0 || visibleIndex >= offsetEndIndex - visibleSize - 1 - 5) {
+                if (visibleIndex <= 0 || visibleIndex >= offsetEndIndex - visibleSize - 20) {
                     if (yStart !== offsetStartIndex || yEnd !== offsetEndIndex) {
                         gridReactiveData.yStart = offsetStartIndex
                         gridReactiveData.yEnd = offsetEndIndex

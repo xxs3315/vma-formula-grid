@@ -413,7 +413,7 @@ export default defineComponent({
                     nextTick(() => {
                         // $vmaFormulaGrid.calcCurrentCellPosition()
                         // $vmaFormulaGrid.calcCurrentCellDisplay()
-                        console.log('columnWidthsChanged', $vmaFormulaGrid.reactiveData.columnWidthsChanged)
+                        // console.log('columnWidthsChanged', $vmaFormulaGrid.reactiveData.columnWidthsChanged)
                     })
                 })
             }
@@ -474,7 +474,7 @@ export default defineComponent({
                     nextTick(() => {
                         // $vmaFormulaGrid.calcCurrentCellPosition()
                         // $vmaFormulaGrid.calcCurrentCellDisplay()
-                        console.log('rowHeightsChanged', $vmaFormulaGrid.reactiveData.rowHeightsChanged)
+                        // console.log('rowHeightsChanged', $vmaFormulaGrid.reactiveData.rowHeightsChanged)
                     })
                 })
             }
