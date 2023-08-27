@@ -102,8 +102,11 @@ export interface VmaFormulaGridReactiveData {
     }
 
     lastScrollLeft: number
+    lastScrollLeftTime: number
+    lastScrollXVisibleIndex: number
     lastScrollTop: number
-    lastScrollTime: number
+    lastScrollTopTime: number
+    lastScrollYVisibleIndex: number
 
     cells: {
         eMap: Record<string, any>

@@ -194,8 +194,11 @@ export default defineComponent({
                 otherList: [],
             },
             lastScrollLeft: 0,
+            lastScrollLeftTime: 0,
+            lastScrollXVisibleIndex: 0,
             lastScrollTop: 0,
-            lastScrollTime: 0,
+            lastScrollTopTime: 0,
+            lastScrollYVisibleIndex: 0,
             cells: {
                 eMap: {},
                 cMap: {},
@@ -551,20 +554,24 @@ export default defineComponent({
                 )
 
                 const offsetItem = {
-                    startColIndex: Math.max(-1, visibleIndex + 1 - 20),
-                    endColIndex: visibleIndex + visibleSize + 1 + 20,
+                    startColIndex: Math.max(0, visibleIndex - 20),
+                    endColIndex: Math.min(visibleIndex + visibleSize + 20, gridReactiveData.colConfs.length)
                 }
 
                 const { startColIndex: offsetStartColIndex, endColIndex: offsetEndColIndex } = offsetItem
-                const { xStart, xEnd } = gridReactiveData
 
-                if (visibleIndex <= 0 || visibleIndex >= offsetEndColIndex - visibleSize - 20) {
-                    if (xStart !== offsetStartColIndex || xEnd !== offsetEndColIndex) {
-                        gridReactiveData.xStart = offsetStartColIndex
-                        gridReactiveData.xEnd = offsetEndColIndex
-                        updateScrollXYSpace()
-                    }
+                if (gridReactiveData.lastScrollXVisibleIndex === 0) {
+                    gridReactiveData.xStart = offsetStartColIndex
+                    gridReactiveData.xEnd = offsetEndColIndex
                 }
+
+                if (Math.abs(offsetEndColIndex - visibleIndex - visibleSize) / 2 > 5 || Math.abs(visibleIndex - offsetStartColIndex) / 2 > 5) {
+                    gridReactiveData.xStart = offsetStartColIndex
+                    gridReactiveData.xEnd = offsetEndColIndex
+                    gridReactiveData.lastScrollXVisibleIndex = visibleIndex
+                    updateScrollXYSpace()
+                }
+                
                 resolve()
             })
 
@@ -579,18 +586,22 @@ export default defineComponent({
                 )
 
                 const offsetItem = {
-                    startIndex: Math.max(0, visibleIndex + 1 - 20),
-                    endIndex: visibleIndex + visibleSize + 1 + 20,
+                    startIndex: Math.max(0, visibleIndex - 20),
+                    endIndex: Math.min(visibleIndex + visibleSize + 20, gridReactiveData.rowConfs.length - 1)
                 }
 
                 const { startIndex: offsetStartIndex, endIndex: offsetEndIndex } = offsetItem
-                const { yStart, yEnd } = gridReactiveData
-                if (visibleIndex <= 0 || visibleIndex >= offsetEndIndex - visibleSize - 20) {
-                    if (yStart !== offsetStartIndex || yEnd !== offsetEndIndex) {
-                        gridReactiveData.yStart = offsetStartIndex
-                        gridReactiveData.yEnd = offsetEndIndex
-                        updateScrollXYSpace()
-                    }
+
+                if (gridReactiveData.lastScrollYVisibleIndex === 0) {
+                    gridReactiveData.yStart = offsetStartIndex
+                    gridReactiveData.yEnd = offsetEndIndex
+                }
+
+                if (Math.abs(offsetEndIndex - visibleIndex - visibleSize) / 2 > 5 || Math.abs(visibleIndex - offsetStartIndex) / 2 > 5) {
+                    gridReactiveData.yStart = offsetStartIndex
+                    gridReactiveData.yEnd = offsetEndIndex
+                    gridReactiveData.lastScrollYVisibleIndex = visibleIndex
+                    updateScrollXYSpace()
                 }
                 resolve()
             })

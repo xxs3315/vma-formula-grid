@@ -182,7 +182,7 @@ export default defineComponent({
                                 type: `${$vmaFormulaGrid.props.type}`,
                                 row: rf.index,
                                 col: -1,
-                                id: `${rf.index}_-1`,
+                                'data-id': `${rf.index}_-1`,
                             })
                         )
                     } else {
@@ -193,7 +193,7 @@ export default defineComponent({
                                 type: `${$vmaFormulaGrid.props.type}`,
                                 row: rf.index,
                                 col: cf.index,
-                                id: `${rf.index}_${cf.index}`,
+                                'data-id': `${rf.index}_${cf.index}`,
                                 // cf: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index - 1].cf,
                             })
                         )
@@ -204,7 +204,7 @@ export default defineComponent({
                     h(
                         'tr',
                         {
-                            row: index,
+                            'data-row': index,
                             style: {
                                 height: rf.visible ? (typeof rf.height === 'string' ? `${renderDefaultRowHeight.value}px` : `${rf.height}px`) : 0,
                             },
@@ -283,7 +283,7 @@ export default defineComponent({
                 if (isRollX) {
                     wheelEvent.preventDefault()
                     $vmaFormulaGrid.reactiveData.lastScrollLeft = scrollLeft
-                    $vmaFormulaGrid.reactiveData.lastScrollTime = Date.now()
+                    $vmaFormulaGrid.reactiveData.lastScrollLeftTime = Date.now()
                     handleWheelX(wheelEvent, deltaX, isWheelLeft)
                     $vmaFormulaGrid.triggerScrollXEvent(wheelEvent)
                 }
@@ -296,7 +296,7 @@ export default defineComponent({
                 if (isRollY) {
                     wheelEvent.preventDefault()
                     $vmaFormulaGrid.reactiveData.lastScrollTop = scrollTop
-                    $vmaFormulaGrid.reactiveData.lastScrollTime = Date.now()
+                    $vmaFormulaGrid.reactiveData.lastScrollTopTime = Date.now()
                     handleWheelY(wheelEvent, deltaY, isWheelUp)
                     $vmaFormulaGrid.triggerScrollYEvent(wheelEvent)
                 }

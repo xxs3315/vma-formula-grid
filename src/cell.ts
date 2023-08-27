@@ -311,8 +311,8 @@ export default defineComponent({
                 {
                     rowspan: props.rowSpan,
                     colspan: props.colSpan,
-                    row: props.row,
-                    col: props.col,
+                    'data-row': props.row,
+                    'data-col': props.col,
                     class: [
                         props.cat,
                         `${props.type}`,
@@ -387,8 +387,8 @@ export default defineComponent({
                 document.onmousemove = domMousemove
                 document.onmouseup = domMouseup
                 resizeBarElem.style.display = 'none'
-                if (dragBtnElem.parentElement!.getAttribute('col')) {
-                    const columnConfig = $vmaFormulaGrid.reactiveData.colConfs.find(item => item.index === parseInt(dragBtnElem.parentElement!.getAttribute('col')!, 10))
+                if (dragBtnElem.parentElement!.getAttribute('data-col')) {
+                    const columnConfig = $vmaFormulaGrid.reactiveData.colConfs.find(item => item.index === parseInt(dragBtnElem.parentElement!.getAttribute('data-col')!, 10))
                     if (columnConfig) {
                         columnConfig.width = Math.max(dragBtnElem.parentElement!.clientWidth + dragLeft - dragPosLeft, 6)
                         $vmaFormulaGrid.reactiveData.columnWidthsChanged[`${columnConfig.index + 1}`] = columnConfig.width
@@ -447,8 +447,8 @@ export default defineComponent({
                 document.onmousemove = domMousemove
                 document.onmouseup = domMouseup
                 resizeBarElem.style.display = 'none'
-                if (dragBtnElem.parentElement!.getAttribute('row')) {
-                    const rowConfig = $vmaFormulaGrid.reactiveData.rowConfs.find(item => item.index === parseInt(dragBtnElem.parentElement!.getAttribute('row')!, 10))
+                if (dragBtnElem.parentElement!.getAttribute('data-row')) {
+                    const rowConfig = $vmaFormulaGrid.reactiveData.rowConfs.find(item => item.index === parseInt(dragBtnElem.parentElement!.getAttribute('data-row')!, 10))
                     if (rowConfig) {
                         rowConfig.height = Math.max(dragBtnElem.parentElement!.clientHeight + dragTop - dragPosTop, 6)
                         $vmaFormulaGrid.reactiveData.rowHeightsChanged[`${rowConfig.index + 1}`] = rowConfig.height
