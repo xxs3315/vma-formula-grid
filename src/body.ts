@@ -70,7 +70,7 @@ export default defineComponent({
                 ref: props.fixed === 'center' ? refGridBodyTableWrapperDiv : refGridBodyLeftFixedTableWrapperDiv,
                 class: ['body-wrapper'],
                 ...{
-                    onWheel: wheelEvent,
+                    'onWheel.passive': wheelEvent,
                 },
             },
             props.fixed === 'center' ?
@@ -334,7 +334,7 @@ export default defineComponent({
                     refGridBodyTableWrapperDiv.value.scrollTop = targetTop
                     refGridBodyLeftFixedTableWrapperDiv.value.scrollTop = targetTop
                     if (isWheelUp ? targetTop < scrollHeight - clientHeight : targetTop >= 0) {
-                        wheelTime = setTimeout(handleSmooth, 10)
+                        wheelTime = setTimeout(handleSmooth, 200)
                     }
                     // emit
                 }
@@ -360,7 +360,7 @@ export default defineComponent({
                     const targetLeft = scrollLeft + wheelXInterval * (isWheelLeft ? -1 : 1)
                     refGridBodyTableWrapperDiv.value.scrollLeft = targetLeft
                     if (isWheelLeft ? targetLeft < scrollWidth - clientWidth : targetLeft >= 0) {
-                        wheelTime = setTimeout(handleSmooth, 10)
+                        wheelTime = setTimeout(handleSmooth, 200)
                     }
                     // emit
                 }

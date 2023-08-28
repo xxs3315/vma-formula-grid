@@ -458,15 +458,15 @@ export default defineComponent({
 
         const debounceScrollX = debounce((scrollBodyElem: HTMLDivElement) => {
             calcScrollSizeX(scrollBodyElem).then(() => {
-                arrangeColumnWidth()
+                updateStyle()
             })
-        }, 20)
+        }, 10)
 
         const debounceScrollY = debounce((scrollBodyElem: HTMLDivElement) => {
             calcScrollSizeY(scrollBodyElem).then(() => {
                 updateStyle()
             })
-        }, 20)
+        }, 10)
 
 
 
