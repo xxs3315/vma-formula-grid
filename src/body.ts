@@ -79,15 +79,16 @@ export default defineComponent({
                         ref: refGridBodyXLineDiv,
                         style: {
                             float: 'left',
-                            width: 0,
+                            height: `1px`,
+                            marginTop: `-1px`,
                         },
                     }),
                     h('div', {
                         ref: refGridBodyYLineDiv,
                         style: {
                             float: 'left',
-                            height: `1px`,
-                            marginTop: `-1px`,
+                            width: `1px`,
+                            marginLeft: `-1px`,
                         },
                     }),
                     h(
@@ -120,7 +121,8 @@ export default defineComponent({
                             ref: refGridBodyLeftFixedYLineDiv,
                             style: {
                                 float: 'left',
-                                width: 0,
+                                width: `1px`,
+                                marginLeft: `-1px`,
                             },
                         }),
                         h('div', {

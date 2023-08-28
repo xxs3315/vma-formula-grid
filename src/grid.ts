@@ -1,7 +1,10 @@
 import {
-    ComponentOptions, computed, createCommentVNode,
+    ComponentOptions,
+    computed,
+    createCommentVNode,
     defineComponent,
-    h, nextTick,
+    h,
+    nextTick,
     onMounted,
     PropType,
     provide,
@@ -13,7 +16,9 @@ import {
 } from "vue";
 import {
     VmaFormulaGridConstructor,
-    VmaFormulaGridEmits, VmaFormulaGridMethods, VmaFormulaGridPrivateMethods,
+    VmaFormulaGridEmits,
+    VmaFormulaGridMethods,
+    VmaFormulaGridPrivateMethods,
     VmaFormulaGridPropTypes,
     VmaFormulaGridReactiveData,
     VmaFormulaGridRefs
@@ -33,7 +38,8 @@ import {
     getRenderRowIndicatorWidth,
     getWidth,
     getXSpaceFromColumnWidths,
-    getYSpaceFromRowHeights, isNumeric,
+    getYSpaceFromRowHeights,
+    isNumeric,
     isObject
 } from "./utils";
 import {Column} from "./internals/column.ts";
@@ -545,6 +551,9 @@ export default defineComponent({
 
         const calcScrollSizeX = (scrollBodyElem: HTMLDivElement): Promise<void> =>
             new Promise((resolve): void => {
+                if (!scrollBodyElem) {
+                    resolve()
+                }
                 const scrollLeft = scrollBodyElem.scrollLeft
                 const visibleIndex = getIndexFromColumnWidths(scrollLeft, renderDefaultColWidth.value, gridReactiveData.columnWidthsChanged, gridReactiveData.columnHidesChanged)
                 const viewportWidth = refGridBodyTableWrapperDiv.value.clientWidth
@@ -571,12 +580,17 @@ export default defineComponent({
                     gridReactiveData.lastScrollXVisibleIndex = visibleIndex
                     updateScrollXYSpace()
                 }
+
+                // console.log('scrollLeft:' + scrollLeft)
                 
                 resolve()
             })
 
         const calcScrollSizeY = (scrollBodyElem: HTMLDivElement): Promise<void> =>
             new Promise((resolve): void => {
+                if (!scrollBodyElem) {
+                    resolve()
+                }
                 const scrollTop = scrollBodyElem.scrollTop
                 const visibleIndex = getIndexFromRowHeights(scrollTop, renderDefaultRowHeight.value, gridReactiveData.rowHeightsChanged, gridReactiveData.rowHidesChanged)
                 const viewportHeight = refGridBodyTableWrapperDiv.value.clientHeight

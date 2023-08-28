@@ -390,7 +390,7 @@ export const getYSpaceFromRowHeights = (startIndex: number, rowHeight: number, c
         }
         return ySpace
     }
-    return Math.max(0, (startIndex - 1) * rowHeight)
+    return Math.max(0, startIndex * rowHeight)
 }
 
 export const getWidth = (rowIndicatorElemWidth: number, total: number, colWidth: number, changedColumnWidths: Record<string, number>, changedColumnHides: Record<string, number>): number => {
@@ -447,16 +447,14 @@ export const getHeight = (total: number, rowHeight: number, changedRowHeights: R
                 }
             }
         }
-    }
-    if (Object.keys(changedRowHeights).length) {
+    } else if (Object.keys(changedRowHeights).length) {
         // 配置中只有行高定义
         for (const k in Object.keys(changedRowHeights)) {
             if (changedRowHeights.hasOwnProperty(Object.keys(changedRowHeights)[k])) {
                 changeSum += changedRowHeights[Object.keys(changedRowHeights)[k]] - rowHeight
             }
         }
-    }
-    if (Object.keys(changedRowHides).length) {
+    } else if (Object.keys(changedRowHides).length) {
         // 配置中只有行隐藏定义
         for (const k in Object.keys(changedRowHides)) {
             if (changedRowHides.hasOwnProperty(Object.keys(changedRowHides)[k])) {
