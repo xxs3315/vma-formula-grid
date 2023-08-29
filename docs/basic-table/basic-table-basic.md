@@ -30,14 +30,20 @@ description: 基础表格-基础
 
 
 <script lang="ts">
-import {defineComponent, reactive, ref, watch} from "vue";
+import {defineComponent, onMounted, reactive, ref, watch} from "vue";
+import Immutable from 'immutable';
+import {getColumnSymbol} from "../../src/utils";
 
 export default defineComponent({
   name: "HelloWorld",
-  setup(props, context) {
+  setup() {
     const datasource = ref('map');
     const size = ref('normal');
     const themeType = ref('primary');
+
+    onMounted(() => {
+      console.log(data)
+    });
 
     const mapData = reactive({
       data: [{
@@ -54,19 +60,22 @@ export default defineComponent({
         v: 4
       }, {
         p: 'AA100',
-        v: 5
+        v: '= BB100 - 2'
       }, {
         p: 'B1',
-        v: '= A1 + 123456789012345678901234567890'
+        v: '= SUM(A1, 6)'
       }, {
         p: 'B2',
-        v: '= A2 + 2'
+        v: '= A2 + 2 + SQRT(2)'
       }, {
         p: 'B3',
         v: '= A3 + 2'
       }, {
         p: 'B4',
         v: '= A4 + 2'
+      }, {
+        p: 'B5',
+        v: '= SUM(A1:A4)'
       }, {
         p: 'BB100',
         v: '= AA100 + 2'
@@ -76,14 +85,36 @@ export default defineComponent({
     const arrayData = reactive([
       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
       [
-        '= A20 + 2', '= A1 + 2', '= A2 + 2', '= A3 + 2', '= A4 + 2',
-        '= A5 + 2', '= A6 + 2', '= A7 + 2', '= A8 + 2', '= A9 + 2',
-        '= A10 + 2', '= A11 + 2', '= A12 + 2', '= A13 + 2', '= A14 + 2',
-        '= A15 + 2', '= A16 + 2', '= A17 + 2', '= A18 + 2', '= A19 + 2'
+        '= A1 + 2', '= B1 + 2', '= C1 + 2', '= D1 + 2', '= E1 + 2',
+        '= F1 + 2', '= G1 + 2', '= H1 + 2', '= I1 + 2', '= J1 + 2',
+        '= K1 + 2', '= L1 + 2', '= M1 + 2', '= N1 + 2', '= O1 + 2',
+        '= P1 + 2', '= Q1 + 2', '= R1 + 2', '= S1 + 2', '= T1 + 2'
       ],
     ]);
 
+    const confs = reactive({
+      rowHeight: [{
+        row: 2,
+        height: 48,
+      }, {
+        row: 4,
+        height: 96,
+      }],
+      colWidth: [{
+        col: 'B',
+        width: 200,
+      }, {
+        col: 'H',
+        width: 200,
+      }],
+      rowHide: [9, ...Immutable.Range(15, 21).toArray()],
+      colHide: ['D', ...Immutable.Range(6, 8).map((value, _) => {
+        return getColumnSymbol(value)
+      }).toArray()]
+    });
+
     const data = reactive({
+      conf: confs,
       type: 'map',
       arrayData: arrayData,
       mapData: mapData
@@ -108,7 +139,7 @@ export default defineComponent({
       data,
       size,
       themeType
-    };
+    }
   }
 })
 </script>
