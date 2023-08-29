@@ -39,16 +39,12 @@ export default defineComponent({
 
         onMounted(() => {
             nextTick(() => {
-                console.log(props.fixed)
                 if (props.fixed === 'left') {
                     refGridBodyTableWrapperDiv.value.onscroll = null
                     refGridBodyLeftFixedScrollWrapperDiv.value.onscroll = scrollEvent
-                    console.log(refGridBodyLeftFixedScrollWrapperDiv.value)
-                    console.log(refGridBodyLeftFixedScrollWrapperDiv.value.onscroll)
                 } else if (props.fixed === 'center') {
                     refGridBodyTableWrapperDiv.value.onscroll = scrollEvent
                     refGridBodyLeftFixedScrollWrapperDiv.value.onscroll = null
-                    console.log(refGridBodyTableWrapperDiv.value.onscroll)
                 }
             })
         })
@@ -75,19 +71,15 @@ export default defineComponent({
             refGridBodyTableColgroup,
             refGridBodyLeftFixedTableColgroup,
             renderDefaultRowHeight,
-            // renderDefaultColWidth,
             refGridHeaderTableWrapperDiv,
         } = $vmaFormulaGrid.getRefs()
 
         const renderVN = () => h('div', {
                 ref: props.fixed === 'center' ? refGridBodyTableWrapperDiv : refGridBodyLeftFixedTableWrapperDiv,
                 class: ['body-wrapper'],
-                // ...{
-                //     'onWheel.passive': wheelEvent,
-                // },
-                // ...{
-                //     'onWheel.passive': wheelEventTest,
-                // },
+                ...{
+                    'onWheel': wheelEvent,
+                },
             },
             props.fixed === 'center' ?
                 [
@@ -169,10 +161,6 @@ export default defineComponent({
                     : createCommentVNode())
         )
 
-        // const wheelEventTest = () => {
-        //     console.log('123')
-        // }
-
         const renderBodyRows = () => {
             const trs: any = []
             for (let index = $vmaFormulaGrid.reactiveData.yStart; index <= $vmaFormulaGrid.reactiveData.yEnd; index++) {
@@ -215,7 +203,6 @@ export default defineComponent({
                                 row: rf.index,
                                 col: cf.index,
                                 'data-id': `${rf.index}_${cf.index}`,
-                                // cf: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index - 1].cf,
                             })
                         )
                     }
@@ -260,8 +247,6 @@ export default defineComponent({
         }
 
         const scrollEvent = (event: Event) => {
-            // console.log(new Date().getTime())
-            console.log(event)
             if (props.fixed === 'center') {
                 refGridHeaderTableWrapperDiv.value.scrollLeft = refGridBodyTableWrapperDiv.value.scrollLeft
                 refGridBodyLeftFixedScrollWrapperDiv.value.scrollTop = refGridBodyTableWrapperDiv.value.scrollTop
@@ -272,124 +257,15 @@ export default defineComponent({
             $vmaFormulaGrid.triggerScrollYEvent(event)
         }
 
-        // const wheelEvent = (wheelEvent: WheelEvent) => {
-        //     console.log(new Date().getTime())
-        //     if (props.fixed === 'center') {
-        //         refGridBodyTableWrapperDiv.value.onscroll = scrollEvent
-        //         refGridBodyLeftFixedScrollWrapperDiv.value.onscroll = null
-        //     } else if (props.fixed === 'left') {
-        //         refGridBodyTableWrapperDiv.value.onscroll = null
-        //         refGridBodyLeftFixedScrollWrapperDiv.value.onscroll = scrollEvent
-        //     }
-        //
-        //     const { deltaX, deltaY } = wheelEvent
-        //     const isWheelUp = deltaY < 0
-        //     const isWheelLeft = deltaX < 0
-        //     const scrollBodyElement = props.fixed === 'left' ? refGridBodyLeftFixedTableWrapperDiv.value : refGridBodyTableWrapperDiv.value
-        //
-        //     let returnY = false
-        //     if (deltaX === 0 && isWheelUp ? scrollBodyElement.scrollTop <= 0 : scrollBodyElement.scrollTop >= scrollBodyElement.scrollHeight - scrollBodyElement.clientHeight - 20 * renderDefaultRowHeight.value) {
-        //         returnY = true
-        //     }
-        //     let returnX = false
-        //     if (deltaY === 0 && isWheelLeft ? scrollBodyElement.scrollLeft <= 0 : scrollBodyElement.scrollLeft >= scrollBodyElement.scrollWidth - scrollBodyElement.clientWidth - 20 * renderDefaultColWidth.value) {
-        //         returnX = true
-        //     }
-        //
-        //     if (returnX && returnY) {
-        //         return
-        //     }
-        //
-        //     if (!returnX) {
-        //         const { lastScrollLeft } = $vmaFormulaGrid.reactiveData
-        //         const scrollLeft = scrollBodyElement.scrollLeft + deltaX
-        //         const isRollX = scrollLeft !== lastScrollLeft
-        //         if (isRollX) {
-        //             wheelEvent.preventDefault()
-        //             $vmaFormulaGrid.reactiveData.lastScrollLeft = scrollLeft
-        //             $vmaFormulaGrid.reactiveData.lastScrollLeftTime = Date.now()
-        //             handleWheelX(wheelEvent, deltaX, isWheelLeft)
-        //             $vmaFormulaGrid.triggerScrollXEvent(wheelEvent)
-        //         }
-        //     }
-        //
-        //     if (!returnY) {
-        //         const { lastScrollTop } = $vmaFormulaGrid.reactiveData
-        //         const scrollTop = scrollBodyElement.scrollTop + deltaY
-        //         const isRollY = scrollTop !== lastScrollTop
-        //         if (isRollY) {
-        //             wheelEvent.preventDefault()
-        //             $vmaFormulaGrid.reactiveData.lastScrollTop = scrollTop
-        //             $vmaFormulaGrid.reactiveData.lastScrollTopTime = Date.now()
-        //             handleWheelY(wheelEvent, deltaY, isWheelUp)
-        //             $vmaFormulaGrid.triggerScrollYEvent(wheelEvent)
-        //         }
-        //     }
-        // }
-
-        // let wheelTime: any
-        // let wheelXSize = 0
-        // let wheelXInterval = 0
-        // let wheelXTotal = 0
-        // let isPrevWheelX = false
-        // let wheelYSize = 0
-        // let wheelYInterval = 0
-        // let wheelYTotal = 0
-        // let isPrevWheelY = false
-        //
-        // const handleWheelY = (_: WheelEvent, deltaY: number, isWheelUp: boolean) => {
-        //     const remainSize = isPrevWheelY === isWheelUp ? Math.max(0, wheelYSize - wheelYTotal) : 0
-        //     isPrevWheelY = isWheelUp
-        //     wheelYSize = Math.abs(isWheelUp ? deltaY - remainSize : deltaY + remainSize)
-        //     wheelYInterval = 0
-        //     wheelYTotal = 0
-        //     clearTimeout(wheelTime)
-        //     const handleSmooth = () => {
-        //         if (wheelYTotal < wheelYSize) {
-        //             wheelYInterval = Math.max(5, Math.floor(wheelYInterval * 1.5))
-        //             wheelYTotal += wheelYInterval
-        //             if (wheelYTotal > wheelYSize) {
-        //                 wheelYInterval -= wheelYTotal - wheelYSize
-        //             }
-        //             const { scrollTop, clientHeight, scrollHeight } = refGridBodyTableWrapperDiv.value
-        //             const targetTop = scrollTop + wheelYInterval * (isWheelUp ? -1 : 1)
-        //             refGridBodyTableWrapperDiv.value.scrollTop = targetTop
-        //             refGridBodyLeftFixedTableWrapperDiv.value.scrollTop = targetTop
-        //             console.log(new Date().getTime())
-        //             if (isWheelUp ? targetTop < scrollHeight - clientHeight : targetTop >= 0) {
-        //                 wheelTime = setTimeout(handleSmooth, 10)
-        //             }
-        //             // emit
-        //         }
-        //     }
-        //     handleSmooth()
-        // }
-        //
-        // const handleWheelX = (_: WheelEvent, deltaX: number, isWheelLeft: boolean) => {
-        //     const remainSize = isPrevWheelX === isWheelLeft ? Math.max(0, wheelXSize - wheelXTotal) : 0
-        //     isPrevWheelX = isWheelLeft
-        //     wheelXSize = Math.abs(isWheelLeft ? deltaX - remainSize : deltaX + remainSize)
-        //     wheelXInterval = 0
-        //     wheelXTotal = 0
-        //     clearTimeout(wheelTime)
-        //     const handleSmooth = () => {
-        //         if (wheelXTotal < wheelXSize) {
-        //             wheelXInterval = Math.max(5, Math.floor(wheelXInterval * 1.5))
-        //             wheelXTotal += wheelXInterval
-        //             if (wheelXTotal > wheelXSize) {
-        //                 wheelXInterval -= wheelXTotal - wheelXSize
-        //             }
-        //             const { scrollLeft, clientWidth, scrollWidth } = refGridBodyTableWrapperDiv.value
-        //             const targetLeft = scrollLeft + wheelXInterval * (isWheelLeft ? -1 : 1)
-        //             refGridBodyTableWrapperDiv.value.scrollLeft = targetLeft
-        //             if (isWheelLeft ? targetLeft < scrollWidth - clientWidth : targetLeft >= 0) {
-        //                 wheelTime = setTimeout(handleSmooth, 10)
-        //             }
-        //             // emit
-        //         }
-        //     }
-        //     handleSmooth()
-        // }
+        const wheelEvent = (_: WheelEvent) => {
+            if (props.fixed === 'center') {
+                refGridBodyTableWrapperDiv.value.onscroll = scrollEvent
+                refGridBodyLeftFixedScrollWrapperDiv.value.onscroll = null
+            } else if (props.fixed === 'left') {
+                refGridBodyTableWrapperDiv.value.onscroll = null
+                refGridBodyLeftFixedScrollWrapperDiv.value.onscroll = scrollEvent
+            }
+        }
 
         const $vmaFormulaGridBody = {
             uId: Guid.create().toString(),
