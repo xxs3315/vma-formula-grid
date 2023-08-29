@@ -172,8 +172,16 @@ export interface VmaFormulaGridHeaderConstructor extends VmaComponentInstance, V
     getRefs(): VmaFormulaGridHeaderRefs
 }
 
+export type VmaFormulaGridBodyFixedType =
+    | 'center'
+    | 'left'
+    | 'right'
+    | 'top'
+    | 'bottom'
+    | 'left-top'
+
 export namespace VmaFormulaGridBodyPropTypes {
-    export type Fixed = BodyFixedType
+    export type Fixed = VmaFormulaGridBodyFixedType
 }
 
 export interface VmaFormulaGridBodyProps {
@@ -185,6 +193,8 @@ export interface VmaFormulaGridBodyMethods {
 
 interface VmaFormulaGridBodyPrivateMethods {
 }
+
+export type VmaFormulaGridBodyOptions = VmaFormulaGridBodyProps
 
 export interface VmaFormulaGridBodyConstructor extends VmaComponentInstance, VmaFormulaGridBodyMethods, VmaFormulaGridBodyPrivateMethods {
     props: VmaFormulaGridBodyOptions
@@ -212,6 +222,8 @@ export interface VmaFormulaGridCellMethods {
 
 interface VmaFormulaGridCellPrivateMethods {
 }
+
+export type VmaFormulaGridCellOptions = VmaFormulaGridCellProps
 
 export interface VmaFormulaGridCellConstructor extends VmaComponentInstance, VmaFormulaGridCellMethods, VmaFormulaGridCellPrivateMethods {
     props: VmaFormulaGridCellOptions

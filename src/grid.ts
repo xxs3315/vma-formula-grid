@@ -460,13 +460,13 @@ export default defineComponent({
             calcScrollSizeX(scrollBodyElem).then(() => {
                 updateStyle()
             })
-        }, 10)
+        }, 50)
 
         const debounceScrollY = debounce((scrollBodyElem: HTMLDivElement) => {
             calcScrollSizeY(scrollBodyElem).then(() => {
                 updateStyle()
             })
-        }, 10)
+        }, 50)
 
 
 
