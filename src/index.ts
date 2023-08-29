@@ -2,6 +2,8 @@ import VmaFormulaGrid from './grid'
 import VmaFormulaGridHeader from './header.ts'
 import VmaFormulaGridBody from './body.ts'
 import VmaFormulaGridCell from './cell.ts'
+
+import VmaFormulaGridCompIcon from './components/icon/icon.ts'
 import {ComponentOptions} from "vue";
 
 import dc, {dfo, d} from "./utils";
@@ -16,6 +18,7 @@ VmaFormulaGrid.install = (Vue: ComponentOptions) => {
     Vue.component('VmaFormulaGridHeader', VmaFormulaGridHeader)
     Vue.component('VmaFormulaGridBody', VmaFormulaGridBody)
     Vue.component('VmaFormulaGridCell', VmaFormulaGridCell)
+    Vue.component('VmaFormulaGridCompIcon', VmaFormulaGridCompIcon)
 }
 
 // To auto-install when vue is found
