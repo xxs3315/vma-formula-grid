@@ -22,7 +22,7 @@ import {
     VmaFormulaGridPropTypes,
     VmaFormulaGridReactiveData,
     VmaFormulaGridRefs
-} from "./types/grid";
+} from "./types";
 import {Guid} from "./utils/guid.ts";
 import {
     calcVertexes,
@@ -35,7 +35,7 @@ import {
     getRealVisibleWidthSize,
     getRenderDefaultColWidth,
     getRenderDefaultRowHeight,
-    getRenderRowIndicatorWidth,
+    getRenderRowIndicatorWidth, getRowColSpanFromMerges,
     getWidth,
     getXSpaceFromColumnWidths,
     getYSpaceFromRowHeights,
@@ -210,6 +210,7 @@ export default defineComponent({
                 cMap: {},
                 ncMap: {},
             },
+            merges: {}
         }) as VmaFormulaGridReactiveData
 
         const gridRefs: VmaFormulaGridRefs = {
@@ -964,6 +965,38 @@ export default defineComponent({
                         gridReactiveData.yEnd = gridReactiveData.yDim - 1
                     }
 
+                    if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('merges') && props.data.conf.merges.length > 0) {
+                        props.data.conf.merges.forEach((item: any) => {
+                            const mArr = item.split(':')
+
+                            let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''))
+                            let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
+                            let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
+                            let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
+
+                            if (colStart !== colEnd || rowStart !== rowEnd) {
+                                if (colStart > colEnd) {
+                                    const t = colEnd
+                                    colEnd = colStart
+                                    colStart = t
+                                }
+                                if (rowStart > rowEnd) {
+                                    const t = rowEnd
+                                    rowEnd = rowStart
+                                    rowStart = t
+                                }
+                                gridReactiveData.merges[`${colStart}_${rowStart}:${colEnd}_${rowEnd}`] = {
+                                    colStart: colStart,
+                                    colEnd: colEnd,
+                                    colSpan: colEnd - colStart + 1,
+                                    rowStart: rowStart,
+                                    rowEnd: rowEnd,
+                                    rowSpan: rowEnd - rowStart + 1
+                                }
+                            }
+                        })
+                    }
+
                     const columns = [...Array<Record<string, unknown>>(gridReactiveData.xDim.valueOf() + 1)]
                     columns.forEach((_, index) => {
                         let colWidth = null
@@ -1016,6 +1049,8 @@ export default defineComponent({
 
                     gridReactiveData.currentSheetData = new Array(rows.length).fill(null).map(() => new Array(columns.length).fill(null))
 
+                    console.log(gridReactiveData.merges)
+                    console.log(props.data.conf.merges)
 
                     gridReactiveData.currentSheetData.forEach((row, rowIndex) => {
                         row.forEach((_, colIndex) => {
@@ -1031,11 +1066,12 @@ export default defineComponent({
                                     }
                                 }
                             }
+                            const {rowSpan, colSpan} = getRowColSpanFromMerges(colIndex, rowIndex + 1, gridReactiveData.merges)
                             gridReactiveData.currentSheetData[rowIndex][colIndex] = new Cell(
                                 rowIndex,
                                 colIndex - 1,
-                                1,
-                                1,
+                                rowSpan,
+                                colSpan,
                                 props.data && props.data.type === 'map' ? (cellData && cellData.v ? cellData.v : null) : isObject(cellData) ? (cellData && cellData.v ? cellData.v : null) : cellData,
                                 null,
                                 null,
@@ -1045,7 +1081,7 @@ export default defineComponent({
                             )
                         })
                     })
-
+                    console.log(gridReactiveData.currentSheetData)
                 }
 
                 resolve()

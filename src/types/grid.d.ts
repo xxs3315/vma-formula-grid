@@ -113,6 +113,8 @@ export interface VmaFormulaGridReactiveData {
         cMap: Record<string, any>
         ncMap: Record<string, any>
     }
+
+    merges: Record<string, any>
 }
 
 export interface VmaFormulaGridProps {

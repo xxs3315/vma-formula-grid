@@ -1137,3 +1137,13 @@ export function calcVertexes(vertexes: Record<string, any>, cycleVertexes: Recor
     }
     return result
 }
+
+export function getRowColSpanFromMerges(col: number, row: number, merges: Record<string, any>) : {rowSpan: number, colSpan: number} {
+    const keys = Object.keys(merges)
+    for (let i = 0; i < keys.length; i++) {
+        if (keys[i].startsWith(`${col}_${row}:`)) {
+            return {rowSpan: merges[keys[i]].rowSpan, colSpan: merges[keys[i]].colSpan}
+        }
+    }
+    return {rowSpan: 1, colSpan: 1}
+}
