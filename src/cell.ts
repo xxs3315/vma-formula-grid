@@ -301,12 +301,13 @@ export default defineComponent({
                 renderCellContent())
         }
 
-        const renderVN = () =>
-            h(
+        const renderVN = () => {
+            const c = currentSheetData[props.row][props.col + 1]
+            return h(
                 props.cat === 'normal' || props.cat === 'row-indicator' ? 'td' : 'th',
                 {
-                    rowspan: props.rowSpan,
-                    colspan: props.colSpan,
+                    rowspan: c.rowSpan,
+                    colspan: c.colSpan,
                     'data-row': props.row,
                     'data-col': props.col,
                     class: [
@@ -342,6 +343,7 @@ export default defineComponent({
                 },
                 renderCell()
             )
+        }
 
         const resizeColumnMousedown = (event: MouseEvent) => {
             const {clientX: dragClientX} = event
