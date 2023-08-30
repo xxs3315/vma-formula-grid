@@ -473,7 +473,7 @@ export default defineComponent({
             context,
             reactiveData: gridCellReactiveData,
             renderVN: renderVN,
-        } as VmaFormulaGridCellConstructor & VmaFormulaGridCellMethods & VmaFormulaGridCellPrivateMethods
+        } as unknown as VmaFormulaGridCellConstructor & VmaFormulaGridCellMethods & VmaFormulaGridCellPrivateMethods
 
         return $vmaFormulaGridCell
     },
