@@ -224,19 +224,19 @@ export default defineComponent({
                                 display:
                                     $vmaFormulaGrid.reactiveData.columnHidesChanged &&
                                     Object.keys($vmaFormulaGrid.reactiveData.columnHidesChanged).length > 0 &&
-                                    $vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(`${props.col - 1}`)
+                                    $vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(`${props.col}`)
                                         ? 'block'
                                         : 'none',
                             },
                             class: ['column-hide-info-frontward'],
-                            onClick: (_: MouseEvent) => {
-                                // const elem = event.target as HTMLDivElement
-                                // const targetElem: any = elem.parentElement!.parentElement!
-                                // $vmaFormulaGrid.updateColumn(
-                                //     'showFrontColumns',
-                                //     targetElem.attributes.row.value,
-                                //     targetElem.attributes.col.value
-                                // )
+                            onClick: (event: MouseEvent) => {
+                                const elem = event.target as HTMLDivElement
+                                const targetElem: any = elem.parentElement!.parentElement!
+                                $vmaFormulaGrid.updateColVisible(
+                                    'showForwardCols',
+                                    targetElem.attributes['data-col'].value,
+                                    targetElem.attributes['data-col'].value
+                                )
                             },
                         },
                         h(GridCompIconComponent, {
@@ -253,19 +253,19 @@ export default defineComponent({
                                 display:
                                     $vmaFormulaGrid.reactiveData.columnHidesChanged &&
                                     Object.keys($vmaFormulaGrid.reactiveData.columnHidesChanged).length > 0 &&
-                                    $vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(`${props.col}`)
+                                    $vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(`${props.col + 1 + 1}`)
                                         ? 'block'
                                         : 'none',
                             },
                             class: ['column-hide-info-backward'],
-                            onClick: (_: MouseEvent) => {
-                                // const elem = event.target as HTMLDivElement
-                                // const targetElem: any = elem.parentElement!.parentElement!
-                                // $vmaFormulaGrid.updateColumn(
-                                //     'showBackColumns',
-                                //     targetElem.attributes.row.value,
-                                //     targetElem.attributes.col.value
-                                // )
+                            onClick: (event: MouseEvent) => {
+                                const elem = event.target as HTMLDivElement
+                                const targetElem: any = elem.parentElement!.parentElement!
+                                $vmaFormulaGrid.updateColVisible(
+                                    'showBackwardCols',
+                                    targetElem.attributes['data-col'].value,
+                                    targetElem.attributes['data-col'].value
+                                )
                             },
                         },
                         h(GridCompIconComponent, {

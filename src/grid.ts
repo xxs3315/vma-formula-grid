@@ -454,6 +454,70 @@ export default defineComponent({
                 const scrollBodyElem = (event.currentTarget || event.target) as HTMLDivElement
                 debounceScrollY(scrollBodyElem)
             },
+            updateColVisible: (type: string, colStart: number, colEnd: number) => {
+                if (type === 'showForwardCols') {
+                    if (Object.keys(gridReactiveData.columnHidesChanged).length) {
+                        if (colStart === colEnd) {
+                            let idx = 0
+                            const removeKeys: string[] = []
+                            while (
+                                gridReactiveData.columnHidesChanged.hasOwnProperty(
+                                    `${Number(colStart) - idx}`
+                                )
+                                ) {
+                                gridReactiveData.colConfs[Number(colStart) - idx].visible = true
+                                removeKeys.push(`${Number(colStart) - idx}`)
+                                idx++
+                            }
+                            const gridColumnsVisibleChangedNew: Record<string, number> = {}
+                            Object.keys(gridReactiveData.columnHidesChanged).map(
+                                (key) => {
+                                    if (removeKeys.indexOf(key) < 0) {
+                                        gridColumnsVisibleChangedNew[key] =
+                                            gridReactiveData.columnHidesChanged[key]
+                                    }
+                                    return null
+                                }
+                            )
+                            gridReactiveData.columnHidesChanged =
+                                gridColumnsVisibleChangedNew
+                        }
+                        $vmaFormulaGrid.recalculate(false).then(() => {
+                        })
+                    }
+                }
+                if (type === 'showBackwardCols') {
+                    if (Object.keys(gridReactiveData.columnHidesChanged).length) {
+                        if (colStart === colEnd) {
+                            let idx = 2
+                            const removeKeys: string[] = []
+                            while (
+                                gridReactiveData.columnHidesChanged.hasOwnProperty(
+                                    `${Number(colStart) + idx}`
+                                )
+                                ) {
+                                gridReactiveData.colConfs[Number(colStart) + idx].visible = true
+                                removeKeys.push(`${Number(colStart) + idx}`)
+                                idx++
+                            }
+                            const gridColumnsVisibleChangedNew: Record<string, number> = {}
+                            Object.keys(gridReactiveData.columnHidesChanged).map(
+                                (key) => {
+                                    if (removeKeys.indexOf(key) < 0) {
+                                        gridColumnsVisibleChangedNew[key] =
+                                            gridReactiveData.columnHidesChanged[key]
+                                    }
+                                    return null
+                                }
+                            )
+                            gridReactiveData.columnHidesChanged =
+                                gridColumnsVisibleChangedNew
+                        }
+                        $vmaFormulaGrid.recalculate(false).then(() => {
+                        })
+                    }
+                }
+            },
             updateRowVisible: (type: string, rowStart: number, rowEnd: number) => {
                 if (type === 'showUpRows') {
                     if (Object.keys(gridReactiveData.rowHidesChanged).length) {
