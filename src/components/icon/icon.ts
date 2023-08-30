@@ -42,9 +42,9 @@ export default defineComponent({
         const renderVN = () =>
             h('i', {
                 class: [
-                    'vma-iconfont',
-                    `vma-icon-${props.name}`,
-                    'vma-icon',
+                    'vma-formula-grid-iconfont',
+                    `vma-formula-grid-icon-${props.name}`,
+                    'vma-formula-grid-icon',
                     props.size,
                     props.type
                 ],

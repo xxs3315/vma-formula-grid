@@ -1,4 +1,14 @@
-import {createCommentVNode, defineComponent, h, inject, nextTick, PropType, reactive} from "vue";
+import {
+    ComponentOptions,
+    createCommentVNode,
+    defineComponent,
+    h,
+    inject,
+    nextTick,
+    PropType,
+    reactive,
+    resolveComponent
+} from "vue";
 import {
     VmaFormulaGridCellConstructor,
     VmaFormulaGridCellMethods,
@@ -7,7 +17,7 @@ import {
     VmaFormulaGridConstructor,
     VmaFormulaGridMethods,
     VmaFormulaGridPrivateMethods
-} from "./types/grid";
+} from "./types";
 import {
     getColumnSymbol,
     getRenderDefaultColWidth,
@@ -50,6 +60,8 @@ export default defineComponent({
     },
     setup(props, context) {
         const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
+
+        const GridCompIconComponent = resolveComponent('VmaFormulaGridCompIcon') as ComponentOptions
 
         const gridCellReactiveData = reactive({})
 
@@ -129,7 +141,7 @@ export default defineComponent({
                                 display:
                                     $vmaFormulaGrid.reactiveData.rowHidesChanged &&
                                     Object.keys($vmaFormulaGrid.reactiveData.rowHidesChanged).length > 0 &&
-                                    $vmaFormulaGrid.reactiveData.rowHidesChanged.hasOwnProperty(`${props.row! - 1}`)
+                                    $vmaFormulaGrid.reactiveData.rowHidesChanged.hasOwnProperty(`${props.row}`)
                                         ? 'block'
                                         : 'none',
                             },
@@ -143,17 +155,17 @@ export default defineComponent({
                                 //     targetElem.attributes.col.value
                                 // )
                             },
-                        }
-                        // h(IconComponent, {
-                        //     name: 'ellipsis-h',
-                        //     size: $vmaFormulaGrid.props.size,
-                        //     translateY: getHideCaretTranslateY(
-                        //         $vmaFormulaGrid.props.size!,
-                        //         'up'
-                        //     ),
-                        //     scaleX: 0.7,
-                        //     scaleY: 0.7
-                        // })
+                        },
+                        h(GridCompIconComponent, {
+                            name: 'ellipsis-v',
+                            size: $vmaFormulaGrid.props.size,
+                            // translateY: getHideCaretTranslateY(
+                            //     $vmaFormulaGrid.props.size!,
+                            //     'up'
+                            // ),
+                            scaleX: 0.7,
+                            scaleY: 0.7
+                        })
                     ),
                     h(
                         'div',
@@ -162,7 +174,7 @@ export default defineComponent({
                                 display:
                                     $vmaFormulaGrid.reactiveData.rowHidesChanged &&
                                     Object.keys($vmaFormulaGrid.reactiveData.rowHidesChanged).length > 0 &&
-                                    $vmaFormulaGrid.reactiveData.rowHidesChanged.hasOwnProperty(`${props.row! + 1}`)
+                                    $vmaFormulaGrid.reactiveData.rowHidesChanged.hasOwnProperty(`${props.row + 1 + 1}`)
                                         ? 'block'
                                         : 'none',
                             },
@@ -176,17 +188,17 @@ export default defineComponent({
                                 //     targetElem.attributes.col.value
                                 // )
                             },
-                        }
-                        // h(IconComponent, {
-                        //     name: 'ellipsis-h',
-                        //     size: $vmaFormulaGrid.props.size,
-                        //     translateY: getHideCaretTranslateY(
-                        //         $vmaFormulaGrid.props.size!,
-                        //         'down'
-                        //     ),
-                        //     scaleX: 0.7,
-                        //     scaleY: 0.7
-                        // })
+                        },
+                        h(GridCompIconComponent, {
+                            name: 'ellipsis-v',
+                            size: $vmaFormulaGrid.props.size,
+                            // translateY: getHideCaretTranslateY(
+                            //     $vmaFormulaGrid.props.size!,
+                            //     'down'
+                            // ),
+                            scaleX: 0.7,
+                            scaleY: 0.7
+                        })
                     ),
                 ]
             }
@@ -220,7 +232,7 @@ export default defineComponent({
                                 display:
                                     $vmaFormulaGrid.reactiveData.columnHidesChanged &&
                                     Object.keys($vmaFormulaGrid.reactiveData.columnHidesChanged).length > 0 &&
-                                    $vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(`${props.col! - 1}`)
+                                    $vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(`${props.col - 1}`)
                                         ? 'block'
                                         : 'none',
                             },
@@ -234,17 +246,17 @@ export default defineComponent({
                                 //     targetElem.attributes.col.value
                                 // )
                             },
-                        }
-                        // h(IconComponent, {
-                        //     name: 'ellipsis-h',
-                        //     size: $vmaFormulaGrid.props.size,
-                        //     translateY: getHideCaretTranslateY(
-                        //         $vmaFormulaGrid.props.size!,
-                        //         'up'
-                        //     ),
-                        //     scaleX: 0.7,
-                        //     scaleY: 0.7
-                        // })
+                        },
+                        h(GridCompIconComponent, {
+                            name: 'ellipsis-h',
+                            size: $vmaFormulaGrid.props.size,
+                            // translateY: getHideCaretTranslateY(
+                            //     $vmaFormulaGrid.props.size!,
+                            //     'up'
+                            // ),
+                            scaleX: 0.7,
+                            scaleY: 0.7
+                        })
                     ),
                     h(
                         'div',
@@ -253,7 +265,7 @@ export default defineComponent({
                                 display:
                                     $vmaFormulaGrid.reactiveData.columnHidesChanged &&
                                     Object.keys($vmaFormulaGrid.reactiveData.columnHidesChanged).length > 0 &&
-                                    $vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(`${props.col!}`)
+                                    $vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(`${props.col}`)
                                         ? 'block'
                                         : 'none',
                             },
@@ -267,17 +279,17 @@ export default defineComponent({
                                 //     targetElem.attributes.col.value
                                 // )
                             },
-                        }
-                        // h(IconComponent, {
-                        //     name: 'ellipsis-h',
-                        //     size: $vmaFormulaGrid.props.size,
-                        //     translateY: getHideCaretTranslateY(
-                        //         $vmaFormulaGrid.props.size!,
-                        //         'down'
-                        //     ),
-                        //     scaleX: 0.7,
-                        //     scaleY: 0.7
-                        // })
+                        },
+                        h(GridCompIconComponent, {
+                            name: 'ellipsis-h',
+                            size: $vmaFormulaGrid.props.size,
+                            // translateY: getHideCaretTranslateY(
+                            //     $vmaFormulaGrid.props.size!,
+                            //     'down'
+                            // ),
+                            scaleX: 0.7,
+                            scaleY: 0.7
+                        })
                     ),
                 ]
             }
