@@ -146,23 +146,19 @@ export default defineComponent({
                                         : 'none',
                             },
                             class: ['row-hide-info-upward'],
-                            onClick: (_: MouseEvent) => {
-                                // const elem = event.target as HTMLDivElement
-                                // const targetElem: any = elem.parentElement!.parentElement!
-                                // $vmaFormulaGrid.updateRow(
-                                //     'showUpRows',
-                                //     targetElem.attributes.row.value,
-                                //     targetElem.attributes.col.value
-                                // )
+                            onClick: (event: MouseEvent) => {
+                                const elem = event.target as HTMLDivElement
+                                const targetElem: any = elem.parentElement!.parentElement!
+                                $vmaFormulaGrid.updateRowVisible(
+                                    'showUpRows',
+                                    targetElem.attributes['data-row'].value,
+                                    targetElem.attributes['data-row'].value
+                                )
                             },
                         },
                         h(GridCompIconComponent, {
                             name: 'ellipsis-v',
                             size: $vmaFormulaGrid.props.size,
-                            // translateY: getHideCaretTranslateY(
-                            //     $vmaFormulaGrid.props.size!,
-                            //     'up'
-                            // ),
                             scaleX: 0.7,
                             scaleY: 0.7
                         })
@@ -179,23 +175,19 @@ export default defineComponent({
                                         : 'none',
                             },
                             class: ['row-hide-info-downward'],
-                            onClick: (_: MouseEvent) => {
-                                // const elem = event.target as HTMLDivElement
-                                // const targetElem: any = elem.parentElement!.parentElement!
-                                // $vmaFormulaGrid.updateRow(
-                                //     'showDownRows',
-                                //     targetElem.attributes.row.value,
-                                //     targetElem.attributes.col.value
-                                // )
+                            onClick: (event: MouseEvent) => {
+                                const elem = event.target as HTMLDivElement
+                                const targetElem: any = elem.parentElement!.parentElement!
+                                $vmaFormulaGrid.updateRowVisible(
+                                    'showDownRows',
+                                    targetElem.attributes['data-row'].value,
+                                    targetElem.attributes['data-row'].value
+                                )
                             },
                         },
                         h(GridCompIconComponent, {
                             name: 'ellipsis-v',
                             size: $vmaFormulaGrid.props.size,
-                            // translateY: getHideCaretTranslateY(
-                            //     $vmaFormulaGrid.props.size!,
-                            //     'down'
-                            // ),
                             scaleX: 0.7,
                             scaleY: 0.7
                         })
@@ -250,10 +242,6 @@ export default defineComponent({
                         h(GridCompIconComponent, {
                             name: 'ellipsis-h',
                             size: $vmaFormulaGrid.props.size,
-                            // translateY: getHideCaretTranslateY(
-                            //     $vmaFormulaGrid.props.size!,
-                            //     'up'
-                            // ),
                             scaleX: 0.7,
                             scaleY: 0.7
                         })
@@ -283,10 +271,6 @@ export default defineComponent({
                         h(GridCompIconComponent, {
                             name: 'ellipsis-h',
                             size: $vmaFormulaGrid.props.size,
-                            // translateY: getHideCaretTranslateY(
-                            //     $vmaFormulaGrid.props.size!,
-                            //     'down'
-                            // ),
                             scaleX: 0.7,
                             scaleY: 0.7
                         })

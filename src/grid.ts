@@ -454,6 +454,64 @@ export default defineComponent({
                 const scrollBodyElem = (event.currentTarget || event.target) as HTMLDivElement
                 debounceScrollY(scrollBodyElem)
             },
+            updateRowVisible: (type: string, rowStart: number, rowEnd: number) => {
+                if (type === 'showUpRows') {
+                    if (Object.keys(gridReactiveData.rowHidesChanged).length) {
+                        if (rowStart === rowEnd) {
+                            let idx = 0
+                            const removeKeys: string[] = []
+                            while (
+                                gridReactiveData.rowHidesChanged.hasOwnProperty(
+                                    `${Number(rowStart) - idx}`
+                                )
+                                ) {
+                                gridReactiveData.rowConfs[Number(rowStart) - idx - 1].visible = true
+                                removeKeys.push(`${Number(rowStart) - idx}`)
+                                idx++
+                            }
+                            const gridRowsVisibleChangedNew: Record<string, number> = {}
+                            Object.keys(gridReactiveData.rowHidesChanged).map((key) => {
+                                if (removeKeys.indexOf(key) < 0) {
+                                    gridRowsVisibleChangedNew[key] =
+                                        gridReactiveData.rowHidesChanged[key]
+                                }
+                                return null
+                            })
+                            gridReactiveData.rowHidesChanged = gridRowsVisibleChangedNew
+                        }
+                        $vmaFormulaGrid.recalculate(false).then(() => {
+                        })
+                    }
+                }
+                if (type === 'showDownRows') {
+                    if (Object.keys(gridReactiveData.rowHidesChanged).length) {
+                        if (rowStart === rowEnd) {
+                            let idx = 2
+                            const removeKeys: string[] = []
+                            while (
+                                gridReactiveData.rowHidesChanged.hasOwnProperty(
+                                    `${Number(rowStart) + idx}`
+                                )
+                                ) {
+                                gridReactiveData.rowConfs[Number(rowStart) + idx - 1].visible = true
+                                removeKeys.push(`${Number(rowStart) + idx}`)
+                                idx++
+                            }
+                            const gridRowsVisibleChangedNew: Record<string, number> = {}
+                            Object.keys(gridReactiveData.rowHidesChanged).map((key) => {
+                                if (removeKeys.indexOf(key) < 0) {
+                                    gridRowsVisibleChangedNew[key] =
+                                        gridReactiveData.rowHidesChanged[key]
+                                }
+                                return null
+                            })
+                            gridReactiveData.rowHidesChanged = gridRowsVisibleChangedNew
+                        }
+                        $vmaFormulaGrid.recalculate(false).then(() => {
+                        })
+                    }
+                }
+            },
         } as VmaFormulaGridPrivateMethods
 
         const debounceScrollX = debounce((scrollBodyElem: HTMLDivElement) => {
