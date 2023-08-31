@@ -1,5 +1,9 @@
 import {ComputedRef, ref, Ref, RenderFunction, SetupContext} from "vue";
 import {Cell} from "../internals/cell.ts";
+import {
+    VmaFormulaGridCompContextMenuMethods,
+    VmaFormulaGridCompContextMenuPrivateMethods
+} from "./components/context-menu";
 
 export interface VmaComponentInstance {
     uId: string
@@ -155,6 +159,11 @@ interface VmaFormulaGridPrivateMethods {
     updateColVisible(type: string, colStart: number, colEnd: number): void
 }
 
+declare module './grid' {
+    interface VmaFormulaGridMethods extends VmaFormulaGridCompContextMenuMethods {}
+    interface VmaFormulaGridPrivateMethods extends VmaFormulaGridCompContextMenuPrivateMethods {}
+}
+
 export interface VmaFormulaGridConstructor extends VmaComponentInstance, VmaFormulaGridMethods, VmaFormulaGridPrivateMethods {
     props: VmaFormulaGridOptions
     context: SetupContext<VmaFormulaGridEmits>
@@ -164,6 +173,7 @@ export interface VmaFormulaGridConstructor extends VmaComponentInstance, VmaForm
     getRefs(): VmaFormulaGridRefs
 }
 
+export * from './hooks'
 
 export namespace VmaFormulaGridHeaderPropTypes {
     export type Fixed = HeaderFixedType

@@ -48,6 +48,7 @@ import {Cell} from "./internals/cell.ts";
 import {debounce} from "./utils/debounce.ts";
 import {createResizeEvent} from "./utils/resize.ts";
 import {DepParser, FormulaParser} from "./formula";
+import GlobalEvent from "./utils/events.ts";
 
 export default defineComponent({
     name: "VmaFormulaGrid",
@@ -100,6 +101,13 @@ export default defineComponent({
                         }
                         if (parentEl) {
                             resizeObserver.observe(parentEl)
+                        }
+                        if ($vmaFormulaGrid.handleContextmenuEvent) {
+                            GlobalEvent.on(
+                                $vmaFormulaGrid,
+                                'contextmenu',
+                                $vmaFormulaGrid.handleContextmenuEvent,
+                            )
                         }
                     }).finally(() => {
                     $vmaFormulaGrid.calc()
