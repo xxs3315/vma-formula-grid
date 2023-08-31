@@ -704,8 +704,6 @@ export default defineComponent({
                     updateScrollXYSpace()
                 }
 
-                // console.log('scrollLeft:' + scrollLeft)
-                
                 resolve()
             })
 
@@ -1049,9 +1047,6 @@ export default defineComponent({
 
                     gridReactiveData.currentSheetData = new Array(rows.length).fill(null).map(() => new Array(columns.length).fill(null))
 
-                    console.log(gridReactiveData.merges)
-                    console.log(props.data.conf.merges)
-
                     gridReactiveData.currentSheetData.forEach((row, rowIndex) => {
                         row.forEach((_, colIndex) => {
                             let cellData = null
@@ -1081,7 +1076,6 @@ export default defineComponent({
                             )
                         })
                     })
-                    console.log(gridReactiveData.currentSheetData)
                 }
 
                 resolve()

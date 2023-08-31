@@ -138,7 +138,7 @@ export default defineComponent({
       colHide: ['D', ...Immutable.Range(6, 8).map((value, _) => {
         return getColumnSymbol(value)
       }).toArray()],
-      merges: ['A2:B3', 'A5:A7']
+      merges: ['A2:B3', 'A5:A12']
     })
 
     const data = reactive({
