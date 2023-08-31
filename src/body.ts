@@ -18,8 +18,9 @@ import {
     VmaFormulaGridConstructor,
     VmaFormulaGridMethods,
     VmaFormulaGridPrivateMethods
-} from "./types/grid";
+} from "./types";
 import {Guid} from "./utils/guid.ts";
+import { checkCellInMerges } from "./utils";
 
 export default defineComponent({
     name: 'VmaFormulaGridBody',
@@ -196,15 +197,17 @@ export default defineComponent({
                         )
                     } else {
                         const cf: any = $vmaFormulaGrid.reactiveData.colConfs[indexCol + 1]
-                        cols.push(
-                            h(GridCellComponent, {
-                                cat: 'normal',
-                                type: `${$vmaFormulaGrid.props.type}`,
-                                row: rf.index,
-                                col: cf.index,
-                                'data-id': `${rf.index}_${cf.index}`,
-                            })
-                        )
+                        if (!checkCellInMerges(cf.index + 1, rf.index + 1, $vmaFormulaGrid.reactiveData.merges)) {
+                            cols.push(
+                                h(GridCellComponent, {
+                                    cat: 'normal',
+                                    type: `${$vmaFormulaGrid.props.type}`,
+                                    row: rf.index,
+                                    col: cf.index,
+                                    'data-id': `${rf.index}_${cf.index}`,
+                                })
+                            )
+                        }
                     }
                 }
 

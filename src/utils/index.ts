@@ -1,4 +1,4 @@
-import {VmaFormulaGridPropTypes} from "../types/grid";
+import {VmaFormulaGridPropTypes} from "../types";
 
 export function isNumeric(val: string | number): val is string {
     return typeof val === 'number' || /^\d+(\.\d+)?$/.test(val)
@@ -1007,10 +1007,10 @@ export default class dc {
                         this.dfp(dg, item)
                     } else if (this._os[item]) {
                         for (let x = v; x !== item; x = this._et[x]) {
-                            this._cy.push(x)
+                            this._cy!.push(x)
                         }
-                        this._cy.push(item)
-                        this._cy.push(v)
+                        this._cy!.push(item)
+                        this._cy!.push(v)
                     }
                 }
             })
@@ -1146,4 +1146,17 @@ export function getRowColSpanFromMerges(col: number, row: number, merges: Record
         }
     }
     return {rowSpan: 1, colSpan: 1}
+}
+
+export function checkCellInMerges(col: number, row: number, merges: Record<string, any>) : boolean {
+    const keys = Object.keys(merges)
+    for (let i = 0; i < keys.length; i++) {
+        if (col > merges[keys[i]].colStart && col <= merges[keys[i]].colEnd && row >= merges[keys[i]].rowStart && row <= merges[keys[i]].rowEnd) {
+            return true
+        }
+        if (col >= merges[keys[i]].colStart && col <= merges[keys[i]].colEnd && row > merges[keys[i]].rowStart && row <= merges[keys[i]].rowEnd) {
+            return true
+        }
+    }
+    return false
 }
