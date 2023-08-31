@@ -159,6 +159,8 @@ export default defineComponent({
         const refGridBodyTableColgroup = ref() as Ref<HTMLTableColElement>
         const refGridBodyLeftFixedTableColgroup = ref() as Ref<HTMLTableColElement>
 
+        const refGridContextMenu = ref() as Ref<HTMLDivElement>
+
         const renderDefaultColWidth = computed(() => getRenderDefaultColWidth(props.defaultColumnWidth, props.size))
 
         const renderDefaultRowHeight = computed(() => getRenderDefaultRowHeight(props.defaultRowHeight, props.size))
@@ -210,7 +212,15 @@ export default defineComponent({
                 cMap: {},
                 ncMap: {},
             },
-            merges: {}
+            merges: {},
+            ctxMenuStore: {
+                selected: null,
+                visible: false,
+                showChild: false,
+                selectChild: null,
+                list: [],
+                style: null,
+            },
         }) as VmaFormulaGridReactiveData
 
         const gridRefs: VmaFormulaGridRefs = {
@@ -243,8 +253,9 @@ export default defineComponent({
 
             renderDefaultColWidth,
             renderDefaultRowHeight,
-            rowIndicatorElWidth
+            rowIndicatorElWidth,
 
+            refGridContextMenu
         }
 
         const gridMethods = {

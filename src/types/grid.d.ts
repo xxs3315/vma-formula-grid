@@ -53,6 +53,8 @@ export interface VmaFormulaGridRefs {
     renderDefaultColWidth: ComputedRef<number>
     renderDefaultRowHeight: ComputedRef<number>
     rowIndicatorElWidth: ComputedRef<number>
+
+    refGridContextMenu: Ref<HTMLDivElement>
 }
 
 export interface VmaFormulaGridReactiveData {
@@ -115,6 +117,16 @@ export interface VmaFormulaGridReactiveData {
     }
 
     merges: Record<string, any>
+
+    ctxMenuStore: {
+        selected: any
+        visible: boolean
+        showChild: boolean
+        selectChild: any
+        list: any[][]
+        style: any
+        [key: string]: any
+    }
 }
 
 export interface VmaFormulaGridProps {

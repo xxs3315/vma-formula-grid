@@ -19,6 +19,12 @@ interface VmaFormulaGridCompIconPrivateMethods {
 
 export type VmaFormulaGridCompIconOptions = VmaFormulaGridCompIconProps
 
+export type VmaFormulaGridCompIconEmits = []
+
+export interface VmaFormulaGridCompIconReactiveData {}
+
+export interface VmaFormulaGridCompIconRefs {}
+
 export interface VmaFormulaGridCompIconConstructor extends VmaComponentInstance, VmaFormulaGridCompIconMethods, VmaFormulaGridCompIconPrivateMethods {
     props: VmaFormulaGridCompIconOptions
     context: SetupContext<VmaFormulaGridCompIconEmits>
