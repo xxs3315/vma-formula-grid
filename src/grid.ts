@@ -25,7 +25,7 @@ import {
 } from "./types";
 import {Guid} from "./utils/guid.ts";
 import {
-    calcVertexes,
+    calcVertexes, checkCellInMerges,
     filterVertexes,
     getColumnCount,
     getHeight,
@@ -282,12 +282,17 @@ export default defineComponent({
                             if (isFormulaCellDepParseError) {
                                 errorKeyList.push(`${item.col}_${item.row}`)
                             }
-                            // 检查是否有引用错误（例如，超出范围的单元格引用）
+                            // 检查是否有引用错误（例如，超出范围的单元格引用，是否引用了merge块中的cell）
                             if (formulaCellDepParseResult !== null) {
-                                const errorRefCell = formulaCellDepParseResult.find((item: any) => item.row > gridReactiveData.rowConfs.length || item.col > gridReactiveData.colConfs.length)
+                                const errorRefCell = formulaCellDepParseResult.find(
+                                    (i: any) => {
+                                        return i.row > gridReactiveData.rowConfs.length || i.col > gridReactiveData.colConfs.length
+                                        || checkCellInMerges(i.col, i.row, gridReactiveData.merges)
+                                    }
+                                )
                                 if (errorRefCell) {
                                     se = '#REFERROR!'
-                                    errorKeyList.push(`${item.col}_${item.row}`)
+                                    errorKeyList.push(`${item.col + 1}_${item.row + 1}`)
                                     isFormulaCellDepParseError = true
                                     formulaCellDepParseResult = null
                                 }
@@ -302,6 +307,7 @@ export default defineComponent({
                     })
 
                 })
+
                 const vertexes: Record<string, any> = {}
                 calcCells.forEach(item => {
                     if (errorKeyList.indexOf(`${item.col + 1}_${item.row + 1}`) >= 0) {
@@ -389,7 +395,11 @@ export default defineComponent({
                         for (let row = ref.from.row; row <= ref.to.row; row++) {
                             const innerArr = []
                             for (let col = ref.from.col; col <= ref.to.col; col++) {
-                                innerArr.push(gridReactiveData.currentSheetData[row - 1][col].mv)
+                                innerArr.push(
+                                    checkCellInMerges(col, row, gridReactiveData.merges) ?
+                                        null :
+                                        gridReactiveData.currentSheetData[row - 1][col].mv
+                                )
                             }
                             arr.push(innerArr)
                         }

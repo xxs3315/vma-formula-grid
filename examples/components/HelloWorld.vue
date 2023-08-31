@@ -90,7 +90,7 @@ export default defineComponent({
         v: '= BB100 - 2'
       }, {
         p: 'B1',
-        v: '= SUM(A1, 6)'
+        v: '= SUM(A3, 6)'
       }, {
         p: 'B2',
         v: '= A2 + 2 + SQRT(2)'
@@ -138,7 +138,7 @@ export default defineComponent({
       colHide: ['D', ...Immutable.Range(6, 8).map((value, _) => {
         return getColumnSymbol(value)
       }).toArray()],
-      merges: ['A2:B3', 'A5:A12']
+      merges: ['A2:G3', 'A5:A12']
     })
 
     const data = reactive({
