@@ -17,16 +17,16 @@ import {
     VmaFormulaGridConstructor,
     VmaFormulaGridMethods,
     VmaFormulaGridPrivateMethods
-} from "./types";
+} from "../../types";
 import {
     getColumnSymbol,
     getRenderDefaultColWidth,
     getRenderDefaultRowHeight,
     getXSpaceFromColumnWidths,
     getYSpaceFromRowHeights
-} from "./utils";
-import {Guid} from "./utils/guid.ts";
-import {DomTools} from "./utils/doms.ts";
+} from "../../utils";
+import {Guid} from "../../utils/guid.ts";
+import {DomTools} from "../../utils/doms.ts";
 
 export default defineComponent({
     name: 'VmaFormulaGridCell',

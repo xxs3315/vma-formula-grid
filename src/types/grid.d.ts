@@ -1,9 +1,5 @@
-import {ComputedRef, ref, Ref, RenderFunction, SetupContext} from "vue";
-import {Cell} from "../internals/cell.ts";
-import {
-    VmaFormulaGridCompContextMenuMethods,
-    VmaFormulaGridCompContextMenuPrivateMethods
-} from "./components/context-menu";
+import {ComputedRef, Ref, RenderFunction, SetupContext} from "vue";
+import {Cell} from "../components/grid/internals/cell.ts";
 
 export interface VmaComponentInstance {
     uId: string
@@ -151,17 +147,12 @@ export interface VmaFormulaGridMethods {
     recalculate(refresh: boolean): Promise<any>
 }
 
-interface VmaFormulaGridPrivateMethods {
+export interface VmaFormulaGridPrivateMethods {
     getParentElem(): Element | null
     triggerScrollXEvent(event: Event): void
     triggerScrollYEvent(event: Event): void
     updateRowVisible(type: string, rowStart: number, rowEnd: number): void
     updateColVisible(type: string, colStart: number, colEnd: number): void
-}
-
-declare module './grid' {
-    interface VmaFormulaGridMethods extends VmaFormulaGridCompContextMenuMethods {}
-    interface VmaFormulaGridPrivateMethods extends VmaFormulaGridCompContextMenuPrivateMethods {}
 }
 
 export interface VmaFormulaGridConstructor extends VmaComponentInstance, VmaFormulaGridMethods, VmaFormulaGridPrivateMethods {
@@ -186,7 +177,7 @@ export interface VmaFormulaGridHeaderProps {
 export interface VmaFormulaGridHeaderMethods {
 }
 
-interface VmaFormulaGridHeaderPrivateMethods {
+export interface VmaFormulaGridHeaderPrivateMethods {
 }
 
 export interface VmaFormulaGridHeaderConstructor extends VmaComponentInstance, VmaFormulaGridHeaderMethods, VmaFormulaGridHeaderPrivateMethods {
@@ -217,7 +208,7 @@ export interface VmaFormulaGridBodyProps {
 export interface VmaFormulaGridBodyMethods {
 }
 
-interface VmaFormulaGridBodyPrivateMethods {
+export interface VmaFormulaGridBodyPrivateMethods {
 }
 
 export type VmaFormulaGridBodyOptions = VmaFormulaGridBodyProps
@@ -246,7 +237,7 @@ export interface VmaFormulaGridCellProps {
 export interface VmaFormulaGridCellMethods {
 }
 
-interface VmaFormulaGridCellPrivateMethods {
+export interface VmaFormulaGridCellPrivateMethods {
 }
 
 export type VmaFormulaGridCellOptions = VmaFormulaGridCellProps

@@ -8,7 +8,7 @@ import {
     reactive,
     resolveComponent
 } from "vue";
-import {Guid} from "./utils/guid.ts";
+import {Guid} from "../../utils/guid.ts";
 import {
     VmaFormulaGridConstructor,
     VmaFormulaGridMethods,
@@ -17,7 +17,7 @@ import {
     VmaFormulaGridHeaderMethods,
     VmaFormulaGridHeaderPrivateMethods,
     VmaFormulaGridHeaderPropTypes
-} from "./types/grid";
+} from "../../types";
 
 export default defineComponent({
     name: 'VmaFormulaGridHeader',

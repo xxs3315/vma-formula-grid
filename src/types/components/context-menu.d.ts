@@ -1,5 +1,5 @@
 import {RenderFunction, SetupContext} from "vue";
-import {ComponentType, SizeType, VmaComponentInstance, VmaFormulaGridPrivateMethods} from "../grid";
+import {ComponentType, SizeType, VmaComponentInstance} from "../grid";
 
 export namespace VmaFormulaGridCompContextMenuPropTypes {
     export type Size = SizeType
@@ -19,10 +19,10 @@ export interface VmaFormulaGridCompContextMenuMethods {
 }
 
 interface VmaFormulaGridCompContextMenuPrivateMethods {
-    handleContextmenuEvent(event: any): void
-    ctxMenuMouseoverEvent(event: any, item: any, child?: any): void
-    ctxMenuMouseoutEvent(event: any, item: any): void
-    ctxMenuLinkEvent(event: any, menu: any): void
+    handleContextmenuEvent?(event: any): void
+    ctxMenuMouseoverEvent?(event: any, item: any, child?: any): void
+    ctxMenuMouseoutEvent?(event: any, item: any): void
+    ctxMenuLinkEvent?(event: any, menu: any): void
 }
 
 export type VmaFormulaGridCompContextMenuOptions = VmaFormulaGridCompContextMenuProps
@@ -40,4 +40,9 @@ export interface VmaFormulaGridCompContextMenuConstructor extends VmaComponentIn
     renderVN: RenderFunction
 
     getRefs(): VmaFormulaGridCompContextMenuRefs
+}
+
+declare module './grid' {
+    interface VmaFormulaGridMethods extends VmaFormulaGridCompContextMenuMethods {}
+    interface VmaFormulaGridPrivateMethods extends VmaFormulaGridCompContextMenuPrivateMethods {}
 }

@@ -4,5 +4,4 @@ import App from './App.vue'
 import VmaFormulaGrid from '../src/index'
 import '../src/styles/index.less'
 
-// TODO remove as any
-createApp(App).use(VmaFormulaGrid as any).mount('#app')
+createApp(App).use(VmaFormulaGrid).mount('#app')

@@ -22,8 +22,8 @@ import {
     VmaFormulaGridPropTypes,
     VmaFormulaGridReactiveData,
     VmaFormulaGridRefs
-} from "./types";
-import {Guid} from "./utils/guid.ts";
+} from "../../types";
+import {Guid} from "../../utils/guid.ts";
 import {
     calcVertexes, checkCellInMerges,
     filterVertexes,
@@ -41,14 +41,14 @@ import {
     getYSpaceFromRowHeights,
     isNumeric,
     isObject
-} from "./utils";
+} from "../../utils";
 import {Column} from "./internals/column.ts";
 import {Row} from "./internals/row.ts";
 import {Cell} from "./internals/cell.ts";
-import {debounce} from "./utils/debounce.ts";
-import {createResizeEvent} from "./utils/resize.ts";
-import {DepParser, FormulaParser} from "./formula";
-import GlobalEvent from "./utils/events.ts";
+import {debounce} from "../../utils/debounce.ts";
+import {createResizeEvent} from "../../utils/resize.ts";
+import {DepParser, FormulaParser} from "../../formula";
+import GlobalEvent from "../../utils/events.ts";
 
 export default defineComponent({
     name: "VmaFormulaGrid",

@@ -18,9 +18,9 @@ import {
     VmaFormulaGridConstructor,
     VmaFormulaGridMethods,
     VmaFormulaGridPrivateMethods
-} from "./types";
-import {Guid} from "./utils/guid.ts";
-import { checkCellInMerges } from "./utils";
+} from "../../types";
+import {Guid} from "../../utils/guid.ts";
+import { checkCellInMerges } from "../../utils";
 
 export default defineComponent({
     name: 'VmaFormulaGridBody',
