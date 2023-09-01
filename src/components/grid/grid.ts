@@ -50,6 +50,7 @@ import {createResizeEvent} from "../../utils/resize.ts";
 import {DepParser, FormulaParser} from "../../formula";
 import GlobalEvent from "../../utils/events.ts";
 import VmaFormulaGrid from "../../vma-formula-grid";
+import {DomTools} from "../../utils/doms.ts";
 
 export default defineComponent({
     name: "VmaFormulaGrid",
@@ -103,6 +104,17 @@ export default defineComponent({
                         if (parentEl) {
                             resizeObserver.observe(parentEl)
                         }
+                        GlobalEvent.on(
+                            $vmaFormulaGrid,
+                            'mousewheel',
+                            handleGlobalMousewheelEvent,
+                        )
+                        GlobalEvent.on(
+                            $vmaFormulaGrid,
+                            'mousedown',
+                            handleGlobalMousedownEvent,
+                        )
+                        GlobalEvent.on($vmaFormulaGrid, 'keydown', handleGlobalKeydownEvent)
                         if ($vmaFormulaGrid.handleContextmenuEvent) {
                             GlobalEvent.on(
                                 $vmaFormulaGrid,
@@ -127,6 +139,9 @@ export default defineComponent({
         })
 
         onUnmounted(() => {
+            GlobalEvent.off($vmaFormulaGrid, 'mousedown')
+            GlobalEvent.off($vmaFormulaGrid, 'mousewheel')
+            GlobalEvent.off($vmaFormulaGrid, 'keydown')
             GlobalEvent.off($vmaFormulaGrid, 'resize')
             GlobalEvent.off($vmaFormulaGrid, 'contextmenu')
         })
@@ -134,7 +149,41 @@ export default defineComponent({
         watch(() => props.data, () => {
             reset().then(() => {
                 loadData().then(() => {
-                    $vmaFormulaGrid.recalculate(true).finally(() => {$vmaFormulaGrid.calc()})
+                    $vmaFormulaGrid
+                        .recalculate(true)
+                        .then(() => {
+                            const el = refGridDiv.value
+                            const parentEl = $vmaFormulaGrid.getParentElem()
+                            resizeObserver = createResizeEvent(() => {
+                                $vmaFormulaGrid.recalculate(true)
+                            })
+                            if (el) {
+                                resizeObserver.observe(el)
+                            }
+                            if (parentEl) {
+                                resizeObserver.observe(parentEl)
+                            }
+                            GlobalEvent.on(
+                                $vmaFormulaGrid,
+                                'mousewheel',
+                                handleGlobalMousewheelEvent,
+                            )
+                            GlobalEvent.on(
+                                $vmaFormulaGrid,
+                                'mousedown',
+                                handleGlobalMousedownEvent,
+                            )
+                            GlobalEvent.on($vmaFormulaGrid, 'keydown', handleGlobalKeydownEvent)
+                            if ($vmaFormulaGrid.handleContextmenuEvent) {
+                                GlobalEvent.on(
+                                    $vmaFormulaGrid,
+                                    'contextmenu',
+                                    $vmaFormulaGrid.handleContextmenuEvent,
+                                )
+                            }
+                            GlobalEvent.on($vmaFormulaGrid, 'resize', handleGlobalResizeEvent)
+                        })
+                        .finally(() => {$vmaFormulaGrid.calc()})
                 })
             })
 
@@ -678,6 +727,7 @@ export default defineComponent({
                 }),
                 // header left fixed
                 h(FormulaGridHeaderComponent, {
+                    'data-uid': $vmaFormulaGrid.uId,
                     fixed: 'left',
                     class: ['left'],
                     style: {
@@ -687,6 +737,7 @@ export default defineComponent({
                 }),
                 // header center
                 h(FormulaGridHeaderComponent, {
+                    'data-uid': $vmaFormulaGrid.uId,
                     fixed: 'center',
                     class: ['center'],
                     style: {
@@ -696,11 +747,13 @@ export default defineComponent({
                 }),
                 // body left fixed
                 h(FormulaGridBodyComponent, {
+                    'data-uid': $vmaFormulaGrid.uId,
                     fixed: 'left',
                     class: ['left'],
                 }),
                 // body center
                 h(FormulaGridBodyComponent, {
+                    'data-uid': $vmaFormulaGrid.uId,
                     fixed: 'center',
                     class: ['center'],
                     style: {
@@ -715,6 +768,48 @@ export default defineComponent({
                 $vmaFormulaGrid.closeMenu()
             }
             $vmaFormulaGrid.recalculate(false)
+        }
+
+        const handleGlobalMousewheelEvent = (event: MouseEvent) => {
+            if ($vmaFormulaGrid.closeMenu) {
+                const { ctxMenuStore } = gridReactiveData
+                const ctxMenu = refGridContextMenu.value
+                if (
+                    ctxMenuStore.visible &&
+                    ctxMenu &&
+                    !DomTools.getEventTargetNode(event, ctxMenu).flag
+                ) {
+                    $vmaFormulaGrid.closeMenu()
+                }
+            }
+        }
+
+        const handleGlobalMousedownEvent = (event: MouseEvent) => {
+            if ($vmaFormulaGrid.closeMenu) {
+                const { ctxMenuStore } = gridReactiveData
+                const ctxMenu = refGridContextMenu.value
+                if (
+                    ctxMenuStore.visible &&
+                    ctxMenu &&
+                    !DomTools.getEventTargetNode(event, ctxMenu).flag
+                ) {
+                    $vmaFormulaGrid.closeMenu()
+                }
+            }
+        }
+
+        const handleGlobalKeydownEvent = (event: KeyboardEvent) => {
+            if ($vmaFormulaGrid.closeMenu) {
+                const { ctxMenuStore } = gridReactiveData
+                const ctxMenu = refGridContextMenu.value
+                if (
+                    ctxMenuStore.visible &&
+                    ctxMenu &&
+                    !DomTools.getEventTargetNode(event, ctxMenu).flag
+                ) {
+                    $vmaFormulaGrid.closeMenu()
+                }
+            }
         }
 
         const computeScrollLoad = () => {
