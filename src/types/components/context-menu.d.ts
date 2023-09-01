@@ -41,8 +41,3 @@ export interface VmaFormulaGridCompContextMenuConstructor extends VmaComponentIn
 
     getRefs(): VmaFormulaGridCompContextMenuRefs
 }
-
-declare module './grid' {
-    interface VmaFormulaGridMethods extends VmaFormulaGridCompContextMenuMethods {}
-    interface VmaFormulaGridPrivateMethods extends VmaFormulaGridCompContextMenuPrivateMethods {}
-}

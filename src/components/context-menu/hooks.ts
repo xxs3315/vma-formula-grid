@@ -95,5 +95,9 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
         ) => {
 
         }
+
+        return {...ctxMenuMethods, ...ctxMenuPrivateMethods}
     }
 }
+
+export default gridCtxMenuHook

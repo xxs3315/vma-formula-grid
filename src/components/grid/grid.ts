@@ -4,8 +4,8 @@ import {
     createCommentVNode,
     defineComponent,
     h,
-    nextTick,
-    onMounted,
+    nextTick, onBeforeUnmount,
+    onMounted, onUnmounted,
     PropType,
     provide,
     reactive,
@@ -49,6 +49,7 @@ import {debounce} from "../../utils/debounce.ts";
 import {createResizeEvent} from "../../utils/resize.ts";
 import {DepParser, FormulaParser} from "../../formula";
 import GlobalEvent from "../../utils/events.ts";
+import VmaFormulaGrid from "../../vma-formula-grid";
 
 export default defineComponent({
     name: "VmaFormulaGrid",
@@ -109,10 +110,25 @@ export default defineComponent({
                                 $vmaFormulaGrid.handleContextmenuEvent,
                             )
                         }
+                        GlobalEvent.on($vmaFormulaGrid, 'resize', handleGlobalResizeEvent)
                     }).finally(() => {
                     $vmaFormulaGrid.calc()
                 })
             })
+        })
+
+        onBeforeUnmount(() => {
+            if (resizeObserver) {
+                resizeObserver.disconnect()
+            }
+            if ($vmaFormulaGrid.closeMenu) {
+                $vmaFormulaGrid.closeMenu()
+            }
+        })
+
+        onUnmounted(() => {
+            GlobalEvent.off($vmaFormulaGrid, 'resize')
+            GlobalEvent.off($vmaFormulaGrid, 'contextmenu')
         })
 
         watch(() => props.data, () => {
@@ -657,6 +673,9 @@ export default defineComponent({
                             : {},
                     })
                     : createCommentVNode(),
+                h(resolveComponent('VmaFormulaGridCompContextMenu') as ComponentOptions, {
+                    ref: refGridContextMenu,
+                }),
                 // header left fixed
                 h(FormulaGridHeaderComponent, {
                     fixed: 'left',
@@ -689,6 +708,13 @@ export default defineComponent({
                     },
                 })
             ])
+        }
+
+        const handleGlobalResizeEvent = () => {
+            if ($vmaFormulaGrid.closeMenu) {
+                $vmaFormulaGrid.closeMenu()
+            }
+            $vmaFormulaGrid.recalculate(false)
         }
 
         const computeScrollLoad = () => {
@@ -1122,6 +1148,15 @@ export default defineComponent({
 
         Object.assign($vmaFormulaGrid, gridMethods)
         Object.assign($vmaFormulaGrid, gridPrivateMethods)
+
+        VmaFormulaGrid.hooks.forEach((options) => {
+            if (options.setupGrid) {
+                const hookRest = options.setupGrid($vmaFormulaGrid)
+                if (hookRest && typeof hookRest === 'object') {
+                    Object.assign($vmaFormulaGrid, hookRest)
+                }
+            }
+        })
 
         provide('$vmaFormulaGrid', $vmaFormulaGrid)
 

@@ -1,5 +1,9 @@
 import {ComputedRef, Ref, RenderFunction, SetupContext} from "vue";
 import {Cell} from "../components/grid/internals/cell.ts";
+import {
+    VmaFormulaGridCompContextMenuMethods,
+    VmaFormulaGridCompContextMenuPrivateMethods
+} from "./components/context-menu";
 
 export interface VmaComponentInstance {
     uId: string
@@ -162,6 +166,11 @@ export interface VmaFormulaGridConstructor extends VmaComponentInstance, VmaForm
     renderVN: RenderFunction
 
     getRefs(): VmaFormulaGridRefs
+}
+
+declare module './grid' {
+    interface VmaFormulaGridMethods extends VmaFormulaGridCompContextMenuMethods {}
+    interface VmaFormulaGridPrivateMethods extends VmaFormulaGridCompContextMenuPrivateMethods {}
 }
 
 export * from './hooks'
