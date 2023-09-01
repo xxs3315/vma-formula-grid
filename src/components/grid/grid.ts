@@ -764,7 +764,6 @@ export default defineComponent({
         }
 
         const handleGlobalResizeEvent = () => {
-            console.log(1)
             if ($vmaFormulaGrid.closeMenu) {
                 $vmaFormulaGrid.closeMenu()
             }
