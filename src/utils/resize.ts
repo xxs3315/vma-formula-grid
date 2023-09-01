@@ -47,6 +47,7 @@ export class ResizeObserver {
     }
 
     observe(target: Element): void {
+        console.log(target)
         if (target) {
             const { targetList } = this
             if (!targetList.some(observer => observer.target === target)) {

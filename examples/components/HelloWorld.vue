@@ -51,9 +51,9 @@
     </div>
   </fieldset>
 
-  <p>
+  <div style="margin-top: 10px;">
     <vma-formula-grid style="width: 100%; height: 800px;" :data="data" :size="size" :type="themeType" />
-  </p>
+  </div>
 </template>
 
 <script lang="ts">

@@ -163,7 +163,6 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options.push({name: '隐藏', code: 'hideColumn', disabled: false, visible: true, param,})
                 list.push(options)
             }
-            console.log(list)
             event.preventDefault()
 
             const { scrollTop, scrollLeft } = DomTools.getDomNode()

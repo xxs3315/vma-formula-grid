@@ -31,10 +31,12 @@ export const GlobalEvent = {
 
 if (documentElem) {
   document.addEventListener('contextmenu', triggerEvent, false)
+  document.addEventListener('keydown', triggerEvent, false)
 }
 if (windowElem) {
   window.addEventListener('mousedown', triggerEvent, false)
   window.addEventListener('mousewheel', triggerEvent, false)
+  window.addEventListener('resize', triggerEvent, false)
 }
 
 export default GlobalEvent
