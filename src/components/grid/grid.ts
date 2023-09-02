@@ -549,6 +549,39 @@ export default defineComponent({
                 const scrollBodyElem = (event.currentTarget || event.target) as HTMLDivElement
                 debounceScrollY(scrollBodyElem)
             },
+            insertColumn: (col: number) => {
+                gridReactiveData.colConfs.map((item: Column) => {
+                    if (item.index >= col) {
+                        item.index += 1
+                    }
+                    return item
+                })
+                gridReactiveData.colConfs.splice(
+                    col + 1,
+                    0,
+                    new Column(Number(col), 'default', true,),
+                )
+                gridReactiveData.currentSheetData.map(
+                    (row: Cell[], index: number) => {
+                        row.map((cell: Cell) => {
+                            if (cell.colSpan && cell.colSpan > 1 && cell.col < col && cell.col + cell.colSpan >= col) {
+                                cell.colSpan += 1
+                            }
+                            if (cell.col >= col) {
+                                cell.col += 1
+                            }
+                            return null
+                        })
+                        row.splice(
+                            col + 1,
+                            0,
+                            new Cell(index, col, 1, 1, null, null, null, null, false, -1,) as Cell & { [key: string]: string },
+                        )
+                        return null
+                    },
+                )
+                updateConfs('insertColumn', col, null)
+            },
             updateColVisible: (type: string, colStart: number, colEnd: number) => {
                 if (type === 'showForwardCols') {
                     if (Object.keys(gridReactiveData.columnHidesChanged).length) {
@@ -672,6 +705,64 @@ export default defineComponent({
                 }
             },
         } as VmaFormulaGridPrivateMethods
+
+        const updateConfs = (type: string, col: number | null, row: number | null) : void => {
+            if (type === 'insertColumn') {
+                const gridColumnsVisibleChangedNew: Record<string, number> = {}
+                Object.keys(gridReactiveData.columnHidesChanged).map((key) => {
+                    if (Number(key) >= col!) {
+                        const newKey = Number(key) + 1
+                        gridColumnsVisibleChangedNew[newKey] =
+                            gridReactiveData.columnHidesChanged[key]
+                    } else {
+                        gridColumnsVisibleChangedNew[key] =
+                            gridReactiveData.columnHidesChanged[key]
+                    }
+                    return null
+                })
+                gridReactiveData.columnHidesChanged =
+                    gridColumnsVisibleChangedNew
+
+                const gridColumnsWidthChangedNew: Record<string, number> = {}
+                Object.keys(gridReactiveData.columnWidthsChanged).map((key) => {
+                    if (Number(key) >= col!) {
+                        const newKey = Number(key) + 1
+                        gridColumnsWidthChangedNew[newKey] =
+                            gridReactiveData.columnWidthsChanged[key]
+                    } else {
+                        gridColumnsWidthChangedNew[key] =
+                            gridReactiveData.columnWidthsChanged[key]
+                    }
+                    return null
+                })
+                gridReactiveData.columnWidthsChanged = gridColumnsWidthChangedNew
+
+                const mergesNew: Record<string, any> = {}
+                Object.keys(gridReactiveData.merges).map((key) => {
+                    const crArr = key.split(':')
+                    const crStartArr = crArr[0].split('_')
+                    const crEndArr = crArr[1].split('_')
+                    if (Number(crStartArr[0]) > col!) {
+                        crStartArr[0] = (Number(crStartArr[0]) + 1).toString()
+                        crEndArr[0] = (Number(crEndArr[0]) + 1).toString()
+                    } else if (Number(crEndArr[0]) <= col!) {
+                        crEndArr[0] = (Number(crEndArr[0]) + 1).toString()
+                    }
+                    mergesNew[`${crStartArr.join('_') + ':' + crEndArr.join('_')}`] =
+                        gridReactiveData.merges[key] && {
+                            colStart: Number(crStartArr[0]),
+                            colEnd: Number(crEndArr[0]),
+                            colSpan: Number(crEndArr[0]) - Number(crStartArr[0]) + 1
+                        }
+                })
+                gridReactiveData.merges = mergesNew
+            }
+            $vmaFormulaGrid
+                .recalculate(false)
+                .then(() => {
+                    $vmaFormulaGrid.calc()
+                })
+        }
 
         const debounceScrollX = debounce((scrollBodyElem: HTMLDivElement) => {
             calcScrollSizeX(scrollBodyElem).then(() => {

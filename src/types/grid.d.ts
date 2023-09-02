@@ -157,6 +157,7 @@ export interface VmaFormulaGridPrivateMethods {
     triggerScrollYEvent(event: Event): void
     updateRowVisible(type: string, rowStart: number, rowEnd: number): void
     updateColVisible(type: string, colStart: number, colEnd: number): void
+    insertColumn(col: number): void
 }
 
 export interface VmaFormulaGridConstructor extends VmaComponentInstance, VmaFormulaGridMethods, VmaFormulaGridPrivateMethods {

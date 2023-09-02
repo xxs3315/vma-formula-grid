@@ -29,7 +29,13 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
 
         ctxMenuPrivateMethods = {
             ctxMenuLinkEvent(event: any, menu: any): void {
-                console.log(event, menu)
+                if (menu && !menu.disabled) {
+                    if (menu.code === 'insertColumn') {
+                        grid.insertColumn(
+                            Number(menu.param.col),
+                        )
+                    }
+                }
                 if (ctxMenuMethods.closeMenu) {
                     ctxMenuMethods.closeMenu()
                 }
@@ -130,8 +136,6 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 //     },
                 // )
 
-                console.log(columnTargetNode)
-
                 if (
                     columnTargetNode.flag /* && vmaCalcGrid.props.gridContextHeaderMenu */
                 ) {
@@ -151,16 +155,16 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
             const list = []
             if (type === 'column-indicator') {
                 let options = []
-                options.push({name: '插入', code: 'insertColumnBefore', disabled: false, visible: true, param,})
+                options.push({name: '插入', code: 'insertColumn', disabled: false, visible: true, param,})
                 list.push(options)
-                // options = []
-                // options.push({ name: '固定', code: 'fixColumn', disabled: false, visible: true, param, })
-                // list.push(options)
                 options = []
-                options.push({name: '删除', code: 'deleteColumn', disabled: false, visible: true, param,})
+                options.push({ name: '固定', code: 'fixColumn', disabled: false, visible: true, param, })
                 list.push(options)
                 options = []
                 options.push({name: '隐藏', code: 'hideColumn', disabled: false, visible: true, param,})
+                list.push(options)
+                options = []
+                options.push({name: '删除', code: 'deleteColumn', disabled: false, visible: true, param,})
                 list.push(options)
             }
             event.preventDefault()
