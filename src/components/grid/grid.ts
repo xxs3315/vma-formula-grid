@@ -472,7 +472,7 @@ export default defineComponent({
                 }
 
                 const parser = new FormulaParser({
-                    // functions: props.functions, // TODO
+                    // functions: props.functions,
                     onCell: (ref: any) => gridReactiveData.currentSheetData[ref.row - 1][ref.col].mv,
                     onRange: (ref: any) => {
                         const arr = []
@@ -480,7 +480,7 @@ export default defineComponent({
                             const innerArr = []
                             for (let col = ref.from.col; col <= ref.to.col; col++) {
                                 innerArr.push(
-                                    checkCellInMerges(col, row, gridReactiveData.merges) ?
+                                    checkCellInMerges(col, row - 1, gridReactiveData.merges) ?
                                         null :
                                         gridReactiveData.currentSheetData[row - 1][col].mv
                                 )
@@ -550,16 +550,22 @@ export default defineComponent({
                 debounceScrollY(scrollBodyElem)
             },
             insertColumn: (col: number) => {
+                updateConfs('insertColumn', col, null)
                 gridReactiveData.colConfs.map((item: Column) => {
                     if (item.index >= col) {
                         item.index += 1
                     }
                     return item
                 })
+                let colVisible = true
+                if (gridReactiveData.columnHidesChanged.hasOwnProperty((col + 1).toString())) {
+                    colVisible = false
+                    gridReactiveData.columnHidesChanged[col.toString()] = 0
+                }
                 gridReactiveData.colConfs.splice(
                     col + 1,
                     0,
-                    new Column(Number(col), 'default', true,),
+                    new Column(Number(col), 'default', colVisible,),
                 )
                 gridReactiveData.currentSheetData.map(
                     (row: Cell[], index: number) => {
@@ -580,7 +586,7 @@ export default defineComponent({
                         return null
                     },
                 )
-                updateConfs('insertColumn', col, null)
+
             },
             updateColVisible: (type: string, colStart: number, colEnd: number) => {
                 if (type === 'showForwardCols') {
@@ -707,6 +713,7 @@ export default defineComponent({
         } as VmaFormulaGridPrivateMethods
 
         const updateConfs = (type: string, col: number | null, row: number | null) : void => {
+            console.log(type, col, row)
             if (type === 'insertColumn') {
                 const gridColumnsVisibleChangedNew: Record<string, number> = {}
                 Object.keys(gridReactiveData.columnHidesChanged).map((key) => {
@@ -745,20 +752,22 @@ export default defineComponent({
                     if (Number(crStartArr[0]) > col!) {
                         crStartArr[0] = (Number(crStartArr[0]) + 1).toString()
                         crEndArr[0] = (Number(crEndArr[0]) + 1).toString()
-                    } else if (Number(crEndArr[0]) <= col!) {
+                    } else if (Number(crStartArr[0]) <= col! && col! < Number(crEndArr[0])) {
                         crEndArr[0] = (Number(crEndArr[0]) + 1).toString()
                     }
-                    mergesNew[`${crStartArr.join('_') + ':' + crEndArr.join('_')}`] =
-                        gridReactiveData.merges[key] && {
+                    mergesNew[`${crStartArr.join('_') + ':' + crEndArr.join('_')}`] = {
                             colStart: Number(crStartArr[0]),
                             colEnd: Number(crEndArr[0]),
-                            colSpan: Number(crEndArr[0]) - Number(crStartArr[0]) + 1
+                            colSpan: Number(crEndArr[0]) - Number(crStartArr[0]) + 1,
+                            rowStart: Number(crStartArr[1]),
+                            rowEnd: Number(crEndArr[1]),
+                            rowSpan: Number(crEndArr[1]) - Number(crStartArr[1]) + 1
                         }
                 })
                 gridReactiveData.merges = mergesNew
             }
             $vmaFormulaGrid
-                .recalculate(false)
+                .recalculate(true)
                 .then(() => {
                     $vmaFormulaGrid.calc()
                 })

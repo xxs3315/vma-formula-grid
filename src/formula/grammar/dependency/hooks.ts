@@ -75,7 +75,6 @@ class DepParser {
   }
 
   /**
-   * TODO:
    * Get references or values from a user defined variable.
    * @param name
    * @return {*}
