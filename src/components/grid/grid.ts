@@ -549,44 +549,86 @@ export default defineComponent({
                 const scrollBodyElem = (event.currentTarget || event.target) as HTMLDivElement
                 debounceScrollY(scrollBodyElem)
             },
-            insertColumn: (col: number) => {
-                updateConfs('insertColumn', col, null)
+            insertColumn: (colNumber: number) => {
+                updateConfs('insertColumn', colNumber, null)
                 gridReactiveData.colConfs.map((item: Column) => {
-                    if (item.index >= col) {
+                    if (item.index >= colNumber) {
                         item.index += 1
                     }
                     return item
                 })
                 let colVisible = true
-                if (gridReactiveData.columnHidesChanged.hasOwnProperty((col + 1).toString())) {
+                if (gridReactiveData.columnHidesChanged.hasOwnProperty((colNumber + 1).toString())) {
                     colVisible = false
-                    gridReactiveData.columnHidesChanged[col.toString()] = 0
+                    gridReactiveData.columnHidesChanged[colNumber.toString()] = 0
                 }
                 gridReactiveData.colConfs.splice(
-                    col + 1,
+                    colNumber + 1,
                     0,
-                    new Column(Number(col), 'default', colVisible,),
+                    new Column(Number(colNumber), 'default', colVisible,),
                 )
                 gridReactiveData.currentSheetData.map(
                     (row: Cell[], index: number) => {
                         row.map((cell: Cell) => {
-                            if (cell.colSpan && cell.colSpan > 1 && cell.col < col && cell.col + cell.colSpan >= col) {
+                            if (cell.colSpan && cell.colSpan > 1 && cell.col < colNumber && cell.col + cell.colSpan >= colNumber) {
                                 cell.colSpan += 1
                             }
-                            if (cell.col >= col) {
+                            if (cell.col >= colNumber) {
                                 cell.col += 1
                             }
                             return null
                         })
                         row.splice(
-                            col + 1,
+                            colNumber + 1,
                             0,
-                            new Cell(index, col, 1, 1, null, null, null, null, false, -1,) as Cell & { [key: string]: string },
+                            new Cell(index, colNumber, 1, 1, null, null, null, null, false, -1,) as Cell & { [key: string]: string },
                         )
                         return null
                     },
                 )
 
+            },
+            insertRow: (rowNumber: number) => {
+                updateConfs('insertRow', null, rowNumber)
+                gridReactiveData.rowConfs.map((item: Column) => {
+                    if (item.index >= rowNumber) {
+                        item.index += 1
+                    }
+                    return item
+                })
+                let rowVisible = true
+                if (gridReactiveData.rowHidesChanged.hasOwnProperty((rowNumber + 1).toString())) {
+                    rowVisible = false
+                    gridReactiveData.rowHidesChanged[rowNumber.toString()] = 0
+                }
+                gridReactiveData.rowConfs.splice(
+                    rowNumber,
+                    0,
+                    new Row(Number(rowNumber), 'default', rowVisible,),
+                )
+                gridReactiveData.currentSheetData.map(
+                    (row: Cell[], _: number) => {
+                        row.map((cell: Cell) => {
+                            if (cell.rowSpan && cell.rowSpan > 1 && cell.row < rowNumber && cell.row + cell.rowSpan >= rowNumber) {
+                                cell.rowSpan += 1
+                            }
+                            if (cell.row >= rowNumber) {
+                                cell.row += 1
+                            }
+                            return null
+                        })
+                        return null
+                    },
+                )
+
+                const aNewRow: Cell[] = []
+                for (let i = -1; i < gridReactiveData.colConfs.length - 1; i++) {
+                    aNewRow.push(
+                        new Cell(Number(rowNumber), i, 1, 1, null, null, null, null, false, -1,) as Cell & { [key: string]: string },
+                    )
+                }
+                gridReactiveData.currentSheetData.splice(Number(rowNumber), 0, aNewRow)
+                console.log(123)
             },
             updateColVisible: (type: string, colStart: number, colEnd: number) => {
                 if (type === 'showForwardCols') {
@@ -713,7 +755,6 @@ export default defineComponent({
         } as VmaFormulaGridPrivateMethods
 
         const updateConfs = (type: string, col: number | null, row: number | null) : void => {
-            console.log(type, col, row)
             if (type === 'insertColumn') {
                 const gridColumnsVisibleChangedNew: Record<string, number> = {}
                 Object.keys(gridReactiveData.columnHidesChanged).map((key) => {
@@ -763,6 +804,53 @@ export default defineComponent({
                             rowEnd: Number(crEndArr[1]),
                             rowSpan: Number(crEndArr[1]) - Number(crStartArr[1]) + 1
                         }
+                })
+                gridReactiveData.merges = mergesNew
+            }
+            if (type === 'insertRow') {
+                const gridRowsVisibleChangedNew: Record<string, number> = {}
+                Object.keys(gridReactiveData.rowHidesChanged).map((key) => {
+                    if (Number(key) >= row!) {
+                        const newKey = Number(key) + 1
+                        gridRowsVisibleChangedNew[newKey] = gridReactiveData.rowHidesChanged[key]
+                    } else {
+                        gridRowsVisibleChangedNew[key] = gridReactiveData.rowHidesChanged[key]
+                    }
+                    return null
+                })
+                gridReactiveData.rowHidesChanged = gridRowsVisibleChangedNew
+
+                const gridRowsHeightChangedNew: Record<string, number> = {}
+                Object.keys(gridReactiveData.rowHeightsChanged).map((key) => {
+                    if (Number(key) >= row!) {
+                        const newKey = Number(key) + 1
+                        gridRowsHeightChangedNew[newKey] = gridReactiveData.rowHeightsChanged[key]
+                    } else {
+                        gridRowsHeightChangedNew[key] = gridReactiveData.rowHeightsChanged[key]
+                    }
+                    return null
+                })
+                gridReactiveData.rowHeightsChanged = gridRowsHeightChangedNew
+
+                const mergesNew: Record<string, any> = {}
+                Object.keys(gridReactiveData.merges).map((key) => {
+                    const crArr = key.split(':')
+                    const crStartArr = crArr[0].split('_')
+                    const crEndArr = crArr[1].split('_')
+                    if (Number(crStartArr[1]) > row!) {
+                        crStartArr[1] = (Number(crStartArr[1]) + 1).toString()
+                        crEndArr[1] = (Number(crEndArr[1]) + 1).toString()
+                    } else if (Number(crStartArr[1]) <= row! && row! < Number(crEndArr[1])) {
+                        crEndArr[1] = (Number(crEndArr[1]) + 1).toString()
+                    }
+                    mergesNew[`${crStartArr.join('_') + ':' + crEndArr.join('_')}`] = {
+                        colStart: Number(crStartArr[0]),
+                        colEnd: Number(crEndArr[0]),
+                        colSpan: Number(crEndArr[0]) - Number(crStartArr[0]) + 1,
+                        rowStart: Number(crStartArr[1]),
+                        rowEnd: Number(crEndArr[1]),
+                        rowSpan: Number(crEndArr[1]) - Number(crStartArr[1]) + 1
+                    }
                 })
                 gridReactiveData.merges = mergesNew
             }

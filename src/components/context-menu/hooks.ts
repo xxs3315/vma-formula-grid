@@ -28,11 +28,16 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
         }
 
         ctxMenuPrivateMethods = {
-            ctxMenuLinkEvent(event: any, menu: any): void {
+            ctxMenuLinkEvent(_: any, menu: any): void {
                 if (menu && !menu.disabled) {
                     if (menu.code === 'insertColumn') {
                         grid.insertColumn(
                             Number(menu.param.col),
+                        )
+                    }
+                    if (menu.code === 'insertRow') {
+                        grid.insertRow(
+                            Number(menu.param.row),
                         )
                     }
                 }
@@ -105,16 +110,17 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     },
                 )
 
-                // const rowTargetNode = DomTools.getEventTargetNode(
-                //     event,
-                //     refGridDivElem,
-                //     `row-indicator`,
-                //     (target: any) => {
-                //         const elem =
-                //             target.parentNode.parentNode.parentNode.parentNode.parentNode
-                //         return elem !== document && elem.getAttribute('data-uid') === uId
-                //     },
-                // )
+                const rowTargetNode = DomTools.getEventTargetNode(
+                    event,
+                    refGridDivElem,
+                    `row-indicator`,
+                    (target: any) => {
+                        const elem =
+                            target.parentNode.parentNode.parentNode.parentNode.parentNode
+                        return elem !== document && elem.getAttribute('data-uid') === uId
+                    },
+                )
+
                 //
                 // const cornerTargetNode = DomTools.getEventTargetNode(
                 //     event,
@@ -136,12 +142,17 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 //     },
                 // )
 
-                if (
-                    columnTargetNode.flag /* && vmaCalcGrid.props.gridContextHeaderMenu */
-                ) {
+                if (columnTargetNode.flag) {
                     openCtxMenu(event, 'column-indicator', {
                         row: columnTargetNode.targetElem.getAttribute('data-row'),
                         col: columnTargetNode.targetElem.getAttribute('data-col'),
+                    })
+                }
+
+                if (rowTargetNode.flag) {
+                    openCtxMenu(event, 'row-indicator', {
+                        row: rowTargetNode.targetElem.getAttribute('data-row'),
+                        col: rowTargetNode.targetElem.getAttribute('data-col'),
                     })
                 }
             },
@@ -158,13 +169,27 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options.push({name: '插入', code: 'insertColumn', disabled: false, visible: true, param,})
                 list.push(options)
                 options = []
-                options.push({ name: '固定', code: 'fixColumn', disabled: false, visible: true, param, })
+                options.push({ name: '固定', code: 'fixedColumn', disabled: false, visible: true, param, })
                 list.push(options)
                 options = []
                 options.push({name: '隐藏', code: 'hideColumn', disabled: false, visible: true, param,})
                 list.push(options)
                 options = []
                 options.push({name: '删除', code: 'deleteColumn', disabled: false, visible: true, param,})
+                list.push(options)
+            }
+            if (type === 'row-indicator') {
+                let options = []
+                options.push({name: '插入', code: 'insertRow', disabled: false, visible: true, param,})
+                list.push(options)
+                options = []
+                options.push({ name: '固定', code: 'fixedRow', disabled: false, visible: true, param, })
+                list.push(options)
+                options = []
+                options.push({name: '隐藏', code: 'hideRow', disabled: false, visible: true, param,})
+                list.push(options)
+                options = []
+                options.push({name: '删除', code: 'deleteRow', disabled: false, visible: true, param,})
                 list.push(options)
             }
             event.preventDefault()
