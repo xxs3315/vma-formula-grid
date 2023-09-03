@@ -663,6 +663,9 @@ export default defineComponent({
                 gridReactiveData.currentSheetData.map(
                     (row: Cell[], _: number) => {
                         row.map((cell: Cell) => {
+                            if (cell.colSpan && cell.colSpan > 1 && cell.col === colNumber) {
+                                row[colNumber + 1 + 1].colSpan = row[colNumber + 1].colSpan! - 1
+                            }
                             if (cell.colSpan && cell.colSpan > 1 && cell.col <= colNumber && cell.col + cell.colSpan > colNumber) {
                                 cell.colSpan -= 1
                             }
@@ -699,6 +702,9 @@ export default defineComponent({
                 gridReactiveData.currentSheetData.map(
                     (row: Cell[], _: number) => {
                         row.map((cell: Cell) => {
+                            if (cell.rowSpan && cell.rowSpan > 1 && cell.row === rowNumber) {
+                                row[rowNumber + 1 + 1].colSpan = row[rowNumber + 1].colSpan! - 1
+                            }
                             if (cell.rowSpan && cell.rowSpan > 1 && cell.row <= rowNumber && cell.row + cell.rowSpan > rowNumber) {
                                 cell.rowSpan -= 1
                             }
@@ -891,13 +897,18 @@ export default defineComponent({
                     } else if (Number(crStartArr[0]) <= col! && col! < Number(crEndArr[0])) {
                         crEndArr[0] = (Number(crEndArr[0]) - 1).toString()
                     }
-                    mergesNew[`${crStartArr.join('_') + ':' + crEndArr.join('_')}`] = {
-                        colStart: Number(crStartArr[0]),
-                        colEnd: Number(crEndArr[0]),
-                        colSpan: Number(crEndArr[0]) - Number(crStartArr[0]) + 1,
-                        rowStart: Number(crStartArr[1]),
-                        rowEnd: Number(crEndArr[1]),
-                        rowSpan: Number(crEndArr[1]) - Number(crStartArr[1]) + 1
+                    if (!(Number(crStartArr[0]) === 0 && Number(crEndArr[0]) === 0)) {
+                        if (Number(crStartArr[0]) === 0 && Number(crEndArr[0]) > 0) {
+                            crStartArr[0] = '1'
+                            mergesNew[`${crStartArr.join('_') + ':' + crEndArr.join('_')}`] = {
+                                colStart: Number(crStartArr[0]),
+                                colEnd: Number(crEndArr[0]),
+                                colSpan: Number(crEndArr[0]) - Number(crStartArr[0]) + 1,
+                                rowStart: Number(crStartArr[1]),
+                                rowEnd: Number(crEndArr[1]),
+                                rowSpan: Number(crEndArr[1]) - Number(crStartArr[1]) + 1
+                            }
+                        }
                     }
                 })
                 gridReactiveData.merges = mergesNew
@@ -939,13 +950,18 @@ export default defineComponent({
                     } else if (Number(crStartArr[1]) < row! && row! < Number(crEndArr[1])) {
                         crEndArr[1] = (Number(crEndArr[1]) - 1).toString()
                     }
-                    mergesNew[`${crStartArr.join('_') + ':' + crEndArr.join('_')}`] = {
-                        colStart: Number(crStartArr[0]),
-                        colEnd: Number(crEndArr[0]),
-                        colSpan: Number(crEndArr[0]) - Number(crStartArr[0]) + 1,
-                        rowStart: Number(crStartArr[1]),
-                        rowEnd: Number(crEndArr[1]),
-                        rowSpan: Number(crEndArr[1]) - Number(crStartArr[1]) + 1
+                    if (!(Number(crStartArr[1]) === 0 && Number(crEndArr[1]) === 0)) {
+                        if (Number(crStartArr[1]) === 0 && Number(crEndArr[1]) > 0) {
+                            crStartArr[1] = '1'
+                            mergesNew[`${crStartArr.join('_') + ':' + crEndArr.join('_')}`] = {
+                                colStart: Number(crStartArr[0]),
+                                colEnd: Number(crEndArr[0]),
+                                colSpan: Number(crEndArr[0]) - Number(crStartArr[0]) + 1,
+                                rowStart: Number(crStartArr[1]),
+                                rowEnd: Number(crEndArr[1]),
+                                rowSpan: Number(crEndArr[1]) - Number(crStartArr[1]) + 1
+                            }
+                        }
                     }
                 })
                 gridReactiveData.merges = mergesNew
