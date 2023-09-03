@@ -40,6 +40,16 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                             Number(menu.param.row),
                         )
                     }
+                    if (menu.code === 'hideColumn') {
+                        grid.hideColumn(
+                            Number(menu.param.col),
+                        )
+                    }
+                    if (menu.code === 'hideRow') {
+                        grid.hideRow(
+                            Number(menu.param.row),
+                        )
+                    }
                 }
                 if (ctxMenuMethods.closeMenu) {
                     ctxMenuMethods.closeMenu()

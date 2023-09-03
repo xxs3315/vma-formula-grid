@@ -586,7 +586,11 @@ export default defineComponent({
                         return null
                     },
                 )
-
+                $vmaFormulaGrid
+                    .recalculate(true)
+                    .then(() => {
+                        $vmaFormulaGrid.calc()
+                    })
             },
             insertRow: (rowNumber: number) => {
                 updateConfs('insertRow', null, rowNumber)
@@ -628,7 +632,21 @@ export default defineComponent({
                     )
                 }
                 gridReactiveData.currentSheetData.splice(Number(rowNumber), 0, aNewRow)
-                console.log(123)
+                $vmaFormulaGrid
+                    .recalculate(true)
+                    .then(() => {
+                        $vmaFormulaGrid.calc()
+                    })
+            },
+            hideColumn: (colNumber: number) => {
+                updateConfs('hideColumn', colNumber, null)
+                gridReactiveData.colConfs[colNumber + 1].visible = false
+                $vmaFormulaGrid.recalculate(false)
+            },
+            hideRow: (rowNumber: number) => {
+                updateConfs('hideRow', null, rowNumber)
+                gridReactiveData.rowConfs[rowNumber].visible = false
+                $vmaFormulaGrid.recalculate(false)
             },
             updateColVisible: (type: string, colStart: number, colEnd: number) => {
                 if (type === 'showForwardCols') {
@@ -755,6 +773,12 @@ export default defineComponent({
         } as VmaFormulaGridPrivateMethods
 
         const updateConfs = (type: string, col: number | null, row: number | null) : void => {
+            if (type === 'hideColumn') {
+                gridReactiveData.columnHidesChanged[col! + 1] = 0
+            }
+            if (type === 'hideRow') {
+                gridReactiveData.rowHidesChanged[row! + 1] = 0
+            }
             if (type === 'insertColumn') {
                 const gridColumnsVisibleChangedNew: Record<string, number> = {}
                 Object.keys(gridReactiveData.columnHidesChanged).map((key) => {
@@ -854,11 +878,6 @@ export default defineComponent({
                 })
                 gridReactiveData.merges = mergesNew
             }
-            $vmaFormulaGrid
-                .recalculate(true)
-                .then(() => {
-                    $vmaFormulaGrid.calc()
-                })
         }
 
         const debounceScrollX = debounce((scrollBodyElem: HTMLDivElement) => {

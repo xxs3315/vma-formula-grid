@@ -159,6 +159,8 @@ export interface VmaFormulaGridPrivateMethods {
     updateColVisible(type: string, colStart: number, colEnd: number): void
     insertColumn(col: number): void
     insertRow(row: number): void
+    hideColumn(col: number): void
+    hideRow(row: number): void
 }
 
 export interface VmaFormulaGridConstructor extends VmaComponentInstance, VmaFormulaGridMethods, VmaFormulaGridPrivateMethods {
