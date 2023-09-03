@@ -50,6 +50,16 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                             Number(menu.param.row),
                         )
                     }
+                    if (menu.code === 'deleteColumn') {
+                        grid.deleteColumn(
+                            Number(menu.param.col),
+                        )
+                    }
+                    if (menu.code === 'deleteRow') {
+                        grid.deleteRow(
+                            Number(menu.param.row),
+                        )
+                    }
                 }
                 if (ctxMenuMethods.closeMenu) {
                     ctxMenuMethods.closeMenu()
@@ -178,9 +188,9 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 let options = []
                 options.push({name: '插入', code: 'insertColumn', disabled: false, visible: true, param,})
                 list.push(options)
-                options = []
-                options.push({ name: '固定', code: 'fixedColumn', disabled: false, visible: true, param, })
-                list.push(options)
+                // options = []
+                // options.push({ name: '固定', code: 'fixedColumn', disabled: false, visible: true, param, })
+                // list.push(options)
                 options = []
                 options.push({name: '隐藏', code: 'hideColumn', disabled: false, visible: true, param,})
                 list.push(options)
@@ -192,9 +202,9 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 let options = []
                 options.push({name: '插入', code: 'insertRow', disabled: false, visible: true, param,})
                 list.push(options)
-                options = []
-                options.push({ name: '固定', code: 'fixedRow', disabled: false, visible: true, param, })
-                list.push(options)
+                // options = []
+                // options.push({ name: '固定', code: 'fixedRow', disabled: false, visible: true, param, })
+                // list.push(options)
                 options = []
                 options.push({name: '隐藏', code: 'hideRow', disabled: false, visible: true, param,})
                 list.push(options)
