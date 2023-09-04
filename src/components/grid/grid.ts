@@ -660,12 +660,20 @@ export default defineComponent({
                     colNumber + 1,
                     1
                 )
+
+                if (colNumber + 1 <= gridReactiveData.colConfs.length - 1) {
+                    gridReactiveData.currentSheetData.map(
+                        (row: Cell[], _: number) => {
+                            if (row[colNumber + 1].colSpan && row[colNumber + 1].colSpan! > 1) {
+                                row[colNumber + 1 + 1].rowSpan = row[colNumber + 1].rowSpan!
+                                row[colNumber + 1 + 1].colSpan = row[colNumber + 1].colSpan! - 1
+                            }
+                        })
+                }
+
                 gridReactiveData.currentSheetData.map(
                     (row: Cell[], _: number) => {
                         row.map((cell: Cell) => {
-                            if (cell.colSpan && cell.colSpan > 1 && cell.col === colNumber) {
-                                row[colNumber + 1 + 1].colSpan = row[colNumber + 1].colSpan! - 1
-                            }
                             if (cell.colSpan && cell.colSpan > 1 && cell.col <= colNumber && cell.col + cell.colSpan > colNumber) {
                                 cell.colSpan -= 1
                             }
@@ -681,6 +689,7 @@ export default defineComponent({
                         return null
                     },
                 )
+
                 $vmaFormulaGrid
                     .recalculate(true)
                     .then(() => {
@@ -699,12 +708,19 @@ export default defineComponent({
                     rowNumber,
                     1
                 )
+
+                if (rowNumber + 1 <= gridReactiveData.currentSheetData.length) {
+                    gridReactiveData.currentSheetData[rowNumber].map((cell: Cell) => {
+                        if (cell.rowSpan && cell.rowSpan > 1) {
+                            gridReactiveData.currentSheetData[rowNumber + 1][cell.col + 1].colSpan = cell.colSpan!
+                            gridReactiveData.currentSheetData[rowNumber + 1][cell.col + 1].rowSpan = cell.rowSpan! - 1
+                        }
+                    })
+                }
+
                 gridReactiveData.currentSheetData.map(
                     (row: Cell[], _: number) => {
                         row.map((cell: Cell) => {
-                            if (cell.rowSpan && cell.rowSpan > 1 && cell.row === rowNumber) {
-                                row[rowNumber + 1 + 1].colSpan = row[rowNumber + 1].colSpan! - 1
-                            }
                             if (cell.rowSpan && cell.rowSpan > 1 && cell.row <= rowNumber && cell.row + cell.rowSpan > rowNumber) {
                                 cell.rowSpan -= 1
                             }
@@ -718,6 +734,7 @@ export default defineComponent({
                 )
 
                 gridReactiveData.currentSheetData.splice(Number(rowNumber), 1)
+
                 $vmaFormulaGrid
                     .recalculate(true)
                     .then(() => {
@@ -885,8 +902,7 @@ export default defineComponent({
                 })
                 gridReactiveData.columnWidthsChanged = gridColumnsWidthChangedNew
 
-                const mergesNew: Record<string, any> = {} // TODO
-                console.log(gridReactiveData.merges)
+                const mergesNew: Record<string, any> = {}
                 Object.keys(gridReactiveData.merges).map((key) => {
                     const crArr = key.split(':')
                     const crStartArr = crArr[0].split('_')
@@ -900,19 +916,19 @@ export default defineComponent({
                     if (!(Number(crStartArr[0]) === 0 && Number(crEndArr[0]) === 0)) {
                         if (Number(crStartArr[0]) === 0 && Number(crEndArr[0]) > 0) {
                             crStartArr[0] = '1'
-                            mergesNew[`${crStartArr.join('_') + ':' + crEndArr.join('_')}`] = {
-                                colStart: Number(crStartArr[0]),
-                                colEnd: Number(crEndArr[0]),
-                                colSpan: Number(crEndArr[0]) - Number(crStartArr[0]) + 1,
-                                rowStart: Number(crStartArr[1]),
-                                rowEnd: Number(crEndArr[1]),
-                                rowSpan: Number(crEndArr[1]) - Number(crStartArr[1]) + 1
-                            }
                         }
+                        mergesNew[`${crStartArr.join('_') + ':' + crEndArr.join('_')}`] = {
+                            colStart: Number(crStartArr[0]),
+                            colEnd: Number(crEndArr[0]),
+                            colSpan: Number(crEndArr[0]) - Number(crStartArr[0]) + 1,
+                            rowStart: Number(crStartArr[1]),
+                            rowEnd: Number(crEndArr[1]),
+                            rowSpan: Number(crEndArr[1]) - Number(crStartArr[1]) + 1
+                        }
+
                     }
                 })
                 gridReactiveData.merges = mergesNew
-                console.log(gridReactiveData.merges)
             }
             if (type === 'deleteRow') {
                 const gridRowsVisibleChangedNew: Record<string, number> = {}
@@ -939,28 +955,28 @@ export default defineComponent({
                 })
                 gridReactiveData.rowHeightsChanged = gridRowsHeightChangedNew
 
-                const mergesNew: Record<string, any> = {} // TODO
+                const mergesNew: Record<string, any> = {}
                 Object.keys(gridReactiveData.merges).map((key) => {
                     const crArr = key.split(':')
                     const crStartArr = crArr[0].split('_')
                     const crEndArr = crArr[1].split('_')
-                    if (Number(crStartArr[1]) >= row!) {
+                    if (Number(crStartArr[1]) > row! + 1) {
                         crStartArr[1] = (Number(crStartArr[1]) - 1).toString()
                         crEndArr[1] = (Number(crEndArr[1]) - 1).toString()
-                    } else if (Number(crStartArr[1]) < row! && row! < Number(crEndArr[1])) {
+                    } else if (Number(crStartArr[1]) <= row! + 1 && row! + 1 <= Number(crEndArr[1])) {
                         crEndArr[1] = (Number(crEndArr[1]) - 1).toString()
                     }
                     if (!(Number(crStartArr[1]) === 0 && Number(crEndArr[1]) === 0)) {
                         if (Number(crStartArr[1]) === 0 && Number(crEndArr[1]) > 0) {
                             crStartArr[1] = '1'
-                            mergesNew[`${crStartArr.join('_') + ':' + crEndArr.join('_')}`] = {
-                                colStart: Number(crStartArr[0]),
-                                colEnd: Number(crEndArr[0]),
-                                colSpan: Number(crEndArr[0]) - Number(crStartArr[0]) + 1,
-                                rowStart: Number(crStartArr[1]),
-                                rowEnd: Number(crEndArr[1]),
-                                rowSpan: Number(crEndArr[1]) - Number(crStartArr[1]) + 1
-                            }
+                        }
+                        mergesNew[`${crStartArr.join('_') + ':' + crEndArr.join('_')}`] = {
+                            colStart: Number(crStartArr[0]),
+                            colEnd: Number(crEndArr[0]),
+                            colSpan: Number(crEndArr[0]) - Number(crStartArr[0]) + 1,
+                            rowStart: Number(crStartArr[1]),
+                            rowEnd: Number(crEndArr[1]),
+                            rowSpan: Number(crEndArr[1]) - Number(crStartArr[1]) + 1
                         }
                     }
                 })
