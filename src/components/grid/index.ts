@@ -5,6 +5,7 @@ import VmaFormulaGridCell from './cell.ts'
 
 import VmaFormulaGridCompIcon from '../icon/icon.ts'
 import VmaFormulaGridCompContextMenu from '../context-menu/context-menu.ts'
+import VmaFormulaGridCompTextarea from '../textarea/textarea.ts'
 import VmaFormulaGridCompContextMenuHook from '../context-menu/hooks'
 import {ComponentOptions} from "vue";
 import VmaFormulaGrid from "../../vma-formula-grid";
@@ -19,6 +20,7 @@ VmaFormulaGridComp.install = (Vue: ComponentOptions) => {
     Vue.component('VmaFormulaGridBody', VmaFormulaGridBody)
     Vue.component('VmaFormulaGridCell', VmaFormulaGridCell)
     Vue.component('VmaFormulaGridCompIcon', VmaFormulaGridCompIcon)
+    Vue.component('VmaFormulaGridCompTextarea', VmaFormulaGridCompTextarea)
     VmaFormulaGrid.hooks.add('VmaFormulaGridCompContextMenu', VmaFormulaGridCompContextMenuHook)
     Vue.component(VmaFormulaGridCompContextMenu.name, VmaFormulaGridCompContextMenu)
 }

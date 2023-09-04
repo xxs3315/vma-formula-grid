@@ -13,6 +13,8 @@ export type SizeType = 'large' | 'normal' | 'small' | 'mini'
 
 export type ComponentType = 'default' | 'primary' | 'success' | 'warning' | 'danger'
 
+export type ValueOf<T> = T extends any[] ? T[number] : T[keyof T]
+
 export namespace VmaFormulaGridPropTypes {
     export type Data = Record<string, any>
     export type Type = ComponentType
