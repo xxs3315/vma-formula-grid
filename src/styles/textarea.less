@@ -1,0 +1,191 @@
+@import url('./common');
+
+@textarea-mini-size: 12px;
+@textarea-mini-font-size: 12px;
+@textarea-small-size: 14px;
+@textarea-small-font-size: 14px;
+@textarea-normal-size: 16px;
+@textarea-normal-font-size: 16px;
+@textarea-large-size: 18px;
+@textarea-large-font-size: 18px;
+@textarea-x-large-size: 20px;
+@textarea-x-large-font-size: 20px;
+@textarea-xx-large-size: 22px;
+@textarea-xx-large-font-size: 22px;
+@textarea-xxx-large-size: 24px;
+@textarea-xxx-large-font-size: 24px;
+@textarea-default-color: @gray-7;
+@textarea-primary-color: @blue;
+@textarea-success-color: @green;
+@textarea-danger-color: @red;
+@textarea-warning-color: @orange;
+@textarea-disabled-color: @gray-5;
+@textarea-disabled-background-color: @gray-4;
+
+.vma-formula-grid-textarea {
+  position: relative;
+  display: block;
+  text-align: left;
+  border-radius: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+  line-height: normal;
+
+  .count-helper {
+    position: absolute;
+    width: auto;
+    min-width: 1px;
+    height: auto;
+    visibility: hidden;
+  }
+
+  &.is--disabled {
+    .prefix,
+    .suffix {
+      cursor: no-drop;
+    }
+  }
+
+  &:not(.is--disabled) {
+    .clear-icon {
+      cursor: pointer;
+    }
+
+    &.is--active {
+      &.default {
+        .inner-textarea {
+          border-top: 1px solid @textarea-default-color;
+          border-bottom: 1px solid @textarea-default-color;
+          border-right: 1px solid @textarea-default-color;
+          border-left: 1px solid @textarea-default-color;
+        }
+      }
+
+      &.primary {
+        .inner-textarea {
+          border-top: 1px solid @textarea-primary-color;
+          border-bottom: 1px solid @textarea-primary-color;
+          border-right: 1px solid @textarea-primary-color;
+          border-left: 1px solid @textarea-primary-color;
+        }
+      }
+
+      &.success {
+        .inner-textarea {
+          border-top: 1px solid @textarea-success-color;
+          border-bottom: 1px solid @textarea-success-color;
+          border-right: 1px solid @textarea-success-color;
+          border-left: 1px solid @textarea-success-color;
+        }
+      }
+
+      &.warning {
+        .inner-textarea {
+          border-top: 1px solid @textarea-warning-color;
+          border-bottom: 1px solid @textarea-warning-color;
+          border-right: 1px solid @textarea-warning-color;
+          border-left: 1px solid @textarea-warning-color;
+        }
+      }
+
+      &.danger {
+        .inner-textarea {
+          border-top: 1px solid @textarea-danger-color;
+          border-bottom: 1px solid @textarea-danger-color;
+          border-right: 1px solid @textarea-danger-color;
+          border-left: 1px solid @textarea-danger-color;
+        }
+      }
+    }
+  }
+
+  &.xxx-large {
+    font-size: @textarea-xxx-large-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-xxx-large-size;
+    }
+  }
+
+  &.xx-large {
+    font-size: @textarea-xx-large-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-xx-large-size;
+    }
+  }
+
+  &.x-large {
+    font-size: @textarea-x-large-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-x-large-size;
+    }
+  }
+
+  &.large {
+    font-size: @textarea-large-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-large-size;
+    }
+  }
+
+  &.normal {
+    font-size: @textarea-normal-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-normal-size;
+    }
+  }
+
+  &.small {
+    font-size: @textarea-small-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-small-size;
+    }
+  }
+
+  &.mini {
+    font-size: @textarea-mini-font-size;
+
+    .inner-textarea {
+      min-height: @textarea-mini-size;
+    }
+  }
+
+  .inner-textarea {
+    overflow: auto;
+    padding: 1px;
+    margin: 0;
+    width: 100%;
+    font-size: inherit;
+    color: @gray-8;
+    background-color: #fff;
+    border: 1px solid @gray-4;
+    border-radius: 0;
+    outline: 0;
+    box-shadow: none;
+    line-height: inherit;
+
+    &::placeholder {
+      color: @gray-5;
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+      color: @textarea-disabled-color;
+      background-color: @textarea-disabled-background-color;
+    }
+
+    &--wrap {
+      white-space: pre-wrap;
+    }
+
+    &--nowrap {
+      white-space: pre;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import {
-    ComponentOptions,
+    ComponentOptions, ComponentPublicInstance,
     computed,
     createCommentVNode,
     defineComponent,
@@ -123,9 +123,13 @@ export default defineComponent({
                             )
                         }
                         GlobalEvent.on($vmaFormulaGrid, 'resize', handleGlobalResizeEvent)
-                    }).finally(() => {
-                    $vmaFormulaGrid.calc()
-                })
+                    })
+                    .then(() => {
+                        $vmaFormulaGrid.calc()
+                    })
+                    .then(() => {
+                        $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                    })
             })
         })
 
@@ -234,6 +238,14 @@ export default defineComponent({
 
         const refGridContextMenu = ref() as Ref<HTMLDivElement>
 
+        const refCurrentCellEditor = ref() as Ref<ComponentPublicInstance>
+
+        const refCurrentCellBorderTop = ref() as Ref<HTMLDivElement>
+        const refCurrentCellBorderRight = ref() as Ref<HTMLDivElement>
+        const refCurrentCellBorderBottom = ref() as Ref<HTMLDivElement>
+        const refCurrentCellBorderLeft = ref() as Ref<HTMLDivElement>
+        const refCurrentCellBorderCorner = ref() as Ref<HTMLDivElement>
+
         const renderDefaultColWidth = computed(() => getRenderDefaultColWidth(props.defaultColumnWidth, props.size))
 
         const renderDefaultRowHeight = computed(() => getRenderDefaultRowHeight(props.defaultRowHeight, props.size))
@@ -294,7 +306,33 @@ export default defineComponent({
                 list: [],
                 style: null,
             },
+            currentCell: null,
+            currentCellBorderStyle: {
+                transform: 'translateX(0) translateY(0)',
+                left: 0,
+                top: 0,
+                width: 0,
+                height: 0
+            },
+            currentCellEditorStyle: {
+                transform: 'translateX(0) translateY(0)',
+                display: 'none',
+                left: 0,
+                top: 0,
+                width: 0,
+                height: 0
+            },
+            currentCellEditorActive: false,
+            currentCellEditorContent: null,
         }) as VmaFormulaGridReactiveData
+
+        watch(
+            () => gridReactiveData.currentCell,
+            () => $vmaFormulaGrid.calcCurrentCellEditorStyle(),
+            {
+                deep: true
+            }
+        )
 
         const gridRefs: VmaFormulaGridRefs = {
             refGridDiv,
@@ -328,7 +366,15 @@ export default defineComponent({
             renderDefaultRowHeight,
             rowIndicatorElWidth,
 
-            refGridContextMenu
+            refGridContextMenu,
+
+            refCurrentCellEditor,
+
+            refCurrentCellBorderTop,
+            refCurrentCellBorderRight,
+            refCurrentCellBorderBottom,
+            refCurrentCellBorderLeft,
+            refCurrentCellBorderCorner,
         }
 
         const gridMethods = {
@@ -548,6 +594,59 @@ export default defineComponent({
             triggerScrollYEvent: (event: Event) => {
                 const scrollBodyElem = (event.currentTarget || event.target) as HTMLDivElement
                 debounceScrollY(scrollBodyElem)
+            },
+            calcCurrentCellEditorStyle: () => {
+                if (gridReactiveData.currentCell) {
+                    const leftSpaceWidth = getXSpaceFromColumnWidths(
+                        gridReactiveData.xStart,
+                        renderDefaultColWidth.value,
+                        gridReactiveData.columnWidthsChanged,
+                        gridReactiveData.columnHidesChanged
+                    )
+
+                    const topSpaceHeight = getYSpaceFromRowHeights(
+                        gridReactiveData.yStart,
+                        renderDefaultRowHeight.value,
+                        gridReactiveData.rowHeightsChanged,
+                        gridReactiveData.rowHidesChanged
+                    )
+
+                    nextTick(() => {
+                        const { row, col } = gridReactiveData.currentCell
+                        refGridBodyTable.value
+                            .querySelectorAll(`td[data-row="${row}"][data-col="${col!}"]`)
+                            .forEach((cellElem: any) => {
+                                const marginLeft = `${leftSpaceWidth + cellElem.offsetLeft}px`
+                                const marginTop = `${topSpaceHeight + cellElem.offsetTop}px`
+                                const borderMarginLeft = `${leftSpaceWidth + cellElem.offsetLeft - 1}px`
+                                const borderMarginTop = `${topSpaceHeight + cellElem.offsetTop - 1}px`
+                                gridReactiveData.currentCellEditorStyle.transform = `translateX(${marginLeft}) translateY(${marginTop})`
+                                gridReactiveData.currentCellEditorStyle.height = `${cellElem.offsetHeight - 1}px`
+                                gridReactiveData.currentCellEditorStyle.width = `${cellElem.offsetWidth - 1}px`
+                                gridReactiveData.currentCellBorderStyle.transform = `translateX(${borderMarginLeft}) translateY(${borderMarginTop})`
+                                gridReactiveData.currentCellBorderStyle.height = `${cellElem.offsetHeight}px`
+                                gridReactiveData.currentCellBorderStyle.width = `${cellElem.offsetWidth}px`
+                            })
+                    })
+                }
+            },
+            calcCurrentCellEditorDisplay: () => {
+                if (gridReactiveData.currentCell) {
+                    const { row, col } = gridReactiveData.currentCell
+                    if (
+                        row! <= gridReactiveData.yEnd &&
+                        row! >= gridReactiveData.yStart &&
+                        col! <= gridReactiveData.xEnd &&
+                        col! >= gridReactiveData.xStart &&
+                        gridReactiveData.currentCellEditorActive
+                    ) {
+                        gridReactiveData.currentCellEditorStyle.display = 'block'
+                    } else {
+                        gridReactiveData.currentCellEditorStyle.display = 'none'
+                    }
+                } else {
+                    gridReactiveData.currentCellEditorStyle.display = 'none'
+                }
             },
             insertColumn: (colNumber: number) => {
                 updateConfs('insertColumn', colNumber, null)

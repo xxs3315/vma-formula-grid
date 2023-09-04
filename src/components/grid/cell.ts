@@ -71,7 +71,8 @@ export default defineComponent({
             refColumnResizeBarDiv,
             refRowResizeBarDiv,
             renderDefaultColWidth,
-            renderDefaultRowHeight
+            renderDefaultRowHeight,
+            refCurrentCellEditor
         } = $vmaFormulaGrid.getRefs()
 
         const {currentSheetData} = $vmaFormulaGrid.reactiveData
@@ -292,10 +293,21 @@ export default defineComponent({
                         // $vmaFormulaGrid.reactiveData.currentAreaStatus = false
                     },
                     onMousedown: (_: MouseEvent) => {
-
+                        $vmaFormulaGrid.reactiveData.currentCellEditorActive = false
+                        $vmaFormulaGrid.reactiveData.currentCell =
+                            currentSheetData[props.row!][props.col! + 1]
+                        $vmaFormulaGrid.reactiveData.currentCellEditorContent =
+                            currentSheetData[props.row!][props.col! + 1].v
                     },
                     onDblclick: (_: MouseEvent) => {
-
+                        $vmaFormulaGrid.reactiveData.currentCellEditorActive = true
+                        nextTick(() => {
+                            refCurrentCellEditor.value.$el
+                                .querySelectorAll(`textarea`)
+                                .forEach((elem: HTMLTextAreaElement) => {
+                                    elem.focus()
+                                })
+                        })
                     }
                 },
                 renderCellContent())

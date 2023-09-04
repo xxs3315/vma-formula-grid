@@ -226,7 +226,7 @@ export default defineComponent({
         {
           ref: refElem,
           class: [
-            'vma-textarea',
+            'vma-formula-grid-textarea',
             props.size,
             props.type,
             {

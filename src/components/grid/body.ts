@@ -20,7 +20,7 @@ import {
     VmaFormulaGridPrivateMethods
 } from "../../types";
 import {Guid} from "../../utils/guid.ts";
-import { checkCellInMerges } from "../../utils";
+import {checkCellInMerges, isNumeric} from "../../utils";
 
 export default defineComponent({
     name: 'VmaFormulaGridBody',
@@ -35,6 +35,8 @@ export default defineComponent({
         const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
 
         const GridCellComponent = resolveComponent('VmaFormulaGridCell') as ComponentOptions
+
+        const TextareaComponent = resolveComponent('VmaFormulaGridCompTextarea') as ComponentOptions
 
         const gridBodyReactiveData = reactive({})
 
@@ -73,6 +75,7 @@ export default defineComponent({
             refGridBodyLeftFixedTableColgroup,
             renderDefaultRowHeight,
             refGridHeaderTableWrapperDiv,
+            refCurrentCellEditor,
         } = $vmaFormulaGrid.getRefs()
 
         const renderVN = () => h('div', {
@@ -117,6 +120,37 @@ export default defineComponent({
                             h('tbody', {}, renderBodyRows()),
                         ]
                     ),
+                    h(TextareaComponent, {
+                        ref: refCurrentCellEditor,
+                        class: ['cell-editor'],
+                        size: $vmaFormulaGrid.props.size,
+                        type: $vmaFormulaGrid.props.type,
+                        modelValue: $vmaFormulaGrid.reactiveData.currentCellEditorContent,
+                        'onUpdate:modelValue': (value: any) => {
+                            $vmaFormulaGrid.reactiveData.currentCellEditorContent = value
+                        },
+                        style: {
+                            display: $vmaFormulaGrid.reactiveData.currentCellEditorStyle.display,
+                            transform: $vmaFormulaGrid.reactiveData.currentCellEditorStyle.transform,
+                            height: $vmaFormulaGrid.reactiveData.currentCellEditorStyle.height,
+                            width: $vmaFormulaGrid.reactiveData.currentCellEditorStyle.width,
+                            left: $vmaFormulaGrid.reactiveData.currentCellEditorStyle.left,
+                            top: $vmaFormulaGrid.reactiveData.currentCellEditorStyle.top
+                        },
+                        onChange: () => {
+                            $vmaFormulaGrid.reactiveData.currentCell.v = isNumeric(
+                                $vmaFormulaGrid.reactiveData.currentCellEditorContent
+                            )
+                                ? Number($vmaFormulaGrid.reactiveData.currentCellEditorContent)
+                                : $vmaFormulaGrid.reactiveData.currentCellEditorContent
+                        },
+                        onBlur: () => {
+                            // 重新计算
+                            nextTick(() => {
+                                $vmaFormulaGrid.calc()
+                            })
+                        }
+                    })
                 ] : (props.fixed === 'left' ?
                     h('div', {
                         ref: refGridBodyLeftFixedScrollWrapperDiv,

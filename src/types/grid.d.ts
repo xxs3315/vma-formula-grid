@@ -1,4 +1,4 @@
-import {ComputedRef, Ref, RenderFunction, SetupContext} from "vue";
+import {ComponentPublicInstance, ComputedRef, Ref, RenderFunction, SetupContext} from "vue";
 import {Cell} from "../components/grid/internals/cell.ts";
 import {
     VmaFormulaGridCompContextMenuMethods,
@@ -61,6 +61,14 @@ export interface VmaFormulaGridRefs {
     rowIndicatorElWidth: ComputedRef<number>
 
     refGridContextMenu: Ref<HTMLDivElement>
+
+    refCurrentCellEditor: Ref<ComponentPublicInstance>
+
+    refCurrentCellBorderTop: Ref<HTMLDivElement>
+    refCurrentCellBorderRight: Ref<HTMLDivElement>
+    refCurrentCellBorderBottom: Ref<HTMLDivElement>
+    refCurrentCellBorderLeft: Ref<HTMLDivElement>
+    refCurrentCellBorderCorner: Ref<HTMLDivElement>
 }
 
 export interface VmaFormulaGridReactiveData {
@@ -133,6 +141,12 @@ export interface VmaFormulaGridReactiveData {
         style: any
         [key: string]: any
     }
+
+    currentCell: any
+    currentCellBorderStyle: Record<string, any>
+    currentCellEditorStyle: Record<string, any>
+    currentCellEditorActive: boolean
+    currentCellEditorContent: any
 }
 
 export interface VmaFormulaGridProps {
@@ -165,6 +179,8 @@ export interface VmaFormulaGridPrivateMethods {
     hideRow(row: number): void
     deleteColumn(col: number): void
     deleteRow(row: number): void
+    calcCurrentCellEditorStyle(): void
+    calcCurrentCellEditorDisplay(): void
 }
 
 export interface VmaFormulaGridConstructor extends VmaComponentInstance, VmaFormulaGridMethods, VmaFormulaGridPrivateMethods {
