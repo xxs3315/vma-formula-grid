@@ -79,7 +79,7 @@ export default defineComponent({
 
         const renderCellContentWithFormat = () => {
             const c = currentSheetData[props.row][props.col + 1]
-            // 加入数据格式处理
+            // TODO 加入数据格式处理
             return c.mv
         }
 
@@ -415,9 +415,6 @@ export default defineComponent({
                 dragBtnElem.parentElement!.style.width = `${Math.max(dragBtnElem.parentElement!.clientWidth + dragLeft - dragPosLeft, 6)}px`
                 $vmaFormulaGrid.recalculate(true).then(() => {
                     nextTick(() => {
-                        // $vmaFormulaGrid.calcCurrentCellPosition()
-                        // $vmaFormulaGrid.calcCurrentCellDisplay()
-                        // console.log('columnWidthsChanged', $vmaFormulaGrid.reactiveData.columnWidthsChanged)
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
                     })
@@ -477,9 +474,6 @@ export default defineComponent({
                 dragBtnElem.parentElement!.parentElement!.style.height = `${Math.max(dragBtnElem.parentElement!.clientHeight + dragTop - dragPosTop, 6)}px`
                 $vmaFormulaGrid.recalculate(true).then(() => {
                     nextTick(() => {
-                        // $vmaFormulaGrid.calcCurrentCellPosition()
-                        // $vmaFormulaGrid.calcCurrentCellDisplay()
-                        // console.log('rowHeightsChanged', $vmaFormulaGrid.reactiveData.rowHeightsChanged)
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
                     })
