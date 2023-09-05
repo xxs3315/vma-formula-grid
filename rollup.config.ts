@@ -6,6 +6,7 @@ import postcss from 'rollup-plugin-postcss'
 import babel from '@rollup/plugin-babel'
 import vue from 'rollup-plugin-vue'
 import terser from '@rollup/plugin-terser'
+import less from 'rollup-plugin-less'
 
 /**
  * Rollup Configuration
@@ -34,7 +35,21 @@ export default defineConfig([
       }),
       terser(),
       vue(),
-      postcss(),
+      postcss({
+        // extensions: ['css', '.less'],
+        minimize: true,
+        modules: true,
+        use: {
+          sass: null,
+          stylus: null,
+          less: { javascriptEnabled: true }
+        }, //, modifyVars: antdVars }},,
+        extract: 'index.css'/*,
+        config: {
+          path: './postcss.config.js',
+          ctx: null
+        }*/
+      }),
       babel({
         babelHelpers: 'bundled',
         extensions: ['.js', '.vue']

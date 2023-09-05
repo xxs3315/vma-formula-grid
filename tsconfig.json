@@ -17,6 +17,6 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "examples/**/*.vue", "examples/**/*.ts", "examples/**/*.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.less"], // , "examples/**/*.vue", "examples/**/*.ts", "examples/**/*.d.ts"
   "references": [{ "path": "./tsconfig.node.json" }]
 }
