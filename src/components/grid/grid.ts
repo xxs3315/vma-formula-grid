@@ -196,7 +196,10 @@ export default defineComponent({
         })
 
         watch(() => props.size, () => {
-            $vmaFormulaGrid.recalculate(false)
+            $vmaFormulaGrid.recalculate(false).then(() => {
+                $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+            })
         })
 
         watch(() => props.type, () => {
@@ -331,6 +334,13 @@ export default defineComponent({
             () => $vmaFormulaGrid.calcCurrentCellEditorStyle(),
             {
                 deep: true
+            }
+        )
+
+        watch(
+            () => gridReactiveData.currentCellEditorActive,
+            () => {
+                $vmaFormulaGrid.calcCurrentCellEditorDisplay()
             }
         )
 
@@ -597,21 +607,20 @@ export default defineComponent({
             },
             calcCurrentCellEditorStyle: () => {
                 if (gridReactiveData.currentCell) {
-                    const leftSpaceWidth = getXSpaceFromColumnWidths(
-                        gridReactiveData.xStart,
-                        renderDefaultColWidth.value,
-                        gridReactiveData.columnWidthsChanged,
-                        gridReactiveData.columnHidesChanged
-                    )
-
-                    const topSpaceHeight = getYSpaceFromRowHeights(
-                        gridReactiveData.yStart,
-                        renderDefaultRowHeight.value,
-                        gridReactiveData.rowHeightsChanged,
-                        gridReactiveData.rowHidesChanged
-                    )
-
                     nextTick(() => {
+                        const leftSpaceWidth = getXSpaceFromColumnWidths(
+                            gridReactiveData.xStart,
+                            renderDefaultColWidth.value,
+                            gridReactiveData.columnWidthsChanged,
+                            gridReactiveData.columnHidesChanged
+                        )
+
+                        const topSpaceHeight = getYSpaceFromRowHeights(
+                            gridReactiveData.yStart,
+                            renderDefaultRowHeight.value,
+                            gridReactiveData.rowHeightsChanged,
+                            gridReactiveData.rowHidesChanged
+                        )
                         const { row, col } = gridReactiveData.currentCell
                         refGridBodyTable.value
                             .querySelectorAll(`td[data-row="${row}"][data-col="${col!}"]`)
@@ -688,6 +697,10 @@ export default defineComponent({
                 $vmaFormulaGrid
                     .recalculate(true)
                     .then(() => {
+                        $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                        $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                    })
+                    .then(() => {
                         $vmaFormulaGrid.calc()
                     })
             },
@@ -734,18 +747,28 @@ export default defineComponent({
                 $vmaFormulaGrid
                     .recalculate(true)
                     .then(() => {
+                        $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                        $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                    })
+                    .then(() => {
                         $vmaFormulaGrid.calc()
                     })
             },
             hideColumn: (colNumber: number) => {
                 updateConfs('hideColumn', colNumber, null)
                 gridReactiveData.colConfs[colNumber + 1].visible = false
-                $vmaFormulaGrid.recalculate(false)
+                $vmaFormulaGrid.recalculate(false).then(() => {
+                    $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                    $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                })
             },
             hideRow: (rowNumber: number) => {
                 updateConfs('hideRow', null, rowNumber)
                 gridReactiveData.rowConfs[rowNumber].visible = false
-                $vmaFormulaGrid.recalculate(false)
+                $vmaFormulaGrid.recalculate(false).then(() => {
+                    $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                    $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                })
             },
             deleteColumn: (colNumber: number) => {
                 updateConfs('deleteColumn', colNumber, null)
@@ -792,8 +815,14 @@ export default defineComponent({
                 $vmaFormulaGrid
                     .recalculate(true)
                     .then(() => {
+                        $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                        $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                    })
+                    .then(() => {
                         $vmaFormulaGrid.calc()
                     })
+
+                updateCurrentCell()
             },
             deleteRow: (rowNumber: number) => {
                 updateConfs('deleteRow', null, rowNumber)
@@ -837,8 +866,14 @@ export default defineComponent({
                 $vmaFormulaGrid
                     .recalculate(true)
                     .then(() => {
+                        $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                        $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                    })
+                    .then(() => {
                         $vmaFormulaGrid.calc()
                     })
+
+                updateCurrentCell()
             },
             updateColVisible: (type: string, colStart: number, colEnd: number) => {
                 if (type === 'showForwardCols') {
@@ -869,6 +904,8 @@ export default defineComponent({
                                 gridColumnsVisibleChangedNew
                         }
                         $vmaFormulaGrid.recalculate(false).then(() => {
+                            $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                            $vmaFormulaGrid.calcCurrentCellEditorDisplay()
                         })
                     }
                 }
@@ -900,6 +937,8 @@ export default defineComponent({
                                 gridColumnsVisibleChangedNew
                         }
                         $vmaFormulaGrid.recalculate(false).then(() => {
+                            $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                            $vmaFormulaGrid.calcCurrentCellEditorDisplay()
                         })
                     }
                 }
@@ -930,6 +969,8 @@ export default defineComponent({
                             gridReactiveData.rowHidesChanged = gridRowsVisibleChangedNew
                         }
                         $vmaFormulaGrid.recalculate(false).then(() => {
+                            $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                            $vmaFormulaGrid.calcCurrentCellEditorDisplay()
                         })
                     }
                 }
@@ -958,11 +999,21 @@ export default defineComponent({
                             gridReactiveData.rowHidesChanged = gridRowsVisibleChangedNew
                         }
                         $vmaFormulaGrid.recalculate(false).then(() => {
+                            $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                            $vmaFormulaGrid.calcCurrentCellEditorDisplay()
                         })
                     }
                 }
             },
         } as VmaFormulaGridPrivateMethods
+
+        const updateCurrentCell = () => {
+            if (gridReactiveData.currentCell) {
+                if (gridReactiveData.currentCell.row < 0 || gridReactiveData.currentCell.col < 0) {
+                    gridReactiveData.currentCell = null
+                }
+            }
+        }
 
         const updateConfs = (type: string, col: number | null, row: number | null) : void => {
             if (type === 'hideColumn') {

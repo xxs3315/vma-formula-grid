@@ -76,6 +76,11 @@ export default defineComponent({
             renderDefaultRowHeight,
             refGridHeaderTableWrapperDiv,
             refCurrentCellEditor,
+            refCurrentCellBorderTop,
+            refCurrentCellBorderRight,
+            refCurrentCellBorderBottom,
+            refCurrentCellBorderLeft,
+            refCurrentCellBorderCorner,
         } = $vmaFormulaGrid.getRefs()
 
         const renderVN = () => h('div', {
@@ -150,7 +155,61 @@ export default defineComponent({
                                 $vmaFormulaGrid.calc()
                             })
                         }
-                    })
+                    }),
+                    h('div', {
+                        ref: refCurrentCellBorderLeft,
+                        class: ['current-cell-border', 'left', `${$vmaFormulaGrid.props.type}`],
+                        style: {
+                            transform: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.transform,
+                            left: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.left,
+                            top: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.top,
+                            height: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.height,
+                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'block' : 'none'
+                        }
+                    }),
+                    h('div', {
+                        ref: refCurrentCellBorderTop,
+                        class: ['current-cell-border', 'top', `${$vmaFormulaGrid.props.type}`],
+                        style: {
+                            transform: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.transform,
+                            left: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.left,
+                            top: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.top,
+                            width: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.width,
+                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'block' : 'none'
+                        }
+                    }),
+                    h('div', {
+                        ref: refCurrentCellBorderRight,
+                        class: ['current-cell-border', 'right', `${$vmaFormulaGrid.props.type}`],
+                        style: {
+                            transform: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.transform,
+                            left: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.left + $vmaFormulaGrid.reactiveData.currentCellBorderStyle.width,
+                            top: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.top,
+                            height: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.height,
+                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'block' : 'none'
+                        }
+                    }),
+                    h('div', {
+                        ref: refCurrentCellBorderBottom,
+                        class: ['current-cell-border', 'bottom', `${$vmaFormulaGrid.props.type}`],
+                        style: {
+                            transform: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.transform,
+                            left: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.left,
+                            top: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.top + $vmaFormulaGrid.reactiveData.currentCellBorderStyle.height,
+                            width: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.width,
+                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'block' : 'none'
+                        }
+                    }),
+                    h('div', {
+                        ref: refCurrentCellBorderCorner,
+                        class: ['current-cell-border', 'corner', `${$vmaFormulaGrid.props.type}`],
+                        style: {
+                            transform: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.transform,
+                            left: `calc(${$vmaFormulaGrid.reactiveData.currentCellBorderStyle.left + $vmaFormulaGrid.reactiveData.currentCellBorderStyle.width} - 3px)`,
+                            top: `calc(${$vmaFormulaGrid.reactiveData.currentCellBorderStyle.top + $vmaFormulaGrid.reactiveData.currentCellBorderStyle.height} - 3px)`,
+                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'block' : 'none'
+                        }
+                    }),
                 ] : (props.fixed === 'left' ?
                     h('div', {
                         ref: refGridBodyLeftFixedScrollWrapperDiv,

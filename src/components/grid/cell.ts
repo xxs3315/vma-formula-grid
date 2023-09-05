@@ -289,26 +289,6 @@ export default defineComponent({
                         alignItems: 'center',
 
                     },
-                    onMouseup: (_: MouseEvent) => {
-                        // $vmaFormulaGrid.reactiveData.currentAreaStatus = false
-                    },
-                    onMousedown: (_: MouseEvent) => {
-                        $vmaFormulaGrid.reactiveData.currentCellEditorActive = false
-                        $vmaFormulaGrid.reactiveData.currentCell =
-                            currentSheetData[props.row!][props.col! + 1]
-                        $vmaFormulaGrid.reactiveData.currentCellEditorContent =
-                            currentSheetData[props.row!][props.col! + 1].v
-                    },
-                    onDblclick: (_: MouseEvent) => {
-                        $vmaFormulaGrid.reactiveData.currentCellEditorActive = true
-                        nextTick(() => {
-                            refCurrentCellEditor.value.$el
-                                .querySelectorAll(`textarea`)
-                                .forEach((elem: HTMLTextAreaElement) => {
-                                    elem.focus()
-                                })
-                        })
-                    }
                 },
                 renderCellContent())
         }
@@ -354,6 +334,30 @@ export default defineComponent({
                         height: c.rowSpan! > 1 ? '100%' : 'inherit',
                         width: c.colSpan ! > 1 ? '100%' : 'inherit',
                     },
+                    onMouseup: (_: MouseEvent) => {
+                        // $vmaFormulaGrid.reactiveData.currentAreaStatus = false
+                    },
+                    onMousedown: (_: MouseEvent) => {
+                        if (props.cat === 'normal' && props.col >= 0) {
+                            $vmaFormulaGrid.reactiveData.currentCellEditorActive = false
+                            $vmaFormulaGrid.reactiveData.currentCell =
+                                currentSheetData[props.row!][props.col! + 1]
+                            $vmaFormulaGrid.reactiveData.currentCellEditorContent =
+                                currentSheetData[props.row!][props.col! + 1].v
+                        }
+                    },
+                    onDblclick: (_: MouseEvent) => {
+                        if (props.cat === 'normal' && props.col >= 0) {
+                            $vmaFormulaGrid.reactiveData.currentCellEditorActive = true
+                            nextTick(() => {
+                                refCurrentCellEditor.value.$el
+                                    .querySelectorAll(`textarea`)
+                                    .forEach((elem: HTMLTextAreaElement) => {
+                                        elem.focus()
+                                    })
+                            })
+                        }
+                    }
                 },
                 renderCell()
             )
@@ -414,6 +418,8 @@ export default defineComponent({
                         // $vmaFormulaGrid.calcCurrentCellPosition()
                         // $vmaFormulaGrid.calcCurrentCellDisplay()
                         // console.log('columnWidthsChanged', $vmaFormulaGrid.reactiveData.columnWidthsChanged)
+                        $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                        $vmaFormulaGrid.calcCurrentCellEditorDisplay()
                     })
                 })
             }
@@ -474,6 +480,8 @@ export default defineComponent({
                         // $vmaFormulaGrid.calcCurrentCellPosition()
                         // $vmaFormulaGrid.calcCurrentCellDisplay()
                         // console.log('rowHeightsChanged', $vmaFormulaGrid.reactiveData.rowHeightsChanged)
+                        $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                        $vmaFormulaGrid.calcCurrentCellEditorDisplay()
                     })
                 })
             }
