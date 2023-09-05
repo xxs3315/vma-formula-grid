@@ -298,8 +298,8 @@ export default defineComponent({
             return h(
                 props.cat === 'normal' || props.cat === 'row-indicator' ? 'td' : 'th',
                 {
-                    rowspan: c.rowSpan,
-                    colspan: c.colSpan,
+                    rowspan: props.cat === 'normal' || props.cat === 'row-indicator' ? c.rowSpan : 1,
+                    colspan: props.cat === 'normal' || props.cat === 'row-indicator' ? c.colSpan : 1,
                     'data-row': props.row,
                     'data-col': props.col,
                     class: [
