@@ -10,6 +10,10 @@ gulp.task('copy_font', () =>
     gulp.src('src/styles/font/*.*').pipe(gulp.dest('dist/font')),
 )
 
+gulp.task('copy_types', () =>
+    gulp.src('src/types/**/*.*').pipe(gulp.dest('dist/types')),
+)
+
 gulp.task('build_style', () => {
   return merge(
     gulp
@@ -52,6 +56,7 @@ gulp.task('build_style', () => {
 gulp.task(
   'build',
   gulp.series(
+      'copy_types',
     'build_style',
     'copy_font',
   ),
