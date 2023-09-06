@@ -331,7 +331,10 @@ export default defineComponent({
 
         watch(
             () => gridReactiveData.currentCell,
-            () => $vmaFormulaGrid.calcCurrentCellEditorStyle(),
+            () => {
+                console.log(gridReactiveData.currentCell)
+                $vmaFormulaGrid.calcCurrentCellEditorStyle()
+            },
             {
                 deep: true
             }
@@ -622,9 +625,10 @@ export default defineComponent({
                             gridReactiveData.rowHidesChanged
                         )
                         const { row, col } = gridReactiveData.currentCell
-                        refGridBodyTable.value
+                        const cells = refGridBodyTable.value
                             .querySelectorAll(`td[data-row="${row}"][data-col="${col!}"]`)
-                            .forEach((cellElem: any) => {
+                        if (cells.length > 0) {
+                            cells.forEach((cellElem: any) => {
                                 const marginLeft = `${leftSpaceWidth + cellElem.offsetLeft}px`
                                 const marginTop = `${topSpaceHeight + cellElem.offsetTop}px`
                                 const borderMarginLeft = `${leftSpaceWidth + cellElem.offsetLeft - 1}px`
@@ -636,6 +640,9 @@ export default defineComponent({
                                 gridReactiveData.currentCellBorderStyle.height = `${cellElem.offsetHeight}px`
                                 gridReactiveData.currentCellBorderStyle.width = `${cellElem.offsetWidth}px`
                             })
+                        } else {
+                            gridReactiveData.currentCell = null
+                        }
                     })
                 }
             },
@@ -1008,6 +1015,7 @@ export default defineComponent({
         } as VmaFormulaGridPrivateMethods
 
         const updateCurrentCell = () => {
+            console.log(gridReactiveData.currentCell)
             if (gridReactiveData.currentCell) {
                 if (gridReactiveData.currentCell.row < 0 || gridReactiveData.currentCell.col < 0) {
                     gridReactiveData.currentCell = null
