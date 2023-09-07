@@ -332,7 +332,6 @@ export default defineComponent({
         watch(
             () => gridReactiveData.currentCell,
             () => {
-                console.log(gridReactiveData.currentCell)
                 $vmaFormulaGrid.calcCurrentCellEditorStyle()
             },
             {
@@ -1018,7 +1017,6 @@ export default defineComponent({
         } as VmaFormulaGridPrivateMethods
 
         const updateCurrentCell = () => {
-            console.log(gridReactiveData.currentCell)
             if (gridReactiveData.currentCell) {
                 if (gridReactiveData.currentCell.row < 0 || gridReactiveData.currentCell.col < 0) {
                     gridReactiveData.currentCell = null
