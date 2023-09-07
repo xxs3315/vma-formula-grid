@@ -34,7 +34,11 @@ export default defineConfig([
       terser(),
     ],
     external: [
-      /^vue(\/.+|$)/
+      'vue',
+      'bahttext',
+      'bessel',
+      'chevrotain',
+      'jstat'
     ]
   }
 ])
