@@ -52,11 +52,10 @@ gulp.task('build_style', () => {
   )
 })
 
-
 gulp.task(
   'build',
   gulp.series(
-      'copy_types',
+    'copy_types',
     'build_style',
     'copy_font',
   ),

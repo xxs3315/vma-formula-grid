@@ -114,8 +114,8 @@ export default defineComponent({
         p: 'A4',
         v: 4
       }, {
-        p: 'AA100',
-        v: '= BB100 - 2'
+        p: 'A20',
+        v: '= T20 - 2'
       }, {
         p: 'B1',
         v: '= SUM(A3, 6)'
@@ -132,8 +132,8 @@ export default defineComponent({
         p: 'B5',
         v: '= SUM(A1:A4)'
       }, {
-        p: 'BB100',
-        v: '= AA100 + 2'
+        p: 'T20',
+        v: '= A20 + 2'
       },]
     });
 
@@ -185,10 +185,8 @@ export default defineComponent({
         col: 'H',
         width: 200,
       }],
-      rowHide: [9, ...Immutable.Range(15, 21).toArray()],
-      colHide: ['D', ...Immutable.Range(6, 8).map((value, _) => {
-        return getColumnSymbol(value)
-      }).toArray()],
+      rowHide: [9, 15, 16, 17, 18, 19],
+      colHide: ['D', 'F', 'G'],
       merges: ['A2:G3', 'A5:A12']
     })
 

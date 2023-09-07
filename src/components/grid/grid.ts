@@ -1766,6 +1766,9 @@ export default defineComponent({
                         gridReactiveData.rowConfs.push(new Row(index, rowHeight || 'default', rowVisible))
                     })
 
+                    console.log(props.data.conf.rowHide)
+                    console.log(gridReactiveData.rowHidesChanged)
+
                     gridReactiveData.currentSheetData = new Array(rows.length).fill(null).map(() => new Array(columns.length).fill(null))
 
                     gridReactiveData.currentSheetData.forEach((row, rowIndex) => {
