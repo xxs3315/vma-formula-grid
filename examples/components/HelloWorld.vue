@@ -55,7 +55,7 @@
     </div>
 
     <div style="margin-top: 10px; height: calc(100% - 80px)">
-      <splitpanes class="default-theme" style="height: 100%;" @resize="layoutEditor" @ready="layoutEditor">
+      <splitpanes class="default-theme" style="height: 100%;">
         <pane min-size="50" size="80">
           <vma-formula-grid style="width: calc(100% - 16px); height: calc(100% - 16px); margin: 8px;" :data="data" :size="size" :type="themeType" />
         </pane>
@@ -195,13 +195,6 @@ export default defineComponent({
       mapData: mapData
     })
 
-    const layoutEditor = () => {
-      console.log(123)
-      // if (editorRef.value && editorInstance.value) {
-      //   editorInstance.value.layout();
-      // }
-    }
-
     watch(() => datasource.value, () => {
       data.type = datasource.value
     })
@@ -222,9 +215,7 @@ export default defineComponent({
       datasource,
       data,
       size,
-      themeType,
-
-      layoutEditor
+      themeType
     }
   }
 })
