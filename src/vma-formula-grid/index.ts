@@ -1,7 +1,7 @@
 import hooks from './hooks'
 
 export class VmaFormulaGridInstance {
-    readonly version = '1.0.4'
+    readonly version = '1.0.5'
 
     readonly hooks = hooks
 }
