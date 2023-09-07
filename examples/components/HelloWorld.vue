@@ -69,8 +69,6 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, onUnmounted, reactive, ref, toRaw, watch} from "vue";
-import Immutable from 'immutable';
-import {getColumnSymbol} from "../../src/utils";
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';

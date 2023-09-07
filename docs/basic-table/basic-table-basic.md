@@ -31,8 +31,6 @@ description: 基础表格-基础
 
 <script lang="ts">
 import {defineComponent, onMounted, reactive, ref, watch} from "vue";
-import Immutable from 'immutable';
-import {getColumnSymbol} from "../../src/utils";
 
 export default defineComponent({
   name: "HelloWorld",
