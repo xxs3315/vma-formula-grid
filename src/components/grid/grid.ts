@@ -588,6 +588,9 @@ export default defineComponent({
                     })
                 }
                 return computeScrollLoad()
+            },
+            getCurrentGridData: () => {
+
             }
         } as VmaFormulaGridMethods
 
@@ -1667,7 +1670,7 @@ export default defineComponent({
                     } else {
                         if (props.data.arrayData && props.data.arrayData.length > 0) {
                             if (props.data.arrayData.length + 1 > gridReactiveData.yDim) {
-                                gridReactiveData.yDim = props.data.arrayData.length + 1
+                                gridReactiveData.yDim = props.data.arrayData.length
                             }
                             props.data.arrayData.forEach((item: any) => {
                                 if (item.length > gridReactiveData.xDim) {

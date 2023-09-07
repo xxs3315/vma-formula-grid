@@ -165,6 +165,7 @@ export type VmaFormulaGridOptions = VmaFormulaGridProps
 export interface VmaFormulaGridMethods {
     calc(): void
     recalculate(refresh: boolean): Promise<any>
+    getCurrentGridData(): void
 }
 
 export interface VmaFormulaGridPrivateMethods {
