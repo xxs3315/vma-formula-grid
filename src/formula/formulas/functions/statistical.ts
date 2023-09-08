@@ -1,4 +1,4 @@
-import { FormulaHelpers, Types, Criteria, Address } from '../helpers'
+import { FormulaHelpers, Types, Criteria } from '../helpers'
 import FormulaError from '../error'
 import { Infix } from '../operators'
 import DistributionFunctions from './distribution'
@@ -11,6 +11,7 @@ const StatisticalFunctions = {
     const arr: any = []
     // parse number only if the input is literal
     H.flattenParams(numbers, Types.NUMBER, true, (item: any, info: any) => {
+      console.log(info)
       if (typeof item === 'number') {
         sum += item
         arr.push(item)
@@ -29,6 +30,7 @@ const StatisticalFunctions = {
     let cnt = 0
     // parse number only if the input is literal
     H.flattenParams(numbers, Types.NUMBER, true, (item: any, info: any) => {
+      console.log(info)
       if (typeof item === 'number') {
         sum += item
         cnt++
@@ -42,6 +44,7 @@ const StatisticalFunctions = {
     let cnt = 0
     // parse number only if the input is literal
     H.flattenParams(numbers, Types.NUMBER, true, (item: any, info: any) => {
+      console.log(info)
       const type = typeof item
       if (type === 'number') {
         sum += item

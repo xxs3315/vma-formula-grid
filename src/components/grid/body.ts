@@ -18,7 +18,7 @@ import {
     VmaFormulaGridConstructor,
     VmaFormulaGridMethods,
     VmaFormulaGridPrivateMethods
-} from "../../types";
+} from "../../../types";
 import {Guid} from "../../utils/guid.ts";
 import {checkCellInMerges, isNumeric} from "../../utils";
 

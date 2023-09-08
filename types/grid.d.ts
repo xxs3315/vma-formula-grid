@@ -1,5 +1,5 @@
 import {ComponentPublicInstance, ComputedRef, Ref, RenderFunction, SetupContext} from "vue";
-import {Cell} from "../components/grid/internals/cell.ts";
+import {Cell} from "../src/components/grid/internals/cell.ts";
 import {
     VmaFormulaGridCompContextMenuMethods,
     VmaFormulaGridCompContextMenuPrivateMethods

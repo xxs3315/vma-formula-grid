@@ -20,7 +20,7 @@ description: 基础表格-行高
 
 <script lang="ts">
   import {defineComponent, reactive, ref} from 'vue';
-  import { ComponentType, SizeType } from '../../src/types';
+  import { ComponentType, SizeType } from '../../types';
   export default defineComponent({
     name: 'Button',
     setup() {

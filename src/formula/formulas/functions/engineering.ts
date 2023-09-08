@@ -9,8 +9,8 @@ import { FormulaHelpers, Types } from '../helpers'
 const H = FormulaHelpers
 const MAX_OCT = 536870911 // OCT2DEC(3777777777)
 const MIN_OCT = -536870912 // OCT2DEC4000000000)
-const MAX_HEX = 549755813887
-const MIN_HEX = -549755813888
+// const MAX_HEX = 549755813887
+// const MIN_HEX = -549755813888
 const MAX_BIN = 511 // BIN2DEC(111111111)
 const MIN_BIN = -512 // BIN2DEC(1000000000)
 
@@ -654,7 +654,7 @@ const EngineeringFunctions = {
   },
 
   IMTAN: (iNumber: any) => {
-    const { unit } = parseIM(iNumber)
+    // const { unit } = parseIM(iNumber)
     return EngineeringFunctions.IMDIV(EngineeringFunctions.IMSIN(iNumber), EngineeringFunctions.IMCOS(iNumber) /* , unit */)
   },
 

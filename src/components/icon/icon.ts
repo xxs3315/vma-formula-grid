@@ -1,6 +1,6 @@
 import {CSSProperties, defineComponent, h, PropType, provide} from 'vue'
 import {Guid} from "../../utils/guid.ts";
-import {VmaFormulaGridCompIconConstructor, VmaFormulaGridCompIconPropTypes} from "../../types";
+import {VmaFormulaGridCompIconConstructor, VmaFormulaGridCompIconPropTypes} from "../../../types";
 
 
 export default defineComponent({

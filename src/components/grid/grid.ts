@@ -22,7 +22,7 @@ import {
     VmaFormulaGridPropTypes,
     VmaFormulaGridReactiveData,
     VmaFormulaGridRefs
-} from "../../types";
+} from "../../../types";
 import {Guid} from "../../utils/guid.ts";
 import {
     calcVertexes, checkCellInMerges,

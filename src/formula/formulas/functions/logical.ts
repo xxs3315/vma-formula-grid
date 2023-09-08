@@ -43,6 +43,7 @@ const LogicalFunctions = {
 
   // Special
   IF: (context: any, logicalTest: any, valueIfTrue: any, valueIfFalse: any) => {
+    console.log(context)
     logicalTest = H.accept(logicalTest, Types.BOOLEAN)
     valueIfTrue = H.accept(valueIfTrue) // do not parse type
     valueIfFalse = H.accept(valueIfFalse, null, false) // do not parse type
@@ -83,7 +84,10 @@ const LogicalFunctions = {
     return numTrue > 0
   },
 
-  SWITCH: (...params: any) => {},
+  SWITCH: (...params: any) => {
+    console.log(params)
+    throw FormulaError.NOT_IMPLEMENTED('SWITCH');
+  },
 
   TRUE: () => true,
 

@@ -17,7 +17,7 @@ import {
     VmaFormulaGridConstructor,
     VmaFormulaGridMethods,
     VmaFormulaGridPrivateMethods
-} from "../../types";
+} from "../../../types";
 import {
     getColumnSymbol,
     getRenderDefaultColWidth,

@@ -38,6 +38,8 @@ const MathFunctions = {
   'AGGREGATE': (functionNum: any, options: any, ref1: any, ...refs: any) => {
     // functionNum = H.accept(functionNum, Types.NUMBER);
     // throw FormulaError.NOT_IMPLEMENTED('AGGREGATE');
+    console.log(functionNum, options, ref1, refs)
+    throw FormulaError.NOT_IMPLEMENTED('SWITCH');
   },
 
   'ARABIC': (text: any) => {
@@ -349,6 +351,8 @@ const MathFunctions = {
     // if (array[0].length !== array.length)
     //     throw FormulaError.VALUE;
     // throw FormulaError.NOT_IMPLEMENTED('MINVERSE');
+    console.log(array)
+    throw FormulaError.NOT_IMPLEMENTED('MINVERSE');
   },
 
   'MMULT': (array1: any, array2: any) => {
@@ -676,9 +680,11 @@ const MathFunctions = {
     const y: any = []
     let sum = 0
     H.flattenParams([arrayX], null, false, (item: any, info: any) => {
+      console.log(info)
       x.push(item)
     })
     H.flattenParams([arrayY], null, false, (item: any, info: any) => {
+      console.log(info)
       y.push(item)
     })
     if (x.length !== y.length) throw FormulaError.NA
@@ -693,9 +699,11 @@ const MathFunctions = {
     const y: any = []
     let sum = 0
     H.flattenParams([arrayX], null, false, (item: any, info: any) => {
+      console.log(info)
       x.push(item)
     })
     H.flattenParams([arrayY], null, false, (item: any, info: any) => {
+      console.log(info)
       y.push(item)
     })
     if (x.length !== y.length) throw FormulaError.NA
@@ -710,9 +718,11 @@ const MathFunctions = {
     const y: any = []
     let sum = 0
     H.flattenParams([arrayX], null, false, (item: any, info: any) => {
+      console.log(info)
       x.push(item)
     })
     H.flattenParams([arrayY], null, false, (item: any, info: any) => {
+      console.log(info)
       y.push(item)
     })
     if (x.length !== y.length) throw FormulaError.NA

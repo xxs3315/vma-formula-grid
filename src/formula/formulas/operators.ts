@@ -107,6 +107,7 @@ const Infix = {
   },
 
   concatOp: (value1: any, infix: any, value2: any, isArray1: any, isArray2: any) => {
+    console.log(infix)
     if (value1 == null) value1 = ''
     if (value2 == null) value2 = ''
     // for array: {1,2,3}, get the first element to concat

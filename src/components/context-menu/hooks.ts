@@ -2,7 +2,7 @@ import {
     VmaFormulaGridCompContextMenuMethods,
     VmaFormulaGridCompContextMenuPrivateMethods,
     VmaFormulaGridGlobalHooksHandlers
-} from "../../types";
+} from "../../../types";
 import {nextTick} from "vue";
 import {DomTools, getAbsolutePos} from "../../utils/doms.ts";
 

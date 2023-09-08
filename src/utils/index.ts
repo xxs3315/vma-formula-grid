@@ -1,4 +1,4 @@
-import {VmaFormulaGridPropTypes} from "../types";
+import {VmaFormulaGridPropTypes} from "../../types";
 
 export function isNumeric(val: string | number): val is string {
     return typeof val === 'number' || /^\d+(\.\d+)?$/.test(val)

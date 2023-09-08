@@ -12,7 +12,7 @@ class DepParser {
 
   private onVariable
 
-  private functions
+  // private functions
 
   private parser
 
@@ -32,7 +32,7 @@ class DepParser {
     this.utils = new DepUtils(this)
 
     this.onVariable = config.onVariable
-    this.functions = {}
+    // this.functions = {}
 
     this.parser = new Parser(this, this.utils)
   }
@@ -112,6 +112,7 @@ class DepParser {
    * @return {*}
    */
   callFunction(name: any, args: any) {
+    console.log(name)
     args.forEach((arg: any) => {
       if (arg == null) return
       this.retrieveRef(arg)

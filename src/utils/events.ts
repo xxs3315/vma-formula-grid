@@ -1,5 +1,5 @@
 import { documentElem, DomTools, windowElem } from './doms'
-import { VmaComponentInstance } from '../types'
+import { VmaComponentInstance } from '../../types'
 
 const wheelName = DomTools.isFirefox ? 'DOMMouseScroll' : 'mousewheel'
 const eventStore: {

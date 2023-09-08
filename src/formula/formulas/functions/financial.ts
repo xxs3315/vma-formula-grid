@@ -1,5 +1,5 @@
 import FormulaError from '../error'
-import { FormulaHelpers as H, Types, WildCard } from '../helpers'
+import { FormulaHelpers as H, Types } from '../helpers'
 import DateFunctions from './date'
 
 const FinancialFunctions = {

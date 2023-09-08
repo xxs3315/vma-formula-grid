@@ -17,7 +17,7 @@ import {
     VmaFormulaGridHeaderMethods,
     VmaFormulaGridHeaderPrivateMethods,
     VmaFormulaGridHeaderPropTypes
-} from "../../types";
+} from "../../../types";
 
 export default defineComponent({
     name: 'VmaFormulaGridHeader',

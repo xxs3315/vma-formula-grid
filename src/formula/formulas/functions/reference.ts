@@ -1,5 +1,5 @@
 import FormulaError from '../error'
-import { FormulaHelpers, Types, Factorials, Criteria, Address, WildCard } from '../helpers'
+import { FormulaHelpers, Types, Address, WildCard } from '../helpers'
 import Collection from '../../grammar/type/collection'
 
 const H = FormulaHelpers
@@ -46,7 +46,10 @@ const ReferenceFunctions = {
     return 1
   },
 
-  CHOOSE: (indexNum: any, ...values: any) => {},
+  CHOOSE: (indexNum: any, ...values: any) => {
+    console.log(indexNum, values)
+    throw FormulaError.NOT_IMPLEMENTED('SWITCH');
+  },
 
   // Special
   COLUMN: (context: any, obj: any) => {
@@ -67,6 +70,7 @@ const ReferenceFunctions = {
 
   // Special
   COLUMNS: (context: any, obj: any) => {
+    console.log(context)
     if (obj == null) {
       throw Error('COLUMNS requires one argument')
     }
@@ -253,6 +257,7 @@ const ReferenceFunctions = {
 
   // Special
   ROWS: (context: any, obj: any) => {
+    console.log(context)
     if (obj == null) {
       throw Error('ROWS requires one argument')
     }

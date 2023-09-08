@@ -17,7 +17,7 @@ import {
   VmaFormulaGridCompTextareaPropTypes,
   VmaFormulaGridCompTextareaReactiveData,
   VmaFormulaGridCompTextareaRefs
-} from '../../types'
+} from '../../../types'
 
 export default defineComponent({
   name: 'VmaFormulaGridCompTextarea',

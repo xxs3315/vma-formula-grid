@@ -10,7 +10,7 @@ const WebFunctions = {
     // Not implemented due to extra dependency
   },
 
-  WEBSERVICE: (context: any, url: any) => {
+  WEBSERVICE: (_: any, url: any) => {
     throw FormulaError.ERROR('WEBSERVICE is not supported in sync mode.')
     if (typeof fetch === 'function') {
       url = H.accept(url, Types.STRING)

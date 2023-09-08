@@ -57,16 +57,19 @@ class Utils {
    * @return {*}
    */
   applyPrefix(prefixes: any, value: any) {
+    console.log(prefixes)
     this.extractRefValue(value)
     return 0
   }
 
   applyPostfix(value: any, postfix: any) {
+    console.log(postfix)
     this.extractRefValue(value)
     return 0
   }
 
   applyInfix(value1: any, infix: any, value2: any) {
+    console.log(infix)
     this.extractRefValue(value1)
     this.extractRefValue(value2)
     return 0

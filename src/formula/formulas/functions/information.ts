@@ -19,7 +19,8 @@ const error2Number: NumberDic = {
 
 const InfoFunctions = {
   'CELL': (infoType: any, reference: any) => {
-    // throw FormulaError.NOT_IMPLEMENTED('CELL');
+    console.log(infoType, reference)
+    throw FormulaError.NOT_IMPLEMENTED('CELL');
   },
 
   'ERROR.TYPE': (value: any) => {

@@ -254,6 +254,7 @@ const TextFunctions = {
   SEARCHB: (findText: any, withinText: any, startNum: any) => TextFunctions.SEARCH(findText, withinText, startNum),
 
   SUBSTITUTE: (...params: any) => {
+    console.log(params)
     throw FormulaError.NOT_IMPLEMENTED('SUBSTITUTE')
   },
 
@@ -276,7 +277,10 @@ const TextFunctions = {
     }
   },
 
-  TEXTJOIN: (...params: any) => {},
+  TEXTJOIN: (...params: any) => {
+    console.log(params)
+    throw FormulaError.NOT_IMPLEMENTED('TEXTJOIN');
+  },
 
   TRIM: (text: any) => {
     text = H.accept(text, [Types.STRING])

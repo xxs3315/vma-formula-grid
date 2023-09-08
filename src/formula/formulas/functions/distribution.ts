@@ -233,6 +233,7 @@ const DistributionFunctions = {
     const x: any = []
     // parse number only if the input is literal
     H.flattenParams(numbers, Types.NUMBER, true, (item: any, info: any) => {
+      console.log(info)
       if (typeof item === 'number') {
         sum += item
         x.push(item)
@@ -565,6 +566,7 @@ const DistributionFunctions = {
     const filterArr: any = []
     // parse number only if the input is literal
     H.flattenParams(numbers, Types.NUMBER, true, (item: any, info: any) => {
+      console.log(info)
       if (typeof item === 'number') {
         filterArr.push(item)
       }
@@ -652,6 +654,7 @@ const DistributionFunctions = {
     let denominator = 0
     // parse number only if the input is literal
     H.flattenParams(numbers, Types.NUMBER, true, (item: any, info: any) => {
+      console.log(info)
       if (typeof item === 'number') {
         denominator += 1 / item
         cnt++
@@ -747,6 +750,7 @@ const DistributionFunctions = {
     const range: any = []
     // parse number only if the input is literal
     H.flattenParams(numbers, Types.NUMBER, true, (item: any, info: any) => {
+      console.log(info)
       if (typeof item === 'number') {
         mean += item
         range.push(item)
