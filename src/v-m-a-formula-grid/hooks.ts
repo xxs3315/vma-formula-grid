@@ -1,4 +1,5 @@
-import { VmaFormulaGridGlobalHooks } from '../../types'
+import {VmaFormulaGridGlobalHooks} from "../../types";
+
 
 export class Skeleton {
     private skeleton: any = {}

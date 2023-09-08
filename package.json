@@ -1,6 +1,6 @@
 {
   "name": "vma-formula-grid",
-  "version": "1.0.7",
+  "version": "1.0.14",
   "description": "",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
@@ -41,6 +41,7 @@
     "@types/eslint": "^8.21.0",
     "@types/jest": "^29.4.0",
     "@types/node": "^18.13.0",
+    "@types/resize-observer-browser": "^0.1.7",
     "@types/splitpanes": "^2.2.1",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",

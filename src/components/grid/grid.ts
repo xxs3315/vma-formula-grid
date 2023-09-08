@@ -49,7 +49,7 @@ import {debounce} from "../../utils/debounce.ts";
 import {createResizeEvent} from "../../utils/resize.ts";
 import {DepParser, FormulaParser} from "../../formula";
 import GlobalEvent from "../../utils/events.ts";
-import VmaFormulaGrid from "../../vma-formula-grid";
+import VmaFormulaGrid from "../../v-m-a-formula-grid";
 import {DomTools} from "../../utils/doms.ts";
 
 export default defineComponent({

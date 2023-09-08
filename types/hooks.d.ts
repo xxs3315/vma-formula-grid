@@ -7,7 +7,7 @@ export namespace VmaFormulaGridGlobalHooksHandlers {
     }
 }
 
-export class VmaFormulaGridGlobalHooks {
+export interface VmaFormulaGridGlobalHooks {
     add(type: string, options: VmaFormulaGridGlobalHooksHandlers.HookOptions): VmaFormulaGridGlobalHooks
     forEach(callback: (options: VmaFormulaGridGlobalHooksHandlers.HookOptions, type: string) => void): void
 }

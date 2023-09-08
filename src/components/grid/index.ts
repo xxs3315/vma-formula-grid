@@ -7,23 +7,36 @@ import VmaFormulaGridCompIcon from '../icon/icon.ts'
 import VmaFormulaGridCompContextMenu from '../context-menu/context-menu.ts'
 import VmaFormulaGridCompTextarea from '../textarea/textarea.ts'
 import VmaFormulaGridCompContextMenuHook from '../context-menu/hooks'
-import {ComponentOptions} from "vue";
-import VmaFormulaGrid from "../../vma-formula-grid";
+import {App} from "vue";
+// import VmaFormulaGrid from "../../vma-formula-grid";
 
 // `Vue.use` automatically prevents you from using
 // the same plugin more than once,
 // so calling it multiple times on the same plugin
 // will install the plugin only once
-VmaFormulaGridComp.install = (Vue: ComponentOptions) => {
-    Vue.component('VmaFormulaGrid', VmaFormulaGridComp)
-    Vue.component('VmaFormulaGridHeader', VmaFormulaGridHeader)
-    Vue.component('VmaFormulaGridBody', VmaFormulaGridBody)
-    Vue.component('VmaFormulaGridCell', VmaFormulaGridCell)
-    Vue.component('VmaFormulaGridCompIcon', VmaFormulaGridCompIcon)
-    Vue.component('VmaFormulaGridCompTextarea', VmaFormulaGridCompTextarea)
-    VmaFormulaGrid.hooks.add('VmaFormulaGridCompContextMenu', VmaFormulaGridCompContextMenuHook)
-    Vue.component(VmaFormulaGridCompContextMenu.name, VmaFormulaGridCompContextMenu)
-}
+// VmaFormulaGridComp.install = (Vue: ComponentOptions) => {
+//     Vue.component('VmaFormulaGrid', VmaFormulaGridComp)
+//     Vue.component('VmaFormulaGridHeader', VmaFormulaGridHeader)
+//     Vue.component('VmaFormulaGridBody', VmaFormulaGridBody)
+//     Vue.component('VmaFormulaGridCell', VmaFormulaGridCell)
+//     Vue.component('VmaFormulaGridCompIcon', VmaFormulaGridCompIcon)
+//     Vue.component('VmaFormulaGridCompTextarea', VmaFormulaGridCompTextarea)
+//     VmaFormulaGrid.hooks.add('VmaFormulaGridCompContextMenu', VmaFormulaGridCompContextMenuHook)
+//     Vue.component(VmaFormulaGridCompContextMenu.name, VmaFormulaGridCompContextMenu)
+// }
+
+
+export const VmaFormulaGrid = Object.assign(VmaFormulaGridComp, {
+    install: function (app: App) {
+        app.component('VmaFormulaGrid', VmaFormulaGridComp)
+        app.component('VmaFormulaGridHeader', VmaFormulaGridHeader)
+        app.component('VmaFormulaGridBody', VmaFormulaGridBody)
+        app.component('VmaFormulaGridCell', VmaFormulaGridCell)
+        app.component('VmaFormulaGridCompIcon', VmaFormulaGridCompIcon)
+        app.component('VmaFormulaGridCompTextarea', VmaFormulaGridCompTextarea)
+        app.component(VmaFormulaGridCompContextMenu.name, VmaFormulaGridCompContextMenu)
+    }
+})
 
 // // To auto-install when vue is found
 // // 如果浏览器环境且拥有全局Vue，则自动安装组件
@@ -40,4 +53,4 @@ VmaFormulaGridComp.install = (Vue: ComponentOptions) => {
 // To allow use as module (npm/webpack/etc.) export component
 // export { dc, dfo, d }
 // export { FormulaParser, MAX_ROW, MAX_COLUMN, SSF, DepParser, FormulaError, FormulaHelpers, Types, ReversedTypes, Factorials, WildCard, Criteria, Address }
-export default VmaFormulaGridComp
+export default VmaFormulaGrid
