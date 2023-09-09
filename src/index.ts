@@ -14,25 +14,25 @@ const components = [
 //     }
 // }
 
-export function install (app: App, options: any) {
+export function install (app: App) {
     components.forEach(component => component.install(app))
 }
 
 // To auto-install when vue is found
 // 如果浏览器环境且拥有全局Vue，则自动安装组件
-// declare global {
-//     interface Window {
-//         Vue?: any;
-//     }
-// }
-//
-// if (typeof window !== "undefined" && window.Vue) {
-//     window.Vue.use(VmaFormulaGrid);
-// }
+declare global {
+    interface Window {
+        Vue?: any;
+    }
+}
+
+if (typeof window !== "undefined" && window.Vue) {
+    window.Vue.use(VmaFormulaGrid);
+}
 
 export * from './v-m-a-formula-grid'
 
 export { dc, dfo, d }
 export { FormulaParser, MAX_ROW, MAX_COLUMN, SSF, DepParser, FormulaError, FormulaHelpers, Types, ReversedTypes, Factorials, WildCard, Criteria, Address }
 
-export * from './components/grid'
+export * from './components/grid/index.ts'

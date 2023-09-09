@@ -34,7 +34,7 @@ export const VmaFormulaGrid = Object.assign(VmaFormulaGridComp, {
         app.component('VmaFormulaGridCell', VmaFormulaGridCell)
         app.component('VmaFormulaGridCompIcon', VmaFormulaGridCompIcon)
         app.component('VmaFormulaGridCompTextarea', VmaFormulaGridCompTextarea)
-        app.component(VmaFormulaGridCompContextMenu.name, VmaFormulaGridCompContextMenu)
+        app.component('VmaFormulaGridCompContextMenu', VmaFormulaGridCompContextMenu)
     }
 })
 
