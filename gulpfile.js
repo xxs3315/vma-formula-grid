@@ -59,7 +59,7 @@ gulp.task('build_style', () => {
 gulp.task(
   'build',
   gulp.series(
-      'copy_ts',
+    'copy_ts',
     'copy_types',
     'build_style',
     'copy_font',

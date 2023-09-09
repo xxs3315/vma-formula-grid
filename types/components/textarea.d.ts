@@ -1,9 +1,9 @@
 import { Ref, RenderFunction, SetupContext } from 'vue'
-import { CompType, SizeType, ValueOf, VmaComponentInstance } from '../grid'
+import { ComponentType, SizeType, ValueOf, VmaComponentInstance } from '../grid'
 
 export namespace VmaFormulaGridCompTextareaPropTypes {
     export type Size = SizeType
-    export type Type = CompType
+    export type Type = ComponentType
     export type ModelValue = string | number | null
     export type Immediate = boolean
     export type Name = string

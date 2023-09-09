@@ -1,5 +1,4 @@
 import {ComponentPublicInstance, ComputedRef, Ref, RenderFunction, SetupContext} from "vue";
-import {Cell} from "../src/components/grid/internals/cell.ts";
 import {
     VmaFormulaGridCompContextMenuMethods,
     VmaFormulaGridCompContextMenuPrivateMethods
@@ -103,7 +102,7 @@ export interface VmaFormulaGridReactiveData {
     colConfs: any[]
     rowConfs: any[]
 
-    currentSheetData: Cell[][]
+    currentSheetData: any[][]
 
     rowHeightsChanged: Record<string, number>
     columnWidthsChanged: Record<string, number>
@@ -200,8 +199,10 @@ declare module './grid' {
 
 export * from './hooks'
 
+export type VmaFormulaGridHeaderFixedType = 'center' | 'left' | 'right'
+
 export namespace VmaFormulaGridHeaderPropTypes {
-    export type Fixed = HeaderFixedType
+    export type Fixed = VmaFormulaGridHeaderFixedType
 }
 
 export interface VmaFormulaGridHeaderProps {
@@ -213,6 +214,8 @@ export interface VmaFormulaGridHeaderMethods {
 
 export interface VmaFormulaGridHeaderPrivateMethods {
 }
+
+export type VmaFormulaGridHeaderOptions = VmaFormulaGridHeaderProps
 
 export interface VmaFormulaGridHeaderConstructor extends VmaComponentInstance, VmaFormulaGridHeaderMethods, VmaFormulaGridHeaderPrivateMethods {
     props: VmaFormulaGridHeaderOptions

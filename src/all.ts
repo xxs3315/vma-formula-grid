@@ -35,4 +35,4 @@ export * from './v-m-a-formula-grid'
 export { dc, dfo, d }
 export { FormulaParser, MAX_ROW, MAX_COLUMN, SSF, DepParser, FormulaError, FormulaHelpers, Types, ReversedTypes, Factorials, WildCard, Criteria, Address }
 
-export * from './components/grid/index.ts'
+export * from './components/grid'

@@ -1,7 +1,7 @@
 import DefaultTheme from 'vitepress/theme'
 import './custom.less'
 
-import VmaFormulaGrid from '../../../src'
+import VmaFormulaGrid from '../../../src/index.common'
 import '../../../styles/index.less'
 
 export default {

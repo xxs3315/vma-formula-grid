@@ -10,7 +10,7 @@ import terser from '@rollup/plugin-terser'
  */
 export default defineConfig([
   {
-    input: 'src/index.ts',
+    input: 'src/index.common.ts',
     output: [
       {
         dir: 'dist',
@@ -31,7 +31,17 @@ export default defineConfig([
         check: false,
       }),
       babel(),
-      terser(),
+      terser({
+        ecma: 2015, // ES6
+        mangle: { toplevel: true },
+        compress: {
+          module: true,
+          toplevel: true,
+          unsafe_arrows: true,
+          drop_console: true
+        },
+        output: { comments: false } ,
+      }),
     ],
     external: [
       'vue',
