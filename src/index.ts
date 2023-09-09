@@ -15,7 +15,6 @@ const components = [
 // }
 
 export function install (app: App, options: any) {
-    console.log(123)
     components.forEach(component => component.install(app))
 }
 

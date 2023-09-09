@@ -43,7 +43,8 @@ export default defineComponent({
             refGridHeaderTableColgroup,
             refGridHeaderLeftFixedTableColgroup,
             refGridHeaderLeftFixedXLineDiv,
-            renderDefaultRowHeight
+            renderDefaultRowHeight,
+            renderDefaultColWidth
         } = $vmaFormulaGrid.getRefs()
 
         const renderHeaderColgroup = () => {
@@ -67,7 +68,7 @@ export default defineComponent({
                         h('col', {
                             idx: index,
                             style: {
-                                width: `${$vmaFormulaGrid.reactiveData.colConfs[index + 1].width}px`,
+                                width: $vmaFormulaGrid.reactiveData.colConfs[index + 1].visible ? (typeof $vmaFormulaGrid.reactiveData.colConfs[index + 1].width === 'string' ? `${renderDefaultColWidth.value}px` : `${$vmaFormulaGrid.reactiveData.colConfs[index + 1].width}px`) : '0px',
                             },
                         })
                     )
