@@ -306,28 +306,8 @@ export default defineComponent({
                         props.cat,
                         `${props.type}`,
                         `cell-bg-0`,
-                        // {
-                        //     'column-indicator-active':
-                        //         props.cat === 'column-indicator' &&
-                        //         $vmaFormulaGrid.reactiveData.currentArea &&
-                        //         Object.keys($vmaFormulaGrid.reactiveData.currentArea).length > 1 &&
-                        //         ((props.col! >=
-                        //                 $vmaFormulaGrid.reactiveData.currentArea.start.c &&
-                        //                 props.col! <=
-                        //                 $vmaFormulaGrid.reactiveData.currentArea.end.c) ||
-                        //             (props.col! >=
-                        //                 $vmaFormulaGrid.reactiveData.currentArea.end.c &&
-                        //                 props.col! <=
-                        //                 $vmaFormulaGrid.reactiveData.currentArea.start.c)),
-                        //     'row-indicator-active':
-                        //         props.cat === 'row-indicator' &&
-                        //         $vmaFormulaGrid.reactiveData.currentArea &&
-                        //         Object.keys($vmaFormulaGrid.reactiveData.currentArea).length > 1 &&
-                        //         ((props.row! >= $vmaFormulaGrid.reactiveData.currentArea.start.r &&
-                        //                 props.row! <= $vmaFormulaGrid.reactiveData.currentArea.end.r) ||
-                        //             (props.row! >= $vmaFormulaGrid.reactiveData.currentArea.end.r &&
-                        //                 props.row! <= $vmaFormulaGrid.reactiveData.currentArea.start.r))
-                        // }
+                        {'column-indicator-active': props.cat === 'column-indicator' && $vmaFormulaGrid.reactiveData.currentCell && $vmaFormulaGrid.reactiveData.currentCell.col === props.col},
+                        {'row-indicator-active': props.cat === 'row-indicator' && $vmaFormulaGrid.reactiveData.currentCell && $vmaFormulaGrid.reactiveData.currentCell.row === props.row},
                     ],
                     style: {
                         overflow: 'hidden',
