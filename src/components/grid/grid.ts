@@ -1636,6 +1636,45 @@ export default defineComponent({
                 gridReactiveData.colConfs = []
                 gridReactiveData.rowConfs = []
                 gridReactiveData.currentSheetData = []
+                gridReactiveData.rowHeightsChanged = {}
+                gridReactiveData.columnWidthsChanged = {}
+                gridReactiveData.rowHidesChanged = {}
+                gridReactiveData.columnHidesChanged = {}
+                gridReactiveData.columns = {
+                    firstList: [],
+                    leftList: [],
+                    otherList: [],
+                }
+                gridReactiveData.lastScrollLeft = 0
+                gridReactiveData.lastScrollLeftTime = 0
+                gridReactiveData.lastScrollXVisibleIndex = 0
+                gridReactiveData.lastScrollTop = 0
+                gridReactiveData.lastScrollTopTime = 0
+                gridReactiveData.lastScrollYVisibleIndex = 0
+                gridReactiveData.cells = {
+                    eMap: {},
+                    cMap: {},
+                    ncMap: {},
+                }
+                gridReactiveData.merges = {}
+                gridReactiveData.currentCell = null
+                gridReactiveData.currentCellBorderStyle = {
+                    transform: 'translateX(0) translateY(0)',
+                    left: 0,
+                    top: 0,
+                    width: 0,
+                    height: 0
+                }
+                gridReactiveData.currentCellEditorStyle = {
+                    transform: 'translateX(0) translateY(0)',
+                    display: 'none',
+                    left: 0,
+                    top: 0,
+                    width: 0,
+                    height: 0
+                }
+                gridReactiveData.currentCellEditorActive = false
+                gridReactiveData.currentCellEditorContent = null
                 resolve()
             })
         }
