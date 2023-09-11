@@ -306,8 +306,22 @@ export default defineComponent({
                         props.cat,
                         `${props.type}`,
                         `cell-bg-0`,
-                        {'column-indicator-active': props.cat === 'column-indicator' && $vmaFormulaGrid.reactiveData.currentCell && $vmaFormulaGrid.reactiveData.currentCell.col === props.col},
-                        {'row-indicator-active': props.cat === 'row-indicator' && $vmaFormulaGrid.reactiveData.currentCell && $vmaFormulaGrid.reactiveData.currentCell.row === props.row},
+                        {'column-indicator-active':
+                                props.cat === 'column-indicator'
+                                && $vmaFormulaGrid.reactiveData.currentCell
+                                && (
+                                    $vmaFormulaGrid.reactiveData.currentCell.col <= props.col
+                                    && props.col < $vmaFormulaGrid.reactiveData.currentCell.col + $vmaFormulaGrid.reactiveData.currentCell.colSpan
+                                )
+                        },
+                        {'row-indicator-active':
+                                props.cat === 'row-indicator'
+                                && $vmaFormulaGrid.reactiveData.currentCell
+                                && (
+                                    $vmaFormulaGrid.reactiveData.currentCell.row <= props.row
+                                    && props.row < $vmaFormulaGrid.reactiveData.currentCell.row + $vmaFormulaGrid.reactiveData.currentCell.rowSpan
+                                )
+                        },
                     ],
                     style: {
                         overflow: 'hidden',
