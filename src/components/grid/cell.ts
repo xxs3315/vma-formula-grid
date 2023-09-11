@@ -19,7 +19,7 @@ import {
     VmaFormulaGridPrivateMethods
 } from "../../../types";
 import {
-    getColumnSymbol,
+    getColumnSymbol, getCurrentAreaHeight, getCurrentAreaWidth,
     getRenderDefaultColWidth,
     getRenderDefaultRowHeight,
     getXSpaceFromColumnWidths,
@@ -66,6 +66,7 @@ export default defineComponent({
         const gridCellReactiveData = reactive({})
 
         const {
+            refGridBodyTable,
             refGridHeaderTableWrapperDiv,
             refGridBodyLeftFixedTableWrapperDiv,
             refColumnResizeBarDiv,
@@ -308,18 +309,20 @@ export default defineComponent({
                         `cell-bg-0`,
                         {'column-indicator-active':
                                 props.cat === 'column-indicator'
-                                && $vmaFormulaGrid.reactiveData.currentCell
+                                && $vmaFormulaGrid.reactiveData.currentArea.start !== null
+                                && $vmaFormulaGrid.reactiveData.currentArea.end !== null
                                 && (
-                                    $vmaFormulaGrid.reactiveData.currentCell.col <= props.col
-                                    && props.col < $vmaFormulaGrid.reactiveData.currentCell.col + $vmaFormulaGrid.reactiveData.currentCell.colSpan
+                                    Math.min($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col) <= props.col
+                                    && props.col <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col)
                                 )
                         },
                         {'row-indicator-active':
                                 props.cat === 'row-indicator'
-                                && $vmaFormulaGrid.reactiveData.currentCell
+                                && $vmaFormulaGrid.reactiveData.currentArea.start !== null
+                                && $vmaFormulaGrid.reactiveData.currentArea.end !== null
                                 && (
-                                    $vmaFormulaGrid.reactiveData.currentCell.row <= props.row
-                                    && props.row < $vmaFormulaGrid.reactiveData.currentCell.row + $vmaFormulaGrid.reactiveData.currentCell.rowSpan
+                                    Math.min($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row) <= props.row
+                                    && props.row <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row)
                                 )
                         },
                     ],
@@ -329,15 +332,24 @@ export default defineComponent({
                         width: c.colSpan! > 1 ? '100%' : 'inherit',
                     },
                     onMouseup: (_: MouseEvent) => {
-                        // $vmaFormulaGrid.reactiveData.currentAreaStatus = false
+                        $vmaFormulaGrid.reactiveData.currentAreaStatus = false
                     },
-                    onMousedown: (_: MouseEvent) => {
+                    onMousedown: (event: MouseEvent) => {
                         if (props.cat === 'normal' && props.col >= 0) {
                             $vmaFormulaGrid.reactiveData.currentCellEditorActive = false
                             $vmaFormulaGrid.reactiveData.currentCell =
                                 currentSheetData[props.row!][props.col! + 1]
                             $vmaFormulaGrid.reactiveData.currentCellEditorContent =
                                 currentSheetData[props.row!][props.col! + 1].v
+
+                            $vmaFormulaGrid.reactiveData.currentAreaStatus = true
+                            $vmaFormulaGrid.reactiveData.currentArea = {
+                                start: currentSheetData[props.row!][props.col! + 1],
+                                end: null
+                            }
+                            nextTick(() => {
+                                resizeCurrentSelectArea(event)
+                            })
                         }
                     },
                     onDblclick: (_: MouseEvent) => {
@@ -355,6 +367,142 @@ export default defineComponent({
                 },
                 renderCell()
             )
+        }
+
+        /*const updateCurrentSelectArea = () => {
+            const { currentArea } = $vmaFormulaGrid.reactiveData
+            const startColIndex = Math.min(currentArea.start.col, currentArea.end.col)
+            const endColIndex = Math.max(currentArea.start.col, currentArea.end.col)
+            const startRowIndex = Math.min(currentArea.start.row, currentArea.end.row)
+            const endRowIndex = Math.max(currentArea.start.row, currentArea.end.row)
+
+            const leftSpaceWidth = getXSpaceFromColumnWidths(
+                $vmaFormulaGrid.reactiveData.xStart,
+                renderDefaultColWidth.value,
+                $vmaFormulaGrid.reactiveData.columnWidthsChanged,
+                $vmaFormulaGrid.reactiveData.columnHidesChanged
+            )
+
+            const topSpaceHeight = getYSpaceFromRowHeights(
+                $vmaFormulaGrid.reactiveData.yStart,
+                renderDefaultRowHeight.value,
+                $vmaFormulaGrid.reactiveData.rowHeightsChanged,
+                $vmaFormulaGrid.reactiveData.rowHidesChanged
+            )
+
+            nextTick(() => {
+                    refGridBodyTable.value
+                        .querySelectorAll(
+                            `td[data-row="${startRowIndex}"][data-col="${startColIndex}"]`
+                        )
+                        .forEach((cellElem: any) => {
+                            const borderMarginLeft = `${
+                                leftSpaceWidth + cellElem.offsetLeft - 1
+                            }px`
+                            const borderMarginTop = `${
+                                topSpaceHeight + cellElem.offsetTop - 1
+                            }px`
+                            $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.transform = `translateX(${borderMarginLeft}) translateY(${borderMarginTop})`
+                            const w = getCurrentAreaWidth(
+                                startColIndex,
+                                endColIndex,
+                                renderDefaultColWidth.value,
+                                $vmaFormulaGrid.reactiveData.columnWidthsChanged,
+                                $vmaFormulaGrid.reactiveData.columnHidesChanged
+                            )
+                            const h = getCurrentAreaHeight(
+                                startRowIndex,
+                                endRowIndex,
+                                renderDefaultRowHeight.value,
+                                $vmaFormulaGrid.reactiveData.rowHeightsChanged,
+                                $vmaFormulaGrid.reactiveData.rowHidesChanged
+                            )
+                            $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.height = `${h}px`
+                            $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.width = `${w}px`
+                        })
+
+                    // 为cell加上cell-active效果
+                    // 先清除所有的已有cell-active效果
+                    refGridBodyTable.value
+                        .querySelectorAll('.cell-active')
+                        .forEach((elem: any, index: any) => {
+                            elem.classList.remove('cell-active')
+                        })
+                    // 当前范围内的cell，加上cell-active效果
+                    for (let i = startRowIndex; i <= endRowIndex; i++) {
+                        for (let j = startColIndex; j <= endColIndex; j++) {
+                            refGridBodyTable.value
+                                .querySelectorAll(`td[data-row="${i}"][data-col="${j}"]`)
+                                .forEach((cellElem: any) => {
+                                    cellElem.classList.add('cell-active')
+                                })
+                        }
+                    }
+                    // // 为cell加上border bottom效果
+                    // // 先清除所有的已有bdb效果
+                    // refGridBodyTable.value
+                    //     .querySelectorAll('.cell-bdb')
+                    //     .forEach((elem, index) => {
+                    //       elem.classList.remove('cell-bdb')
+                    //     })
+                    // // 当前范围内的cell，加上cell-active效果
+                    // for (let i = startRowIndex; i <= endRowIndex; i++) {
+                    //   for (let j = startColIndex; j <= endColIndex; j++) {
+                    //     refGridBodyTable.value
+                    //         .querySelectorAll(`td[row="${i}"][col="${j + 1}"]`)
+                    //         .forEach((cellElem: any) => {
+                    //           cellElem.classList.add('cell-bdb')
+                    //         })
+                    //   }
+                    // }
+                })
+        }*/
+
+        const mousemoveHandler = (event: MouseEvent) => {
+            const eventTargetNode: any = DomTools.getEventTargetNode(
+                event,
+                refGridBodyTable,
+                `normal`,
+                (target: any) =>
+                    target.attributes.hasOwnProperty('data-row') &&
+                    target.attributes.hasOwnProperty('data-col')
+            )
+            if (eventTargetNode && eventTargetNode.flag) {
+                const targetElem: any = eventTargetNode.targetElem
+                $vmaFormulaGrid.reactiveData.currentArea.end = currentSheetData[Number(targetElem.attributes['data-row'].value)][Number(targetElem.attributes['data-col'].value) + 1]
+                $vmaFormulaGrid.updateCurrentAreaStyle()
+            }
+        }
+
+        const resizeCurrentSelectArea = (event: MouseEvent) => {
+            const domMousemove = document.onmousemove
+            const domMouseup = document.onmouseup
+
+            const updateEvent = (event: MouseEvent) => {
+                event.stopPropagation()
+                event.preventDefault()
+                mousemoveHandler(event)
+            }
+
+            document.onmousemove = updateEvent
+
+            document.onmouseup = (event: MouseEvent) => {
+                document.onmousemove = domMousemove
+                document.onmouseup = domMouseup
+                const eventTargetNode: any = DomTools.getEventTargetNode(
+                    event,
+                    refGridBodyTable,
+                    `normal`,
+                    (target: any) =>
+                        target.attributes.hasOwnProperty('data-row') &&
+                        target.attributes.hasOwnProperty('data-col')
+                )
+                if (eventTargetNode && eventTargetNode.flag) {
+                    const targetElem: any = eventTargetNode.targetElem
+                    $vmaFormulaGrid.reactiveData.currentArea.end = currentSheetData[Number(targetElem.attributes['data-row'].value)][Number(targetElem.attributes['data-col'].value) + 1]
+                    $vmaFormulaGrid.updateCurrentAreaStyle()
+                }
+            }
         }
 
         const resizeColumnMousedown = (event: MouseEvent) => {
@@ -411,6 +559,7 @@ export default defineComponent({
                     nextTick(() => {
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
                 })
             }
@@ -470,6 +619,7 @@ export default defineComponent({
                     nextTick(() => {
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
                 })
             }

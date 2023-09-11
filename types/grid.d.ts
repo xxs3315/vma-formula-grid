@@ -68,6 +68,12 @@ export interface VmaFormulaGridRefs {
     refCurrentCellBorderBottom: Ref<HTMLDivElement>
     refCurrentCellBorderLeft: Ref<HTMLDivElement>
     refCurrentCellBorderCorner: Ref<HTMLDivElement>
+
+    refCurrentAreaBorderTop: Ref<HTMLDivElement>
+    refCurrentAreaBorderRight: Ref<HTMLDivElement>
+    refCurrentAreaBorderBottom: Ref<HTMLDivElement>
+    refCurrentAreaBorderLeft: Ref<HTMLDivElement>
+    refCurrentAreaBorderCorner: Ref<HTMLDivElement>
 }
 
 export interface VmaFormulaGridReactiveData {
@@ -146,6 +152,13 @@ export interface VmaFormulaGridReactiveData {
     currentCellEditorStyle: Record<string, any>
     currentCellEditorActive: boolean
     currentCellEditorContent: any
+
+    currentAreaStatus: boolean
+    currentArea: {
+        start: any
+        end: any
+    }
+    currentAreaBorderStyle: Record<string, any>
 }
 
 export interface VmaFormulaGridProps {
@@ -181,6 +194,7 @@ export interface VmaFormulaGridPrivateMethods {
     deleteRow(row: number): void
     calcCurrentCellEditorStyle(): void
     calcCurrentCellEditorDisplay(): void
+    updateCurrentAreaStyle(): void
 }
 
 export interface VmaFormulaGridConstructor extends VmaComponentInstance, VmaFormulaGridMethods, VmaFormulaGridPrivateMethods {

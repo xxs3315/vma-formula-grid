@@ -27,7 +27,7 @@ import {Guid} from "../../utils/guid.ts";
 import {
     calcVertexes, checkCellInMerges,
     filterVertexes,
-    getColumnCount,
+    getColumnCount, getCurrentAreaHeight, getCurrentAreaWidth,
     getHeight,
     getIndexFromColumnWidths,
     getIndexFromRowHeights,
@@ -129,6 +129,8 @@ export default defineComponent({
                     })
                     .then(() => {
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                        $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
             })
         })
@@ -199,6 +201,7 @@ export default defineComponent({
             $vmaFormulaGrid.recalculate(false).then(() => {
                 $vmaFormulaGrid.calcCurrentCellEditorStyle()
                 $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                $vmaFormulaGrid.updateCurrentAreaStyle()
             })
         })
 
@@ -248,6 +251,12 @@ export default defineComponent({
         const refCurrentCellBorderBottom = ref() as Ref<HTMLDivElement>
         const refCurrentCellBorderLeft = ref() as Ref<HTMLDivElement>
         const refCurrentCellBorderCorner = ref() as Ref<HTMLDivElement>
+
+        const refCurrentAreaBorderTop = ref() as Ref<HTMLDivElement>
+        const refCurrentAreaBorderRight = ref() as Ref<HTMLDivElement>
+        const refCurrentAreaBorderBottom = ref() as Ref<HTMLDivElement>
+        const refCurrentAreaBorderLeft = ref() as Ref<HTMLDivElement>
+        const refCurrentAreaBorderCorner = ref() as Ref<HTMLDivElement>
 
         const renderDefaultColWidth = computed(() => getRenderDefaultColWidth(props.defaultColumnWidth, props.size))
 
@@ -327,6 +336,18 @@ export default defineComponent({
             },
             currentCellEditorActive: false,
             currentCellEditorContent: null,
+            currentAreaStatus: false,
+            currentArea: {
+                start: null,
+                end: null
+            },
+            currentAreaBorderStyle: {
+                transform: 'translateX(0) translateY(0)',
+                left: 0,
+                top: 0,
+                width: 0,
+                height: 0
+            },
         }) as VmaFormulaGridReactiveData
 
         watch(
@@ -387,6 +408,12 @@ export default defineComponent({
             refCurrentCellBorderBottom,
             refCurrentCellBorderLeft,
             refCurrentCellBorderCorner,
+
+            refCurrentAreaBorderTop,
+            refCurrentAreaBorderRight,
+            refCurrentAreaBorderBottom,
+            refCurrentAreaBorderLeft,
+            refCurrentAreaBorderCorner,
         }
 
         const gridMethods = {
@@ -610,6 +637,111 @@ export default defineComponent({
                 const scrollBodyElem = (event.currentTarget || event.target) as HTMLDivElement
                 debounceScrollY(scrollBodyElem)
             },
+            updateCurrentAreaStyle: () => {
+                if ($vmaFormulaGrid.reactiveData.currentArea
+                    && $vmaFormulaGrid.reactiveData.currentArea.start !== null
+                    && $vmaFormulaGrid.reactiveData.currentArea.end != null) {
+                    const { currentArea } = $vmaFormulaGrid.reactiveData
+                    const startColIndex = Math.min(currentArea.start.col, currentArea.end.col)
+                    const endColIndex = Math.max(currentArea.start.col, currentArea.end.col)
+                    const startRowIndex = Math.min(currentArea.start.row, currentArea.end.row)
+                    const endRowIndex = Math.max(currentArea.start.row, currentArea.end.row)
+
+                    const leftSpaceWidth = getXSpaceFromColumnWidths(
+                        $vmaFormulaGrid.reactiveData.xStart,
+                        renderDefaultColWidth.value,
+                        $vmaFormulaGrid.reactiveData.columnWidthsChanged,
+                        $vmaFormulaGrid.reactiveData.columnHidesChanged
+                    )
+
+                    const topSpaceHeight = getYSpaceFromRowHeights(
+                        $vmaFormulaGrid.reactiveData.yStart,
+                        renderDefaultRowHeight.value,
+                        $vmaFormulaGrid.reactiveData.rowHeightsChanged,
+                        $vmaFormulaGrid.reactiveData.rowHidesChanged
+                    )
+
+                    nextTick(() => {
+                        refGridBodyTable.value
+                            .querySelectorAll(
+                                `td[data-row="${startRowIndex}"][data-col="${startColIndex}"]`
+                            )
+                            .forEach((cellElem: any) => {
+                                const borderMarginLeft = `${
+                                    leftSpaceWidth + cellElem.offsetLeft - 1
+                                }px`
+                                const borderMarginTop = `${
+                                    topSpaceHeight + cellElem.offsetTop - 1
+                                }px`
+                                $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.transform = `translateX(${borderMarginLeft}) translateY(${borderMarginTop})`
+                                const w = getCurrentAreaWidth(
+                                    startColIndex,
+                                    endColIndex,
+                                    renderDefaultColWidth.value,
+                                    $vmaFormulaGrid.reactiveData.columnWidthsChanged,
+                                    $vmaFormulaGrid.reactiveData.columnHidesChanged
+                                )
+                                const h = getCurrentAreaHeight(
+                                    startRowIndex,
+                                    endRowIndex,
+                                    renderDefaultRowHeight.value,
+                                    $vmaFormulaGrid.reactiveData.rowHeightsChanged,
+                                    $vmaFormulaGrid.reactiveData.rowHidesChanged
+                                )
+                                $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.height = `${h}px`
+                                $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.width = `${w}px`
+                            })
+
+                        // 为cell加上cell-active效果
+                        // 先清除所有的已有cell-active效果
+                        refGridBodyTable.value
+                            .querySelectorAll('.cell-active')
+                            .forEach((elem: any, index: any) => {
+                                elem.classList.remove('cell-active')
+                            })
+                        // 当前范围内的cell，加上cell-active效果
+                        for (let i = startRowIndex; i <= endRowIndex; i++) {
+                            for (let j = startColIndex; j <= endColIndex; j++) {
+                                refGridBodyTable.value
+                                    .querySelectorAll(`td[data-row="${i}"][data-col="${j}"]`)
+                                    .forEach((cellElem: any) => {
+                                        cellElem.classList.add('cell-active')
+                                    })
+                            }
+                        }
+                        // // 为cell加上border bottom效果
+                        // // 先清除所有的已有bdb效果
+                        // refGridBodyTable.value
+                        //     .querySelectorAll('.cell-bdb')
+                        //     .forEach((elem, index) => {
+                        //       elem.classList.remove('cell-bdb')
+                        //     })
+                        // // 当前范围内的cell，加上cell-active效果
+                        // for (let i = startRowIndex; i <= endRowIndex; i++) {
+                        //   for (let j = startColIndex; j <= endColIndex; j++) {
+                        //     refGridBodyTable.value
+                        //         .querySelectorAll(`td[row="${i}"][col="${j + 1}"]`)
+                        //         .forEach((cellElem: any) => {
+                        //           cellElem.classList.add('cell-bdb')
+                        //         })
+                        //   }
+                        // }
+                    })
+                } else {
+                    $vmaFormulaGrid.reactiveData.currentAreaBorderStyle = {
+                        transform: 'translateX(0) translateY(0)',
+                        left: 0,
+                        top: 0,
+                        width: 0,
+                        height: 0
+                    }
+                    refGridBodyTable.value
+                        .querySelectorAll('.cell-active')
+                        .forEach((elem: any, index: any) => {
+                            elem.classList.remove('cell-active')
+                        })
+                }
+            },
             calcCurrentCellEditorStyle: () => {
                 if (gridReactiveData.currentCell) {
                     nextTick(() => {
@@ -708,6 +840,7 @@ export default defineComponent({
                     .then(() => {
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
                     .then(() => {
                         $vmaFormulaGrid.calc()
@@ -758,6 +891,7 @@ export default defineComponent({
                     .then(() => {
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
                     .then(() => {
                         $vmaFormulaGrid.calc()
@@ -769,6 +903,7 @@ export default defineComponent({
                 $vmaFormulaGrid.recalculate(false).then(() => {
                     $vmaFormulaGrid.calcCurrentCellEditorStyle()
                     $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                    $vmaFormulaGrid.updateCurrentAreaStyle()
                 })
             },
             hideRow: (rowNumber: number) => {
@@ -777,6 +912,7 @@ export default defineComponent({
                 $vmaFormulaGrid.recalculate(false).then(() => {
                     $vmaFormulaGrid.calcCurrentCellEditorStyle()
                     $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                    $vmaFormulaGrid.updateCurrentAreaStyle()
                 })
             },
             deleteColumn: (colNumber: number) => {
@@ -826,6 +962,7 @@ export default defineComponent({
                     .then(() => {
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
                     .then(() => {
                         $vmaFormulaGrid.calc()
@@ -877,6 +1014,7 @@ export default defineComponent({
                     .then(() => {
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
                     .then(() => {
                         $vmaFormulaGrid.calc()
@@ -915,6 +1053,7 @@ export default defineComponent({
                         $vmaFormulaGrid.recalculate(false).then(() => {
                             $vmaFormulaGrid.calcCurrentCellEditorStyle()
                             $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                            $vmaFormulaGrid.updateCurrentAreaStyle()
                         })
                     }
                 }
@@ -948,6 +1087,7 @@ export default defineComponent({
                         $vmaFormulaGrid.recalculate(false).then(() => {
                             $vmaFormulaGrid.calcCurrentCellEditorStyle()
                             $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                            $vmaFormulaGrid.updateCurrentAreaStyle()
                         })
                     }
                 }
@@ -980,6 +1120,7 @@ export default defineComponent({
                         $vmaFormulaGrid.recalculate(false).then(() => {
                             $vmaFormulaGrid.calcCurrentCellEditorStyle()
                             $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                            $vmaFormulaGrid.updateCurrentAreaStyle()
                         })
                     }
                 }
@@ -1010,6 +1151,7 @@ export default defineComponent({
                         $vmaFormulaGrid.recalculate(false).then(() => {
                             $vmaFormulaGrid.calcCurrentCellEditorStyle()
                             $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                            $vmaFormulaGrid.updateCurrentAreaStyle()
                         })
                     }
                 }
@@ -1088,6 +1230,35 @@ export default defineComponent({
                     }
                 })
                 gridReactiveData.merges = mergesNew
+
+                if ($vmaFormulaGrid.reactiveData.currentArea
+                    && $vmaFormulaGrid.reactiveData.currentArea.start !== null
+                    && $vmaFormulaGrid.reactiveData.currentArea.end != null) {
+                    const {start, end} = $vmaFormulaGrid.reactiveData.currentArea
+                    if (start.col === col || end.col === col) {
+                        if (start.col === end.col) {
+                            $vmaFormulaGrid.reactiveData.currentArea = {
+                                start: null,
+                                end: null
+                            }
+                            $vmaFormulaGrid.reactiveData.currentAreaStatus = false
+                        } else if (start.col < end.col) {
+                            if (start.col === col) {
+                                $vmaFormulaGrid.reactiveData.currentArea.start = $vmaFormulaGrid.reactiveData.currentSheetData[start.row][start.col + 1 + 1]
+                            }
+                            if (end.col === col) {
+                                $vmaFormulaGrid.reactiveData.currentArea.end = $vmaFormulaGrid.reactiveData.currentSheetData[end.row][end.col + 1 - 1]
+                            }
+                        } else if (start.col > end.col) {
+                            if (end.col === col) {
+                                $vmaFormulaGrid.reactiveData.currentArea.end = $vmaFormulaGrid.reactiveData.currentSheetData[end.row][end.col + 1 + 1]
+                            }
+                            if (start.col === col) {
+                                $vmaFormulaGrid.reactiveData.currentArea.start = $vmaFormulaGrid.reactiveData.currentSheetData[start.row][start.col + 1 - 1]
+                            }
+                        }
+                    }
+                }
             }
             if (type === 'deleteRow') {
                 const gridRowsVisibleChangedNew: Record<string, number> = {}
@@ -1140,11 +1311,40 @@ export default defineComponent({
                     }
                 })
                 gridReactiveData.merges = mergesNew
+
+                if ($vmaFormulaGrid.reactiveData.currentArea
+                    && $vmaFormulaGrid.reactiveData.currentArea.start !== null
+                    && $vmaFormulaGrid.reactiveData.currentArea.end != null) {
+                    const {start, end} = $vmaFormulaGrid.reactiveData.currentArea
+                    if (start.row === row || end.row === row) {
+                        if (start.row === end.row) {
+                            $vmaFormulaGrid.reactiveData.currentArea = {
+                                start: null,
+                                end: null
+                            }
+                            $vmaFormulaGrid.reactiveData.currentAreaStatus = false
+                        } else if (start.row < end.row) {
+                            if (start.row === row) {
+                                $vmaFormulaGrid.reactiveData.currentArea.start = $vmaFormulaGrid.reactiveData.currentSheetData[start.row + 1][start.col + 1]
+                            }
+                            if (end.row === row) {
+                                $vmaFormulaGrid.reactiveData.currentArea.end = $vmaFormulaGrid.reactiveData.currentSheetData[end.row - 1][end.col + 1]
+                            }
+                        } else if (start.row > end.row) {
+                            if (end.row === row) {
+                                $vmaFormulaGrid.reactiveData.currentArea.end = $vmaFormulaGrid.reactiveData.currentSheetData[end.row + 1][end.col + 1]
+                            }
+                            if (start.row === row) {
+                                $vmaFormulaGrid.reactiveData.currentArea.start = $vmaFormulaGrid.reactiveData.currentSheetData[start.row - 1][start.col + 1]
+                            }
+                        }
+                    }
+                }
             }
             if (type === 'insertColumn') {
                 const gridColumnsVisibleChangedNew: Record<string, number> = {}
                 Object.keys(gridReactiveData.columnHidesChanged).map((key) => {
-                    if (Number(key) >= col!) {
+                    if (Number(key) > col!) {
                         const newKey = Number(key) + 1
                         gridColumnsVisibleChangedNew[newKey] =
                             gridReactiveData.columnHidesChanged[key]
@@ -1159,7 +1359,7 @@ export default defineComponent({
 
                 const gridColumnsWidthChangedNew: Record<string, number> = {}
                 Object.keys(gridReactiveData.columnWidthsChanged).map((key) => {
-                    if (Number(key) >= col!) {
+                    if (Number(key) > col!) {
                         const newKey = Number(key) + 1
                         gridColumnsWidthChangedNew[newKey] =
                             gridReactiveData.columnWidthsChanged[key]
@@ -1196,7 +1396,7 @@ export default defineComponent({
             if (type === 'insertRow') {
                 const gridRowsVisibleChangedNew: Record<string, number> = {}
                 Object.keys(gridReactiveData.rowHidesChanged).map((key) => {
-                    if (Number(key) >= row!) {
+                    if (Number(key) > row!) {
                         const newKey = Number(key) + 1
                         gridRowsVisibleChangedNew[newKey] = gridReactiveData.rowHidesChanged[key]
                     } else {
@@ -1208,7 +1408,7 @@ export default defineComponent({
 
                 const gridRowsHeightChangedNew: Record<string, number> = {}
                 Object.keys(gridReactiveData.rowHeightsChanged).map((key) => {
-                    if (Number(key) >= row!) {
+                    if (Number(key) > row!) {
                         const newKey = Number(key) + 1
                         gridRowsHeightChangedNew[newKey] = gridReactiveData.rowHeightsChanged[key]
                     } else {
@@ -1675,6 +1875,18 @@ export default defineComponent({
                 }
                 gridReactiveData.currentCellEditorActive = false
                 gridReactiveData.currentCellEditorContent = null
+                gridReactiveData.currentAreaStatus = false
+                gridReactiveData.currentArea = {
+                    start: null,
+                    end: null
+                }
+                gridReactiveData.currentAreaBorderStyle = {
+                    transform: 'translateX(0) translateY(0)',
+                    left: 0,
+                    top: 0,
+                    width: 0,
+                    height: 0
+                }
                 resolve()
             })
         }

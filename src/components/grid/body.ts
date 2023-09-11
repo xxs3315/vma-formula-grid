@@ -81,6 +81,11 @@ export default defineComponent({
             refCurrentCellBorderBottom,
             refCurrentCellBorderLeft,
             refCurrentCellBorderCorner,
+            refCurrentAreaBorderTop,
+            refCurrentAreaBorderRight,
+            refCurrentAreaBorderBottom,
+            refCurrentAreaBorderLeft,
+            refCurrentAreaBorderCorner,
         } = $vmaFormulaGrid.getRefs()
 
         const renderVN = () => h('div', {
@@ -164,7 +169,7 @@ export default defineComponent({
                             left: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.left,
                             top: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.top,
                             height: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.height,
-                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'block' : 'none'
+                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'none' : 'none'
                         }
                     }),
                     h('div', {
@@ -175,7 +180,7 @@ export default defineComponent({
                             left: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.left,
                             top: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.top,
                             width: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.width,
-                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'block' : 'none'
+                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'none' : 'none'
                         }
                     }),
                     h('div', {
@@ -186,7 +191,7 @@ export default defineComponent({
                             left: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.left + $vmaFormulaGrid.reactiveData.currentCellBorderStyle.width,
                             top: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.top,
                             height: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.height,
-                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'block' : 'none'
+                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'none' : 'none'
                         }
                     }),
                     h('div', {
@@ -197,7 +202,7 @@ export default defineComponent({
                             left: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.left,
                             top: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.top + $vmaFormulaGrid.reactiveData.currentCellBorderStyle.height,
                             width: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.width,
-                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'block' : 'none'
+                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'none' : 'none'
                         }
                     }),
                     h('div', {
@@ -207,9 +212,63 @@ export default defineComponent({
                             transform: $vmaFormulaGrid.reactiveData.currentCellBorderStyle.transform,
                             left: `calc(${$vmaFormulaGrid.reactiveData.currentCellBorderStyle.left + $vmaFormulaGrid.reactiveData.currentCellBorderStyle.width} - 3px)`,
                             top: `calc(${$vmaFormulaGrid.reactiveData.currentCellBorderStyle.top + $vmaFormulaGrid.reactiveData.currentCellBorderStyle.height} - 3px)`,
-                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'block' : 'none'
+                            display: $vmaFormulaGrid.reactiveData.currentCell && Object.keys($vmaFormulaGrid.reactiveData.currentCell).length > 0 ? 'none' : 'none'
                         }
                     }),
+                    h('div', {
+                        ref: refCurrentAreaBorderLeft,
+                        class: ['current-area-border', 'left', `${$vmaFormulaGrid.props.type}`],
+                        style: {
+                            transform: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.transform,
+                            left: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.left,
+                            top: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.top,
+                            height: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.height,
+                            display: $vmaFormulaGrid.reactiveData.currentArea && $vmaFormulaGrid.reactiveData.currentArea.start !== null && $vmaFormulaGrid.reactiveData.currentArea.end !== null ? 'block' : 'none'
+                        }
+                    }),
+                    h('div', {
+                        ref: refCurrentAreaBorderTop,
+                        class: ['current-area-border', 'top', `${$vmaFormulaGrid.props.type}`],
+                        style: {
+                            transform: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.transform,
+                            left: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.left,
+                            top: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.top,
+                            width: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.width,
+                            display: $vmaFormulaGrid.reactiveData.currentArea && $vmaFormulaGrid.reactiveData.currentArea.start !== null && $vmaFormulaGrid.reactiveData.currentArea.end !== null ? 'block' : 'none'
+                        }
+                    }),
+                    h('div', {
+                        ref: refCurrentAreaBorderRight,
+                        class: ['current-area-border', 'right', `${$vmaFormulaGrid.props.type}`],
+                        style: {
+                            transform: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.transform,
+                            left: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.left + $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.width,
+                            top: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.top,
+                            height: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.height,
+                            display: $vmaFormulaGrid.reactiveData.currentArea && $vmaFormulaGrid.reactiveData.currentArea.start !== null && $vmaFormulaGrid.reactiveData.currentArea.end !== null ? 'block' : 'none'
+                        }
+                    }),
+                    h('div', {
+                        ref: refCurrentAreaBorderBottom,
+                        class: ['current-area-border', 'bottom', `${$vmaFormulaGrid.props.type}`],
+                        style: {
+                            transform: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.transform,
+                            left: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.left,
+                            top: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.top + $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.height,
+                            width: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.width,
+                            display: $vmaFormulaGrid.reactiveData.currentArea && $vmaFormulaGrid.reactiveData.currentArea.start !== null && $vmaFormulaGrid.reactiveData.currentArea.end !== null ? 'block' : 'none'
+                        }
+                    }),
+                    h('div', {
+                        ref: refCurrentAreaBorderCorner,
+                        class: ['current-area-border', 'corner', `${$vmaFormulaGrid.props.type}`],
+                        style: {
+                            transform: $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.transform,
+                            left: `calc(${$vmaFormulaGrid.reactiveData.currentAreaBorderStyle.left + $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.width} - 3px)`,
+                            top: `calc(${$vmaFormulaGrid.reactiveData.currentAreaBorderStyle.top + $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.height} - 3px)`,
+                            display: $vmaFormulaGrid.reactiveData.currentArea && $vmaFormulaGrid.reactiveData.currentArea.start !== null && $vmaFormulaGrid.reactiveData.currentArea.end !== null ? 'block' : 'none'
+                        }
+                    })
                 ] : (props.fixed === 'left' ?
                     h('div', {
                         ref: refGridBodyLeftFixedScrollWrapperDiv,
