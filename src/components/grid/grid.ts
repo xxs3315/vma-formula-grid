@@ -25,7 +25,7 @@ import {
 } from "../../../types";
 import {Guid} from "../../utils/guid.ts";
 import {
-    calcVertexes, checkCellInMerges,
+    calcVertexes, calcXOverlapMerges, calcYOverlapMerges, checkCellInMerges,
     filterVertexes,
     getColumnCount, getCurrentAreaHeight, getCurrentAreaWidth,
     getHeight,
@@ -1589,7 +1589,10 @@ export default defineComponent({
                     endColIndex: Math.min(visibleIndex + visibleSize + 20, gridReactiveData.colConfs.length)
                 }
 
-                const { startColIndex: offsetStartColIndex, endColIndex: offsetEndColIndex } = offsetItem
+                let { startColIndex: offsetStartColIndex, endColIndex: offsetEndColIndex } = offsetItem
+
+                offsetStartColIndex = Math.min(offsetStartColIndex, calcXOverlapMerges(offsetStartColIndex, $vmaFormulaGrid.reactiveData.merges))
+                offsetEndColIndex = Math.max(offsetEndColIndex, calcXOverlapMerges(offsetEndColIndex, $vmaFormulaGrid.reactiveData.merges))
 
                 if (gridReactiveData.lastScrollXVisibleIndex === 0) {
                     gridReactiveData.xStart = offsetStartColIndex
@@ -1624,7 +1627,10 @@ export default defineComponent({
                     endIndex: Math.min(visibleIndex + visibleSize + 20, gridReactiveData.rowConfs.length - 1)
                 }
 
-                const { startIndex: offsetStartIndex, endIndex: offsetEndIndex } = offsetItem
+                let { startIndex: offsetStartIndex, endIndex: offsetEndIndex } = offsetItem
+
+                offsetStartIndex = Math.min(offsetStartIndex, calcYOverlapMerges(offsetStartIndex, $vmaFormulaGrid.reactiveData.merges))
+                offsetEndIndex = Math.max(offsetEndIndex, calcYOverlapMerges(offsetEndIndex, $vmaFormulaGrid.reactiveData.merges))
 
                 if (gridReactiveData.lastScrollYVisibleIndex === 0) {
                     gridReactiveData.yStart = offsetStartIndex
