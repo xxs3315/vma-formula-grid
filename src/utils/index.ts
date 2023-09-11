@@ -1213,10 +1213,10 @@ export const getCurrentAreaHeight = (
     return height
 }
 
-export function calcXOverlapMerges(offsetStartColIndex: number, merges: Record<string, any>) {
+export function calcXOverlapMerges(offsetStartColIndex: number, merges: Record<string, any>, direction: string) {
     return 0;
 }
 
-export function calcYOverlapMerges(offsetStartIndex: number, merges: Record<string, any>) {
+export function calcYOverlapMerges(offsetStartIndex: number, merges: Record<string, any>, direction: string) {
     return 0;
 }

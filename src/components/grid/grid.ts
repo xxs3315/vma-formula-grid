@@ -1591,8 +1591,8 @@ export default defineComponent({
 
                 let { startColIndex: offsetStartColIndex, endColIndex: offsetEndColIndex } = offsetItem
 
-                offsetStartColIndex = Math.min(offsetStartColIndex, calcXOverlapMerges(offsetStartColIndex, $vmaFormulaGrid.reactiveData.merges))
-                offsetEndColIndex = Math.max(offsetEndColIndex, calcXOverlapMerges(offsetEndColIndex, $vmaFormulaGrid.reactiveData.merges))
+                offsetStartColIndex = Math.min(offsetStartColIndex, calcXOverlapMerges(offsetStartColIndex, $vmaFormulaGrid.reactiveData.merges, 'min'))
+                offsetEndColIndex = Math.max(offsetEndColIndex, calcXOverlapMerges(offsetEndColIndex, $vmaFormulaGrid.reactiveData.merges, 'max'))
 
                 if (gridReactiveData.lastScrollXVisibleIndex === 0) {
                     gridReactiveData.xStart = offsetStartColIndex
@@ -1629,8 +1629,8 @@ export default defineComponent({
 
                 let { startIndex: offsetStartIndex, endIndex: offsetEndIndex } = offsetItem
 
-                offsetStartIndex = Math.min(offsetStartIndex, calcYOverlapMerges(offsetStartIndex, $vmaFormulaGrid.reactiveData.merges))
-                offsetEndIndex = Math.max(offsetEndIndex, calcYOverlapMerges(offsetEndIndex, $vmaFormulaGrid.reactiveData.merges))
+                offsetStartIndex = Math.min(offsetStartIndex, calcYOverlapMerges(offsetStartIndex, $vmaFormulaGrid.reactiveData.merges, 'min'))
+                offsetEndIndex = Math.max(offsetEndIndex, calcYOverlapMerges(offsetEndIndex, $vmaFormulaGrid.reactiveData.merges, 'max'))
 
                 if (gridReactiveData.lastScrollYVisibleIndex === 0) {
                     gridReactiveData.yStart = offsetStartIndex
