@@ -692,40 +692,21 @@ export default defineComponent({
                                 $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.width = `${w}px`
                             })
 
-                        // 为cell加上cell-active效果
-                        // 先清除所有的已有cell-active效果
                         refGridBodyTable.value
                             .querySelectorAll('.cell-active')
                             .forEach((elem: any, index: any) => {
                                 elem.classList.remove('cell-active')
                             })
-                        // 当前范围内的cell，加上cell-active效果
                         for (let i = startRowIndex; i <= endRowIndex; i++) {
                             for (let j = startColIndex; j <= endColIndex; j++) {
                                 refGridBodyTable.value
                                     .querySelectorAll(`td[data-row="${i}"][data-col="${j}"]`)
                                     .forEach((cellElem: any) => {
+                                        console.log(cellElem)
                                         cellElem.classList.add('cell-active')
                                     })
                             }
                         }
-                        // // 为cell加上border bottom效果
-                        // // 先清除所有的已有bdb效果
-                        // refGridBodyTable.value
-                        //     .querySelectorAll('.cell-bdb')
-                        //     .forEach((elem, index) => {
-                        //       elem.classList.remove('cell-bdb')
-                        //     })
-                        // // 当前范围内的cell，加上cell-active效果
-                        // for (let i = startRowIndex; i <= endRowIndex; i++) {
-                        //   for (let j = startColIndex; j <= endColIndex; j++) {
-                        //     refGridBodyTable.value
-                        //         .querySelectorAll(`td[row="${i}"][col="${j + 1}"]`)
-                        //         .forEach((cellElem: any) => {
-                        //           cellElem.classList.add('cell-bdb')
-                        //         })
-                        //   }
-                        // }
                     })
                 } else {
                     $vmaFormulaGrid.reactiveData.currentAreaBorderStyle = {
@@ -1829,6 +1810,9 @@ export default defineComponent({
             if (refGridHeaderTable.value) {
                 refGridHeaderTable.value.style.width = `${gridReactiveData.gridWidth + gridReactiveData.scrollbarWidth}px`
             }
+            $vmaFormulaGrid.calcCurrentCellEditorStyle()
+            $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+            $vmaFormulaGrid.updateCurrentAreaStyle()
         }
 
         const reset = (): Promise<void> => {
