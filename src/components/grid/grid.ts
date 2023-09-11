@@ -702,7 +702,6 @@ export default defineComponent({
                                 refGridBodyTable.value
                                     .querySelectorAll(`td[data-row="${i}"][data-col="${j}"]`)
                                     .forEach((cellElem: any) => {
-                                        console.log(cellElem)
                                         cellElem.classList.add('cell-active')
                                     })
                             }
