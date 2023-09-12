@@ -64,6 +64,10 @@ export default defineComponent({
             type: String as PropType<VmaFormulaGridPropTypes.Size>,
             default: 'normal'
         },
+        functions: {
+            type: Object as PropType<VmaFormulaGridPropTypes.CustomFunction>,
+            default: null
+        },
         minDims: {
             type: Array as PropType<VmaFormulaGridPropTypes.MinDims>,
             default: [10, 10], // [column, row]
@@ -557,7 +561,7 @@ export default defineComponent({
                 }
 
                 const parser = new FormulaParser({
-                    // functions: props.functions,
+                    functions: props.functions,
                     onCell: (ref: any) => gridReactiveData.currentSheetData[ref.row - 1][ref.col].mv,
                     onRange: (ref: any) => {
                         const arr = []

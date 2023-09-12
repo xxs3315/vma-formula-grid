@@ -333,6 +333,7 @@ export default defineComponent({
                     },
                     onMouseup: (_: MouseEvent) => {
                         $vmaFormulaGrid.reactiveData.currentAreaStatus = false
+                        $vmaFormulaGrid.updateCurrentAreaStyle()
                     },
                     onMousedown: (event: MouseEvent) => {
                         if (props.cat === 'normal' && props.col >= 0) {
@@ -345,7 +346,7 @@ export default defineComponent({
                             $vmaFormulaGrid.reactiveData.currentAreaStatus = true
                             $vmaFormulaGrid.reactiveData.currentArea = {
                                 start: currentSheetData[props.row!][props.col! + 1],
-                                end: null
+                                end: currentSheetData[props.row!][props.col! + 1]
                             }
                             nextTick(() => {
                                 resizeCurrentSelectArea(event)

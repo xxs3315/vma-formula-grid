@@ -18,6 +18,7 @@ export namespace VmaFormulaGridPropTypes {
     export type Data = Record<string, any>
     export type Type = ComponentType
     export type Size = SizeType
+    export type CustomFunction = Record<string, unknown>
     export type MinDims = number[]
     export type DefaultRowHeight = number
     export type DefaultColumnWidth = number
