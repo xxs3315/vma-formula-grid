@@ -1214,11 +1214,29 @@ export const getCurrentAreaHeight = (
 }
 
 export function calcXOverlapMerges(offsetStartColIndex: number, merges: Record<string, any>, direction: string) {
-    console.log(offsetStartColIndex, merges, direction)
-    return 0;
+    Object.keys(merges).forEach((key: string) => {
+        if (offsetStartColIndex > merges[key].colStart && offsetStartColIndex < merges[key].colEnd) {
+            if (direction === 'min') {
+                offsetStartColIndex = merges[key].colStart
+            }
+            if (direction === 'max') {
+                offsetStartColIndex = merges[key].colEnd
+            }
+        }
+    })
+    return offsetStartColIndex;
 }
 
 export function calcYOverlapMerges(offsetStartIndex: number, merges: Record<string, any>, direction: string) {
-    console.log(offsetStartIndex, merges, direction)
-    return 0;
+    Object.keys(merges).forEach((key: string) => {
+        if (offsetStartIndex + 1 > merges[key].rowStart && offsetStartIndex + 1 < merges[key].rowEnd) {
+            if (direction === 'min') {
+                offsetStartIndex = merges[key].rowStart - 1
+            }
+            if (direction === 'max') {
+                offsetStartIndex = merges[key].rowEnd - 1
+            }
+        }
+    })
+    return offsetStartIndex;
 }
