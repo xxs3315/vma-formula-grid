@@ -562,14 +562,16 @@ export default defineComponent({
 
                 const parser = new FormulaParser({
                     functions: props.functions,
-                    onCell: (ref: any) => gridReactiveData.currentSheetData[ref.row - 1][ref.col].mv,
+                    onCell: (ref: any) => checkCellInMerges(ref.col, ref.row, gridReactiveData.merges) ?
+                                            null :
+                                            gridReactiveData.currentSheetData[ref.row - 1][ref.col].mv,
                     onRange: (ref: any) => {
                         const arr = []
                         for (let row = ref.from.row; row <= ref.to.row; row++) {
                             const innerArr = []
                             for (let col = ref.from.col; col <= ref.to.col; col++) {
                                 innerArr.push(
-                                    checkCellInMerges(col, row - 1, gridReactiveData.merges) ?
+                                    checkCellInMerges(col, row, gridReactiveData.merges) ?
                                         null :
                                         gridReactiveData.currentSheetData[row - 1][col].mv
                                 )
