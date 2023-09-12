@@ -326,7 +326,7 @@ export default defineComponent({
       }],
       rowHide: [9, 15, 16, 17, 18, 19],
       colHide: ['D', 'F', 'G'],
-      merges: ['A1:I1', 'A2:A12']
+      merges: ['A1:I1', 'A2:A12', 'A120:A165']
     })
 
     const data = reactive({

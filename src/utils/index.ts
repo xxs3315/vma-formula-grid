@@ -1234,7 +1234,7 @@ export function calcYOverlapMerges(offsetStartIndex: number, merges: Record<stri
                 offsetStartIndex = merges[key].rowStart - 1
             }
             if (direction === 'max') {
-                offsetStartIndex = merges[key].rowEnd - 1
+                offsetStartIndex = merges[key].rowEnd + 1
             }
         }
     })
