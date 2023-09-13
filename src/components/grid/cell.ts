@@ -7,7 +7,7 @@ import {
     nextTick,
     PropType,
     reactive,
-    resolveComponent
+    resolveComponent, useCssVars
 } from "vue";
 import {
     VmaFormulaGridCellConstructor,
@@ -19,6 +19,7 @@ import {
     VmaFormulaGridPrivateMethods
 } from "../../../types";
 import {
+    calcCellBgCustom,
     getColumnSymbol, getCurrentAreaHeight, getCurrentAreaWidth,
     getRenderDefaultColWidth,
     getRenderDefaultRowHeight,
@@ -62,6 +63,19 @@ export default defineComponent({
         const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
 
         const GridCompIconComponent = resolveComponent('VmaFormulaGridCompIcon') as ComponentOptions
+
+        useCssVars(() =>
+            props.cat === 'normal' && props.col
+                ? {
+                    cellBgType: '8',
+                    cellBgCustom: calcCellBgCustom(props.col, props.row, $vmaFormulaGrid.reactiveData.styles)
+                        /*currentSheetData[props.r!][props.c! - 1] &&
+                        currentSheetData[props.r!][props.c! - 1].bg
+                            ? currentSheetData[props.r!][props.c! - 1].bg
+                            : ''*/,
+                }
+                : { cellBgType: '', cellBgCustom: '' },
+        )
 
         const gridCellReactiveData = reactive({})
 
@@ -306,7 +320,7 @@ export default defineComponent({
                     class: [
                         props.cat,
                         `${props.type}`,
-                        `cell-bg-0`,
+                        `cell-bg-8`,
                         {'column-indicator-active':
                                 props.cat === 'column-indicator'
                                 && $vmaFormulaGrid.reactiveData.currentArea.start !== null
@@ -369,95 +383,6 @@ export default defineComponent({
                 renderCell()
             )
         }
-
-        /*const updateCurrentSelectArea = () => {
-            const { currentArea } = $vmaFormulaGrid.reactiveData
-            const startColIndex = Math.min(currentArea.start.col, currentArea.end.col)
-            const endColIndex = Math.max(currentArea.start.col, currentArea.end.col)
-            const startRowIndex = Math.min(currentArea.start.row, currentArea.end.row)
-            const endRowIndex = Math.max(currentArea.start.row, currentArea.end.row)
-
-            const leftSpaceWidth = getXSpaceFromColumnWidths(
-                $vmaFormulaGrid.reactiveData.xStart,
-                renderDefaultColWidth.value,
-                $vmaFormulaGrid.reactiveData.columnWidthsChanged,
-                $vmaFormulaGrid.reactiveData.columnHidesChanged
-            )
-
-            const topSpaceHeight = getYSpaceFromRowHeights(
-                $vmaFormulaGrid.reactiveData.yStart,
-                renderDefaultRowHeight.value,
-                $vmaFormulaGrid.reactiveData.rowHeightsChanged,
-                $vmaFormulaGrid.reactiveData.rowHidesChanged
-            )
-
-            nextTick(() => {
-                    refGridBodyTable.value
-                        .querySelectorAll(
-                            `td[data-row="${startRowIndex}"][data-col="${startColIndex}"]`
-                        )
-                        .forEach((cellElem: any) => {
-                            const borderMarginLeft = `${
-                                leftSpaceWidth + cellElem.offsetLeft - 1
-                            }px`
-                            const borderMarginTop = `${
-                                topSpaceHeight + cellElem.offsetTop - 1
-                            }px`
-                            $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.transform = `translateX(${borderMarginLeft}) translateY(${borderMarginTop})`
-                            const w = getCurrentAreaWidth(
-                                startColIndex,
-                                endColIndex,
-                                renderDefaultColWidth.value,
-                                $vmaFormulaGrid.reactiveData.columnWidthsChanged,
-                                $vmaFormulaGrid.reactiveData.columnHidesChanged
-                            )
-                            const h = getCurrentAreaHeight(
-                                startRowIndex,
-                                endRowIndex,
-                                renderDefaultRowHeight.value,
-                                $vmaFormulaGrid.reactiveData.rowHeightsChanged,
-                                $vmaFormulaGrid.reactiveData.rowHidesChanged
-                            )
-                            $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.height = `${h}px`
-                            $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.width = `${w}px`
-                        })
-
-                    // 为cell加上cell-active效果
-                    // 先清除所有的已有cell-active效果
-                    refGridBodyTable.value
-                        .querySelectorAll('.cell-active')
-                        .forEach((elem: any, index: any) => {
-                            elem.classList.remove('cell-active')
-                        })
-                    // 当前范围内的cell，加上cell-active效果
-                    for (let i = startRowIndex; i <= endRowIndex; i++) {
-                        for (let j = startColIndex; j <= endColIndex; j++) {
-                            refGridBodyTable.value
-                                .querySelectorAll(`td[data-row="${i}"][data-col="${j}"]`)
-                                .forEach((cellElem: any) => {
-                                    cellElem.classList.add('cell-active')
-                                })
-                        }
-                    }
-                    // // 为cell加上border bottom效果
-                    // // 先清除所有的已有bdb效果
-                    // refGridBodyTable.value
-                    //     .querySelectorAll('.cell-bdb')
-                    //     .forEach((elem, index) => {
-                    //       elem.classList.remove('cell-bdb')
-                    //     })
-                    // // 当前范围内的cell，加上cell-active效果
-                    // for (let i = startRowIndex; i <= endRowIndex; i++) {
-                    //   for (let j = startColIndex; j <= endColIndex; j++) {
-                    //     refGridBodyTable.value
-                    //         .querySelectorAll(`td[row="${i}"][col="${j + 1}"]`)
-                    //         .forEach((cellElem: any) => {
-                    //           cellElem.classList.add('cell-bdb')
-                    //         })
-                    //   }
-                    // }
-                })
-        }*/
 
         const mousemoveHandler = (event: MouseEvent) => {
             const eventTargetNode: any = DomTools.getEventTargetNode(

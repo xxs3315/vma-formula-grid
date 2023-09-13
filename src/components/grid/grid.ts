@@ -352,6 +352,18 @@ export default defineComponent({
                 width: 0,
                 height: 0
             },
+            styles: {
+                bgc: {
+                    cols: [],
+                    rows: [],
+                    cells: [],
+                },
+                fgc: {
+                    cols: [],
+                    rows: [],
+                    cells: [],
+                }
+            }
         }) as VmaFormulaGridReactiveData
 
         watch(
@@ -1958,6 +1970,31 @@ export default defineComponent({
                                 }
                             }
                         })
+                    }
+
+                    if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('styles')) {
+                        if (props.data.conf.styles.hasOwnProperty('bgc')) {
+                            if (props.data.conf.styles.bgc.hasOwnProperty('cols') && props.data.conf.styles.bgc.cols.length > 0) {
+                                gridReactiveData.styles.bgc.cols = props.data.conf.styles.bgc.cols
+                            }
+                            if (props.data.conf.styles.bgc.hasOwnProperty('rows') && props.data.conf.styles.bgc.rows.length > 0) {
+                                gridReactiveData.styles.bgc.rows = props.data.conf.styles.bgc.rows
+                            }
+                            if (props.data.conf.styles.bgc.hasOwnProperty('cells') && props.data.conf.styles.bgc.cells.length > 0) {
+                                gridReactiveData.styles.bgc.cells = props.data.conf.styles.bgc.cells
+                            }
+                        }
+                        if (props.data.conf.styles.hasOwnProperty('fgc')) {
+                            if (props.data.conf.styles.fgc.hasOwnProperty('cols') && props.data.conf.styles.fgc.cols.length > 0) {
+                                gridReactiveData.styles.fgc.cols = props.data.conf.styles.fgc.cols
+                            }
+                            if (props.data.conf.styles.fgc.hasOwnProperty('rows') && props.data.conf.styles.fgc.rows.length > 0) {
+                                gridReactiveData.styles.fgc.rows = props.data.conf.styles.fgc.rows
+                            }
+                            if (props.data.conf.styles.fgc.hasOwnProperty('cells') && props.data.conf.styles.fgc.cells.length > 0) {
+                                gridReactiveData.styles.fgc.cells = props.data.conf.styles.fgc.cells
+                            }
+                        }
                     }
 
                     const columns = [...Array<Record<string, unknown>>(gridReactiveData.xDim.valueOf() + 1)]

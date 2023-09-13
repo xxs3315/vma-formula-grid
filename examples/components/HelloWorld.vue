@@ -346,7 +346,55 @@ export default defineComponent({
       }],
       rowHide: [9, 15, 16, 17, 18, 19],
       colHide: ['D', 'F', 'G'],
-      merges: ['A1:I1', 'A2:A12', 'A120:A165']
+      merges: ['A1:I1', 'A2:A12', 'A120:A165'],
+      styles: {
+        bgc: {
+          cols: [{
+            p: ['A', 'C', 'D'],
+            color: 'grey'
+          },{
+            p: ['B', 'D', 'F'],
+            color: 'lightblue'
+          }],
+          rows: [{
+            p: [1, 3, 5],
+            color: '#FCCC99'
+          },{
+            p: [10, 11, 12],
+            color: '#88EEFF'
+          },],
+          cells: [{
+            p: 'J28',
+            color: '#88EEFF'
+          },{
+            p: 'G7:J26',
+            color: 'rgba(66, 88, 99, 0.5)'
+          },]
+        },
+        fgc: {
+          cols: [{
+            p: ['A', 'C', 'D'],
+            color: 'darkblue'
+          },{
+            p: ['B', 'D', 'F'],
+            color: 'red'
+          }],
+          rows: [{
+            p: [1, 3, 5],
+            color: '#006644'
+          },{
+            p: [10, 11, 12],
+            color: '#225599'
+          },],
+          cells: [{
+            p: 'J28',
+            color: 'rgba(42, 48, 46, 0.8)'
+          },{
+            p: 'G7:J26',
+            color: 'rgba(42, 48, 46, 0.8)'
+          },]
+        }
+      }
     })
 
     const data = reactive({

@@ -160,6 +160,19 @@ export interface VmaFormulaGridReactiveData {
         end: any
     }
     currentAreaBorderStyle: Record<string, any>
+
+    styles: {
+        bgc: {
+            cols: Record<string, any>[],
+            rows: Record<string, any>[],
+            cells: Record<string, any>[]
+        },
+        fgc: {
+            cols: Record<string, any>[],
+            rows: Record<string, any>[],
+            cells: Record<string, any>[]
+        }
+    }
 }
 
 export interface VmaFormulaGridProps {
