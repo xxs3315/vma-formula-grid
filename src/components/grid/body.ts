@@ -333,32 +333,34 @@ export default defineComponent({
                         })
                     )
                 }
-                for (let indexCol = $vmaFormulaGrid.reactiveData.xStart; indexCol <= $vmaFormulaGrid.reactiveData.xEnd; indexCol++) {
-                    if (indexCol >= $vmaFormulaGrid.reactiveData.colConfs.length - 1) {
-                        break
-                    }
-                    if (indexCol === -1) {
-                        cols.push(
-                            h(GridCellComponent, {
-                                cat: 'row-indicator',
-                                type: `${$vmaFormulaGrid.props.type}`,
-                                row: rf.index,
-                                col: -1,
-                                'data-id': `${rf.index}_-1`,
-                            })
-                        )
-                    } else {
-                        const cf: any = $vmaFormulaGrid.reactiveData.colConfs[indexCol + 1]
-                        if (!checkCellInMerges(cf.index + 1, rf.index + 1, $vmaFormulaGrid.reactiveData.merges)) {
+                if (props.fixed === 'center') {
+                    for (let indexCol = $vmaFormulaGrid.reactiveData.xStart; indexCol <= $vmaFormulaGrid.reactiveData.xEnd; indexCol++) {
+                        if (indexCol >= $vmaFormulaGrid.reactiveData.colConfs.length - 1) {
+                            break
+                        }
+                        if (indexCol === -1) {
                             cols.push(
                                 h(GridCellComponent, {
-                                    cat: 'normal',
+                                    cat: 'row-indicator',
                                     type: `${$vmaFormulaGrid.props.type}`,
                                     row: rf.index,
-                                    col: cf.index,
-                                    'data-id': `${rf.index}_${cf.index}`,
+                                    col: -1,
+                                    'data-id': `${rf.index}_-1`,
                                 })
                             )
+                        } else {
+                            const cf: any = $vmaFormulaGrid.reactiveData.colConfs[indexCol + 1]
+                            if (!checkCellInMerges(cf.index + 1, rf.index + 1, $vmaFormulaGrid.reactiveData.merges)) {
+                                cols.push(
+                                    h(GridCellComponent, {
+                                        cat: 'normal',
+                                        type: `${$vmaFormulaGrid.props.type}`,
+                                        row: rf.index,
+                                        col: cf.index,
+                                        'data-id': `${rf.index}_${cf.index}`,
+                                    })
+                                )
+                            }
                         }
                     }
                 }

@@ -555,8 +555,6 @@ export default defineComponent({
             renderVN: renderVN,
         } as unknown as VmaFormulaGridCellConstructor & VmaFormulaGridCellMethods & VmaFormulaGridCellPrivateMethods
 
-        console.log($vmaFormulaGridCell.uId)
-
         return $vmaFormulaGridCell
     },
     render() {
