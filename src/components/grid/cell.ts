@@ -65,14 +65,10 @@ export default defineComponent({
         const GridCompIconComponent = resolveComponent('VmaFormulaGridCompIcon') as ComponentOptions
 
         useCssVars(() =>
-            props.cat === 'normal' && props.col
+            props.cat === 'normal' && props.col >= 0
                 ? {
-                    cellBgType: '8',
-                    cellBgCustom: calcCellBgCustom(props.col, props.row, $vmaFormulaGrid.reactiveData.styles)
-                        /*currentSheetData[props.r!][props.c! - 1] &&
-                        currentSheetData[props.r!][props.c! - 1].bg
-                            ? currentSheetData[props.r!][props.c! - 1].bg
-                            : ''*/,
+                    cellBgType: currentSheetData[props.row!][props.col! + 1].bgt,
+                    cellBgCustom: currentSheetData[props.row!][props.col! + 1].bg,
                 }
                 : { cellBgType: '', cellBgCustom: '' },
         )
@@ -320,7 +316,7 @@ export default defineComponent({
                     class: [
                         props.cat,
                         `${props.type}`,
-                        `cell-bg-8`,
+                        `cell-bg-${c.bgt}`,
                         {'column-indicator-active':
                                 props.cat === 'column-indicator'
                                 && $vmaFormulaGrid.reactiveData.currentArea.start !== null
@@ -558,6 +554,8 @@ export default defineComponent({
             reactiveData: gridCellReactiveData,
             renderVN: renderVN,
         } as unknown as VmaFormulaGridCellConstructor & VmaFormulaGridCellMethods & VmaFormulaGridCellPrivateMethods
+
+        console.log($vmaFormulaGridCell.uId)
 
         return $vmaFormulaGridCell
     },

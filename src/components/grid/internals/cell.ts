@@ -9,8 +9,11 @@ export class Cell {
     mv: any
     ss?: boolean // 计算状态，已计算：true；未计算：false
     st?: number // 计算时间戳
+    bgt?: string
+    bg?: any
 
-    constructor(row: number, col: number, rowSpan: number, colSpan: number, v: any, mv: any, fd: any, se: any, ss: boolean, st: number) {
+    constructor(row: number, col: number, rowSpan: number, colSpan: number, v: any, mv: any, fd: any, se: any, ss: boolean, st: number,
+                bgt: string, bg: any) {
         this.row = row;
         this.col = col;
         this.rowSpan = rowSpan;
@@ -21,5 +24,7 @@ export class Cell {
         this.se = se;
         this.ss = ss;
         this.st = st;
+        this.bgt = bgt;
+        this.bg = bg;
     }
 }

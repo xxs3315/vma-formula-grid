@@ -1245,7 +1245,6 @@ export function calcCellBgCustom(col: number, row: number, styles: {
     bgc: { cols: Record<string, any>[]; rows: Record<string, any>[]; cells: Record<string, any>[] };
     fgc: { cols: Record<string, any>[]; rows: Record<string, any>[]; cells: Record<string, any>[] }
 }) {
-    console.log(col, row, styles)
     let result = ''
     if (styles.bgc) {
         if (styles.bgc.cols) {
@@ -1284,5 +1283,5 @@ export function calcCellBgCustom(col: number, row: number, styles: {
             })
         }
     }
-    return result;
+    return {bg: result, bgt: result.length > 0 ? '8' : '0'};
 }

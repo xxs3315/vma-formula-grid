@@ -25,6 +25,7 @@ import {
 } from "../../../types";
 import {Guid} from "../../utils/guid.ts";
 import {
+    calcCellBgCustom,
     calcVertexes, calcXOverlapMerges, calcYOverlapMerges, checkCellInMerges,
     filterVertexes,
     getColumnCount, getCurrentAreaHeight, getCurrentAreaWidth,
@@ -828,7 +829,7 @@ export default defineComponent({
                         row.splice(
                             colNumber + 1,
                             0,
-                            new Cell(index, colNumber, 1, 1, null, null, null, null, false, -1,) as Cell & { [key: string]: string },
+                            new Cell(index, colNumber, 1, 1, null, null, null, null, false, -1, '', null) as Cell & { [key: string]: string },
                         )
                         return null
                     },
@@ -880,7 +881,7 @@ export default defineComponent({
                 const aNewRow: Cell[] = []
                 for (let i = -1; i < gridReactiveData.colConfs.length - 1; i++) {
                     aNewRow.push(
-                        new Cell(Number(rowNumber), i, 1, 1, null, null, null, null, false, -1,) as Cell & { [key: string]: string },
+                        new Cell(Number(rowNumber), i, 1, 1, null, null, null, null, false, -1, '', null) as Cell & { [key: string]: string },
                     )
                 }
                 gridReactiveData.currentSheetData.splice(Number(rowNumber), 0, aNewRow)
@@ -2064,6 +2065,7 @@ export default defineComponent({
                                 }
                             }
                             const {rowSpan, colSpan} = getRowColSpanFromMerges(colIndex, rowIndex + 1, gridReactiveData.merges)
+                            const {bg, bgt} = calcCellBgCustom(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.styles)
                             gridReactiveData.currentSheetData[rowIndex][colIndex] = new Cell(
                                 rowIndex,
                                 colIndex - 1,
@@ -2075,6 +2077,8 @@ export default defineComponent({
                                 null,
                                 false,
                                 -1,
+                                bgt,
+                                bg
                             )
                         })
                     })
