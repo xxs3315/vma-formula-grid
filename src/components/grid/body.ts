@@ -20,7 +20,14 @@ import {
     VmaFormulaGridPrivateMethods
 } from "../../../types";
 import {Guid} from "../../utils/guid.ts";
-import {checkCellInMerges, isNumeric} from "../../utils";
+import {
+    checkCellInMerges,
+    getRenderDefaultRowHeight,
+    getYSpaceFromRowHeights,
+    isNumeric
+} from "../../utils";
+import {Cell} from "./internals/cell.ts";
+import {DomTools} from "../../utils/doms.ts";
 
 export default defineComponent({
     name: 'VmaFormulaGridBody',
@@ -34,7 +41,7 @@ export default defineComponent({
 
         const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
 
-        const GridCellComponent = resolveComponent('VmaFormulaGridCell') as ComponentOptions
+        const GridCompIconComponent = resolveComponent('VmaFormulaGridCompIcon') as ComponentOptions
 
         const TextareaComponent = resolveComponent('VmaFormulaGridCompTextarea') as ComponentOptions
 
@@ -86,6 +93,7 @@ export default defineComponent({
             refCurrentAreaBorderBottom,
             refCurrentAreaBorderLeft,
             refCurrentAreaBorderCorner,
+            refRowResizeBarDiv,
         } = $vmaFormulaGrid.getRefs()
 
         const renderVN = () => h('div', {
@@ -314,6 +322,125 @@ export default defineComponent({
                     : createCommentVNode())
         )
 
+        const renderCellContentWithFormat = (cell: Cell) => {
+            // TODO 加入数据格式处理
+            return cell.mv
+        }
+
+        const getCellContent = (cell: Cell) => {
+            if (cell && cell.v) {
+                return renderCellContentWithFormat(cell)
+            }
+            return null
+        }
+
+        const resizeRowMousedown = (event: MouseEvent) => {
+            const {clientY: dragClientY} = event
+            const domMousemove = document.onmousemove
+            const domMouseup = document.onmouseup
+            const dragBtnElem = event.target as HTMLDivElement
+            const wrapperElem = refGridBodyLeftFixedTableWrapperDiv.value
+            const pos = DomTools.getOffsetPos(dragBtnElem, wrapperElem)
+            const dragBtnHeight = dragBtnElem.clientHeight
+            const rowHeight = getRenderDefaultRowHeight($vmaFormulaGrid.props.defaultRowHeight, $vmaFormulaGrid.props.size!)
+            const topSpaceHeight = getYSpaceFromRowHeights(
+                $vmaFormulaGrid.reactiveData.yStart,
+                renderDefaultRowHeight.value,
+                $vmaFormulaGrid.reactiveData.rowHeightsChanged,
+                $vmaFormulaGrid.reactiveData.rowHidesChanged
+            )
+            const dragBtnOffsetHeight = dragBtnHeight
+            const dragPosTop = pos.top + Math.floor(dragBtnOffsetHeight) + topSpaceHeight
+            const cell = dragBtnElem.parentNode as HTMLTableCellElement
+            const dragMinTop = Math.max(pos.top - cell.clientHeight + dragBtnOffsetHeight, 0)
+            let dragTop = 0
+            const resizeBarElem = refRowResizeBarDiv.value
+            resizeBarElem.style.top = `${pos.top + refGridHeaderTableWrapperDiv.value.clientHeight + dragBtnOffsetHeight + topSpaceHeight}px`
+            resizeBarElem.style.display = 'block'
+
+            // 处理拖动事件
+            const updateEvent = (event: MouseEvent) => {
+                event.stopPropagation()
+                event.preventDefault()
+                const offsetY = event.clientY - dragClientY
+                const top = dragPosTop + offsetY
+                dragTop = Math.max(top, dragMinTop)
+                resizeBarElem.style.top = `${dragTop + refGridHeaderTableWrapperDiv.value.clientHeight}px`
+            }
+
+            document.onmousemove = updateEvent
+
+            document.onmouseup = () => {
+                document.onmousemove = domMousemove
+                document.onmouseup = domMouseup
+                resizeBarElem.style.display = 'none'
+                if (dragBtnElem.parentElement!.getAttribute('data-row')) {
+                    const rowConfig = $vmaFormulaGrid.reactiveData.rowConfs.find(item => item.index === parseInt(dragBtnElem.parentElement!.getAttribute('data-row')!, 10))
+                    if (rowConfig) {
+                        rowConfig.height = Math.max(dragBtnElem.parentElement!.clientHeight + dragTop - dragPosTop, 6)
+                        $vmaFormulaGrid.reactiveData.rowHeightsChanged[`${rowConfig.index + 1}`] = rowConfig.height
+                        $vmaFormulaGrid.reactiveData.gridHeight += rowConfig.height - rowHeight
+                    }
+                }
+
+                dragBtnElem.parentElement!.parentElement!.style.height = `${Math.max(dragBtnElem.parentElement!.clientHeight + dragTop - dragPosTop, 6)}px`
+                $vmaFormulaGrid.recalculate(true).then(() => {
+                    nextTick(() => {
+                        $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                        $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.updateCurrentAreaStyle()
+                    })
+                })
+            }
+        }
+
+        const mousemoveHandler = (event: MouseEvent) => {
+            const eventTargetNode: any = DomTools.getEventTargetNode(
+                event,
+                refGridBodyTable,
+                `normal`,
+                (target: any) =>
+                    target.attributes.hasOwnProperty('data-row') &&
+                    target.attributes.hasOwnProperty('data-col')
+            )
+            if (eventTargetNode && eventTargetNode.flag) {
+                const targetElem: any = eventTargetNode.targetElem
+                $vmaFormulaGrid.reactiveData.currentArea.end = $vmaFormulaGrid.reactiveData.currentSheetData[Number(targetElem.attributes['data-row'].value)][Number(targetElem.attributes['data-col'].value) + 1]
+                $vmaFormulaGrid.updateCurrentAreaStyle()
+            }
+        }
+
+        const resizeCurrentSelectArea = (event: MouseEvent) => {
+            const domMousemove = document.onmousemove
+            const domMouseup = document.onmouseup
+
+            const updateEvent = (event: MouseEvent) => {
+                event.stopPropagation()
+                event.preventDefault()
+                mousemoveHandler(event)
+            }
+
+            document.onmousemove = updateEvent
+
+            document.onmouseup = (event: MouseEvent) => {
+                document.onmousemove = domMousemove
+                document.onmouseup = domMouseup
+                const eventTargetNode: any = DomTools.getEventTargetNode(
+                    event,
+                    refGridBodyTable,
+                    `normal`,
+                    (target: any) =>
+                        target.attributes.hasOwnProperty('data-row') &&
+                        target.attributes.hasOwnProperty('data-col')
+                )
+                if (eventTargetNode && eventTargetNode.flag) {
+                    const targetElem: any = eventTargetNode.targetElem
+                    $vmaFormulaGrid.reactiveData.currentArea.end = $vmaFormulaGrid.reactiveData.currentSheetData[Number(targetElem.attributes['data-row'].value)][Number(targetElem.attributes['data-col'].value) + 1]
+                    $vmaFormulaGrid.updateCurrentAreaStyle()
+                }
+            }
+        }
+
         const renderBodyRows = () => {
             const trs: any = []
             for (let index = $vmaFormulaGrid.reactiveData.yStart; index <= $vmaFormulaGrid.reactiveData.yEnd; index++) {
@@ -325,12 +452,96 @@ export default defineComponent({
                 const cols: any = []
                 if ($vmaFormulaGrid.reactiveData.xStart !== -1) {
                     cols.push(
-                        h(GridCellComponent, {
-                            cat: 'row-indicator',
-                            type: `${$vmaFormulaGrid.props.type}`,
-                            row: rf.index,
-                            col: -1,
-                        })
+                        h('td', {
+                                'data-cat': 'row-indicator',
+                                'data-type': `${$vmaFormulaGrid.props.type}`,
+                                'data-row': rf.index,
+                                'data-col': -1,
+                                class: [
+                                    'row-indicator',
+                                    `${$vmaFormulaGrid.props.type}`,
+                                ],
+                                style: {
+                                    overflow: 'hidden',
+                                    height: 'inherit',
+                                    width: 'inherit',
+                                },
+                            },
+                            [h(
+                                'div',
+                                {
+                                    class: ['cell', `${$vmaFormulaGrid.props.type}`],
+                                    style: {
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    },
+                                },
+                                h(
+                                    'div',
+                                    {
+                                        class: ['cell-content'],
+                                    },
+                                    (rf.index + 1).toString()
+                                )
+                            ), $vmaFormulaGrid.props.rowResizable
+                                ? h('div', {
+                                    class: ['row-resize-handler', `${$vmaFormulaGrid.props.type}`],
+                                    onMousedown: (event: MouseEvent) => {
+                                        resizeRowMousedown(event)
+                                        event.stopPropagation()
+                                    },
+                                })
+                                : createCommentVNode(),
+                                $vmaFormulaGrid.reactiveData.rowHidesChanged &&
+                                Object.keys($vmaFormulaGrid.reactiveData.rowHidesChanged).length > 0 &&
+                                $vmaFormulaGrid.reactiveData.rowHidesChanged.hasOwnProperty(`${rf.index}`) ?
+                                    h(
+                                        'div',
+                                        {
+                                            class: ['row-hide-info-upward'],
+                                            onClick: (event: MouseEvent) => {
+                                                const elem = event.target as HTMLDivElement
+                                                const targetElem: any = elem.parentElement!.parentElement!
+                                                $vmaFormulaGrid.updateRowVisible(
+                                                    'showUpRows',
+                                                    targetElem.attributes['data-row'].value,
+                                                    targetElem.attributes['data-row'].value
+                                                )
+                                            },
+                                        },
+                                        h(GridCompIconComponent, {
+                                            name: 'ellipsis-v',
+                                            size: $vmaFormulaGrid.props.size,
+                                            scaleX: 0.7,
+                                            scaleY: 0.7
+                                        })
+                                    ) : createCommentVNode(),
+                                $vmaFormulaGrid.reactiveData.rowHidesChanged &&
+                                Object.keys($vmaFormulaGrid.reactiveData.rowHidesChanged).length > 0 &&
+                                $vmaFormulaGrid.reactiveData.rowHidesChanged.hasOwnProperty(`${rf.index + 1 + 1}`) ?
+                                    h(
+                                        'div',
+                                        {
+                                            class: ['row-hide-info-downward'],
+                                            onClick: (event: MouseEvent) => {
+                                                const elem = event.target as HTMLDivElement
+                                                const targetElem: any = elem.parentElement!.parentElement!
+                                                $vmaFormulaGrid.updateRowVisible(
+                                                    'showDownRows',
+                                                    targetElem.attributes['data-row'].value,
+                                                    targetElem.attributes['data-row'].value
+                                                )
+                                            },
+                                        },
+                                        h(GridCompIconComponent, {
+                                            name: 'ellipsis-v',
+                                            size: $vmaFormulaGrid.props.size,
+                                            scaleX: 0.7,
+                                            scaleY: 0.7
+                                        })
+                                    ) : createCommentVNode(),]
+                        )
                     )
                 }
                 if (props.fixed === 'center') {
@@ -340,25 +551,119 @@ export default defineComponent({
                         }
                         if (indexCol === -1) {
                             cols.push(
-                                h(GridCellComponent, {
-                                    cat: 'row-indicator',
-                                    type: `${$vmaFormulaGrid.props.type}`,
-                                    row: rf.index,
-                                    col: -1,
-                                    'data-id': `${rf.index}_-1`,
-                                })
+                                h('td', {
+                                        'data-cat': 'row-indicator',
+                                        'data-type': `${$vmaFormulaGrid.props.type}`,
+                                        'data-row': rf.index,
+                                        'data-col': -1,
+                                        'data-id': `${rf.index}_-1`,
+                                        class: [
+                                            'row-indicator',
+                                            `${$vmaFormulaGrid.props.type}`,
+                                        ],
+                                        style: {
+                                            overflow: 'hidden',
+                                            height: 'inherit',
+                                            width: 'inherit',
+                                        },
+                                    },
+                                    h(
+                                        'div',
+                                        {
+                                            class: ['cell', `${$vmaFormulaGrid.props.type}`],
+                                            style: {
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            },
+                                        },
+                                        h(
+                                            'div',
+                                            {
+                                                class: ['cell-content'],
+                                            },
+                                            (rf.index + 1).toString()
+                                        )
+                                    ),
+                                )
                             )
                         } else {
                             const cf: any = $vmaFormulaGrid.reactiveData.colConfs[indexCol + 1]
                             if (!checkCellInMerges(cf.index + 1, rf.index + 1, $vmaFormulaGrid.reactiveData.merges)) {
+                                const cell = $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
                                 cols.push(
-                                    h(GridCellComponent, {
-                                        cat: 'normal',
-                                        type: `${$vmaFormulaGrid.props.type}`,
-                                        row: rf.index,
-                                        col: cf.index,
-                                        'data-id': `${rf.index}_${cf.index}`,
-                                    })
+                                    h('td', {
+                                            'data-cat': 'normal',
+                                            'data-type': `${$vmaFormulaGrid.props.type}`,
+                                            'data-row': rf.index,
+                                            'data-col': cf.index,
+                                            'data-id': `${rf.index}_${cf.index}`,
+                                            rowspan: cell.rowSpan,
+                                            colspan: cell.colSpan,
+                                            class: [
+                                                'normal',
+                                                `${$vmaFormulaGrid.props.type}`,
+                                                `cell-bg-0`,
+                                            ],
+                                            style: {
+                                                overflow: 'hidden',
+                                                height: cell.rowSpan! > 1 ? '100%' : 'inherit',
+                                                width: cell.colSpan! > 1 ? '100%' : 'inherit',
+                                            },
+                                            onMouseup: (_: MouseEvent) => {
+                                                $vmaFormulaGrid.reactiveData.currentAreaStatus = false
+                                                $vmaFormulaGrid.updateCurrentAreaStyle()
+                                            },
+                                            onMousedown: (event: MouseEvent) => {
+                                                if (cf.index >= 0) {
+                                                    $vmaFormulaGrid.reactiveData.currentCellEditorActive = false
+                                                    $vmaFormulaGrid.reactiveData.currentCell =
+                                                        $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
+                                                    $vmaFormulaGrid.reactiveData.currentCellEditorContent =
+                                                        $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1].v
+
+                                                    $vmaFormulaGrid.reactiveData.currentAreaStatus = true
+                                                    $vmaFormulaGrid.reactiveData.currentArea = {
+                                                        start: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1],
+                                                        end: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
+                                                    }
+                                                    nextTick(() => {
+                                                        resizeCurrentSelectArea(event)
+                                                    })
+                                                }
+                                            },
+                                            onDblclick: (_: MouseEvent) => {
+                                                if (cf.index >= 0) {
+                                                    $vmaFormulaGrid.reactiveData.currentCellEditorActive = true
+                                                    nextTick(() => {
+                                                        refCurrentCellEditor.value.$el
+                                                            .querySelectorAll(`textarea`)
+                                                            .forEach((elem: HTMLTextAreaElement) => {
+                                                                elem.focus()
+                                                            })
+                                                    })
+                                                }
+                                            }
+                                        },
+                                        h(
+                                            'div',
+                                            {
+                                                class: ['cell', `${$vmaFormulaGrid.props.type}`],
+                                                style: {
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                },
+                                            },
+                                            h(
+                                                'span',
+                                                {
+                                                    class: ['cell-content'],
+                                                },
+                                                getCellContent(cell)
+                                            )
+                                        ),
+                                    )
                                 )
                             }
                         }

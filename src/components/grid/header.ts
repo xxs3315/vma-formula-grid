@@ -87,12 +87,6 @@ export default defineComponent({
             const cols: any = []
             if ($vmaFormulaGrid.reactiveData.xStart !== -1) {
                 cols.push(
-                    // h(GridCellComponent, {
-                    //     cat: 'grid-corner',
-                    //     type: `${$vmaFormulaGrid.props.type}`,
-                    //     row: 0,
-                    //     col: -1,
-                    // })
                     h('th', {
                         'data-cat': 'grid-corner',
                         'data-type': `${$vmaFormulaGrid.props.type}`,
@@ -146,7 +140,13 @@ export default defineComponent({
                                             alignItems: 'center',
                                         },
                                     },
-                                    getColumnSymbol(cf.index + 1)
+                                    h(
+                                        'div',
+                                        {
+                                            class: ['cell-content'],
+                                        },
+                                        getColumnSymbol(cf.index + 1)
+                                    )
                                 ),
                                 $vmaFormulaGrid.props.columnResizable
                                     ? h('div', {
@@ -163,14 +163,6 @@ export default defineComponent({
                                 h(
                                     'div',
                                     {
-                                        // style: {
-                                        //     display:
-                                        //         $vmaFormulaGrid.reactiveData.columnHidesChanged &&
-                                        //         Object.keys($vmaFormulaGrid.reactiveData.columnHidesChanged).length > 0 &&
-                                        //         $vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(`${cf.index}`)
-                                        //             ? 'block'
-                                        //             : 'none',
-                                        // },
                                         class: ['column-hide-info-frontward'],
                                         onClick: (event: MouseEvent) => {
                                             const elem = event.target as HTMLDivElement
@@ -195,14 +187,6 @@ export default defineComponent({
                                 h(
                                     'div',
                                     {
-                                        // style: {
-                                        //     display:
-                                        //         $vmaFormulaGrid.reactiveData.columnHidesChanged &&
-                                        //         Object.keys($vmaFormulaGrid.reactiveData.columnHidesChanged).length > 0 &&
-                                        //         $vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(`${cf.index + 1 + 1}`)
-                                        //             ? 'block'
-                                        //             : 'none',
-                                        // },
                                         class: ['column-hide-info-backward'],
                                         onClick: (event: MouseEvent) => {
                                             const elem = event.target as HTMLDivElement
@@ -255,18 +239,6 @@ export default defineComponent({
                     cols
                 )
             )
-
-            /*const headerRowCounts = getHeaderRowCounts($vmaFormulaGrid.reactiveData.sheetHeaderData)
-
-            if (headerRowCounts > 1) {
-                const result = []
-                result.push(tr)
-                for (let i = 0; i < headerRowCounts - 1; i++) {
-                    const trCopy = Array.from(tr)
-                    result.push(trCopy)
-                }
-                return result
-            }*/
 
             return tr
         }

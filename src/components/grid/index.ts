@@ -1,7 +1,7 @@
 import VmaFormulaGridComp from './grid.ts'
 import VmaFormulaGridHeader from './header.ts'
 import VmaFormulaGridBody from './body.ts'
-import VmaFormulaGridCell from './cell.ts'
+// import VmaFormulaGridCell from './cell.ts'
 
 import VmaFormulaGridCompIcon from '../icon/icon.ts'
 import VmaFormulaGridCompContextMenu from '../context-menu/context-menu.ts'
@@ -31,7 +31,7 @@ export const VmaFormulaGrid = Object.assign(VmaFormulaGridComp, {
         app.component('VmaFormulaGrid', VmaFormulaGridComp)
         app.component('VmaFormulaGridHeader', VmaFormulaGridHeader)
         app.component('VmaFormulaGridBody', VmaFormulaGridBody)
-        app.component('VmaFormulaGridCell', VmaFormulaGridCell)
+        // app.component('VmaFormulaGridCell', VmaFormulaGridCell)
         app.component('VmaFormulaGridCompIcon', VmaFormulaGridCompIcon)
         app.component('VmaFormulaGridCompTextarea', VmaFormulaGridCompTextarea)
         app.component('VmaFormulaGridCompContextMenu', VmaFormulaGridCompContextMenu)
