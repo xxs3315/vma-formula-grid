@@ -603,12 +603,13 @@ export default defineComponent({
                                             class: [
                                                 'normal',
                                                 `${$vmaFormulaGrid.props.type}`,
-                                                `cell-bg-0`,
+                                                `cell-bg-${cell.bgt}`,
                                             ],
                                             style: {
                                                 overflow: 'hidden',
                                                 height: cell.rowSpan! > 1 ? '100%' : 'inherit',
                                                 width: cell.colSpan! > 1 ? '100%' : 'inherit',
+                                                '--cellBgCustom': cell.bg
                                             },
                                             onMouseup: (_: MouseEvent) => {
                                                 $vmaFormulaGrid.reactiveData.currentAreaStatus = false
