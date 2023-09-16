@@ -1738,6 +1738,7 @@ export default defineComponent({
 
         const updateStyle = () => {
             if (refGridDiv.value === null || refGridDiv.value === undefined) {
+                console.log(123)
                 return
             }
             const gridDivClientWidth = refGridDiv.value.clientWidth
@@ -1841,6 +1842,23 @@ export default defineComponent({
 
         const reset = (): Promise<void> => {
             return new Promise(resolve => {
+                gridReactiveData.xDim = 0
+                gridReactiveData.yDim = 0
+                gridReactiveData.xStart = -1
+                gridReactiveData.xEnd = 0
+                gridReactiveData.yStart = 0
+                gridReactiveData.yEnd = 0
+                gridReactiveData.scrollbarWidth = 0
+                gridReactiveData.scrollbarHeight = 0
+                gridReactiveData.gridWidth = 0
+                gridReactiveData.gridHeight = 0
+                gridReactiveData.gridHeaderWidth = 0
+                gridReactiveData.gridHeaderHeight = 0
+                gridReactiveData.gridBodyWidth = 0
+                gridReactiveData.gridBodyHeight = 0
+                gridReactiveData.gridLeftFixedHeaderWidth = 0
+                gridReactiveData.isOverflowX = false
+                gridReactiveData.isOverflowY = false
                 gridReactiveData.colConfs = []
                 gridReactiveData.rowConfs = []
                 gridReactiveData.currentSheetData = []
@@ -1895,6 +1913,11 @@ export default defineComponent({
                     width: 0,
                     height: 0
                 }
+                refGridBodyTable.value.style.transform = 'translateX(0) translateY(0)'
+                refGridBodyLeftFixedTable.value.style.transform = 'translateY(0)'
+                refGridHeaderTable.value.style.transform = 'translateX(0)'
+                refGridBodyTableWrapperDiv.value.scrollLeft = 0
+                refGridBodyTableWrapperDiv.value.scrollTop = 0
                 resolve()
             })
         }
