@@ -11,9 +11,10 @@ export class Cell {
     st?: number // 计算时间戳
     bgt?: string
     bg?: any
+    fg?: any
 
     constructor(row: number, col: number, rowSpan: number, colSpan: number, v: any, mv: any, fd: any, se: any, ss: boolean, st: number,
-                bgt: string, bg: any) {
+                bgt: string, bg: any, fg: any) {
         this.row = row;
         this.col = col;
         this.rowSpan = rowSpan;
@@ -26,5 +27,6 @@ export class Cell {
         this.st = st;
         this.bgt = bgt;
         this.bg = bg;
+        this.fg = fg;
     }
 }

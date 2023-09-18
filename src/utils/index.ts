@@ -1241,23 +1241,28 @@ export function calcYOverlapMerges(offsetStartIndex: number, merges: Record<stri
     return offsetStartIndex;
 }
 
-export function calcCellBgCustom(col: number, row: number, styles: {
+export function calcCellStyleCustom(col: number, row: number, styles: {
     bgc: { cols: Record<string, any>[]; rows: Record<string, any>[]; cells: Record<string, any>[] };
     fgc: { cols: Record<string, any>[]; rows: Record<string, any>[]; cells: Record<string, any>[] }
 }) {
-    let result = ''
+    let result = {
+        fg: '',
+        bg: '',
+        bgt: '0'
+    }
     if (styles.bgc) {
+        let bg = ''
         if (styles.bgc.cols) {
             styles.bgc.cols.forEach(item => {
                 if (item.p && item.p.indexOf(getColumnSymbol(col + 1)) >= 0) {
-                    result = item.color
+                    bg = item.color
                 }
             })
         }
         if (styles.bgc.rows) {
             styles.bgc.rows.forEach(item => {
                 if (item.p && item.p.indexOf(row + 1) >= 0) {
-                    result = item.color
+                    bg = item.color
                 }
             })
         }
@@ -1271,17 +1276,58 @@ export function calcCellBgCustom(col: number, row: number, styles: {
                     let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
                     let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
                     if (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd) {
-                        result = item.color
+                        bg = item.color
                     }
                 } else {
                     let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''))
                     let rowTarget = parseInt(item.p.replace(/[^0-9]/ig, ''))
                     if (col + 1 === colTarget && row + 1 === rowTarget) {
-                        result = item.color
+                        bg = item.color
                     }
                 }
             })
         }
+        result.bg = bg
+        result.bgt = bg.length > 0 ? '8' : '0'
     }
-    return {bg: result, bgt: result.length > 0 ? '8' : '0'};
+    if (styles.fgc) {
+        let fg = ''
+        if (styles.fgc.cols) {
+            styles.fgc.cols.forEach(item => {
+                if (item.p && item.p.indexOf(getColumnSymbol(col + 1)) >= 0) {
+                    fg = item.color
+                }
+            })
+        }
+        if (styles.fgc.rows) {
+            styles.fgc.rows.forEach(item => {
+                if (item.p && item.p.indexOf(row + 1) >= 0) {
+                    fg = item.color
+                }
+            })
+        }
+        if (styles.fgc.cells) {
+            styles.fgc.cells.forEach(item => {
+                if (item.p.indexOf(':') >= 0) {
+                    const mArr = item.p.split(':')
+
+                    let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''))
+                    let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
+                    let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
+                    let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
+                    if (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd) {
+                        fg = item.color
+                    }
+                } else {
+                    let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''))
+                    let rowTarget = parseInt(item.p.replace(/[^0-9]/ig, ''))
+                    if (col + 1 === colTarget && row + 1 === rowTarget) {
+                        fg = item.color
+                    }
+                }
+            })
+        }
+        result.fg = fg
+    }
+    return result;
 }

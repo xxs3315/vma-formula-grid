@@ -609,7 +609,8 @@ export default defineComponent({
                                                 overflow: 'hidden',
                                                 height: cell.rowSpan! > 1 ? '100%' : 'inherit',
                                                 width: cell.colSpan! > 1 ? '100%' : 'inherit',
-                                                '--cellBgCustom': cell.bg
+                                                '--cellBgCustom': cell.bg,
+                                                color: cell.fg
                                             },
                                             onMouseup: (_: MouseEvent) => {
                                                 $vmaFormulaGrid.reactiveData.currentAreaStatus = false

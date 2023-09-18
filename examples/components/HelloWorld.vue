@@ -374,24 +374,24 @@ export default defineComponent({
         fgc: {
           cols: [{
             p: ['A', 'C', 'D'],
-            color: 'darkblue'
+            color: 'lightgrey'
           },{
             p: ['B', 'D', 'F'],
             color: 'red'
           }],
           rows: [{
             p: [1, 3, 5],
-            color: '#006644'
+            color: '#FF5599'
           },{
             p: [10, 11, 12],
-            color: '#225599'
+            color: '#CC5599'
           },],
           cells: [{
             p: 'J28',
-            color: 'rgba(42, 48, 46, 0.8)'
+            color: 'rgba(200, 48, 46, 0.8)'
           },{
             p: 'G7:J26',
-            color: 'rgba(42, 48, 46, 0.8)'
+            color: 'rgba(220, 48, 46, 0.8)'
           },]
         }
       }
