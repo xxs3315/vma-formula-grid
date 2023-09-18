@@ -1310,7 +1310,6 @@ export function calcCellStyleCustom(col: number, row: number, styles: {
             styles.fgc.cells.forEach(item => {
                 if (item.p.indexOf(':') >= 0) {
                     const mArr = item.p.split(':')
-
                     let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''))
                     let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
                     let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
@@ -1330,4 +1329,15 @@ export function calcCellStyleCustom(col: number, row: number, styles: {
         result.fg = fg
     }
     return result;
+}
+
+export function calcCellBorderCustom(number: number, rowIndex: number, borders: { cells: Record<string, any>[] }) {
+    let result = {
+        bdl: false,
+        bdt: false,
+        bdr: false,
+        bdb: false
+    }
+
+    return result
 }

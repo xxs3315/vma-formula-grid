@@ -173,6 +173,10 @@ export interface VmaFormulaGridReactiveData {
             cells: Record<string, any>[]
         }
     }
+
+    borders: {
+        cells: Record<string, any>[]
+    }
 }
 
 export interface VmaFormulaGridProps {

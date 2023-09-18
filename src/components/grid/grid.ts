@@ -25,6 +25,7 @@ import {
 } from "../../../types";
 import {Guid} from "../../utils/guid.ts";
 import {
+    calcCellBorderCustom,
     calcCellStyleCustom,
     calcVertexes, calcXOverlapMerges, calcYOverlapMerges, checkCellInMerges,
     filterVertexes,
@@ -364,6 +365,9 @@ export default defineComponent({
                     rows: [],
                     cells: [],
                 }
+            },
+            borders: {
+                cells: []
             }
         }) as VmaFormulaGridReactiveData
 
@@ -829,7 +833,7 @@ export default defineComponent({
                         row.splice(
                             colNumber + 1,
                             0,
-                            new Cell(index, colNumber, 1, 1, null, null, null, null, false, -1, '0', '', '') as Cell & { [key: string]: string },
+                            new Cell(index, colNumber, 1, 1, null, null, null, null, false, -1, '0', '', '', null, null, null, null) as Cell & { [key: string]: string },
                         )
                         return null
                     },
@@ -881,7 +885,7 @@ export default defineComponent({
                 const aNewRow: Cell[] = []
                 for (let i = -1; i < gridReactiveData.colConfs.length - 1; i++) {
                     aNewRow.push(
-                        new Cell(Number(rowNumber), i, 1, 1, null, null, null, null, false, -1, '0', '', '') as Cell & { [key: string]: string },
+                        new Cell(Number(rowNumber), i, 1, 1, null, null, null, null, false, -1, '0', '', '', null, null, null, null) as Cell & { [key: string]: string },
                     )
                 }
                 gridReactiveData.currentSheetData.splice(Number(rowNumber), 0, aNewRow)
@@ -2021,6 +2025,12 @@ export default defineComponent({
                         }
                     }
 
+                    if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('borders')) {
+                        if (props.data.conf.borders.hasOwnProperty('cells') && props.data.conf.borders.cells.length > 0) {
+                            gridReactiveData.borders.cells = props.data.conf.borders.cells
+                        }
+                    }
+
                     const columns = [...Array<Record<string, unknown>>(gridReactiveData.xDim.valueOf() + 1)]
                     columns.forEach((_, index) => {
                         let colWidth = null
@@ -2089,6 +2099,7 @@ export default defineComponent({
                             }
                             const {rowSpan, colSpan} = getRowColSpanFromMerges(colIndex, rowIndex + 1, gridReactiveData.merges)
                             const {fg, bg, bgt} = calcCellStyleCustom(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.styles)
+                            // const {bdl, bdt, bdr, bdb} = calcCellBorderCustom(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.borders)
                             gridReactiveData.currentSheetData[rowIndex][colIndex] = new Cell(
                                 rowIndex,
                                 colIndex - 1,
@@ -2102,10 +2113,66 @@ export default defineComponent({
                                 -1,
                                 bgt,
                                 bg,
-                                fg
+                                fg,
+                                null,
+                                null,
+                                null,
+                                null,
                             )
                         })
                     })
+
+                    if (gridReactiveData.borders.cells && gridReactiveData.borders.cells.length > 0) {
+                        gridReactiveData.borders.cells.forEach((item: any) => {
+                            if (item.p.indexOf(':') >= 0) {
+                                const mArr = item.p.split(':')
+                                let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''))
+                                let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
+                                let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
+                                let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
+                                // console.log(colStart, rowStart, colEnd, rowEnd)
+                                // console.log(item.details)
+                            } else {
+                                let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''))
+                                let rowTarget = parseInt(item.p.replace(/[^0-9]/ig, ''))
+                                // console.log(colTarget, rowTarget)
+                                // console.log(item.details)
+                                if (item.hasOwnProperty('details')) {
+                                    if (item.details.hasOwnProperty('full')) {
+                                        if (item.full) {
+                                            gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdl = true
+                                            gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdt = true
+                                            gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdr = true
+                                            gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdb = true
+                                        } else {
+                                            if (item.details.hasOwnProperty('left') && item.details.left.v) {
+                                                gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdl = true
+                                            }
+                                            if (item.details.hasOwnProperty('top') && item.details.top.v) {
+                                                gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdt = true
+                                            }
+                                            if (item.details.hasOwnProperty('right') && item.details.right.v) {
+                                                gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdr = true
+                                            }
+                                            if (item.details.hasOwnProperty('bottom') && item.details.bottom.v) {
+                                                gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdb = true
+                                            }
+                                        }
+                                    }
+                                }
+                                if (gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdr && gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdb) {
+                                    gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bgt = '11'
+                                } else if (gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdr) {
+                                    gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bgt = '10'
+                                } else if (gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdb) {
+                                    gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bgt = '9'
+                                }
+                                if (gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdt && rowTarget - 1 - 1 >= 0) {
+                                    gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bgt = '9'
+                                }
+                            }
+                        })
+                    }
                 }
 
                 resolve()

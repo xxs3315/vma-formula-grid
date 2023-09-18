@@ -12,9 +12,13 @@ export class Cell {
     bgt?: string
     bg?: any
     fg?: any
+    bdl?: any
+    bdt?: any
+    bdr?: any
+    bdb?: any
 
     constructor(row: number, col: number, rowSpan: number, colSpan: number, v: any, mv: any, fd: any, se: any, ss: boolean, st: number,
-                bgt: string, bg: any, fg: any) {
+                bgt: string, bg: any, fg: any, bdl: any, bdt: any, bdr: any, bdb: any) {
         this.row = row;
         this.col = col;
         this.rowSpan = rowSpan;
@@ -28,5 +32,9 @@ export class Cell {
         this.bgt = bgt;
         this.bg = bg;
         this.fg = fg;
+        this.bdl = bdl;
+        this.bdt = bdt;
+        this.bdr = bdr;
+        this.bdb = bdb;
     }
 }

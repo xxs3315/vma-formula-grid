@@ -394,6 +394,29 @@ export default defineComponent({
             color: 'rgba(220, 48, 46, 0.8)'
           },]
         }
+      },
+      borders: {
+        cells: [{
+          p: 'G7:J26',
+          details: {
+            full: {v: true, color: '#88EEFF'},
+            inner: {v: true, color: '#88EEFF'},
+            outer: {v: true, color: '#88EEFF'},
+            left: {v: true, color: '#88EEFF'},
+            right: {v: true, color: '#88EEFF'},
+            top: {v: true, color: '#88EEFF'},
+            bottom: {v: true, color: '#88EEFF'},
+          }
+        }, {
+          p: 'J28',
+          details: {
+            full: {v: false, color: '#FCCC99'},
+            left: {v: true, color: '#FCCC99'},
+            right: {v: false, color: '#FCCC99'},
+            top: {v: true, color: '#FCCC99'},
+            bottom: {v: true, color: '#FCCC99'},
+          }
+        }],
       }
     })
 
