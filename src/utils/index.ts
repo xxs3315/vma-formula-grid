@@ -1247,8 +1247,7 @@ export function calcCellStyleCustom(col: number, row: number, styles: {
 }) {
     let result = {
         fg: '',
-        bg: '',
-        bgt: '0'
+        bg: ''
     }
     if (styles.bgc) {
         let bg = ''
@@ -1288,7 +1287,6 @@ export function calcCellStyleCustom(col: number, row: number, styles: {
             })
         }
         result.bg = bg
-        result.bgt = bg.length > 0 ? '8' : '0'
     }
     if (styles.fgc) {
         let fg = ''
@@ -1331,13 +1329,164 @@ export function calcCellStyleCustom(col: number, row: number, styles: {
     return result;
 }
 
-export function calcCellBorderCustom(number: number, rowIndex: number, borders: { cells: Record<string, any>[] }) {
+export function calcCellBorderCustom(colIndex: number, rowIndex: number, borders: { cells: Record<string, any>[] }) {
     let result = {
         bdl: false,
         bdt: false,
         bdr: false,
         bdb: false
     }
+    if (borders && borders.hasOwnProperty('cells') && borders.cells.length > 0) {
+        borders.cells.forEach((item: any) => {
+            if (item.p.indexOf(':') >= 0) {
+                const mArr = item.p.split(':')
+                let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''))
+                let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
+                let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
+                let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
+                // console.log(colStart, rowStart, colEnd, rowEnd)
+                // console.log(item.details)
+                if (colIndex >= colStart - 1 && colIndex <= colEnd - 1 && rowIndex >= rowStart - 1 && rowIndex <= rowEnd - 1 ) {
+                    if (item.hasOwnProperty('details')) {
+                        if (item.details.hasOwnProperty('full')) {
+                            if (item.full) {
+                                result.bdl = true
+                                result.bdt = true
+                                result.bdr = true
+                                result.bdb = true
+                            } else if (item.inner && item.outer) {
+                                result.bdl = true
+                                result.bdt = true
+                                result.bdr = true
+                                result.bdb = true
+                            } else if (item.inner) {
+                                if (rowIndex === rowStart - 1) {
+                                    result.bdl = true
+                                    result.bdr = true
+                                    result.bdb = true
+                                }
+                                if (rowIndex === rowEnd - 1) {
+                                    result.bdl = true
+                                    result.bdt = true
+                                    result.bdr = true
+                                }
+                                if (colIndex === colStart - 1) {
+                                    result.bdt = true
+                                    result.bdr = true
+                                    result.bdb = true
+                                }
+                                if (colIndex === colEnd - 1) {
+                                    result.bdl = true
+                                    result.bdt = true
+                                    result.bdb = true
+                                }
+                                if (rowIndex > rowStart - 1 && rowIndex < rowEnd - 1 && colIndex > colStart - 1 && colIndex < colEnd - 1) {
+                                    result.bdl = true
+                                    result.bdt = true
+                                    result.bdr = true
+                                    result.bdb = true
+                                }
+                            } else if (item.outer) {
+                                if (rowIndex === rowStart - 1) {
+                                    result.bdt = true
+                                }
+                                if (rowIndex === rowEnd - 1) {
+                                    result.bdb = true
+                                }
+                                if (colIndex === colStart - 1) {
+                                    result.bdl = true
+                                }
+                                if (colIndex === colEnd - 1) {
+                                    result.bdr = true
+                                }
+                            } else {
+                                if (item.details.hasOwnProperty('left') && item.details.left.v) {
+                                    result.bdl = true
+                                }
+                                if (item.details.hasOwnProperty('top') && item.details.top.v) {
+                                    result.bdt = true
+                                }
+                                if (item.details.hasOwnProperty('right') && item.details.right.v) {
+                                    result.bdr = true
+                                }
+                                if (item.details.hasOwnProperty('bottom') && item.details.bottom.v) {
+                                    result.bdb = true
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''))
+                let rowTarget = parseInt(item.p.replace(/[^0-9]/ig, ''))
+                if (colIndex === colTarget - 1 && rowIndex === rowTarget - 1) {
+                    if (item.hasOwnProperty('details')) {
+                        if (item.details.hasOwnProperty('full')) {
+                            if (item.details.full.v) {
+                                result.bdl = true
+                                result.bdt = true
+                                result.bdr = true
+                                result.bdb = true
+                            } else {
+                                if (item.details.hasOwnProperty('left') && item.details.left.v) {
+                                    result.bdl = true
+                                }
+                                if (item.details.hasOwnProperty('top') && item.details.top.v) {
+                                    result.bdt = true
+                                }
+                                if (item.details.hasOwnProperty('right') && item.details.right.v) {
+                                    result.bdr = true
+                                }
+                                if (item.details.hasOwnProperty('bottom') && item.details.bottom.v) {
+                                    result.bdb = true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
 
+    if (rowIndex === 28 && colIndex === 10) {
+        console.log(result)
+    }
     return result
+}
+
+export function calcCellBgType(hasBg: boolean, hasBdb: boolean, hasBdr: boolean,) {
+    if (hasBg) {
+        // 带背景的
+        // 未选中状态的
+        if (hasBdb && hasBdr) {
+            // border bottom + border right
+            return '11'
+        }
+        if (hasBdr) {
+            // border right
+            return '10'
+        }
+        if (hasBdb) {
+            // border bottom
+            return '9'
+        }
+        // none
+        return '8'
+    }
+    // 不带背景的
+    // 未选中状态的
+    if (hasBdb && hasBdr) {
+        // border bottom + border right
+        return '3'
+    }
+    if (hasBdr) {
+        // border right
+        return '2'
+    }
+    if (hasBdb) {
+        // border bottom
+        return '1'
+    }
+    // none
+    return '0'
 }

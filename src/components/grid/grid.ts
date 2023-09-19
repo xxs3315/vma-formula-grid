@@ -25,6 +25,7 @@ import {
 } from "../../../types";
 import {Guid} from "../../utils/guid.ts";
 import {
+    calcCellBgType,
     calcCellBorderCustom,
     calcCellStyleCustom,
     calcVertexes, calcXOverlapMerges, calcYOverlapMerges, checkCellInMerges,
@@ -2093,13 +2094,23 @@ export default defineComponent({
                                     }
                                 } else {
                                     if (props.data.arrayData && props.data.arrayData.length > 0 && rowIndex + 1 <= props.data.arrayData.length && colIndex <= props.data.arrayData[rowIndex].length) {
-                                        cellData = props.data.arrayData[rowIndex][colIndex - 1]
+                                        cellData = colIndex - 1 < 0 ? null : props.data.arrayData[rowIndex][colIndex - 1]
                                     }
                                 }
                             }
+
                             const {rowSpan, colSpan} = getRowColSpanFromMerges(colIndex, rowIndex + 1, gridReactiveData.merges)
-                            const {fg, bg, bgt} = calcCellStyleCustom(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.styles)
-                            // const {bdl, bdt, bdr, bdb} = calcCellBorderCustom(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.borders)
+                            const {fg, bg} = calcCellStyleCustom(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.styles)
+                            const {bdl: bdlCurrent, bdt: bdtCurrent, bdr: bdrCurrent, bdb: bdbCurrent} = calcCellBorderCustom(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.borders)
+                            const {bdl: bdlBottomNext, bdt: bdtBottomNext, bdr: bdrBottomNext, bdb: bdbBottomNext} = rowIndex + 1 < rows.length ?
+                                calcCellBorderCustom(colIndex - 1, rowIndex + 1, $vmaFormulaGrid.reactiveData.borders)
+                                :
+                                {bdl: false, bdt: false, bdr: false, bdb: false}
+                            const {bdl: bdlRightNext, bdt: bdtRightNext, bdr: bdrRightNext, bdb: bdbRightNext} = colIndex - 1 + 1 + 1 < columns.length ?
+                                calcCellBorderCustom(colIndex - 1 + 1, rowIndex, $vmaFormulaGrid.reactiveData.borders)
+                                :
+                                {bdl: false, bdt: false, bdr: false, bdb: false}
+                            const bgt = calcCellBgType(bg.length > 0, bdbCurrent || bdtBottomNext, bdrCurrent || bdrRightNext)
                             gridReactiveData.currentSheetData[rowIndex][colIndex] = new Cell(
                                 rowIndex,
                                 colIndex - 1,
@@ -2111,68 +2122,16 @@ export default defineComponent({
                                 null,
                                 false,
                                 -1,
-                                bgt,
+                                '0'/*bgt*/,
                                 bg,
                                 fg,
-                                null,
-                                null,
-                                null,
-                                null,
+                                bdlCurrent,
+                                bdtCurrent,
+                                bdrCurrent,
+                                bdbCurrent,
                             )
                         })
                     })
-
-                    if (gridReactiveData.borders.cells && gridReactiveData.borders.cells.length > 0) {
-                        gridReactiveData.borders.cells.forEach((item: any) => {
-                            if (item.p.indexOf(':') >= 0) {
-                                const mArr = item.p.split(':')
-                                let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''))
-                                let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
-                                let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
-                                let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
-                                // console.log(colStart, rowStart, colEnd, rowEnd)
-                                // console.log(item.details)
-                            } else {
-                                let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''))
-                                let rowTarget = parseInt(item.p.replace(/[^0-9]/ig, ''))
-                                // console.log(colTarget, rowTarget)
-                                // console.log(item.details)
-                                if (item.hasOwnProperty('details')) {
-                                    if (item.details.hasOwnProperty('full')) {
-                                        if (item.full) {
-                                            gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdl = true
-                                            gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdt = true
-                                            gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdr = true
-                                            gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdb = true
-                                        } else {
-                                            if (item.details.hasOwnProperty('left') && item.details.left.v) {
-                                                gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdl = true
-                                            }
-                                            if (item.details.hasOwnProperty('top') && item.details.top.v) {
-                                                gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdt = true
-                                            }
-                                            if (item.details.hasOwnProperty('right') && item.details.right.v) {
-                                                gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdr = true
-                                            }
-                                            if (item.details.hasOwnProperty('bottom') && item.details.bottom.v) {
-                                                gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdb = true
-                                            }
-                                        }
-                                    }
-                                }
-                                if (gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdr && gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdb) {
-                                    gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bgt = '11'
-                                } else if (gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdr) {
-                                    gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bgt = '10'
-                                } else if (gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdb) {
-                                    gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bgt = '9'
-                                }
-                                if (gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bdt && rowTarget - 1 - 1 >= 0) {
-                                    gridReactiveData.currentSheetData[rowTarget - 1][colTarget].bgt = '9'
-                                }
-                            }
-                        })
-                    }
                 }
 
                 resolve()

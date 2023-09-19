@@ -606,7 +606,7 @@ export default defineComponent({
                                                 `cell-bg-${cell.bgt}`,
                                             ],
                                             style: {
-                                                overflow: 'hidden',
+                                                // overflow: 'hidden',
                                                 height: cell.rowSpan! > 1 ? '100%' : 'inherit',
                                                 width: cell.colSpan! > 1 ? '100%' : 'inherit',
                                                 '--cellBgCustom': cell.bg,

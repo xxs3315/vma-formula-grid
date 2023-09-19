@@ -24,11 +24,18 @@
 @grid-resize-bar-warning-color: @orange;
 @grid-resize-bar-danger-color: @red;
 
+//.cell-background(@bg) {
+//  background-position: right top, right bottom;
+//  background-repeat: no-repeat;
+//  background-size: 1px 100%, 100% 1px;
+//  background-image: linear-gradient(@bg, @bg), linear-gradient(@bg, @bg);
+//}
+//
 .cell-background(@bg) {
-  background-position: right top, right bottom;
+  background-position: left top, left top, right bottom, right bottom;
   background-repeat: no-repeat;
-  background-size: 1px 100%, 100% 1px;
-  background-image: linear-gradient(@bg, @bg), linear-gradient(@bg, @bg);
+  background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
+  background-image: linear-gradient(@bg, @bg), linear-gradient(@bg, @bg), linear-gradient(@bg, @bg), linear-gradient(@bg, @bg);
 }
 
 .vma-formula-grid {
@@ -254,7 +261,18 @@
         font-weight: normal;
         cursor: default;
         word-break: keep-all;
-        .cell-background(@grid-border-color);
+        //.cell-background(@grid-border-color);
+
+        &::before {
+          content: " ";
+          position: absolute;
+          width: calc(100% + 1px);
+          height: calc(100% + 1px);
+          margin-top: -1px;
+          margin-left: -1px;
+          z-index: -1;
+          .cell-background(@grid-border-color);
+        }
 
         .corner {
           float: right;
@@ -280,7 +298,18 @@
         font-weight: normal;
         cursor: pointer;
         word-break: keep-all;
-        .cell-background(@grid-border-color);
+        //.cell-background(@grid-border-color);
+
+        &::before {
+          content: " ";
+          position: absolute;
+          width: calc(100% + 1px);
+          height: calc(100% + 1px);
+          margin-top: -1px;
+          margin-left: -1px;
+          z-index: -1;
+          .cell-background(@grid-border-color);
+        }
 
         &.column-indicator-active {
           background-position: right top, right bottom, left top;
@@ -627,9 +656,11 @@
         transition: none;
         font-weight: normal;
         cursor: default;
+        background-color: transparent;
+
 
         &.cell-bg-0 {
-          .cell-background(@grid-border-color);
+          //.cell-background(@grid-border-color);
           //&::after {
           //  content: "";
           //  position: absolute;
@@ -641,21 +672,27 @@
           //  transform-origin: 0 0;
           //  transform: scale(.5, .5);
           //}
-          &.cell-active {
-            background-position: right top, right bottom, left top;
-            background-repeat: no-repeat;
-            background-size: 1px 100%, 100% 1px,
-            calc(100% - 1px) calc(100% - 1px);
-            background-image: linear-gradient(
-                    @grid-border-color,
-                    @grid-border-color
-            ),
-            linear-gradient(@grid-border-color, @grid-border-color),
-            linear-gradient(
-                    lighten(@grid-border-color, 10%),
-                    lighten(@grid-border-color, 10%)
-            );
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+            width: calc(100% + 1px);
+            height: calc(100% + 1px);
+            margin-top: -1px;
+            margin-left: -1px;
+            z-index: -1;
+            .cell-background(@grid-border-color);
           }
+
+          //&.cell-active {
+          //  background-position: right top, right bottom, left top;
+          //  background-repeat: no-repeat;
+          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
+          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
+          //}
         }
 
         &.cell-bg-1 {
@@ -856,7 +893,18 @@
         transition: none;
         font-weight: normal;
         cursor: pointer;
-        .cell-background(@grid-border-color);
+        //.cell-background(@grid-border-color);
+
+        &::before {
+          content: " ";
+          position: absolute;
+          width: calc(100% + 1px);
+          height: calc(100% + 1px);
+          margin-top: -1px;
+          margin-left: -1px;
+          z-index: -1;
+          .cell-background(@grid-border-color);
+        }
 
         &.row-indicator-active {
           background-position: right top, right bottom, left top;
