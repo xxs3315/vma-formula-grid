@@ -1,7 +1,7 @@
 @import url('common');
 
 //@grid-border-color: @gray-4;
-@grid-border-color: rgba(220,222,224,0.25);
+@grid-border-color: rgba(220,222,224,1);
 @grid-border-color-dark: rgba(220,222,224,1.0);
 @grid-background-color: @gray-2;
 @grid-corner-color: @gray-5;
@@ -669,9 +669,10 @@
             left: 0;
             margin-top: -1px;
             margin-left: -1px;
-            z-index: -1;
+            z-index: -2;
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
+            //background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color);
           }
@@ -698,7 +699,7 @@
             left: 0;
             margin-top: -1px;
             margin-left: -1px;
-            z-index: -1;
+            z-index: -2;
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
@@ -732,7 +733,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color);
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color);
           }
 
           //&.cell-active {
@@ -761,7 +762,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color)
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color)
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -791,7 +792,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0));
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1));
           }
 
           //&.cell-active {
@@ -820,7 +821,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0))
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1))
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -850,7 +851,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color);
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color);
           }
 
           //&.cell-active {
@@ -879,7 +880,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color)
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color)
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -909,7 +910,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color);
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color);
           }
 
           //&.cell-active {
@@ -938,7 +939,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color)
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color)
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -968,7 +969,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color);
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color);
           }
 
           //&.cell-active {
@@ -997,7 +998,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color)
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color)
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -1027,7 +1028,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0));
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1));
           }
 
           //&.cell-active {
@@ -1056,7 +1057,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0))
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1))
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -1086,7 +1087,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color);
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color);
           }
 
           //&.cell-active {
@@ -1115,7 +1116,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color)
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color)
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -1145,7 +1146,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0));
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1));
           }
 
           //&.cell-active {
@@ -1174,7 +1175,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0))
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1))
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -1204,7 +1205,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color);
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color);
           }
 
           //&.cell-active {
@@ -1233,7 +1234,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color)
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color)
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -1263,7 +1264,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0));
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1));
           }
 
           //&.cell-active {
@@ -1292,7 +1293,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0))
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1))
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -1322,7 +1323,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0));
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1));
           }
 
           //&.cell-active {
@@ -1351,7 +1352,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0))
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1))
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -1381,7 +1382,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0));
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1));
           }
 
           //&.cell-active {
@@ -1410,7 +1411,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0))
+            background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1))
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -1440,7 +1441,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color);
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color);
           }
 
           //&.cell-active {
@@ -1469,7 +1470,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color)
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color)
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -1499,7 +1500,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0));
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1));
           }
 
           //&.cell-active {
@@ -1528,7 +1529,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0))
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1))
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -1558,7 +1559,7 @@
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0));
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1));
           }
 
           //&.cell-active {
@@ -1587,7 +1588,7 @@
             background-position: left top, left top, right bottom, right bottom, left 1px top 1px;
             background-repeat: no-repeat;
             background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%, calc(100% - 2px) calc(100% - 2px);
-            background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)), linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0))
+            background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)), linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1))
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
@@ -1609,7 +1610,7 @@
         //          @grid-border-color,
         //          @grid-border-color
         //  ),
-        //  linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0));
+        //  linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1));
         //
         //  &.cell-active {
         //    background-position: right top, right bottom, left top;
@@ -1620,7 +1621,7 @@
         //            @grid-border-color,
         //            @grid-border-color
         //    ),
-        //    linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
+        //    linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
         //    linear-gradient(
         //            lighten(@grid-border-color, 10%),
         //            lighten(@grid-border-color, 10%)
@@ -1634,7 +1635,7 @@
         //  background-position: right top, right bottom;
         //  background-repeat: no-repeat;
         //  background-size: 1px 100%, 100% 1px;
-        //  background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
+        //  background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
         //  linear-gradient(@grid-border-color, @grid-border-color);
         //
         //  &.cell-active {
@@ -1642,7 +1643,7 @@
         //    background-repeat: no-repeat;
         //    background-size: 1px 100%, 100% 1px,
         //    calc(100% - 1px) calc(100% - 1px);
-        //    background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
+        //    background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
         //    linear-gradient(@grid-border-color, @grid-border-color),
         //    linear-gradient(
         //            lighten(@grid-border-color, 10%),
@@ -1657,16 +1658,16 @@
         //  background-position: right top, right bottom;
         //  background-repeat: no-repeat;
         //  background-size: 1px 100%, 100% 1px;
-        //  background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
-        //  linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0));
+        //  background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
+        //  linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1));
         //
         //  &.cell-active {
         //    background-position: right top, right bottom, left top;
         //    background-repeat: no-repeat;
         //    background-size: 1px 100%, 100% 1px,
         //    calc(100% - 1px) calc(100% - 1px);
-        //    background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
-        //    linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
+        //    background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
+        //    linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
         //    linear-gradient(
         //            lighten(@grid-border-color, 10%),
         //            lighten(@grid-border-color, 10%)
@@ -1712,7 +1713,7 @@
         //          @grid-border-color,
         //          @grid-border-color
         //  ),
-        //  linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
+        //  linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
         //  linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
         //
         //  &.cell-active {
@@ -1725,7 +1726,7 @@
         //            @grid-border-color,
         //            @grid-border-color
         //    ),
-        //    linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
+        //    linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
         //    linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
         //  }
         //}
@@ -1736,7 +1737,7 @@
         //  background-position: right top, right bottom, left top;
         //  background-repeat: no-repeat;
         //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-        //  background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
+        //  background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
         //  linear-gradient(@grid-border-color, @grid-border-color),
         //  linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
         //
@@ -1746,7 +1747,7 @@
         //    background-size: 1px 100%, 100% 1px,
         //    calc(100% - 1px) calc(100% - 1px);
         //    opacity: 0.6;
-        //    background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
+        //    background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
         //    linear-gradient(@grid-border-color, @grid-border-color),
         //    linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
         //  }
@@ -1758,8 +1759,8 @@
         //  background-position: right top, right bottom, left top;
         //  background-repeat: no-repeat;
         //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-        //  background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
-        //  linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
+        //  background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
+        //  linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
         //  linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
         //
         //  &.cell-active {
@@ -1768,8 +1769,8 @@
         //    background-size: 1px 100%, 100% 1px,
         //    calc(100% - 1px) calc(100% - 1px);
         //    opacity: 0.6;
-        //    background-image: linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
-        //    linear-gradient(rgba(50, 50, 51, 1.0), rgba(50, 50, 51, 1.0)),
+        //    background-image: linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
+        //    linear-gradient(rgba(50, 50, 50, 1), rgba(50, 50, 50, 1)),
         //    linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
         //  }
         //}

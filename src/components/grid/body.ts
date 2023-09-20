@@ -678,7 +678,7 @@ export default defineComponent({
                         {
                             'data-row': index,
                             style: {
-                                height: rf.visible ? (typeof rf.height === 'string' ? `${renderDefaultRowHeight.value}px` : `${rf.height}px`) : 0,
+                                height: rf.visible ? (typeof rf.height === 'string' ? `${renderDefaultRowHeight.value}px` : `${rf.height}px`) : 0
                             },
                         },
                         cols

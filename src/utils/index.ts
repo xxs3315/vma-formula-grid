@@ -1349,36 +1349,58 @@ export function calcCellBorderCustom(colIndex: number, rowIndex: number, borders
                 if (colIndex >= colStart - 1 && colIndex <= colEnd - 1 && rowIndex >= rowStart - 1 && rowIndex <= rowEnd - 1 ) {
                     if (item.hasOwnProperty('details')) {
                         if (item.details.hasOwnProperty('full')) {
-                            if (item.full) {
+                            if (item.details.full.v) {
                                 result.bdl = true
                                 result.bdt = true
                                 result.bdr = true
                                 result.bdb = true
-                            } else if (item.inner && item.outer) {
+                            } else if (item.details.inner.v && item.details.outer.v) {
                                 result.bdl = true
                                 result.bdt = true
                                 result.bdr = true
                                 result.bdb = true
-                            } else if (item.inner) {
-                                if (rowIndex === rowStart - 1) {
-                                    result.bdl = true
-                                    result.bdr = true
-                                    result.bdb = true
-                                }
-                                if (rowIndex === rowEnd - 1) {
-                                    result.bdl = true
-                                    result.bdt = true
-                                    result.bdr = true
-                                }
-                                if (colIndex === colStart - 1) {
-                                    result.bdt = true
-                                    result.bdr = true
-                                    result.bdb = true
-                                }
-                                if (colIndex === colEnd - 1) {
-                                    result.bdl = true
-                                    result.bdt = true
-                                    result.bdb = true
+                            } else if (item.details.inner.v) {
+                                if (rowIndex === rowStart - 1 && colIndex === colStart - 1
+                                    || rowIndex === rowStart - 1 && colIndex === colEnd - 1
+                                    || rowIndex === rowEnd - 1 && colIndex === colStart - 1
+                                    || rowIndex === rowEnd - 1 && colIndex === colEnd - 1) {
+                                    if (rowIndex === rowStart - 1 && colIndex === colStart - 1) {
+                                        result.bdr = true
+                                        result.bdb = true
+                                    }
+                                    if (rowIndex === rowStart - 1 && colIndex === colEnd - 1) {
+                                        result.bdl = true
+                                        result.bdb = true
+                                    }
+                                    if (rowIndex === rowEnd - 1 && colIndex === colStart - 1) {
+                                        result.bdr = true
+                                        result.bdt = true
+                                    }
+                                    if (rowIndex === rowEnd - 1 && colIndex === colEnd - 1) {
+                                        result.bdl = true
+                                        result.bdt = true
+                                    }
+                                } else {
+                                    if (rowIndex === rowStart - 1) {
+                                        result.bdl = true
+                                        result.bdr = true
+                                        result.bdb = true
+                                    }
+                                    if (rowIndex === rowEnd - 1) {
+                                        result.bdl = true
+                                        result.bdt = true
+                                        result.bdr = true
+                                    }
+                                    if (colIndex === colStart - 1) {
+                                        result.bdt = true
+                                        result.bdr = true
+                                        result.bdb = true
+                                    }
+                                    if (colIndex === colEnd - 1) {
+                                        result.bdl = true
+                                        result.bdt = true
+                                        result.bdb = true
+                                    }
                                 }
                                 if (rowIndex > rowStart - 1 && rowIndex < rowEnd - 1 && colIndex > colStart - 1 && colIndex < colEnd - 1) {
                                     result.bdl = true
@@ -1386,7 +1408,7 @@ export function calcCellBorderCustom(colIndex: number, rowIndex: number, borders
                                     result.bdr = true
                                     result.bdb = true
                                 }
-                            } else if (item.outer) {
+                            } else if (item.details.outer.v) {
                                 if (rowIndex === rowStart - 1) {
                                     result.bdt = true
                                 }
@@ -1448,9 +1470,6 @@ export function calcCellBorderCustom(colIndex: number, rowIndex: number, borders
         })
     }
 
-    if (rowIndex === 28 && colIndex === 10) {
-        console.log(result)
-    }
     return result
 }
 

@@ -834,7 +834,7 @@ export default defineComponent({
                         row.splice(
                             colNumber + 1,
                             0,
-                            new Cell(index, colNumber, 1, 1, null, null, null, null, false, -1, '0', '', '', null, null, null, null) as Cell & { [key: string]: string },
+                            new Cell(index, colNumber, 1, 1, null, null, null, null, false, -1, '17', '', '', null, null, null, null) as Cell & { [key: string]: string },
                         )
                         return null
                     },
@@ -886,7 +886,7 @@ export default defineComponent({
                 const aNewRow: Cell[] = []
                 for (let i = -1; i < gridReactiveData.colConfs.length - 1; i++) {
                     aNewRow.push(
-                        new Cell(Number(rowNumber), i, 1, 1, null, null, null, null, false, -1, '0', '', '', null, null, null, null) as Cell & { [key: string]: string },
+                        new Cell(Number(rowNumber), i, 1, 1, null, null, null, null, false, -1, '17', '', '', null, null, null, null) as Cell & { [key: string]: string },
                     )
                 }
                 gridReactiveData.currentSheetData.splice(Number(rowNumber), 0, aNewRow)
