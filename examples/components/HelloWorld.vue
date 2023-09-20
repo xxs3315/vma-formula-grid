@@ -399,7 +399,7 @@ export default defineComponent({
         cells: [{
           p: 'G7:J26',
           details: {
-            full: {v: false, color: '#88EEFF'},
+            full: {v: true, color: '#88EEFF'},
             inner: {v: false, color: '#88EEFF'},
             outer: {v: true, color: '#88EEFF'},
             left: {v: false, color: '#88EEFF'},
@@ -408,7 +408,7 @@ export default defineComponent({
             bottom: {v: false, color: '#88EEFF'},
           }
         }, {
-          p: 'E4',
+          p: 'J28',
           details: {
             full: {v: true, color: '#FCCC99'},
             left: {v: true, color: '#FCCC99'},

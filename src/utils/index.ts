@@ -1454,39 +1454,140 @@ export function calcCellBorderCustom(colIndex: number, rowIndex: number, borders
     return result
 }
 
-export function calcCellBgType(hasBg: boolean, hasBdb: boolean, hasBdr: boolean,) {
+export function calcCellBgType(hasBg: boolean, hasBdl: boolean, hasBdt: boolean, hasBdr: boolean, hasBdb: boolean) {
     if (hasBg) {
         // 带背景的
         // 未选中状态的
-        if (hasBdb && hasBdr) {
-            // border bottom + border right
+        if (hasBdl && hasBdt && hasBdr && hasBdb) {
+            // border left + border top + border right + border bottom
+            return '16'
+        }
+        if (hasBdl && hasBdt && hasBdr && !hasBdb) {
+            // border left + border top + border right
+            return '15'
+        }
+        if (hasBdl && hasBdt && !hasBdr && hasBdb) {
+            // border left + border top + border bottom
+            return '14'
+        }
+        if (hasBdl && !hasBdt && hasBdr && hasBdb) {
+            // border left + border right + border bottom
+            return '13'
+        }
+        if (!hasBdl && hasBdt && hasBdr && hasBdb) {
+            // border top + border right + border bottom
+            return '12'
+        }
+        if (!hasBdl && !hasBdt && hasBdr && hasBdb) {
+            // border right + border bottom
             return '11'
         }
-        if (hasBdr) {
-            // border right
+        if (!hasBdl && hasBdt && !hasBdr && hasBdb) {
+            // border top + border bottom
             return '10'
         }
-        if (hasBdb) {
-            // border bottom
+        if (!hasBdl && hasBdt && hasBdr && !hasBdb) {
+            // border top + border right
             return '9'
         }
-        // none
-        return '8'
+        if (hasBdl && !hasBdt && !hasBdr && hasBdb) {
+            // border left + border bottom
+            return '8'
+        }
+        if (hasBdl && !hasBdt && hasBdr && !hasBdb) {
+            // border left + border right
+            return '7'
+        }
+        if (hasBdl && hasBdt && !hasBdr && !hasBdb) {
+            // border left + border top
+            return '6'
+        }
+        if (hasBdl && !hasBdt && !hasBdr && !hasBdb) {
+            // border left
+            return '5'
+        }
+        if (!hasBdl && hasBdt && !hasBdr && !hasBdb) {
+            // border top
+            return '4'
+        }
+        if (!hasBdl && !hasBdt && hasBdr && !hasBdb) {
+            // border right
+            return '3'
+        }
+        if (!hasBdl && !hasBdt && !hasBdr && hasBdb) {
+            // border bottom
+            return '2'
+        }
+        if (!hasBdl && !hasBdt && !hasBdr && !hasBdb) {
+            // none
+            return '1'
+        }
     }
     // 不带背景的
     // 未选中状态的
-    if (hasBdb && hasBdr) {
-        // border bottom + border right
-        return '3'
+    if (hasBdl && hasBdt && hasBdr && hasBdb) {
+        // border left + border top + border right + border bottom
+        return '32'
     }
-    if (hasBdr) {
+    if (hasBdl && hasBdt && hasBdr && !hasBdb) {
+        // border left + border top + border right
+        return '31'
+    }
+    if (hasBdl && hasBdt && !hasBdr && hasBdb) {
+        // border left + border top + border bottom
+        return '30'
+    }
+    if (hasBdl && !hasBdt && hasBdr && hasBdb) {
+        // border left + border right + border bottom
+        return '29'
+    }
+    if (!hasBdl && hasBdt && hasBdr && hasBdb) {
+        // border top + border right + border bottom
+        return '28'
+    }
+    if (!hasBdl && !hasBdt && hasBdr && hasBdb) {
+        // border right + border bottom
+        return '27'
+    }
+    if (!hasBdl && hasBdt && !hasBdr && hasBdb) {
+        // border top + border bottom
+        return '26'
+    }
+    if (!hasBdl && hasBdt && hasBdr && !hasBdb) {
+        // border top + border right
+        return '25'
+    }
+    if (hasBdl && !hasBdt && !hasBdr && hasBdb) {
+        // border left + border bottom
+        return '24'
+    }
+    if (hasBdl && !hasBdt && hasBdr && !hasBdb) {
+        // border left + border right
+        return '23'
+    }
+    if (hasBdl && hasBdt && !hasBdr && !hasBdb) {
+        // border left + border top
+        return '22'
+    }
+    if (hasBdl && !hasBdt && !hasBdr && !hasBdb) {
+        // border left
+        return '21'
+    }
+    if (!hasBdl && hasBdt && !hasBdr && !hasBdb) {
+        // border top
+        return '20'
+    }
+    if (!hasBdl && !hasBdt && hasBdr && !hasBdb) {
         // border right
-        return '2'
+        return '19'
     }
-    if (hasBdb) {
+    if (!hasBdl && !hasBdt && !hasBdr && hasBdb) {
         // border bottom
-        return '1'
+        return '18'
     }
-    // none
-    return '0'
+    if (!hasBdl && !hasBdt && !hasBdr && !hasBdb) {
+        // none
+        return '17'
+    }
+    return '17'
 }
