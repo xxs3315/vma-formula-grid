@@ -346,7 +346,7 @@ export default defineComponent({
       }],
       rowHide: [9, 15, 16, 17, 18, 19],
       colHide: ['D', 'F', 'G'],
-      merges: ['A1:I1', 'A2:A12', 'A120:A165'],
+      merges: ['A1:I3', 'A4:A12', 'A120:A165'],
       styles: {
         bgc: {
           cols: [{
@@ -415,6 +415,21 @@ export default defineComponent({
             right: {v: false, color: '#FCCC99'},
             top: {v: true, color: '#FCCC99'},
             bottom: {v: true, color: '#FCCC99'},
+          }
+        }, {
+          p: 'A1',
+          details: {
+            full: {v: true, color: '#FCCC99'},
+          }
+        }, {
+          p: 'G4',
+          details: {
+            full: {v: true, color: '#FCCC99'},
+          }
+        }, {
+          p: 'I13',
+          details: {
+            full: {v: true, color: '#FCCC99'},
           }
         }],
       }
