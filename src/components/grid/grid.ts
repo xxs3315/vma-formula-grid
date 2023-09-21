@@ -1989,13 +1989,29 @@ export default defineComponent({
                                     rowEnd = rowStart
                                     rowStart = t
                                 }
-                                gridReactiveData.merges[`${colStart}_${rowStart}:${colEnd}_${rowEnd}`] = {
-                                    colStart: colStart,
-                                    colEnd: colEnd,
-                                    colSpan: colEnd - colStart + 1,
-                                    rowStart: rowStart,
-                                    rowEnd: rowEnd,
-                                    rowSpan: rowEnd - rowStart + 1
+                                let mergesIntersectCol = false
+                                let mergesIntersectRow = false
+                                Object.keys(gridReactiveData.merges).forEach((key: string) => {
+                                    let startCol = [Math.min(colStart, colEnd),Math.min(gridReactiveData.merges[key].colStart, gridReactiveData.merges[key].colEnd)]
+                                    let endCol = [Math.max(colStart, colEnd),Math.max(gridReactiveData.merges[key].colStart, gridReactiveData.merges[key].colEnd)]
+                                    if (Math.max(...startCol) <= Math.min(...endCol)) {
+                                        mergesIntersectCol = true
+                                    }
+                                    let startRow = [Math.min(rowStart, rowEnd),Math.min(gridReactiveData.merges[key].rowStart, gridReactiveData.merges[key].rowEnd)]
+                                    let endRow = [Math.max(rowStart, rowEnd),Math.max(gridReactiveData.merges[key].rowStart, gridReactiveData.merges[key].rowEnd)]
+                                    if (Math.max(...startRow) <= Math.min(...endRow)) {
+                                        mergesIntersectRow = true
+                                    }
+                                })
+                                if (!(mergesIntersectCol && mergesIntersectRow)) {
+                                    gridReactiveData.merges[`${colStart}_${rowStart}:${colEnd}_${rowEnd}`] = {
+                                        colStart: colStart,
+                                        colEnd: colEnd,
+                                        colSpan: colEnd - colStart + 1,
+                                        rowStart: rowStart,
+                                        rowEnd: rowEnd,
+                                        rowSpan: rowEnd - rowStart + 1
+                                    }
                                 }
                             }
                         })
