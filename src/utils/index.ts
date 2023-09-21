@@ -1344,22 +1344,20 @@ export function calcCellBorderCustom(colIndex: number, rowIndex: number, borders
                 let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
                 let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
                 let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
-                // console.log(colStart, rowStart, colEnd, rowEnd)
-                // console.log(item.details)
                 if (colIndex >= colStart - 1 && colIndex <= colEnd - 1 && rowIndex >= rowStart - 1 && rowIndex <= rowEnd - 1 ) {
                     if (item.hasOwnProperty('details')) {
-                        if (item.details.hasOwnProperty('full')) {
-                            if (item.details.full.v) {
+                        if (item.details.hasOwnProperty('full') && item.details.full.hasOwnProperty('v') && item.details.full.v) {
                                 result.bdl = true
                                 result.bdt = true
                                 result.bdr = true
                                 result.bdb = true
-                            } else if (item.details.inner.v && item.details.outer.v) {
+                            } else if (item.details.hasOwnProperty('inner') && item.details.inner.hasOwnProperty('v') && item.details.inner.v
+                                && item.details.hasOwnProperty('outer') && item.details.outer.hasOwnProperty('v') && item.details.outer.v) {
                                 result.bdl = true
                                 result.bdt = true
                                 result.bdr = true
                                 result.bdb = true
-                            } else if (item.details.inner.v) {
+                            } else if (item.details.hasOwnProperty('inner') && item.details.inner.hasOwnProperty('v') && item.details.inner.v) {
                                 if (rowIndex === rowStart - 1 && colIndex === colStart - 1
                                     || rowIndex === rowStart - 1 && colIndex === colEnd - 1
                                     || rowIndex === rowEnd - 1 && colIndex === colStart - 1
@@ -1408,7 +1406,7 @@ export function calcCellBorderCustom(colIndex: number, rowIndex: number, borders
                                     result.bdr = true
                                     result.bdb = true
                                 }
-                            } else if (item.details.outer.v) {
+                            } else if (item.details.hasOwnProperty('outer') && item.details.outer.hasOwnProperty('v') && item.details.outer.v) {
                                 if (rowIndex === rowStart - 1) {
                                     result.bdt = true
                                 }
@@ -1422,48 +1420,47 @@ export function calcCellBorderCustom(colIndex: number, rowIndex: number, borders
                                     result.bdr = true
                                 }
                             } else {
-                                if (item.details.hasOwnProperty('left') && item.details.left.v) {
+                                if (item.details.hasOwnProperty('left') && item.details.left.hasOwnProperty('v') && item.details.left.v) {
                                     result.bdl = true
                                 }
-                                if (item.details.hasOwnProperty('top') && item.details.top.v) {
+                                if (item.details.hasOwnProperty('top') && item.details.top.hasOwnProperty('v') && item.details.top.v) {
                                     result.bdt = true
                                 }
-                                if (item.details.hasOwnProperty('right') && item.details.right.v) {
+                                if (item.details.hasOwnProperty('right') && item.details.right.hasOwnProperty('v') && item.details.right.v) {
                                     result.bdr = true
                                 }
-                                if (item.details.hasOwnProperty('bottom') && item.details.bottom.v) {
+                                if (item.details.hasOwnProperty('bottom') && item.details.bottom.hasOwnProperty('v') && item.details.bottom.v) {
                                     result.bdb = true
                                 }
                             }
                         }
-                    }
+
                 }
             } else {
                 let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''))
                 let rowTarget = parseInt(item.p.replace(/[^0-9]/ig, ''))
                 if (colIndex === colTarget - 1 && rowIndex === rowTarget - 1) {
                     if (item.hasOwnProperty('details')) {
-                        if (item.details.hasOwnProperty('full')) {
-                            if (item.details.full.v) {
+                        // if (item.details.hasOwnProperty('full')) {
+                            if (item.details.hasOwnProperty('full') && item.details.full.hasOwnProperty('v') && item.details.full.v) {
                                 result.bdl = true
                                 result.bdt = true
                                 result.bdr = true
                                 result.bdb = true
                             } else {
-                                if (item.details.hasOwnProperty('left') && item.details.left.v) {
+                                if (item.details.hasOwnProperty('left') && item.details.left.hasOwnProperty('v') && item.details.left.v) {
                                     result.bdl = true
                                 }
-                                if (item.details.hasOwnProperty('top') && item.details.top.v) {
+                                if (item.details.hasOwnProperty('top') && item.details.top.hasOwnProperty('v') && item.details.top.v) {
                                     result.bdt = true
                                 }
-                                if (item.details.hasOwnProperty('right') && item.details.right.v) {
+                                if (item.details.hasOwnProperty('right') && item.details.right.hasOwnProperty('v') && item.details.right.v) {
                                     result.bdr = true
                                 }
-                                if (item.details.hasOwnProperty('bottom') && item.details.bottom.v) {
+                                if (item.details.hasOwnProperty('bottom') && item.details.bottom.hasOwnProperty('v') && item.details.bottom.v) {
                                     result.bdb = true
                                 }
                             }
-                        }
                     }
                 }
             }

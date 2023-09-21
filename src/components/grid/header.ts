@@ -165,8 +165,9 @@ export default defineComponent({
                                     {
                                         class: ['column-hide-info-frontward'],
                                         onClick: (event: MouseEvent) => {
+                                            event.stopPropagation()
                                             const elem = event.target as HTMLDivElement
-                                            const targetElem: any = elem.parentElement!.parentElement!
+                                            const targetElem: any = elem.parentElement!
                                             $vmaFormulaGrid.updateColVisible(
                                                 'showForwardCols',
                                                 targetElem.attributes['data-col'].value,
@@ -189,8 +190,9 @@ export default defineComponent({
                                     {
                                         class: ['column-hide-info-backward'],
                                         onClick: (event: MouseEvent) => {
+                                            event.stopPropagation()
                                             const elem = event.target as HTMLDivElement
-                                            const targetElem: any = elem.parentElement!.parentElement!
+                                            const targetElem: any = elem.parentElement!
                                             $vmaFormulaGrid.updateColVisible(
                                                 'showBackwardCols',
                                                 targetElem.attributes['data-col'].value,
