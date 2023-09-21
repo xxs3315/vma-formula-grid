@@ -686,13 +686,32 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: left top, left top, right bottom, right bottom;
-          //  background-repeat: no-repeat;
-          //  background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-          //  background-image: linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-17.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -2;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+          }
         }
 
         &.cell-bg-1 {
@@ -721,14 +740,34 @@
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color)
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-          //  background-repeat: no-repeat;
-          //  background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-          //  background-image: linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%))
-          //  , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          //}
+        &.cell-bg-1.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -2;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-18 {
@@ -756,13 +795,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-18.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+          }
         }
 
         &.cell-bg-2 {
@@ -791,13 +850,34 @@
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color)
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-2.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-19 {
@@ -825,13 +905,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-19.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
+          }
         }
 
         &.cell-bg-3 {
@@ -861,12 +961,35 @@
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        }
+
+        &.cell-bg-3.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
+
         }
 
         &.cell-bg-20 {
@@ -894,13 +1017,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-20.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+          }
         }
 
         &.cell-bg-4 {
@@ -929,13 +1072,34 @@
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color)
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-4.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-21 {
@@ -963,13 +1127,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-21.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+          }
         }
 
         &.cell-bg-5 {
@@ -998,13 +1182,34 @@
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color)
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-5.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-22 {
@@ -1032,13 +1237,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-22.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+          }
         }
 
         &.cell-bg-6 {
@@ -1067,13 +1292,34 @@
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color)
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-6.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-23 {
@@ -1101,13 +1347,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-23.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
+          }
         }
 
         &.cell-bg-7 {
@@ -1136,13 +1402,34 @@
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8)
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-7.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-24 {
@@ -1170,13 +1457,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-24.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+          }
         }
 
         &.cell-bg-8 {
@@ -1205,13 +1512,34 @@
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color)
               , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-8.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-25 {
@@ -1239,13 +1567,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-25.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
+          }
         }
 
         &.cell-bg-9 {
@@ -1274,13 +1622,34 @@
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8)
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-9.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-26 {
@@ -1308,13 +1677,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-26.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+          }
         }
 
         &.cell-bg-10 {
@@ -1343,13 +1732,34 @@
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color)
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-10.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-27 {
@@ -1378,12 +1788,34 @@
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8);
           }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        }
+
+        &.cell-bg-27.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
+          }
+
         }
 
         &.cell-bg-11 {
@@ -1412,13 +1844,34 @@
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8)
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-11.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-28 {
@@ -1446,13 +1899,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-28.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
+          }
         }
 
         &.cell-bg-12 {
@@ -1481,13 +1954,34 @@
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8)
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-12.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-29 {
@@ -1515,13 +2009,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-29.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
+          }
         }
 
         &.cell-bg-13 {
@@ -1550,13 +2064,34 @@
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8)
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-13.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-30 {
@@ -1584,13 +2119,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-30.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+          }
         }
 
         &.cell-bg-14 {
@@ -1619,13 +2174,34 @@
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color)
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-14.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-31 {
@@ -1653,13 +2229,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-31.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
+          }
         }
 
         &.cell-bg-15 {
@@ -1688,13 +2284,34 @@
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-8, @gray-8)
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-15.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
         }
 
         &.cell-bg-32 {
@@ -1722,13 +2339,33 @@
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8);
           }
+        }
 
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
+        &.cell-bg-32.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
+          }
         }
 
         &.cell-bg-16 {
@@ -1756,189 +2393,34 @@
             background-image: linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8), linear-gradient(@gray-8, @gray-8)
             , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           }
-
-          //&.cell-active {
-          //  background-position: right top, right bottom, left top;
-          //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
-          //}
         }
 
-        //&.cell-bg-1 {
-        //  .cell-background(@grid-border-color);
-        //
-        //  background-position: right top, right bottom;
-        //  background-repeat: no-repeat;
-        //  background-size: 1px 100%, 100% 1px;
-        //  background-image: linear-gradient(
-        //          @grid-border-color,
-        //          @grid-border-color
-        //  ),
-        //  linear-gradient(@gray-8, @gray-8);
-        //
-        //  &.cell-active {
-        //    background-position: right top, right bottom, left top;
-        //    background-repeat: no-repeat;
-        //    background-size: 1px 100%, 100% 1px,
-        //    calc(100% - 1px) calc(100% - 1px);
-        //    background-image: linear-gradient(
-        //            @grid-border-color,
-        //            @grid-border-color
-        //    ),
-        //    linear-gradient(@gray-8, @gray-8),
-        //    linear-gradient(
-        //            lighten(@grid-border-color, 10%),
-        //            lighten(@grid-border-color, 10%)
-        //    );
-        //  }
-        //}
-        //
-        //&.cell-bg-2 {
-        //  .cell-background(@grid-border-color);
-        //
-        //  background-position: right top, right bottom;
-        //  background-repeat: no-repeat;
-        //  background-size: 1px 100%, 100% 1px;
-        //  background-image: linear-gradient(@gray-8, @gray-8),
-        //  linear-gradient(@grid-border-color, @grid-border-color);
-        //
-        //  &.cell-active {
-        //    background-position: right top, right bottom, left top;
-        //    background-repeat: no-repeat;
-        //    background-size: 1px 100%, 100% 1px,
-        //    calc(100% - 1px) calc(100% - 1px);
-        //    background-image: linear-gradient(@gray-8, @gray-8),
-        //    linear-gradient(@grid-border-color, @grid-border-color),
-        //    linear-gradient(
-        //            lighten(@grid-border-color, 10%),
-        //            lighten(@grid-border-color, 10%)
-        //    );
-        //  }
-        //}
-        //
-        //&.cell-bg-3 {
-        //  .cell-background(@grid-border-color);
-        //
-        //  background-position: right top, right bottom;
-        //  background-repeat: no-repeat;
-        //  background-size: 1px 100%, 100% 1px;
-        //  background-image: linear-gradient(@gray-8, @gray-8),
-        //  linear-gradient(@gray-8, @gray-8);
-        //
-        //  &.cell-active {
-        //    background-position: right top, right bottom, left top;
-        //    background-repeat: no-repeat;
-        //    background-size: 1px 100%, 100% 1px,
-        //    calc(100% - 1px) calc(100% - 1px);
-        //    background-image: linear-gradient(@gray-8, @gray-8),
-        //    linear-gradient(@gray-8, @gray-8),
-        //    linear-gradient(
-        //            lighten(@grid-border-color, 10%),
-        //            lighten(@grid-border-color, 10%)
-        //    );
-        //  }
-        //}
-        //
-        //&.cell-bg-8 {
-        //  .cell-background(@grid-border-color);
-        //
-        //  background-position: right top, right bottom, left top;
-        //  background-repeat: no-repeat;
-        //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-        //  background-image: linear-gradient(
-        //          @grid-border-color,
-        //          @grid-border-color
-        //  ),
-        //  linear-gradient(@grid-border-color, @grid-border-color),
-        //  linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-        //
-        //  &.cell-active {
-        //    background-position: right top, right bottom, left top;
-        //    background-repeat: no-repeat;
-        //    background-size: 1px 100%, 100% 1px,
-        //    calc(100% - 1px) calc(100% - 1px);
-        //    opacity: 0.6;
-        //    background-image: linear-gradient(
-        //            @grid-border-color,
-        //            @grid-border-color
-        //    ),
-        //    linear-gradient(@grid-border-color, @grid-border-color),
-        //    linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-        //  }
-        //}
-        //
-        //&.cell-bg-9 {
-        //  .cell-background(@grid-border-color);
-        //
-        //  background-position: right top, right bottom, left top;
-        //  background-repeat: no-repeat;
-        //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-        //  background-image: linear-gradient(
-        //          @grid-border-color,
-        //          @grid-border-color
-        //  ),
-        //  linear-gradient(@gray-8, @gray-8),
-        //  linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-        //
-        //  &.cell-active {
-        //    background-position: right top, right bottom, left top;
-        //    background-repeat: no-repeat;
-        //    background-size: 1px 100%, 100% 1px,
-        //    calc(100% - 1px) calc(100% - 1px);
-        //    opacity: 0.6;
-        //    background-image: linear-gradient(
-        //            @grid-border-color,
-        //            @grid-border-color
-        //    ),
-        //    linear-gradient(@gray-8, @gray-8),
-        //    linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-        //  }
-        //}
-        //
-        //&.cell-bg-10 {
-        //  .cell-background(@grid-border-color);
-        //
-        //  background-position: right top, right bottom, left top;
-        //  background-repeat: no-repeat;
-        //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-        //  background-image: linear-gradient(@gray-8, @gray-8),
-        //  linear-gradient(@grid-border-color, @grid-border-color),
-        //  linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-        //
-        //  &.cell-active {
-        //    background-position: right top, right bottom, left top;
-        //    background-repeat: no-repeat;
-        //    background-size: 1px 100%, 100% 1px,
-        //    calc(100% - 1px) calc(100% - 1px);
-        //    opacity: 0.6;
-        //    background-image: linear-gradient(@gray-8, @gray-8),
-        //    linear-gradient(@grid-border-color, @grid-border-color),
-        //    linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-        //  }
-        //}
-        //
-        //&.cell-bg-11 {
-        //  .cell-background(@grid-border-color);
-        //
-        //  background-position: right top, right bottom, left top;
-        //  background-repeat: no-repeat;
-        //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-        //  background-image: linear-gradient(@gray-8, @gray-8),
-        //  linear-gradient(@gray-8, @gray-8),
-        //  linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-        //
-        //  &.cell-active {
-        //    background-position: right top, right bottom, left top;
-        //    background-repeat: no-repeat;
-        //    background-size: 1px 100%, 100% 1px,
-        //    calc(100% - 1px) calc(100% - 1px);
-        //    opacity: 0.6;
-        //    background-image: linear-gradient(@gray-8, @gray-8),
-        //    linear-gradient(@gray-8, @gray-8),
-        //    linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-        //  }
-        //}
+        &.cell-bg-16.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
+            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+          }
+        }
 
         .cell {
           display: flex;
