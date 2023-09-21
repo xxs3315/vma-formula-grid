@@ -662,7 +662,7 @@
         background-color: transparent;
 
         &.cell-active {
-          opacity: 0.75;
+          opacity: 0.85;
         }
 
         &.cell-bg-17 {
@@ -691,32 +691,32 @@
           }
         }
 
-        &.cell-bg-17.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -2;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
-          }
-        }
+        //&.cell-bg-17.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -2;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+        //  }
+        //}
 
         &.cell-bg-1 {
 
@@ -746,34 +746,34 @@
           }
         }
 
-        &.cell-bg-1.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -2;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-1.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -2;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-18 {
 
@@ -802,33 +802,33 @@
           }
         }
 
-        &.cell-bg-18.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
-          }
-        }
+        //&.cell-bg-18.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+        //  }
+        //}
 
         &.cell-bg-2 {
 
@@ -858,34 +858,34 @@
           }
         }
 
-        &.cell-bg-2.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-2.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-19 {
 
@@ -914,33 +914,33 @@
           }
         }
 
-        &.cell-bg-19.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
-          }
-        }
+        //&.cell-bg-19.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7);
+        //  }
+        //}
 
         &.cell-bg-3 {
 
@@ -971,35 +971,35 @@
 
         }
 
-        &.cell-bg-3.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-
-        }
+        //&.cell-bg-3.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7)
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //
+        //}
 
         &.cell-bg-20 {
 
@@ -1028,33 +1028,33 @@
           }
         }
 
-        &.cell-bg-20.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
-          }
-        }
+        //&.cell-bg-20.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+        //  }
+        //}
 
         &.cell-bg-4 {
 
@@ -1084,34 +1084,34 @@
           }
         }
 
-        &.cell-bg-4.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-4.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-21 {
 
@@ -1140,33 +1140,33 @@
           }
         }
 
-        &.cell-bg-21.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
-          }
-        }
+        //&.cell-bg-21.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+        //  }
+        //}
 
         &.cell-bg-5 {
 
@@ -1196,34 +1196,34 @@
           }
         }
 
-        &.cell-bg-5.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-5.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-22 {
 
@@ -1252,33 +1252,33 @@
           }
         }
 
-        &.cell-bg-22.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
-          }
-        }
+        //&.cell-bg-22.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+        //  }
+        //}
 
         &.cell-bg-6 {
 
@@ -1308,34 +1308,34 @@
           }
         }
 
-        &.cell-bg-6.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-6.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-23 {
 
@@ -1364,33 +1364,33 @@
           }
         }
 
-        &.cell-bg-23.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
-          }
-        }
+        //&.cell-bg-23.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7);
+        //  }
+        //}
 
         &.cell-bg-7 {
 
@@ -1420,34 +1420,34 @@
           }
         }
 
-        &.cell-bg-7.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-7.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7)
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-24 {
 
@@ -1476,33 +1476,33 @@
           }
         }
 
-        &.cell-bg-24.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
-          }
-        }
+        //&.cell-bg-24.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+        //  }
+        //}
 
         &.cell-bg-8 {
 
@@ -1532,34 +1532,34 @@
           }
         }
 
-        &.cell-bg-8.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-8.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-25 {
 
@@ -1588,33 +1588,33 @@
           }
         }
 
-        &.cell-bg-25.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
-          }
-        }
+        //&.cell-bg-25.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7);
+        //  }
+        //}
 
         &.cell-bg-9 {
 
@@ -1644,34 +1644,34 @@
           }
         }
 
-        &.cell-bg-9.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-9.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7)
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-26 {
 
@@ -1700,33 +1700,33 @@
           }
         }
 
-        &.cell-bg-26.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
-          }
-        }
+        //&.cell-bg-26.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+        //  }
+        //}
 
         &.cell-bg-10 {
 
@@ -1756,34 +1756,34 @@
           }
         }
 
-        &.cell-bg-10.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-10.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-27 {
 
@@ -1813,34 +1813,34 @@
 
         }
 
-        &.cell-bg-27.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
-          }
-
-        }
+        //&.cell-bg-27.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7);
+        //  }
+        //
+        //}
 
         &.cell-bg-11 {
 
@@ -1870,34 +1870,34 @@
           }
         }
 
-        &.cell-bg-11.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-11.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7)
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-28 {
 
@@ -1926,33 +1926,33 @@
           }
         }
 
-        &.cell-bg-28.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
-          }
-        }
+        //&.cell-bg-28.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7);
+        //  }
+        //}
 
         &.cell-bg-12 {
 
@@ -1982,34 +1982,34 @@
           }
         }
 
-        &.cell-bg-12.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-12.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7)
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-29 {
 
@@ -2038,33 +2038,33 @@
           }
         }
 
-        &.cell-bg-29.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
-          }
-        }
+        //&.cell-bg-29.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7);
+        //  }
+        //}
 
         &.cell-bg-13 {
 
@@ -2094,34 +2094,34 @@
           }
         }
 
-        &.cell-bg-13.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-13.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7)
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-30 {
 
@@ -2150,33 +2150,33 @@
           }
         }
 
-        &.cell-bg-30.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
-          }
-        }
+        //&.cell-bg-30.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
+        //  }
+        //}
 
         &.cell-bg-14 {
 
@@ -2206,34 +2206,34 @@
           }
         }
 
-        &.cell-bg-14.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-14.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%))
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-31 {
 
@@ -2262,33 +2262,33 @@
           }
         }
 
-        &.cell-bg-31.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
-          }
-        }
+        //&.cell-bg-31.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7);
+        //  }
+        //}
 
         &.cell-bg-15 {
 
@@ -2318,34 +2318,34 @@
           }
         }
 
-        &.cell-bg-15.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-15.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7)
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         &.cell-bg-32 {
 
@@ -2374,33 +2374,33 @@
           }
         }
 
-        &.cell-bg-32.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%));
-          }
-        }
+        //&.cell-bg-32.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7);
+        //  }
+        //}
 
         &.cell-bg-16 {
 
@@ -2429,33 +2429,33 @@
           }
         }
 
-        &.cell-bg-16.cell-active {
-
-          position: relative;
-          background-color: transparent;
-
-          &::before {
-            content: " ";
-            position: absolute;
-            width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-            top: 0;
-            left: 0;
-            margin-top: -2px;
-            margin-left: -2px;
-            transform-origin: 0 0;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.75;
-            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
-            background-repeat: no-repeat;
-            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
-            background-image: linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%)), linear-gradient(lighten(@gray-8, 25%), lighten(@gray-8, 25%))
-            , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
-          }
-        }
+        //&.cell-bg-16.cell-active {
+        //
+        //  position: relative;
+        //  background-color: transparent;
+        //
+        //  &::before {
+        //    content: " ";
+        //    position: absolute;
+        //    width: calc(200% + 2px);
+        //    height: calc(200% + 2px);
+        //    transform: scale(0.5);
+        //    box-sizing: border-box;
+        //    top: 0;
+        //    left: 0;
+        //    margin-top: -2px;
+        //    margin-left: -2px;
+        //    transform-origin: 0 0;
+        //    pointer-events: none;
+        //    z-index: -1;
+        //
+        //    background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+        //    background-repeat: no-repeat;
+        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+        //    background-image: linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7), linear-gradient(@gray-7, @gray-7)
+        //    , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
+        //  }
+        //}
 
         .cell {
           display: flex;
