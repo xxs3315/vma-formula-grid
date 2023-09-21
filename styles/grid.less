@@ -683,16 +683,15 @@
             z-index: -2;
             background-position: left top, left top, right bottom, right bottom;
             background-repeat: no-repeat;
-            //background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color);
           }
 
           //&.cell-active {
-          //  background-position: right top, right bottom, left top;
+          //  background-position: left top, left top, right bottom, right bottom;
           //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
+          //  background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
+          //  background-image: linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
           //}
         }
 
@@ -724,10 +723,11 @@
           }
 
           //&.cell-active {
-          //  background-position: right top, right bottom, left top;
+          //  background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
           //  background-repeat: no-repeat;
-          //  background-size: 1px 100%, 100% 1px, calc(100% - 1px) calc(100% - 1px);
-          //  background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%));
+          //  background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+          //  background-image: linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 10%), lighten(@grid-border-color, 10%))
+          //  , linear-gradient(var(--cellBgCustom), var(--cellBgCustom));
           //}
         }
 

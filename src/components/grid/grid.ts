@@ -692,10 +692,10 @@ export default defineComponent({
                             )
                             .forEach((cellElem: any) => {
                                 const borderMarginLeft = `${
-                                    leftSpaceWidth + cellElem.offsetLeft - 1
+                                    leftSpaceWidth + cellElem.offsetLeft - 1 - 1
                                 }px`
                                 const borderMarginTop = `${
-                                    topSpaceHeight + cellElem.offsetTop - 1
+                                    topSpaceHeight + cellElem.offsetTop - 1 - 1
                                 }px`
                                 $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.transform = `translateX(${borderMarginLeft}) translateY(${borderMarginTop})`
                                 const w = getCurrentAreaWidth(
@@ -769,8 +769,8 @@ export default defineComponent({
                             cells.forEach((cellElem: any) => {
                                 const marginLeft = `${leftSpaceWidth + cellElem.offsetLeft}px`
                                 const marginTop = `${topSpaceHeight + cellElem.offsetTop}px`
-                                const borderMarginLeft = `${leftSpaceWidth + cellElem.offsetLeft - 1}px`
-                                const borderMarginTop = `${topSpaceHeight + cellElem.offsetTop - 1}px`
+                                const borderMarginLeft = `${leftSpaceWidth + cellElem.offsetLeft - 1 - 1}px`
+                                const borderMarginTop = `${topSpaceHeight + cellElem.offsetTop - 1 - 1}px`
                                 gridReactiveData.currentCellEditorStyle.transform = `translateX(${marginLeft}) translateY(${marginTop})`
                                 gridReactiveData.currentCellEditorStyle.height = `${cellElem.offsetHeight - 1}px`
                                 gridReactiveData.currentCellEditorStyle.width = `${cellElem.offsetWidth - 1}px`
@@ -2102,14 +2102,6 @@ export default defineComponent({
                             const {rowSpan, colSpan} = getRowColSpanFromMerges(colIndex, rowIndex + 1, gridReactiveData.merges)
                             const {fg, bg} = calcCellStyleCustom(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.styles)
                             const {bdl: bdlCurrent, bdt: bdtCurrent, bdr: bdrCurrent, bdb: bdbCurrent} = calcCellBorderCustom(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.borders)
-                            // const {bdl: bdlBottomNext, bdt: bdtBottomNext, bdr: bdrBottomNext, bdb: bdbBottomNext} = rowIndex + 1 < rows.length ?
-                            //     calcCellBorderCustom(colIndex - 1, rowIndex + 1, $vmaFormulaGrid.reactiveData.borders)
-                            //     :
-                            //     {bdl: false, bdt: false, bdr: false, bdb: false}
-                            // const {bdl: bdlRightNext, bdt: bdtRightNext, bdr: bdrRightNext, bdb: bdbRightNext} = colIndex - 1 + 1 + 1 < columns.length ?
-                            //     calcCellBorderCustom(colIndex - 1 + 1, rowIndex, $vmaFormulaGrid.reactiveData.borders)
-                            //     :
-                            //     {bdl: false, bdt: false, bdr: false, bdb: false}
                             const bgt = calcCellBgType(bg.length > 0, bdlCurrent, bdtCurrent, bdrCurrent, bdbCurrent)
                             gridReactiveData.currentSheetData[rowIndex][colIndex] = new Cell(
                                 rowIndex,
