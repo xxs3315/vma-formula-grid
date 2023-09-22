@@ -736,9 +736,7 @@ export default defineComponent({
                             for (let j = sci; j <= eci; j++) {
                                 refGridBodyTable.value
                                     .querySelectorAll(`td[data-row="${i}"][data-col="${j}"]`)
-                                    .forEach((cellElem: any) => {
-                                        cellElem.classList.add('cell-active')
-                                    })
+                                    .forEach((cellElem: any) => cellElem.classList.add('cell-active'))
                             }
                         }
                     })
