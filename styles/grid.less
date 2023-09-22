@@ -661,9 +661,9 @@
         cursor: default;
         background-color: transparent;
 
-        &.cell-active {
-          opacity: 0.85;
-        }
+        //&.cell-active {
+        //  opacity: 0.85;
+        //}
 
         &.cell-bg-17 {
 
@@ -691,32 +691,33 @@
           }
         }
 
-        //&.cell-bg-17.cell-active {
-        //
-        //  position: relative;
-        //  background-color: transparent;
-        //
-        //  &::before {
-        //    content: " ";
-        //    position: absolute;
-        //    width: calc(200% + 2px);
-        //    height: calc(200% + 2px);
-        //    transform: scale(0.5);
-        //    box-sizing: border-box;
-        //    top: 0;
-        //    left: 0;
-        //    margin-top: -2px;
-        //    margin-left: -2px;
-        //    transform-origin: 0 0;
-        //    pointer-events: none;
-        //    z-index: -2;
-        //
-        //    background-position: left top, left top, right bottom, right bottom;
-        //    background-repeat: no-repeat;
-        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
-        //  }
-        //}
+        &.cell-bg-17.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -2;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%)), linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%)), linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%))
+            , linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 8%), lighten(@grid-border-color, 8%));
+          }
+        }
+
 
         &.cell-bg-1 {
 
@@ -802,33 +803,33 @@
           }
         }
 
-        //&.cell-bg-18.cell-active {
-        //
-        //  position: relative;
-        //  background-color: transparent;
-        //
-        //  &::before {
-        //    content: " ";
-        //    position: absolute;
-        //
-        //    width: calc(200% + 2px);
-        //    height: calc(200% + 2px);
-        //    transform: scale(0.5);
-        //    box-sizing: border-box;
-        //    top: 0;
-        //    left: 0;
-        //    margin-top: -2px;
-        //    margin-left: -2px;
-        //    transform-origin: 0 0;
-        //    pointer-events: none;
-        //    z-index: -1;
-        //
-        //    background-position: left top, left top, right bottom, right bottom;
-        //    background-repeat: no-repeat;
-        //    background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
-        //    background-image: linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%)), linear-gradient(@gray-7, @gray-7), linear-gradient(lighten(@grid-border-color, 5%), lighten(@grid-border-color, 5%));
-        //  }
-        //}
+        &.cell-bg-18.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%)), linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%)), linear-gradient(darken(@gray-7, 10%), darken(@gray-7, 10%)), linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%))
+            , linear-gradient(lighten(@grid-border-color, 8%), lighten(@grid-border-color, 8%));
+          }
+        }
 
         &.cell-bg-2 {
 
@@ -911,6 +912,34 @@
             background-repeat: no-repeat;
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-7, @gray-7);
+          }
+        }
+
+        &.cell-bg-19.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%)), linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%)), linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%)), linear-gradient(darken(@gray-7, 10%), darken(@gray-7, 10%))
+            , linear-gradient(lighten(@grid-border-color, 8%), lighten(@grid-border-color, 8%));
           }
         }
 
@@ -1028,6 +1057,34 @@
           }
         }
 
+        &.cell-bg-20.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(darken(@gray-7, 10%), darken(@gray-7, 10%)), linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%)), linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%))
+            , linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 8%), lighten(@grid-border-color, 8%));
+          }
+        }
+
         //&.cell-bg-20.cell-active {
         //
         //  position: relative;
@@ -1137,6 +1194,34 @@
             background-repeat: no-repeat;
             background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%;
             background-image: linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@gray-7, @gray-7), linear-gradient(@grid-border-color, @grid-border-color), linear-gradient(@grid-border-color, @grid-border-color);
+          }
+        }
+
+        &.cell-bg-21.cell-active {
+
+          position: relative;
+          background-color: transparent;
+
+          &::before {
+            content: " ";
+            position: absolute;
+
+            width: calc(200% + 2px);
+            height: calc(200% + 2px);
+            transform: scale(0.5);
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            margin-top: -2px;
+            margin-left: -2px;
+            transform-origin: 0 0;
+            pointer-events: none;
+            z-index: -1;
+            background-position: left top, left top, right bottom, right bottom, left 2px top 2px;
+            background-repeat: no-repeat;
+            background-size: 200% 2px, 2px 200%, 200% 2px, 2px 200%, calc(200% - 4px) calc(200% - 4px);
+            background-image: linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%)), linear-gradient(darken(@gray-7, 10%), darken(@gray-7, 10%)), linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%))
+            , linear-gradient(darken(@grid-border-color, 10%), darken(@grid-border-color, 10%)), linear-gradient(lighten(@grid-border-color, 8%), lighten(@grid-border-color, 8%));
           }
         }
 

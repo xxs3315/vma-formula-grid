@@ -364,7 +364,7 @@ export default defineComponent({
             full: {v: false, color: '#FCCC99'},
             left: {v: false, color: '#FCCC99'},
             right: {v: false, color: '#FCCC99'},
-            top: {v: true, color: '#FCCC99'},
+            top: {v: false, color: '#FCCC99'},
             bottom: {v: true, color: '#FCCC99'},
           }
         }, {
