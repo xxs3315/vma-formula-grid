@@ -1161,7 +1161,102 @@ export function checkCellInMerges(col: number, row: number, merges: Record<strin
     return false
 }
 
-export const getCurrentAreaWidth = (
+export function getRealArea(startColIndex: number, endColIndex: number, startRowIndex: number, endRowIndex: number,
+                            startColSpan: number, endColSpan: number, startRowSpan: number, endRowSpan: number,
+                            columnWidth: number,
+                            changedColumnWidths: Record<string, number>,
+                            changedColumnVisibles: Record<string, number>,
+                            rowHeight: number,
+                            changedRowHeights: Record<string, number>,
+                            changedRowVisibles: Record<string, number>,
+                            merges: Record<string, any>) {
+    const result = {
+        w: 0,
+        h: 0,
+        sci: -1,
+        eci: -1,
+        sri: -1,
+        eri: -1,
+    }
+    if (startColIndex === endColIndex && startRowIndex === endRowIndex) {
+        // single cell
+        let mergeColRows = []
+        Object.keys(merges).forEach((key: string) => {
+            let mergesIntersectCol = false
+            let mergesIntersectRow = false
+            let startCol = [Math.min(startColIndex + 1, endColIndex + 1),Math.min(merges[key].colStart, merges[key].colEnd)]
+            let endCol = [Math.max(startColIndex + 1, endColIndex + 1),Math.max(merges[key].colStart, merges[key].colEnd)]
+            if (Math.max(...startCol) <= Math.min(...endCol)) {
+                mergesIntersectCol = true
+            }
+            let startRow = [Math.min(startRowIndex + 1, endRowIndex + 1),Math.min(merges[key].rowStart, merges[key].rowEnd)]
+            let endRow = [Math.max(startRowIndex + 1, endRowIndex + 1),Math.max(merges[key].rowStart, merges[key].rowEnd)]
+            if (Math.max(...startRow) <= Math.min(...endRow)) {
+                mergesIntersectRow = true
+            }
+            if (mergesIntersectCol && mergesIntersectRow) {
+                mergeColRows.push(merges[key])
+            }
+        })
+        if (mergeColRows.length > 0) {
+            result.w = getCurrentAreaWidth(startColIndex, startColIndex + startColSpan - 1, columnWidth, changedColumnWidths, changedColumnVisibles)
+            result.h = getCurrentAreaHeight(startRowIndex, startRowIndex + startRowSpan - 1,rowHeight, changedRowHeights, changedRowVisibles)
+            result.sci = startColIndex
+            result.eci = startColIndex + startColSpan - 1
+            result.sri = startRowIndex
+            result.eri = startRowIndex + startRowSpan - 1
+        } else {
+            result.w = getCurrentAreaWidth(startColIndex, endColIndex, columnWidth, changedColumnWidths, changedColumnVisibles)
+            result.h = getCurrentAreaHeight(startRowIndex, endRowIndex,rowHeight, changedRowHeights, changedRowVisibles)
+            result.sci = startColIndex
+            result.eci = endColIndex
+            result.sri = startRowIndex
+            result.eri = endRowIndex
+        }
+    } else {
+        // multi cells
+        let mergeColRows: any[] = []
+        Object.keys(merges).forEach((key: string) => {
+            let mergesIntersectCol = false
+            let mergesIntersectRow = false
+            let startCol = [Math.min(startColIndex + 1, endColIndex + 1),Math.min(merges[key].colStart, merges[key].colEnd)]
+            let endCol = [Math.max(startColIndex + 1, endColIndex + 1),Math.max(merges[key].colStart, merges[key].colEnd)]
+            if (Math.max(...startCol) <= Math.min(...endCol)) {
+                mergesIntersectCol = true
+            }
+            let startRow = [Math.min(startRowIndex + 1, endRowIndex + 1),Math.min(merges[key].rowStart, merges[key].rowEnd)]
+            let endRow = [Math.max(startRowIndex + 1, endRowIndex + 1),Math.max(merges[key].rowStart, merges[key].rowEnd)]
+            if (Math.max(...startRow) <= Math.min(...endRow)) {
+                mergesIntersectRow = true
+            }
+            if (mergesIntersectCol && mergesIntersectRow) {
+                mergeColRows.push(merges[key])
+            }
+        })
+        if (mergeColRows.length > 0) {
+            const sci = Math.min(startColIndex, ...mergeColRows.map(item => item.colStart))
+            const eci = Math.max(endColIndex, ...mergeColRows.map(item => item.colEnd - 1))
+            const sri = Math.min(startRowIndex, ...mergeColRows.map(item => item.rowStart))
+            const eri = Math.max(endRowIndex, ...mergeColRows.map(item => item.rowEnd - 1))
+            result.w = getCurrentAreaWidth(sci, eci, columnWidth, changedColumnWidths, changedColumnVisibles)
+            result.h = getCurrentAreaHeight(sri, eri,rowHeight, changedRowHeights, changedRowVisibles)
+            result.sci = sci
+            result.eci = eci
+            result.sri = sri
+            result.eri = eri
+        } else {
+            result.w = getCurrentAreaWidth(startColIndex, endColIndex, columnWidth, changedColumnWidths, changedColumnVisibles)
+            result.h = getCurrentAreaHeight(startRowIndex, endRowIndex,rowHeight, changedRowHeights, changedRowVisibles)
+            result.sci = startColIndex
+            result.eci = endColIndex
+            result.sri = startRowIndex
+            result.eri = endRowIndex
+        }
+    }
+    return result
+}
+
+const getCurrentAreaWidth = (
     startColIndex: number,
     endColIndex: number,
     columnWidth: number,
@@ -1187,7 +1282,7 @@ export const getCurrentAreaWidth = (
     return width
 }
 
-export const getCurrentAreaHeight = (
+const getCurrentAreaHeight = (
     startRowIndex: number,
     endRowIndex: number,
     rowHeight: number,

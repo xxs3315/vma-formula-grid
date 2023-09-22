@@ -30,10 +30,10 @@ import {
     calcCellStyleCustom,
     calcVertexes, calcXOverlapMerges, calcYOverlapMerges, checkCellInMerges,
     filterVertexes,
-    getColumnCount, getCurrentAreaHeight, getCurrentAreaWidth,
+    getColumnCount,
     getHeight,
     getIndexFromColumnWidths,
-    getIndexFromRowHeights,
+    getIndexFromRowHeights, getRealArea,
     getRealVisibleHeightSize,
     getRealVisibleWidthSize,
     getRenderDefaultColWidth,
@@ -671,6 +671,22 @@ export default defineComponent({
                     const startRowIndex = Math.min(currentArea.start.row, currentArea.end.row)
                     const endRowIndex = Math.max(currentArea.start.row, currentArea.end.row)
 
+                    let endColSpan = 1
+                    let endRowSpan = 1
+                    let startColSpan = 1
+                    let startRowSpan = 1
+                    if (currentArea.start.row === endRowIndex && currentArea.start.col === endColIndex) {
+                        endColSpan = currentArea.start.colSpan
+                        endRowSpan = currentArea.start.rowSpan
+                        startColSpan = currentArea.end.colSpan
+                        startRowSpan = currentArea.end.rowSpan
+                    } else {
+                        endColSpan = currentArea.end.colSpan
+                        endRowSpan = currentArea.end.rowSpan
+                        startColSpan = currentArea.start.colSpan
+                        startRowSpan = currentArea.start.rowSpan
+                    }
+
                     const leftSpaceWidth = getXSpaceFromColumnWidths(
                         $vmaFormulaGrid.reactiveData.xStart,
                         renderDefaultColWidth.value,
@@ -686,6 +702,15 @@ export default defineComponent({
                     )
 
                     nextTick(() => {
+                        const {w, h,sci, eci, sri, eri} = getRealArea(startColIndex, endColIndex, startRowIndex, endRowIndex,
+                            startColSpan, endColSpan, startRowSpan, endRowSpan,
+                            renderDefaultColWidth.value,
+                            $vmaFormulaGrid.reactiveData.columnWidthsChanged,
+                            $vmaFormulaGrid.reactiveData.columnHidesChanged,
+                            renderDefaultRowHeight.value,
+                            $vmaFormulaGrid.reactiveData.rowHeightsChanged,
+                            $vmaFormulaGrid.reactiveData.rowHidesChanged,
+                            gridReactiveData.merges)
                         refGridBodyTable.value
                             .querySelectorAll(
                                 `td[data-row="${startRowIndex}"][data-col="${startColIndex}"]`
@@ -698,20 +723,6 @@ export default defineComponent({
                                     topSpaceHeight + cellElem.offsetTop - 1 - 1
                                 }px`
                                 $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.transform = `translateX(${borderMarginLeft}) translateY(${borderMarginTop})`
-                                const w = getCurrentAreaWidth(
-                                    startColIndex,
-                                    endColIndex,
-                                    renderDefaultColWidth.value,
-                                    $vmaFormulaGrid.reactiveData.columnWidthsChanged,
-                                    $vmaFormulaGrid.reactiveData.columnHidesChanged
-                                )
-                                const h = getCurrentAreaHeight(
-                                    startRowIndex,
-                                    endRowIndex,
-                                    renderDefaultRowHeight.value,
-                                    $vmaFormulaGrid.reactiveData.rowHeightsChanged,
-                                    $vmaFormulaGrid.reactiveData.rowHidesChanged
-                                )
                                 $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.height = `${h}px`
                                 $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.width = `${w}px`
                             })
@@ -721,8 +732,8 @@ export default defineComponent({
                             .forEach((elem: any, index: any) => {
                                 elem.classList.remove('cell-active')
                             })
-                        for (let i = startRowIndex; i <= endRowIndex; i++) {
-                            for (let j = startColIndex; j <= endColIndex; j++) {
+                        for (let i = sri; i <= eri; i++) {
+                            for (let j = sci; j <= eci; j++) {
                                 refGridBodyTable.value
                                     .querySelectorAll(`td[data-row="${i}"][data-col="${j}"]`)
                                     .forEach((cellElem: any) => {
@@ -1989,9 +2000,11 @@ export default defineComponent({
                                     rowEnd = rowStart
                                     rowStart = t
                                 }
-                                let mergesIntersectCol = false
-                                let mergesIntersectRow = false
+
+                                let mergeColRows = []
                                 Object.keys(gridReactiveData.merges).forEach((key: string) => {
+                                    let mergesIntersectCol = false
+                                    let mergesIntersectRow = false
                                     let startCol = [Math.min(colStart, colEnd),Math.min(gridReactiveData.merges[key].colStart, gridReactiveData.merges[key].colEnd)]
                                     let endCol = [Math.max(colStart, colEnd),Math.max(gridReactiveData.merges[key].colStart, gridReactiveData.merges[key].colEnd)]
                                     if (Math.max(...startCol) <= Math.min(...endCol)) {
@@ -2002,8 +2015,11 @@ export default defineComponent({
                                     if (Math.max(...startRow) <= Math.min(...endRow)) {
                                         mergesIntersectRow = true
                                     }
+                                    if (mergesIntersectCol && mergesIntersectRow) {
+                                        mergeColRows.push(gridReactiveData.merges[key])
+                                    }
                                 })
-                                if (!(mergesIntersectCol && mergesIntersectRow)) {
+                                if (mergeColRows.length === 0) {
                                     gridReactiveData.merges[`${colStart}_${rowStart}:${colEnd}_${rowEnd}`] = {
                                         colStart: colStart,
                                         colEnd: colEnd,
