@@ -39,6 +39,7 @@ export default defineComponent({
         const gridHeaderReactiveData = reactive({})
 
         const {
+            refGridDiv,
             refGridHeaderTable,
             refGridHeaderTableWrapperDiv,
             refGridHeaderLeftFixedTable,
@@ -166,13 +167,25 @@ export default defineComponent({
                                         class: ['column-hide-info-frontward'],
                                         onClick: (event: MouseEvent) => {
                                             event.stopPropagation()
-                                            const elem = event.target as HTMLDivElement
-                                            const targetElem: any = elem.parentElement!
-                                            $vmaFormulaGrid.updateColVisible(
-                                                'showForwardCols',
-                                                targetElem.attributes['data-col'].value,
-                                                targetElem.attributes['data-col'].value
+                                            const refGridDivElem = refGridDiv.value
+                                            const columnHideInfoFrontwardTargetNode = DomTools.getEventTargetNode(
+                                                event,
+                                                refGridDivElem,
+                                                `column-hide-info-frontward`,
+                                                (target: any) => {
+                                                    const elem = target.parentNode.parentNode.parentNode.parentNode.parentNode
+                                                    return elem !== document && elem.getAttribute('data-uid') === $vmaFormulaGrid.uId
+                                                },
                                             )
+                                            if (columnHideInfoFrontwardTargetNode.flag) {
+                                                const elem = columnHideInfoFrontwardTargetNode.targetElem
+                                                const targetElem: any = elem.parentElement!
+                                                $vmaFormulaGrid.updateColVisible(
+                                                    'showForwardCols',
+                                                    targetElem.attributes['data-col'].value,
+                                                    targetElem.attributes['data-col'].value
+                                                )
+                                            }
                                         },
                                     },
                                     h(GridCompIconComponent, {
@@ -191,13 +204,25 @@ export default defineComponent({
                                         class: ['column-hide-info-backward'],
                                         onClick: (event: MouseEvent) => {
                                             event.stopPropagation()
-                                            const elem = event.target as HTMLDivElement
-                                            const targetElem: any = elem.parentElement!
-                                            $vmaFormulaGrid.updateColVisible(
-                                                'showBackwardCols',
-                                                targetElem.attributes['data-col'].value,
-                                                targetElem.attributes['data-col'].value
+                                            const refGridDivElem = refGridDiv.value
+                                            const columnHideInfoBackwardTargetNode = DomTools.getEventTargetNode(
+                                                event,
+                                                refGridDivElem,
+                                                `column-hide-info-backward`,
+                                                (target: any) => {
+                                                    const elem = target.parentNode.parentNode.parentNode.parentNode.parentNode
+                                                    return elem !== document && elem.getAttribute('data-uid') === $vmaFormulaGrid.uId
+                                                },
                                             )
+                                            if (columnHideInfoBackwardTargetNode.flag) {
+                                                const elem = columnHideInfoBackwardTargetNode.targetElem
+                                                const targetElem: any = elem.parentElement!
+                                                $vmaFormulaGrid.updateColVisible(
+                                                    'showBackwardCols',
+                                                    targetElem.attributes['data-col'].value,
+                                                    targetElem.attributes['data-col'].value
+                                                )
+                                            }
                                         },
                                     },
                                     h(GridCompIconComponent, {

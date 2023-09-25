@@ -69,6 +69,7 @@ export default defineComponent({
         })
 
         const {
+            refGridDiv,
             refGridBodyTable,
             refGridBodyTableWrapperDiv,
             refGridBodyLeftFixedTable,
@@ -501,13 +502,26 @@ export default defineComponent({
                                         {
                                             class: ['row-hide-info-upward'],
                                             onClick: (event: MouseEvent) => {
-                                                const elem = event.target as HTMLDivElement
-                                                const targetElem: any = elem.parentElement!.parentElement!
-                                                $vmaFormulaGrid.updateRowVisible(
-                                                    'showUpRows',
-                                                    targetElem.attributes['data-row'].value,
-                                                    targetElem.attributes['data-row'].value
+                                                event.stopPropagation()
+                                                const refGridDivElem = refGridDiv.value
+                                                const rowHideInfoUpwardTargetNode = DomTools.getEventTargetNode(
+                                                    event,
+                                                    refGridDivElem,
+                                                    `row-hide-info-upward`,
+                                                    (target: any) => {
+                                                        const elem = target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+                                                        return elem !== document && elem.getAttribute('data-uid') === $vmaFormulaGrid.uId
+                                                    },
                                                 )
+                                                if (rowHideInfoUpwardTargetNode.flag) {
+                                                    const elem = rowHideInfoUpwardTargetNode.targetElem
+                                                    const targetElem: any = elem.parentElement!
+                                                    $vmaFormulaGrid.updateRowVisible(
+                                                        'showUpRows',
+                                                        targetElem.attributes['data-row'].value,
+                                                        targetElem.attributes['data-row'].value
+                                                    )
+                                                }
                                             },
                                         },
                                         h(GridCompIconComponent, {
@@ -525,13 +539,26 @@ export default defineComponent({
                                         {
                                             class: ['row-hide-info-downward'],
                                             onClick: (event: MouseEvent) => {
-                                                const elem = event.target as HTMLDivElement
-                                                const targetElem: any = elem.parentElement!.parentElement!
-                                                $vmaFormulaGrid.updateRowVisible(
-                                                    'showDownRows',
-                                                    targetElem.attributes['data-row'].value,
-                                                    targetElem.attributes['data-row'].value
+                                                event.stopPropagation()
+                                                const refGridDivElem = refGridDiv.value
+                                                const rowHideInfoDownwardTargetNode = DomTools.getEventTargetNode(
+                                                    event,
+                                                    refGridDivElem,
+                                                    `row-hide-info-downward`,
+                                                    (target: any) => {
+                                                        const elem = target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+                                                        return elem !== document && elem.getAttribute('data-uid') === $vmaFormulaGrid.uId
+                                                    },
                                                 )
+                                                if (rowHideInfoDownwardTargetNode.flag) {
+                                                    const elem = rowHideInfoDownwardTargetNode.targetElem
+                                                    const targetElem: any = elem.parentElement!
+                                                    $vmaFormulaGrid.updateRowVisible(
+                                                        'showDownRows',
+                                                        targetElem.attributes['data-row'].value,
+                                                        targetElem.attributes['data-row'].value
+                                                    )
+                                                }
                                             },
                                         },
                                         h(GridCompIconComponent, {
