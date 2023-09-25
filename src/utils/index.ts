@@ -1515,16 +1515,16 @@ export function calcCellBorderCustom(colIndex: number, rowIndex: number, borders
                                     result.bdr = true
                                 }
                             } else {
-                                if (item.details.hasOwnProperty('left') && item.details.left.hasOwnProperty('v') && item.details.left.v) {
+                                if (item.details.hasOwnProperty('left') && item.details.left.hasOwnProperty('v') && item.details.left.v && colIndex === colStart - 1) {
                                     result.bdl = true
                                 }
-                                if (item.details.hasOwnProperty('top') && item.details.top.hasOwnProperty('v') && item.details.top.v) {
+                                if (item.details.hasOwnProperty('top') && item.details.top.hasOwnProperty('v') && item.details.top.v && rowIndex === rowStart - 1) {
                                     result.bdt = true
                                 }
-                                if (item.details.hasOwnProperty('right') && item.details.right.hasOwnProperty('v') && item.details.right.v) {
+                                if (item.details.hasOwnProperty('right') && item.details.right.hasOwnProperty('v') && item.details.right.v && colIndex === colEnd - 1) {
                                     result.bdr = true
                                 }
-                                if (item.details.hasOwnProperty('bottom') && item.details.bottom.hasOwnProperty('v') && item.details.bottom.v) {
+                                if (item.details.hasOwnProperty('bottom') && item.details.bottom.hasOwnProperty('v') && item.details.bottom.v && rowIndex === rowEnd - 1) {
                                     result.bdb = true
                                 }
                             }
