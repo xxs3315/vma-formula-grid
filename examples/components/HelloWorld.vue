@@ -52,6 +52,30 @@
           <label for="themeTypeDanger">Danger</label>
         </span>
       </fieldset>
+
+      <fieldset class="fieldset">
+        <legend>Select horizontal virtual scroll:</legend>
+        <span>
+          <input type="radio" id="virtualScrollXTrue" v-model="virtualScrollX" :value="true" checked/>
+          <label for="virtualScrollXTrue">True</label>
+        </span>
+        <span>
+          <input type="radio" id="virtualScrollXFalse" v-model="virtualScrollX" :value="false"/>
+          <label for="virtualScrollXFalse">False</label>
+        </span>
+      </fieldset>
+
+      <fieldset class="fieldset">
+        <legend>Select vertical virtual scroll:</legend>
+        <span>
+          <input type="radio" id="virtualScrollYTrue" v-model="virtualScrollY" :value="true" checked/>
+          <label for="virtualScrollYTrue">True</label>
+        </span>
+        <span>
+          <input type="radio" id="virtualScrollYFalse" v-model="virtualScrollY" :value="false"/>
+          <label for="virtualScrollYFalse">False</label>
+        </span>
+      </fieldset>
     </div>
 
     <div style="margin-top: 10px; height: calc(100% - 80px)">

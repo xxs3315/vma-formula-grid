@@ -224,6 +224,14 @@ export default defineComponent({
             $vmaFormulaGrid.recalculate(false)
         })
 
+        watch(() => props.virtualScrollX, () => {
+            $vmaFormulaGrid.recalculate(true)
+        })
+
+        watch(() => props.virtualScrollY, () => {
+            $vmaFormulaGrid.recalculate(true)
+        })
+
         const FormulaGridHeaderComponent = resolveComponent('VmaFormulaGridHeader') as ComponentOptions
         const FormulaGridBodyComponent = resolveComponent('VmaFormulaGridBody') as ComponentOptions
 
