@@ -722,10 +722,10 @@ export default defineComponent({
                             )
                             .forEach((cellElem: any) => {
                                 const borderMarginLeft = `${
-                                    leftSpaceWidth + cellElem.offsetLeft - 1 - 1
+                                    leftSpaceWidth + cellElem.offsetLeft - 1
                                 }px`
                                 const borderMarginTop = `${
-                                    topSpaceHeight + cellElem.offsetTop - 1 - 1
+                                    topSpaceHeight + cellElem.offsetTop - 1
                                 }px`
                                 $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.transform = `translateX(${borderMarginLeft}) translateY(${borderMarginTop})`
                                 $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.height = `${h}px`
@@ -783,8 +783,8 @@ export default defineComponent({
                             cells.forEach((cellElem: any) => {
                                 const marginLeft = `${leftSpaceWidth + cellElem.offsetLeft}px`
                                 const marginTop = `${topSpaceHeight + cellElem.offsetTop}px`
-                                const borderMarginLeft = `${leftSpaceWidth + cellElem.offsetLeft - 1 - 1}px`
-                                const borderMarginTop = `${topSpaceHeight + cellElem.offsetTop - 1 - 1}px`
+                                const borderMarginLeft = `${leftSpaceWidth + cellElem.offsetLeft - 1}px`
+                                const borderMarginTop = `${topSpaceHeight + cellElem.offsetTop - 1}px`
                                 gridReactiveData.currentCellEditorStyle.transform = `translateX(${marginLeft}) translateY(${marginTop})`
                                 gridReactiveData.currentCellEditorStyle.height = `${cellElem.offsetHeight - 1}px`
                                 gridReactiveData.currentCellEditorStyle.width = `${cellElem.offsetWidth - 1}px`
