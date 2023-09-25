@@ -24,6 +24,8 @@ export namespace VmaFormulaGridPropTypes {
     export type DefaultColumnWidth = number
     export type ColumnResizable = boolean
     export type RowResizable = boolean
+    export type VirtualScrollX = boolean
+    export type VirtualScrollY = boolean
 }
 
 export type VmaFormulaGridEmits = ['update:data', 'change']
@@ -188,6 +190,8 @@ export interface VmaFormulaGridProps {
     defaultColumnWidth?: VmaFormulaGridPropTypes.DefaultColumnWidth
     columnResizable: VmaFormulaGridPropTypes.ColumnResizable
     rowResizable: VmaFormulaGridPropTypes.RowResizable
+    virtualScrollX: VmaFormulaGridPropTypes.VirtualScrollX
+    virtualScrollY: VmaFormulaGridPropTypes.VirtualScrollY
 }
 
 export type VmaFormulaGridOptions = VmaFormulaGridProps

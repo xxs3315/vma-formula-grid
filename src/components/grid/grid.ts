@@ -88,6 +88,14 @@ export default defineComponent({
         rowResizable: {
             type: Boolean as PropType<VmaFormulaGridPropTypes.RowResizable>,
             default: true
+        },
+        virtualScrollX: {
+            type: Boolean as PropType<VmaFormulaGridPropTypes.VirtualScrollX>,
+            default: false
+        },
+        virtualScrollY: {
+            type: Boolean as PropType<VmaFormulaGridPropTypes.VirtualScrollY>,
+            default: false
         }
     },
     emits: ['update:data', 'change'] as VmaFormulaGridEmits,
@@ -1609,36 +1617,42 @@ export default defineComponent({
                 if (!scrollBodyElem) {
                     resolve()
                 }
-                const scrollLeft = scrollBodyElem.scrollLeft
-                const visibleIndex = getIndexFromColumnWidths(scrollLeft, renderDefaultColWidth.value, gridReactiveData.columnWidthsChanged, gridReactiveData.columnHidesChanged)
-                const viewportWidth = refGridBodyTableWrapperDiv.value.clientWidth
-                const visibleSize = Math.max(
-                    Math.ceil(viewportWidth / renderDefaultColWidth.value),
-                    getRealVisibleWidthSize(viewportWidth, visibleIndex, renderDefaultColWidth.value, gridReactiveData.columnWidthsChanged, gridReactiveData.columnHidesChanged)
-                )
+                if (props.virtualScrollX) {
+                    const scrollLeft = scrollBodyElem.scrollLeft
+                    const visibleIndex = getIndexFromColumnWidths(scrollLeft, renderDefaultColWidth.value, gridReactiveData.columnWidthsChanged, gridReactiveData.columnHidesChanged)
+                    const viewportWidth = refGridBodyTableWrapperDiv.value.clientWidth
+                    const visibleSize = Math.max(
+                        Math.ceil(viewportWidth / renderDefaultColWidth.value),
+                        getRealVisibleWidthSize(viewportWidth, visibleIndex, renderDefaultColWidth.value, gridReactiveData.columnWidthsChanged, gridReactiveData.columnHidesChanged)
+                    )
 
-                const offsetItem = {
-                    startColIndex: Math.max(0, visibleIndex - 20),
-                    endColIndex: Math.min(visibleIndex + visibleSize + 20, gridReactiveData.colConfs.length)
-                }
+                    const offsetItem = {
+                        startColIndex: Math.max(0, visibleIndex - 20),
+                        endColIndex: Math.min(visibleIndex + visibleSize + 20, gridReactiveData.colConfs.length)
+                    }
 
-                let { startColIndex: offsetStartColIndex, endColIndex: offsetEndColIndex } = offsetItem
+                    let { startColIndex: offsetStartColIndex, endColIndex: offsetEndColIndex } = offsetItem
 
-                offsetStartColIndex = Math.min(offsetStartColIndex, calcXOverlapMerges(offsetStartColIndex, $vmaFormulaGrid.reactiveData.merges, 'min'))
-                offsetEndColIndex = Math.max(offsetEndColIndex, calcXOverlapMerges(offsetEndColIndex, $vmaFormulaGrid.reactiveData.merges, 'max'))
+                    offsetStartColIndex = Math.min(offsetStartColIndex, calcXOverlapMerges(offsetStartColIndex, $vmaFormulaGrid.reactiveData.merges, 'min'))
+                    offsetEndColIndex = Math.max(offsetEndColIndex, calcXOverlapMerges(offsetEndColIndex, $vmaFormulaGrid.reactiveData.merges, 'max'))
 
-                if (gridReactiveData.lastScrollXVisibleIndex === 0) {
-                    gridReactiveData.xStart = offsetStartColIndex
-                    gridReactiveData.xEnd = offsetEndColIndex
-                }
+                    if (gridReactiveData.lastScrollXVisibleIndex === 0) {
+                        gridReactiveData.xStart = offsetStartColIndex
+                        gridReactiveData.xEnd = offsetEndColIndex
+                    }
 
-                if (Math.abs(offsetEndColIndex - visibleIndex - visibleSize) / 2 > 5 || Math.abs(visibleIndex - offsetStartColIndex) / 2 > 5) {
-                    gridReactiveData.xStart = offsetStartColIndex
-                    gridReactiveData.xEnd = offsetEndColIndex
-                    gridReactiveData.lastScrollXVisibleIndex = visibleIndex
+                    if (Math.abs(offsetEndColIndex - visibleIndex - visibleSize) / 2 > 5 || Math.abs(visibleIndex - offsetStartColIndex) / 2 > 5) {
+                        gridReactiveData.xStart = offsetStartColIndex
+                        gridReactiveData.xEnd = offsetEndColIndex
+                        gridReactiveData.lastScrollXVisibleIndex = visibleIndex
+                        updateScrollXYSpace()
+                    }
+                } else {
+                    gridReactiveData.xStart = 0
+                    gridReactiveData.xEnd = gridReactiveData.colConfs.length
+                    gridReactiveData.lastScrollXVisibleIndex = 0
                     updateScrollXYSpace()
                 }
-
                 resolve()
             })
 
@@ -1647,33 +1661,40 @@ export default defineComponent({
                 if (!scrollBodyElem) {
                     resolve()
                 }
-                const scrollTop = scrollBodyElem.scrollTop
-                const visibleIndex = getIndexFromRowHeights(scrollTop, renderDefaultRowHeight.value, gridReactiveData.rowHeightsChanged, gridReactiveData.rowHidesChanged)
-                const viewportHeight = refGridBodyTableWrapperDiv.value.clientHeight
-                const visibleSize = Math.max(
-                    Math.ceil(viewportHeight / renderDefaultRowHeight.value),
-                    getRealVisibleHeightSize(viewportHeight, visibleIndex, renderDefaultRowHeight.value, gridReactiveData.rowHeightsChanged, gridReactiveData.rowHidesChanged)
-                )
+                if (props.virtualScrollY) {
+                    const scrollTop = scrollBodyElem.scrollTop
+                    const visibleIndex = getIndexFromRowHeights(scrollTop, renderDefaultRowHeight.value, gridReactiveData.rowHeightsChanged, gridReactiveData.rowHidesChanged)
+                    const viewportHeight = refGridBodyTableWrapperDiv.value.clientHeight
+                    const visibleSize = Math.max(
+                        Math.ceil(viewportHeight / renderDefaultRowHeight.value),
+                        getRealVisibleHeightSize(viewportHeight, visibleIndex, renderDefaultRowHeight.value, gridReactiveData.rowHeightsChanged, gridReactiveData.rowHidesChanged)
+                    )
 
-                const offsetItem = {
-                    startIndex: Math.max(0, visibleIndex - 20),
-                    endIndex: Math.min(visibleIndex + visibleSize + 20, gridReactiveData.rowConfs.length - 1)
-                }
+                    const offsetItem = {
+                        startIndex: Math.max(0, visibleIndex - 20),
+                        endIndex: Math.min(visibleIndex + visibleSize + 20, gridReactiveData.rowConfs.length - 1)
+                    }
 
-                let { startIndex: offsetStartIndex, endIndex: offsetEndIndex } = offsetItem
+                    let {startIndex: offsetStartIndex, endIndex: offsetEndIndex} = offsetItem
 
-                offsetStartIndex = Math.min(offsetStartIndex, calcYOverlapMerges(offsetStartIndex, $vmaFormulaGrid.reactiveData.merges, 'min'))
-                offsetEndIndex = Math.max(offsetEndIndex, calcYOverlapMerges(offsetEndIndex, $vmaFormulaGrid.reactiveData.merges, 'max'))
+                    offsetStartIndex = Math.min(offsetStartIndex, calcYOverlapMerges(offsetStartIndex, $vmaFormulaGrid.reactiveData.merges, 'min'))
+                    offsetEndIndex = Math.max(offsetEndIndex, calcYOverlapMerges(offsetEndIndex, $vmaFormulaGrid.reactiveData.merges, 'max'))
 
-                if (gridReactiveData.lastScrollYVisibleIndex === 0) {
-                    gridReactiveData.yStart = offsetStartIndex
-                    gridReactiveData.yEnd = offsetEndIndex
-                }
+                    if (gridReactiveData.lastScrollYVisibleIndex === 0) {
+                        gridReactiveData.yStart = offsetStartIndex
+                        gridReactiveData.yEnd = offsetEndIndex
+                    }
 
-                if (Math.abs(offsetEndIndex - visibleIndex - visibleSize) / 2 > 5 || Math.abs(visibleIndex - offsetStartIndex) / 2 > 5) {
-                    gridReactiveData.yStart = offsetStartIndex
-                    gridReactiveData.yEnd = offsetEndIndex
-                    gridReactiveData.lastScrollYVisibleIndex = visibleIndex
+                    if (Math.abs(offsetEndIndex - visibleIndex - visibleSize) / 2 > 5 || Math.abs(visibleIndex - offsetStartIndex) / 2 > 5) {
+                        gridReactiveData.yStart = offsetStartIndex
+                        gridReactiveData.yEnd = offsetEndIndex
+                        gridReactiveData.lastScrollYVisibleIndex = visibleIndex
+                        updateScrollXYSpace()
+                    }
+                } else {
+                    gridReactiveData.yStart = 0
+                    gridReactiveData.yEnd = gridReactiveData.rowConfs.length - 1
+                    gridReactiveData.lastScrollYVisibleIndex = 0
                     updateScrollXYSpace()
                 }
                 resolve()

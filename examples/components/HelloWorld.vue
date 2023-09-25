@@ -62,6 +62,8 @@
               :data="data"
               :size="size"
               :type="themeType"
+              :virtual-scroll-x="virtualScrollX"
+              :virtual-scroll-y="virtualScrollY"
               :functions="customFunctions"
           />
         </pane>
@@ -87,6 +89,8 @@ export default defineComponent({
     const datasource = ref('array');
     const size = ref('normal');
     const themeType = ref('primary');
+    const virtualScrollX = ref(true);
+    const virtualScrollY = ref(true);
 
     const editorRef = ref<HTMLElement | null>(null);
     let editorInstance:monaco.editor.IStandaloneCodeEditor|null = null
@@ -419,6 +423,8 @@ export default defineComponent({
       data,
       size,
       themeType,
+      virtualScrollX,
+      virtualScrollY,
       customFunctions
     }
   }
