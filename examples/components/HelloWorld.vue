@@ -364,57 +364,35 @@ export default defineComponent({
       colHide: ['D', 'F', 'G'],
       merges: ['A1:I3', 'A4:A12', 'A120:A165'],
       styles: {
-        bgc: {
-          cols: [{p: ['A', 'C', 'D'], color: 'grey'},{p: ['B', 'D', 'F'], color: 'lightblue'}],
-          rows: [{p: [1, 3, 5], color: '#FCCC99'},{p: [10, 11, 12], color: '#88EEFF'},],
-          cells: [{p: 'J28', color: '#88EEFF'},{p: 'G7:J26', color: 'rgba(66, 88, 99, 0.5)'},]
-        },
-        fgc: {
-          cols: [{p: ['A', 'C', 'D'], color: 'lightgrey'},{p: ['B', 'D', 'F'], color: 'red'}],
-          rows: [{p: [1, 3, 5], color: '#FF5599'},{p: [10, 11, 12], color: '#CC5599'},], cells: [{p: 'J28', color: 'rgba(200, 48, 46, 0.8)'},{p: 'G7:J26', color: 'rgba(220, 48, 46, 0.8)'},]
-        }
+        bgc: [
+          {p: ['A', 'C', 'D'], type: 'columns', color: 'grey'},
+          {p: ['B', 'D', 'F'], type: 'columns', color: 'lightblue'},
+          {p: [1, 3, 5], type: 'rows', color: '#FCCC99'},
+          {p: [10, 11, 12], type: 'rows', color: '#88EEFF'},
+          {p: 'G7:L26', type: 'cells', color: 'rgba(66, 88, 99, 0.5)'},
+          {p: 'J20', type: 'cells', color: '#88EEFF'},
+          {p: 'J23', type: 'cells', color: 'none'},
+        ],
+        fgc: [
+          {p: ['A', 'C', 'D'], color: 'lightgrey', type: 'cols'},
+          {p: ['B', 'D', 'F'], color: 'red', type: 'cols'},
+          {p: [1, 3, 5], color: '#FF5599', type: 'rows'},
+          {p: [10, 11, 12], color: '#CC5599', type: 'rows'},
+          {p: 'J28', color: 'rgba(200, 48, 46, 0.8)', type: 'cells'},
+          {p: 'G7:L26', color: 'rgba(220, 48, 46, 0.8)', type: 'cells'},
+          {p: 'J20', type: 'cells', color: 'none'},
+          {p: 'J23', type: 'cells', color: '#88EEFF'},
+        ]
       },
-      borders: {
-        cells: [{
-          p: 'E7:J26',
-          details: {
-            full: {v: false, color: '#88EEFF'},
-            inner: {v: false, color: '#88EEFF'},
-            outer: {v: false, color: '#88EEFF'},
-            left: {v: true, color: '#88EEFF'},
-            right: {v: true, color: '#88EEFF'},
-            top: {v: true, color: '#88EEFF'},
-            bottom: {v: true, color: '#88EEFF'},
-          }
-        }, {
-          p: 'J28:K30',
-          details: {
-            full: {v: false, color: '#FCCC99'},
-            left: {v: false, color: '#FCCC99'},
-            right: {v: false, color: '#FCCC99'},
-            top: {v: false, color: '#FCCC99'},
-            bottom: {v: true, color: '#FCCC99'},
-          }
-        }, {
-          p: 'A1',
-          details: {
-            full: {v: true, color: '#FCCC99'},
-          }
-        }, {
-          p: 'H34',
-          details: {
-            left: {v: true, color: '#FCCC99'},
-            right: {v: true, color: '#FCCC99'},
-            top: {v: false, color: '#FCCC99'},
-            bottom: {v: true, color: '#FCCC99'},
-          }
-        }, {
-          p: 'I43',
-          details: {
-            full: {v: true, color: '#FCCC99'},
-          }
-        }],
-      }
+      borders: [
+        {p: ['A', 'C', 'D'], type: 'columns', details: {full: true, left: true, right: true, top: true, bottom: true,}},
+        {p: 'B4:E8', type: 'cells', details: {full: true, inner: false, outer: false, left: true, right: true, top: true, bottom: true,}},
+        {p: 'C5:D7', type: 'cells', details: {none: true, full: false, inner: false, outer: false, left: true, right: true, top: true, bottom: true,}},
+        {p: [1, 5, 6, 7, 8], type: 'rows', details: {full: true, left: true, right: true, top: true, bottom: true,}},
+        {p: 'J28', details: {}, type: 'cells'},
+        {p: 'G7:K26', details: {full: true}, type: 'cells'},
+        {p: 'J24:M30', details: {full: false, outer: true}, type: 'cells'},
+      ]
     })
 
     const data = reactive({

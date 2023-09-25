@@ -1336,32 +1336,24 @@ export function calcYOverlapMerges(offsetStartIndex: number, merges: Record<stri
     return offsetStartIndex;
 }
 
-export function calcCellStyleCustom(col: number, row: number, styles: {
-    bgc: { cols: Record<string, any>[]; rows: Record<string, any>[]; cells: Record<string, any>[] };
-    fgc: { cols: Record<string, any>[]; rows: Record<string, any>[]; cells: Record<string, any>[] }
-}) {
+
+export function calcCellStyles(col: number, row: number, styles: { bgc: any[]; fgc: any[] }) {
     let result = {
         fg: '',
         bg: ''
     }
-    if (styles.bgc) {
+    if (styles.hasOwnProperty('bgc') && styles.bgc.length > 0) {
         let bg = ''
-        if (styles.bgc.cols) {
-            styles.bgc.cols.forEach(item => {
+        styles.bgc.forEach(item => {
+            if (item.type === 'columns') {
                 if (item.p && item.p.indexOf(getColumnSymbol(col + 1)) >= 0) {
-                    bg = item.color
+                    bg = item.color === 'none' ? '' : item.color
                 }
-            })
-        }
-        if (styles.bgc.rows) {
-            styles.bgc.rows.forEach(item => {
+            } else if (item.type === 'rows') {
                 if (item.p && item.p.indexOf(row + 1) >= 0) {
-                    bg = item.color
+                    bg = item.color === 'none' ? '' : item.color
                 }
-            })
-        }
-        if (styles.bgc.cells) {
-            styles.bgc.cells.forEach(item => {
+            } else if (item.type === 'cells') {
                 if (item.p.indexOf(':') >= 0) {
                     const mArr = item.p.split(':')
 
@@ -1370,58 +1362,233 @@ export function calcCellStyleCustom(col: number, row: number, styles: {
                     let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
                     let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
                     if (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd) {
-                        bg = item.color
+                        bg = item.color === 'none' ? '' : item.color
                     }
                 } else {
                     let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''))
                     let rowTarget = parseInt(item.p.replace(/[^0-9]/ig, ''))
                     if (col + 1 === colTarget && row + 1 === rowTarget) {
-                        bg = item.color
+                        bg = item.color === 'none' ? '' : item.color
                     }
                 }
-            })
-        }
+            }
+        })
         result.bg = bg
     }
-    if (styles.fgc) {
+
+    if (styles.hasOwnProperty('fgc') && styles.fgc.length > 0) {
         let fg = ''
-        if (styles.fgc.cols) {
-            styles.fgc.cols.forEach(item => {
+        styles.fgc.forEach(item => {
+            if (item.type === 'columns') {
                 if (item.p && item.p.indexOf(getColumnSymbol(col + 1)) >= 0) {
-                    fg = item.color
+                    fg = item.color === 'none' ? '' : item.color
                 }
-            })
-        }
-        if (styles.fgc.rows) {
-            styles.fgc.rows.forEach(item => {
+            } else if (item.type === 'rows') {
                 if (item.p && item.p.indexOf(row + 1) >= 0) {
-                    fg = item.color
+                    fg = item.color === 'none' ? '' : item.color
                 }
-            })
-        }
-        if (styles.fgc.cells) {
-            styles.fgc.cells.forEach(item => {
+            } else if (item.type === 'cells') {
+                if (item.p.indexOf(':') >= 0) {
+                    const mArr = item.p.split(':')
+
+                    let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''))
+                    let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
+                    let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
+                    let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
+                    if (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd) {
+                        fg = item.color === 'none' ? '' : item.color
+                    }
+                } else {
+                    let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''))
+                    let rowTarget = parseInt(item.p.replace(/[^0-9]/ig, ''))
+                    if (col + 1 === colTarget && row + 1 === rowTarget) {
+                        fg = item.color === 'none' ? '' : item.color
+                    }
+                }
+            }
+        })
+        result.fg = fg
+    }
+    
+
+    return result
+}
+
+export function calcCellBorders(colIndex: number, rowIndex: number, borders: any[]) {
+    let result = {
+        bdl: false,
+        bdt: false,
+        bdr: false,
+        bdb: false
+    }
+
+    if (borders && borders.length > 0) {
+        borders.forEach(item => {
+            if (item.type === 'columns') {
+                // TODO
+            } else if (item.type === 'rows') {
+                // TODO
+            } else if (item.type === 'cells') {
                 if (item.p.indexOf(':') >= 0) {
                     const mArr = item.p.split(':')
                     let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''))
                     let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
                     let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
                     let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
-                    if (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd) {
-                        fg = item.color
+                    if (colIndex >= colStart - 1 && colIndex <= colEnd - 1 && rowIndex >= rowStart - 1 && rowIndex <= rowEnd - 1 ) {
+                        if (item.hasOwnProperty('details')) {
+                            if (item.details.hasOwnProperty('none') && item.details.none) {
+                                result.bdl = false
+                                result.bdt = false
+                                result.bdr = false
+                                result.bdb = false
+                            } else if (item.details.hasOwnProperty('full') && item.details.full
+                            || (item.details.hasOwnProperty('inner') && item.details.inner
+                                    && item.details.hasOwnProperty('outer') && item.details.outer)) {
+                                result.bdl = true
+                                result.bdt = true
+                                result.bdr = true
+                                result.bdb = true
+                            }  else if (!(item.details.hasOwnProperty('full') && item.details.full
+                                || (item.details.hasOwnProperty('inner') && item.details.inner
+                                    && item.details.hasOwnProperty('outer') && item.details.outer))) {
+                                if (item.details.hasOwnProperty('inner') && item.details.inner) {
+                                    if (rowIndex === rowStart - 1 && colIndex === colStart - 1
+                                        || rowIndex === rowStart - 1 && colIndex === colEnd - 1
+                                        || rowIndex === rowEnd - 1 && colIndex === colStart - 1
+                                        || rowIndex === rowEnd - 1 && colIndex === colEnd - 1) {
+                                        if (rowIndex === rowStart - 1 && colIndex === colStart - 1) {
+                                            result.bdr = true
+                                            result.bdb = true
+                                        }
+                                        if (rowIndex === rowStart - 1 && colIndex === colEnd - 1) {
+                                            result.bdl = true
+                                            result.bdb = true
+                                        }
+                                        if (rowIndex === rowEnd - 1 && colIndex === colStart - 1) {
+                                            result.bdr = true
+                                            result.bdt = true
+                                        }
+                                        if (rowIndex === rowEnd - 1 && colIndex === colEnd - 1) {
+                                            result.bdl = true
+                                            result.bdt = true
+                                        }
+                                    } else {
+                                        if (rowIndex === rowStart - 1) {
+                                            result.bdl = true
+                                            result.bdr = true
+                                            result.bdb = true
+                                        }
+                                        if (rowIndex === rowEnd - 1) {
+                                            result.bdl = true
+                                            result.bdt = true
+                                            result.bdr = true
+                                        }
+                                        if (colIndex === colStart - 1) {
+                                            result.bdt = true
+                                            result.bdr = true
+                                            result.bdb = true
+                                        }
+                                        if (colIndex === colEnd - 1) {
+                                            result.bdl = true
+                                            result.bdt = true
+                                            result.bdb = true
+                                        }
+                                    }
+                                    if (rowIndex > rowStart - 1 && rowIndex < rowEnd - 1 && colIndex > colStart - 1 && colIndex < colEnd - 1) {
+                                        result.bdl = true
+                                        result.bdt = true
+                                        result.bdr = true
+                                        result.bdb = true
+                                    }
+                                } else if (item.details.hasOwnProperty('outer') && item.details.outer) {
+                                    if (rowIndex === rowStart - 1) {
+                                        result.bdt = true
+                                    }
+                                    if (rowIndex === rowEnd - 1) {
+                                        result.bdb = true
+                                    }
+                                    if (colIndex === colStart - 1) {
+                                        result.bdl = true
+                                    }
+                                    if (colIndex === colEnd - 1) {
+                                        result.bdr = true
+                                    }
+                                }
+                            } else {
+                                if (item.details.hasOwnProperty('left') && item.details.left && colIndex === colStart - 1) {
+                                    result.bdl = true
+                                } else if (item.details.hasOwnProperty('left') && !item.details.left && colIndex === colStart - 1) {
+                                    result.bdl = false
+                                }
+                                if (item.details.hasOwnProperty('top') && item.details.top && rowIndex === rowStart - 1) {
+                                    result.bdt = true
+                                } else if (item.details.hasOwnProperty('top') && !item.details.top && rowIndex === rowStart - 1) {
+                                    result.bdt = false
+                                }
+                                if (item.details.hasOwnProperty('right') && item.details.right && colIndex === colEnd - 1) {
+                                    result.bdr = true
+                                } else if (item.details.hasOwnProperty('right') && !item.details.right && colIndex === colEnd - 1) {
+                                    result.bdr = false
+                                }
+                                if (item.details.hasOwnProperty('bottom') && item.details.bottom && rowIndex === rowEnd - 1) {
+                                    result.bdb = true
+                                } else if (item.details.hasOwnProperty('bottom') && !item.details.bottom && rowIndex === rowEnd - 1) {
+                                    result.bdb = false
+                                }
+                            }
+                        }
                     }
                 } else {
                     let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''))
                     let rowTarget = parseInt(item.p.replace(/[^0-9]/ig, ''))
-                    if (col + 1 === colTarget && row + 1 === rowTarget) {
-                        fg = item.color
+                    if (colIndex === colTarget - 1 && rowIndex === rowTarget - 1) {
+                        if (item.hasOwnProperty('details')) {
+                            if (item.details.hasOwnProperty('none') && item.details.none) {
+                                result.bdl = false
+                                result.bdt = false
+                                result.bdr = false
+                                result.bdb = false
+                            } else if (item.details.hasOwnProperty('full') && item.details.full) {
+                                result.bdl = true
+                                result.bdt = true
+                                result.bdr = true
+                                result.bdb = true
+                            }  else if (item.details.hasOwnProperty('full') && !item.details.full) {
+                                result.bdl = false
+                                result.bdt = false
+                                result.bdr = false
+                                result.bdb = false
+                            } else {
+                                if (item.details.hasOwnProperty('left') && item.details.left) {
+                                    result.bdl = true
+                                } else if (item.details.hasOwnProperty('left') && !item.details.left) {
+                                    result.bdl = false
+                                }
+                                if (item.details.hasOwnProperty('top') && item.details.top) {
+                                    result.bdt = true
+                                } else if (item.details.hasOwnProperty('top') && !item.details.top) {
+                                    result.bdt = false
+                                }
+                                if (item.details.hasOwnProperty('right') && item.details.right) {
+                                    result.bdr = true
+                                } else if (item.details.hasOwnProperty('right') && !item.details.right) {
+                                    result.bdr = false
+                                }
+                                if (item.details.hasOwnProperty('bottom') && item.details.bottom) {
+                                    result.bdb = true
+                                } else if (item.details.hasOwnProperty('bottom') && !item.details.bottom) {
+                                    result.bdb = false
+                                }
+                            }
+                        }
                     }
                 }
-            })
-        }
-        result.fg = fg
+            }
+        })
     }
-    return result;
+
+    return result
 }
 
 export function calcCellBorderCustom(colIndex: number, rowIndex: number, borders: { cells: Record<string, any>[] }) {

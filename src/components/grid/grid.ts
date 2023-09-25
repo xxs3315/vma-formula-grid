@@ -26,8 +26,7 @@ import {
 import {Guid} from "../../utils/guid.ts";
 import {
     calcCellBgType,
-    calcCellBorderCustom,
-    calcCellStyleCustom,
+    calcCellBorders, calcCellStyles,
     calcVertexes, calcXOverlapMerges, calcYOverlapMerges, checkCellInMerges,
     filterVertexes,
     getColumnCount,
@@ -372,20 +371,10 @@ export default defineComponent({
                 height: 0
             },
             styles: {
-                bgc: {
-                    cols: [],
-                    rows: [],
-                    cells: [],
-                },
-                fgc: {
-                    cols: [],
-                    rows: [],
-                    cells: [],
-                }
+                bgc: [],
+                fgc: []
             },
-            borders: {
-                cells: []
-            }
+            borders: []
         }) as VmaFormulaGridReactiveData
 
         watch(
@@ -2062,32 +2051,16 @@ export default defineComponent({
 
                     if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('styles')) {
                         if (props.data.conf.styles.hasOwnProperty('bgc')) {
-                            if (props.data.conf.styles.bgc.hasOwnProperty('cols') && props.data.conf.styles.bgc.cols.length > 0) {
-                                gridReactiveData.styles.bgc.cols = props.data.conf.styles.bgc.cols
-                            }
-                            if (props.data.conf.styles.bgc.hasOwnProperty('rows') && props.data.conf.styles.bgc.rows.length > 0) {
-                                gridReactiveData.styles.bgc.rows = props.data.conf.styles.bgc.rows
-                            }
-                            if (props.data.conf.styles.bgc.hasOwnProperty('cells') && props.data.conf.styles.bgc.cells.length > 0) {
-                                gridReactiveData.styles.bgc.cells = props.data.conf.styles.bgc.cells
-                            }
+                            gridReactiveData.styles.bgc = props.data.conf.styles.bgc
                         }
                         if (props.data.conf.styles.hasOwnProperty('fgc')) {
-                            if (props.data.conf.styles.fgc.hasOwnProperty('cols') && props.data.conf.styles.fgc.cols.length > 0) {
-                                gridReactiveData.styles.fgc.cols = props.data.conf.styles.fgc.cols
-                            }
-                            if (props.data.conf.styles.fgc.hasOwnProperty('rows') && props.data.conf.styles.fgc.rows.length > 0) {
-                                gridReactiveData.styles.fgc.rows = props.data.conf.styles.fgc.rows
-                            }
-                            if (props.data.conf.styles.fgc.hasOwnProperty('cells') && props.data.conf.styles.fgc.cells.length > 0) {
-                                gridReactiveData.styles.fgc.cells = props.data.conf.styles.fgc.cells
-                            }
+                            gridReactiveData.styles.fgc = props.data.conf.styles.fgc
                         }
                     }
 
                     if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('borders')) {
-                        if (props.data.conf.borders.hasOwnProperty('cells') && props.data.conf.borders.cells.length > 0) {
-                            gridReactiveData.borders.cells = props.data.conf.borders.cells
+                        if (props.data.conf.borders.length > 0) {
+                            gridReactiveData.borders = props.data.conf.borders
                         }
                     }
 
@@ -2159,8 +2132,8 @@ export default defineComponent({
                             }
 
                             const {rowSpan, colSpan} = getRowColSpanFromMerges(colIndex, rowIndex + 1, gridReactiveData.merges)
-                            const {fg, bg} = calcCellStyleCustom(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.styles)
-                            const {bdl: bdlCurrent, bdt: bdtCurrent, bdr: bdrCurrent, bdb: bdbCurrent} = calcCellBorderCustom(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.borders)
+                            const {fg, bg} = calcCellStyles(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.styles)
+                            const {bdl: bdlCurrent, bdt: bdtCurrent, bdr: bdrCurrent, bdb: bdbCurrent} = calcCellBorders(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.borders)
                             const bgt = calcCellBgType(bg.length > 0, bdlCurrent, bdtCurrent, bdrCurrent, bdbCurrent)
                             gridReactiveData.currentSheetData[rowIndex][colIndex] = new Cell(
                                 rowIndex,
