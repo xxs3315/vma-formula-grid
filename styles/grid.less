@@ -235,6 +235,7 @@
 
     .header {
       table-layout: fixed;
+      background: @grid-border-color-dark;
 
       th.grid-corner {
         position: relative;
@@ -249,6 +250,7 @@
         font-weight: normal;
         cursor: default;
         word-break: keep-all;
+        //background-color: transparent;
 
         &::before {
           content: " ";
@@ -256,17 +258,15 @@
           width: calc(200% + 2px);
           height: calc(200% + 2px);
           transform: scale(0.5);
-          top: 0;
-          left: 0;
-          margin-top: -1px;
-          margin-left: -1px;
+          top: -1px;
+          left: -1px;
           transform-origin: 0 0;
           pointer-events: none;
-          z-index: -1;
-          background-position: left top, left top, right bottom, right bottom;
+          z-index: 0;
+          background-position: left 2px top 2px;
           background-repeat: no-repeat;
-          background-size: calc(200% + 2px) 2px, 2px calc(200% + 2px), calc(200% + 2px) 2px, 2px calc(200% + 2px);
-          background-image: linear-gradient(@grid-border-color-dark, @grid-border-color-dark), linear-gradient(@grid-border-color-dark, @grid-border-color-dark), linear-gradient(@grid-border-color-dark, @grid-border-color-dark), linear-gradient(@grid-border-color-dark, @grid-border-color-dark);
+          background-size: calc(100% - 4px) calc(100% - 4px);
+          background-image: linear-gradient(@gray-4, @gray-4);
         }
 
         .corner {
@@ -301,17 +301,15 @@
           width: calc(200% + 2px);
           height: calc(200% + 2px);
           transform: scale(0.5);
-          top: 0;
-          left: 0;
-          margin-top: -1px;
-          margin-left: -1px;
+          top: -1px;
+          left: -1px;
           transform-origin: 0 0;
           pointer-events: none;
           z-index: -1;
-          background-position: left top, left top, right bottom, right bottom;
+          background-position: left 2px top 2px;
           background-repeat: no-repeat;
-          background-size: calc(200% + 2px) 2px, 2px calc(200% + 2px), calc(200% + 2px) 2px, 2px calc(200% + 2px);
-          background-image: linear-gradient(@grid-border-color-dark, @grid-border-color-dark), linear-gradient(@grid-border-color-dark, @grid-border-color-dark), linear-gradient(@grid-border-color-dark, @grid-border-color-dark), linear-gradient(@grid-border-color-dark, @grid-border-color-dark);
+          background-size: calc(100% - 4px) calc(100% - 4px);
+          background-image: linear-gradient(@gray-4, @gray-4);
         }
 
         &.column-indicator-active {
@@ -478,6 +476,10 @@
         overflow-y: auto;
         background-color: inherit;
         border: 0;
+
+        .body {
+          background: @grid-border-color-dark;
+        }
 
         .vma-formula-grid--header-wrapper {
           position: absolute;
@@ -2318,25 +2320,24 @@
         transition: none;
         font-weight: normal;
         cursor: pointer;
+        background-color: transparent;
 
         &::before {
           content: " ";
           position: absolute;
           width: calc(200% + 2px);
-            height: calc(200% + 2px);
-            transform: scale(0.5);
-            box-sizing: border-box;
-          top: 0;
-          left: 0;
-          margin-top: -1px;
-          margin-left: -1px;
+          height: calc(200% + 2px);
+          transform: scale(0.5);
+          box-sizing: border-box;
+          top: -1px;
+          left: -1px;
           transform-origin: 0 0;
           pointer-events: none;
           z-index: -1;
-          background-position: left top, left top, right bottom, right bottom;
+          background-position: left 2px top 2px;
           background-repeat: no-repeat;
-          background-size: calc(200% + 2px) 2px, 2px calc(200% + 2px), calc(200% + 2px) 2px, 2px calc(200% + 2px);
-          background-image: linear-gradient(@grid-border-color-dark, @grid-border-color-dark), linear-gradient(@grid-border-color-dark, @grid-border-color-dark), linear-gradient(@grid-border-color-dark, @grid-border-color-dark), linear-gradient(@grid-border-color-dark, @grid-border-color-dark);
+          background-size: calc(100% - 4px) calc(100% - 4px);
+          background-image: linear-gradient(@gray-4, @gray-4);
         }
 
         &.row-indicator-active {
