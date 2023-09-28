@@ -24,7 +24,7 @@ import {
     checkCellInMerges,
     getRenderDefaultRowHeight,
     getYSpaceFromRowHeights,
-    isNumeric
+    isNumeric, isRowIndicatorActive
 } from "../../utils";
 import {Cell} from "./internals/cell.ts";
 import {DomTools} from "../../utils/doms.ts";
@@ -81,6 +81,7 @@ export default defineComponent({
             refGridBodyLeftFixedScrollWrapperDiv,
             refGridBodyTableColgroup,
             refGridBodyLeftFixedTableColgroup,
+            renderDefaultColWidth,
             renderDefaultRowHeight,
             refGridHeaderTableWrapperDiv,
             refCurrentCellEditor,
@@ -461,6 +462,16 @@ export default defineComponent({
                                 class: [
                                     'row-indicator',
                                     `${$vmaFormulaGrid.props.type}`,
+                                    {'row-indicator-active':
+                                            isRowIndicatorActive(rf.index,
+                                                $vmaFormulaGrid.reactiveData.currentArea,
+                                                renderDefaultColWidth.value,
+                                                $vmaFormulaGrid.reactiveData.columnWidthsChanged,
+                                                $vmaFormulaGrid.reactiveData.columnHidesChanged,
+                                                renderDefaultRowHeight.value,
+                                                $vmaFormulaGrid.reactiveData.rowHeightsChanged,
+                                                $vmaFormulaGrid.reactiveData.rowHidesChanged,
+                                                $vmaFormulaGrid.reactiveData.merges)},
                                 ],
                                 style: {
                                     overflow: 'hidden',
@@ -644,22 +655,31 @@ export default defineComponent({
                                                 $vmaFormulaGrid.updateCurrentAreaStyle()
                                             },
                                             onMousedown: (event: MouseEvent) => {
-                                                if (cf.index >= 0) {
-                                                    $vmaFormulaGrid.reactiveData.currentCellEditorActive = false
-                                                    $vmaFormulaGrid.reactiveData.currentCell =
-                                                        $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
-                                                    $vmaFormulaGrid.reactiveData.currentCellEditorContent =
-                                                        $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1].v
+                                                if (event) {
+                                                    if (event.button === 0) {
+                                                        if (cf.index >= 0) {
+                                                            $vmaFormulaGrid.reactiveData.currentCellEditorActive = false
+                                                            $vmaFormulaGrid.reactiveData.currentCell =
+                                                                $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
+                                                            $vmaFormulaGrid.reactiveData.currentCellEditorContent =
+                                                                $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1].v
 
-                                                    $vmaFormulaGrid.reactiveData.currentAreaStatus = true
-                                                    $vmaFormulaGrid.reactiveData.currentArea = {
-                                                        start: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1],
-                                                        end: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
+                                                            $vmaFormulaGrid.reactiveData.currentAreaStatus = true
+                                                            $vmaFormulaGrid.reactiveData.currentArea = {
+                                                                start: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1],
+                                                                end: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
+                                                            }
+                                                            nextTick(() => {
+                                                                resizeCurrentSelectArea(event)
+                                                            })
+                                                        }
+                                                    } else if (event.button === 2) {
+                                                        if (cf.index >= 0) {
+                                                            console.log('button 2')
+                                                        }
                                                     }
-                                                    nextTick(() => {
-                                                        resizeCurrentSelectArea(event)
-                                                    })
                                                 }
+
                                             },
                                             onDblclick: (_: MouseEvent) => {
                                                 if (cf.index >= 0) {
