@@ -1161,15 +1161,36 @@ export function checkCellInMerges(col: number, row: number, merges: Record<strin
     return false
 }
 
-export function getRealArea(startColIndex: number, endColIndex: number, startRowIndex: number, endRowIndex: number,
-                            startColSpan: number, endColSpan: number, startRowSpan: number, endRowSpan: number,
-                            columnWidth: number,
+export function getRealArea(columnWidth: number,
                             changedColumnWidths: Record<string, number>,
                             changedColumnVisibles: Record<string, number>,
                             rowHeight: number,
                             changedRowHeights: Record<string, number>,
                             changedRowVisibles: Record<string, number>,
-                            merges: Record<string, any>) {
+                            merges: Record<string, any>,
+                            currentArea: { start: any; end: any },) {
+
+    const startColIndex = Math.min(currentArea.start.col, currentArea.end.col)
+    const endColIndex = Math.max(currentArea.start.col, currentArea.end.col)
+    const startRowIndex = Math.min(currentArea.start.row, currentArea.end.row)
+    const endRowIndex = Math.max(currentArea.start.row, currentArea.end.row)
+
+    let endColSpan = 1
+    let endRowSpan = 1
+    let startColSpan = 1
+    let startRowSpan = 1
+    if (currentArea.start.row === endRowIndex && currentArea.start.col === endColIndex) {
+        endColSpan = currentArea.start.colSpan
+        endRowSpan = currentArea.start.rowSpan
+        startColSpan = currentArea.end.colSpan
+        startRowSpan = currentArea.end.rowSpan
+    } else {
+        endColSpan = currentArea.end.colSpan
+        endRowSpan = currentArea.end.rowSpan
+        startColSpan = currentArea.start.colSpan
+        startRowSpan = currentArea.start.rowSpan
+    }
+
     const result = {
         w: 0,
         h: 0,
@@ -1177,6 +1198,8 @@ export function getRealArea(startColIndex: number, endColIndex: number, startRow
         eci: -1,
         sri: -1,
         eri: -1,
+        startRowIndex: startRowIndex,
+        startColIndex: startColIndex
     }
     if (startColIndex === endColIndex && startRowIndex === endRowIndex) {
         // single cell
@@ -1882,36 +1905,42 @@ export function isRowIndicatorActive(index: number,
     if (currentArea
         && currentArea.start !== null
         && currentArea.end != null) {
-        const startColIndex = Math.min(currentArea.start.col, currentArea.end.col)
-        const endColIndex = Math.max(currentArea.start.col, currentArea.end.col)
-        const startRowIndex = Math.min(currentArea.start.row, currentArea.end.row)
-        const endRowIndex = Math.max(currentArea.start.row, currentArea.end.row)
-
-        let endColSpan = 1
-        let endRowSpan = 1
-        let startColSpan = 1
-        let startRowSpan = 1
-        if (currentArea.start.row === endRowIndex && currentArea.start.col === endColIndex) {
-            endColSpan = currentArea.start.colSpan
-            endRowSpan = currentArea.start.rowSpan
-            startColSpan = currentArea.end.colSpan
-            startRowSpan = currentArea.end.rowSpan
-        } else {
-            endColSpan = currentArea.end.colSpan
-            endRowSpan = currentArea.end.rowSpan
-            startColSpan = currentArea.start.colSpan
-            startRowSpan = currentArea.start.rowSpan
-        }
-        const {sri, eri} = getRealArea(startColIndex, endColIndex, startRowIndex, endRowIndex,
-            startColSpan, endColSpan, startRowSpan, endRowSpan,
-            renderDefaultColWidth,
+        const {sri, eri} = getRealArea(renderDefaultColWidth,
             columnWidthsChanged,
             columnHidesChanged,
             renderDefaultRowHeight,
             rowHeightsChanged,
             rowHidesChanged,
-            merges)
+            merges,
+            currentArea)
         if (index >= sri && index <= eri) {
+            return true
+        }
+    }
+    return false
+}
+
+export function isColumnIndicatorActive(index: number,
+                                     currentArea: { start: any; end: any },
+                                     renderDefaultColWidth: number,
+                                     columnWidthsChanged: Record<string, number>,
+                                     columnHidesChanged: Record<string, number>,
+                                     renderDefaultRowHeight: number,
+                                     rowHeightsChanged: Record<string, number>,
+                                     rowHidesChanged: Record<string, number>,
+                                     merges: Record<string, any>) {
+    if (currentArea
+        && currentArea.start !== null
+        && currentArea.end != null) {
+        const {sci, eci} = getRealArea(renderDefaultColWidth,
+            columnWidthsChanged,
+            columnHidesChanged,
+            renderDefaultRowHeight,
+            rowHeightsChanged,
+            rowHidesChanged,
+            merges,
+            currentArea)
+        if (index >= sci && index <= eci) {
             return true
         }
     }

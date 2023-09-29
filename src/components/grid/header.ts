@@ -20,7 +20,13 @@ import {
     VmaFormulaGridHeaderPropTypes
 } from "../../../types";
 import {DomTools} from "../../utils/doms.ts";
-import {getColumnSymbol, getRenderDefaultColWidth, getXSpaceFromColumnWidths} from "../../utils";
+import {
+    getColumnSymbol,
+    getRenderDefaultColWidth,
+    getXSpaceFromColumnWidths,
+    isColumnIndicatorActive,
+    isRowIndicatorActive
+} from "../../utils";
 
 export default defineComponent({
     name: 'VmaFormulaGridHeader',
@@ -128,7 +134,17 @@ export default defineComponent({
                                 'data-col': cf.index,
                                 class: [
                                     'column-indicator',
-                                    `${$vmaFormulaGrid.props.type}`
+                                    `${$vmaFormulaGrid.props.type}`,
+                                    {'column-indicator-active':
+                                            isColumnIndicatorActive(cf.index,
+                                                $vmaFormulaGrid.reactiveData.currentArea,
+                                                renderDefaultColWidth.value,
+                                                $vmaFormulaGrid.reactiveData.columnWidthsChanged,
+                                                $vmaFormulaGrid.reactiveData.columnHidesChanged,
+                                                renderDefaultRowHeight.value,
+                                                $vmaFormulaGrid.reactiveData.rowHeightsChanged,
+                                                $vmaFormulaGrid.reactiveData.rowHidesChanged,
+                                                $vmaFormulaGrid.reactiveData.merges)},
                                 ]
                             }, [
                                 h(

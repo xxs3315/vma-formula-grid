@@ -670,27 +670,7 @@ export default defineComponent({
                 if ($vmaFormulaGrid.reactiveData.currentArea
                     && $vmaFormulaGrid.reactiveData.currentArea.start !== null
                     && $vmaFormulaGrid.reactiveData.currentArea.end != null) {
-                    const { currentArea } = $vmaFormulaGrid.reactiveData
-                    const startColIndex = Math.min(currentArea.start.col, currentArea.end.col)
-                    const endColIndex = Math.max(currentArea.start.col, currentArea.end.col)
-                    const startRowIndex = Math.min(currentArea.start.row, currentArea.end.row)
-                    const endRowIndex = Math.max(currentArea.start.row, currentArea.end.row)
 
-                    let endColSpan = 1
-                    let endRowSpan = 1
-                    let startColSpan = 1
-                    let startRowSpan = 1
-                    if (currentArea.start.row === endRowIndex && currentArea.start.col === endColIndex) {
-                        endColSpan = currentArea.start.colSpan
-                        endRowSpan = currentArea.start.rowSpan
-                        startColSpan = currentArea.end.colSpan
-                        startRowSpan = currentArea.end.rowSpan
-                    } else {
-                        endColSpan = currentArea.end.colSpan
-                        endRowSpan = currentArea.end.rowSpan
-                        startColSpan = currentArea.start.colSpan
-                        startRowSpan = currentArea.start.rowSpan
-                    }
 
                     const leftSpaceWidth = getXSpaceFromColumnWidths(
                         $vmaFormulaGrid.reactiveData.xStart,
@@ -707,15 +687,17 @@ export default defineComponent({
                     )
 
                     nextTick(() => {
-                        const {w, h,sci, eci, sri, eri} = getRealArea(startColIndex, endColIndex, startRowIndex, endRowIndex,
-                            startColSpan, endColSpan, startRowSpan, endRowSpan,
-                            renderDefaultColWidth.value,
+                        const {w, h,
+                            sci, eci,
+                            sri, eri,
+                            startRowIndex, startColIndex} = getRealArea(renderDefaultColWidth.value,
                             $vmaFormulaGrid.reactiveData.columnWidthsChanged,
                             $vmaFormulaGrid.reactiveData.columnHidesChanged,
                             renderDefaultRowHeight.value,
                             $vmaFormulaGrid.reactiveData.rowHeightsChanged,
                             $vmaFormulaGrid.reactiveData.rowHidesChanged,
-                            gridReactiveData.merges)
+                            gridReactiveData.merges,
+                            $vmaFormulaGrid.reactiveData.currentArea)
                         refGridBodyTable.value
                             .querySelectorAll(
                                 `td[data-row="${startRowIndex}"][data-col="${startColIndex}"]`
