@@ -2115,7 +2115,7 @@ export default defineComponent({
 
                             const {rowSpan, colSpan} = getRowColSpanFromMerges(colIndex, rowIndex + 1, gridReactiveData.merges)
                             const {fg, bg} = calcCellStyles(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.styles)
-                            const {bdl: bdlCurrent, bdt: bdtCurrent, bdr: bdrCurrent, bdb: bdbCurrent} = calcCellBorders(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.borders)
+                            const {bdl: bdlCurrent, bdt: bdtCurrent, bdr: bdrCurrent, bdb: bdbCurrent} = calcCellBorders(colIndex - 1, rowIndex, gridReactiveData.borders, gridReactiveData.colConfs.length, gridReactiveData.rowConfs.length)
                             const bgt = calcCellBgType(bg.length > 0, bdlCurrent, bdtCurrent, bdrCurrent, bdbCurrent)
                             gridReactiveData.currentSheetData[rowIndex][colIndex] = new Cell(
                                 rowIndex,

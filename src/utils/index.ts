@@ -1437,7 +1437,7 @@ export function calcCellStyles(col: number, row: number, styles: { bgc: any[]; f
     return result
 }
 
-export function calcCellBorders(colIndex: number, rowIndex: number, borders: any[]) {
+export function calcCellBorders(colIndex: number, rowIndex: number, borders: any[], colLength: number, rowLength: number) {
     let result = {
         bdl: false,
         bdt: false,
@@ -1448,9 +1448,101 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
     if (borders && borders.length > 0) {
         borders.forEach(item => {
             if (item.type === 'columns') {
-                // TODO
+                if (item.p.indexOf(getColumnSymbol(colIndex + 1)) >= 0) {
+                    if (item.hasOwnProperty('details')) {
+                        if (item.details.hasOwnProperty('none') && item.details.none) {
+                            result.bdl = false
+                            result.bdt = false
+                            result.bdr = false
+                            result.bdb = false
+                        } else if (item.details.hasOwnProperty('full') && item.details.full) {
+                            result.bdl = true
+                            result.bdt = true
+                            result.bdr = true
+                            result.bdb = true
+                        } else if (item.details.hasOwnProperty('outer') && item.details.outer) {
+                            result.bdl = true
+                            result.bdt = false
+                            if (rowIndex === 0) {
+                                result.bdt = true
+                            }
+                            result.bdr = true
+                            result.bdb = false
+                            if (rowIndex === rowLength - 1) {
+                                result.bdb = true
+                            }
+                        }  else {
+                            if (item.details.hasOwnProperty('left') && item.details.left) {
+                                result.bdl = true
+                            } else if (item.details.hasOwnProperty('left') && !item.details.left) {
+                                result.bdl = false
+                            }
+                            if (item.details.hasOwnProperty('top') && item.details.top) {
+                                result.bdt = true
+                            } else if (item.details.hasOwnProperty('top') && !item.details.top) {
+                                result.bdt = false
+                            }
+                            if (item.details.hasOwnProperty('right') && item.details.right) {
+                                result.bdr = true
+                            } else if (item.details.hasOwnProperty('right') && !item.details.right) {
+                                result.bdr = false
+                            }
+                            if (item.details.hasOwnProperty('bottom') && item.details.bottom) {
+                                result.bdb = true
+                            } else if (item.details.hasOwnProperty('bottom') && !item.details.bottom) {
+                                result.bdb = false
+                            }
+                        }
+                    }
+                }
             } else if (item.type === 'rows') {
-                // TODO
+                if (item.p.indexOf(rowIndex + 1) >= 0) {
+                    if (item.hasOwnProperty('details')) {
+                        if (item.details.hasOwnProperty('none') && item.details.none) {
+                            result.bdl = false
+                            result.bdt = false
+                            result.bdr = false
+                            result.bdb = false
+                        } else if (item.details.hasOwnProperty('full') && item.details.full) {
+                            result.bdl = true
+                            result.bdt = true
+                            result.bdr = true
+                            result.bdb = true
+                        } else if (item.details.hasOwnProperty('outer') && item.details.outer) {
+                            result.bdl = false
+                            if (colIndex === 0) {
+                                result.bdl = true
+                            }
+                            result.bdt = true
+                            result.bdr = false
+                            if (colIndex === colLength - 1 - 1) {
+                                result.bdr = true
+                            }
+                            result.bdb = true
+                        }  else {
+                            if (item.details.hasOwnProperty('left') && item.details.left) {
+                                result.bdl = true
+                            } else if (item.details.hasOwnProperty('left') && !item.details.left) {
+                                result.bdl = false
+                            }
+                            if (item.details.hasOwnProperty('top') && item.details.top) {
+                                result.bdt = true
+                            } else if (item.details.hasOwnProperty('top') && !item.details.top) {
+                                result.bdt = false
+                            }
+                            if (item.details.hasOwnProperty('right') && item.details.right) {
+                                result.bdr = true
+                            } else if (item.details.hasOwnProperty('right') && !item.details.right) {
+                                result.bdr = false
+                            }
+                            if (item.details.hasOwnProperty('bottom') && item.details.bottom) {
+                                result.bdb = true
+                            } else if (item.details.hasOwnProperty('bottom') && !item.details.bottom) {
+                                result.bdb = false
+                            }
+                        }
+                    }
+                }
             } else if (item.type === 'cells') {
                 if (item.p.indexOf(':') >= 0) {
                     const mArr = item.p.split(':')

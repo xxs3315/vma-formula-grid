@@ -386,9 +386,13 @@ export default defineComponent({
       },
       borders: [
         {p: ['A', 'C', 'D'], type: 'columns', details: {full: true, left: true, right: true, top: true, bottom: true,}},
+        {p: ['A'], type: 'columns', details: {none: true}},
+        {p: ['G'], type: 'columns', details: {full: false, left: true, right: false, top: true, bottom: true,}},
+        {p: ['J', 'L'], type: 'columns', details: {outer: true}},
         {p: 'B4:E8', type: 'cells', details: {full: true, inner: false, outer: false, left: true, right: true, top: true, bottom: true,}},
         {p: 'C5:D7', type: 'cells', details: {none: true, full: false, inner: false, outer: false, left: true, right: true, top: true, bottom: true,}},
         {p: [1, 5, 6, 7, 8], type: 'rows', details: {full: true, left: true, right: true, top: true, bottom: true,}},
+        {p: [25], type: 'rows', details: {full: false, outer: true}},
         {p: 'J28', details: {}, type: 'cells'},
         {p: 'G7:K26', details: {full: true}, type: 'cells'},
         {p: 'J24:N30', details: {full: false, outer: true}, type: 'cells'},
