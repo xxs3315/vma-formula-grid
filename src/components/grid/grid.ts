@@ -311,6 +311,7 @@ export default defineComponent({
             colConfs: [],
             rowConfs: [],
             currentSheetData: [],
+            currentSheetDataMap: {},
             rowHeightsChanged: {},
             columnWidthsChanged: {},
             rowHidesChanged: {},

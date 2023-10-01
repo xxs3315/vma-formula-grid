@@ -113,6 +113,8 @@ export interface VmaFormulaGridReactiveData {
 
     currentSheetData: any[][]
 
+    currentSheetDataMap: Record<string, any>
+
     rowHeightsChanged: Record<string, number>
     columnWidthsChanged: Record<string, number>
 
