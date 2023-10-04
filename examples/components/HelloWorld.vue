@@ -56,11 +56,11 @@
       <fieldset class="fieldset">
         <legend>Select horizontal virtual scroll:</legend>
         <span>
-          <input type="radio" id="virtualScrollXTrue" v-model="virtualScrollX" :value="true" checked/>
+          <input type="radio" id="virtualScrollXTrue" v-model="virtualScrollX" :value="true"/>
           <label for="virtualScrollXTrue">True</label>
         </span>
         <span>
-          <input type="radio" id="virtualScrollXFalse" v-model="virtualScrollX" :value="false"/>
+          <input type="radio" id="virtualScrollXFalse" v-model="virtualScrollX" :value="false" checked/>
           <label for="virtualScrollXFalse">False</label>
         </span>
       </fieldset>
@@ -68,11 +68,11 @@
       <fieldset class="fieldset">
         <legend>Select vertical virtual scroll:</legend>
         <span>
-          <input type="radio" id="virtualScrollYTrue" v-model="virtualScrollY" :value="true" checked/>
+          <input type="radio" id="virtualScrollYTrue" v-model="virtualScrollY" :value="true"/>
           <label for="virtualScrollYTrue">True</label>
         </span>
         <span>
-          <input type="radio" id="virtualScrollYFalse" v-model="virtualScrollY" :value="false"/>
+          <input type="radio" id="virtualScrollYFalse" v-model="virtualScrollY" :value="false" checked/>
           <label for="virtualScrollYFalse">False</label>
         </span>
       </fieldset>
@@ -113,8 +113,8 @@ export default defineComponent({
     const datasource = ref('array');
     const size = ref('normal');
     const themeType = ref('primary');
-    const virtualScrollX = ref(true);
-    const virtualScrollY = ref(true);
+    const virtualScrollX = ref(false);
+    const virtualScrollY = ref(false);
 
     const editorRef = ref<HTMLElement | null>(null);
     let editorInstance:monaco.editor.IStandaloneCodeEditor|null = null
