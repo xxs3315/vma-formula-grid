@@ -1764,7 +1764,7 @@ export default defineComponent({
             const bodyOffsetWidth = refGridBodyTableWrapperDiv.value.offsetWidth
             const bodyOffsetHeight = refGridBodyTableWrapperDiv.value.offsetHeight
 
-            gridReactiveData.gridWidth = gridDivClientWidth
+            gridReactiveData.gridWidth = Math.min(gridReactiveData.gridWidth, gridDivClientWidth)
             gridReactiveData.gridHeight = gridDivClientHeight
             gridReactiveData.gridHeaderWidth = gridReactiveData.gridWidth
             gridReactiveData.gridHeaderHeight = refGridHeaderTable.value.clientHeight

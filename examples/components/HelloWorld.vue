@@ -159,7 +159,7 @@ export default defineComponent({
         v: 4
       }, {
         p: 'A20',
-        v: '= T20 - 2'
+        v: '= F20 - 2'
       }, {
         p: 'B1',
         v: '= SUM(A3, 6)'
@@ -176,10 +176,10 @@ export default defineComponent({
         p: 'B5',
         v: '= SUM(A1:A4)'
       }, {
-        p: 'T20',
+        p: 'F20',
         v: '= A20 + 2'
       }, {
-        p: 'B55',
+        p: 'B25',
         v: '= A20 + 2'
       },]
     });
