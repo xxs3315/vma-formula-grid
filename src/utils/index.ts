@@ -1446,51 +1446,43 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
     }
 
     if (borders && borders.length > 0) {
+        let bdls: any[] = []
+        let bdts: any[] = []
+        let bdrs: any[] = []
+        let bdbs: any[] = []
+
+
         borders.forEach(item => {
             if (item.type === 'columns') {
                 if (item.p.indexOf(getColumnSymbol(colIndex + 1)) >= 0) {
                     if (item.hasOwnProperty('details')) {
                         if (item.details.hasOwnProperty('none') && item.details.none) {
-                            result.bdl = false
-                            result.bdt = false
-                            result.bdr = false
-                            result.bdb = false
+                            bdls.push('none')
+                            bdts.push('none')
+                            bdrs.push('none')
+                            bdbs.push('none')
                         } else if (item.details.hasOwnProperty('full') && item.details.full) {
-                            result.bdl = true
-                            result.bdt = true
-                            result.bdr = true
-                            result.bdb = true
+                            bdls.push(true)
+                            bdts.push(true)
+                            bdrs.push(true)
+                            bdbs.push(true)
                         } else if (item.details.hasOwnProperty('outer') && item.details.outer) {
-                            result.bdl = true
-                            result.bdt = false
-                            if (rowIndex === 0) {
-                                result.bdt = true
-                            }
-                            result.bdr = true
-                            result.bdb = false
-                            if (rowIndex === rowLength - 1) {
-                                result.bdb = true
-                            }
+                            bdls.push(item.p.indexOf(getColumnSymbol(colIndex + 1 - 1)) < 0)
+                            bdts.push(rowIndex === 0)
+                            bdrs.push(item.p.indexOf(getColumnSymbol(colIndex + 1 + 1)) < 0)
+                            bdbs.push(rowIndex === rowLength - 1)
                         }  else {
                             if (item.details.hasOwnProperty('left') && item.details.left) {
-                                result.bdl = true
-                            } else if (item.details.hasOwnProperty('left') && !item.details.left) {
-                                result.bdl = false
+                                bdls.push(true)
                             }
                             if (item.details.hasOwnProperty('top') && item.details.top) {
-                                result.bdt = true
-                            } else if (item.details.hasOwnProperty('top') && !item.details.top) {
-                                result.bdt = false
+                                bdts.push(true)
                             }
                             if (item.details.hasOwnProperty('right') && item.details.right) {
-                                result.bdr = true
-                            } else if (item.details.hasOwnProperty('right') && !item.details.right) {
-                                result.bdr = false
+                                bdrs.push(true)
                             }
                             if (item.details.hasOwnProperty('bottom') && item.details.bottom) {
-                                result.bdb = true
-                            } else if (item.details.hasOwnProperty('bottom') && !item.details.bottom) {
-                                result.bdb = false
+                                bdbs.push(true)
                             }
                         }
                     }
@@ -1499,46 +1491,32 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
                 if (item.p.indexOf(rowIndex + 1) >= 0) {
                     if (item.hasOwnProperty('details')) {
                         if (item.details.hasOwnProperty('none') && item.details.none) {
-                            result.bdl = false
-                            result.bdt = false
-                            result.bdr = false
-                            result.bdb = false
+                            bdls.push('none')
+                            bdts.push('none')
+                            bdrs.push('none')
+                            bdbs.push('none')
                         } else if (item.details.hasOwnProperty('full') && item.details.full) {
-                            result.bdl = true
-                            result.bdt = true
-                            result.bdr = true
-                            result.bdb = true
+                            bdls.push(true)
+                            bdts.push(true)
+                            bdrs.push(true)
+                            bdbs.push(true)
                         } else if (item.details.hasOwnProperty('outer') && item.details.outer) {
-                            result.bdl = false
-                            if (colIndex === 0) {
-                                result.bdl = true
-                            }
-                            result.bdt = true
-                            result.bdr = false
-                            if (colIndex === colLength - 1 - 1) {
-                                result.bdr = true
-                            }
-                            result.bdb = true
+                            bdls.push(colIndex === 0)
+                            bdts.push(item.p.indexOf(rowIndex + 1 - 1) < 0)
+                            bdrs.push(colIndex === colLength - 1 - 1)
+                            bdbs.push(item.p.indexOf(rowIndex + 1 + 1) < 0)
                         }  else {
                             if (item.details.hasOwnProperty('left') && item.details.left) {
-                                result.bdl = true
-                            } else if (item.details.hasOwnProperty('left') && !item.details.left) {
-                                result.bdl = false
+                                bdls.push(true)
                             }
                             if (item.details.hasOwnProperty('top') && item.details.top) {
-                                result.bdt = true
-                            } else if (item.details.hasOwnProperty('top') && !item.details.top) {
-                                result.bdt = false
+                                bdts.push(true)
                             }
                             if (item.details.hasOwnProperty('right') && item.details.right) {
-                                result.bdr = true
-                            } else if (item.details.hasOwnProperty('right') && !item.details.right) {
-                                result.bdr = false
+                                bdrs.push(true)
                             }
                             if (item.details.hasOwnProperty('bottom') && item.details.bottom) {
-                                result.bdb = true
-                            } else if (item.details.hasOwnProperty('bottom') && !item.details.bottom) {
-                                result.bdb = false
+                                bdbs.push(true)
                             }
                         }
                     }
@@ -1553,17 +1531,17 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
                     if (colIndex >= colStart - 1 && colIndex <= colEnd - 1 && rowIndex >= rowStart - 1 && rowIndex <= rowEnd - 1 ) {
                         if (item.hasOwnProperty('details')) {
                             if (item.details.hasOwnProperty('none') && item.details.none) {
-                                result.bdl = false
-                                result.bdt = false
-                                result.bdr = false
-                                result.bdb = false
+                                bdls.push('none')
+                                bdts.push('none')
+                                bdrs.push('none')
+                                bdbs.push('none')
                             } else if (item.details.hasOwnProperty('full') && item.details.full
                             || (item.details.hasOwnProperty('inner') && item.details.inner
                                     && item.details.hasOwnProperty('outer') && item.details.outer)) {
-                                result.bdl = true
-                                result.bdt = true
-                                result.bdr = true
-                                result.bdb = true
+                                bdls.push(true)
+                                bdts.push(true)
+                                bdrs.push(true)
+                                bdbs.push(true)
                             }  else if (!(item.details.hasOwnProperty('full') && item.details.full
                                 || (item.details.hasOwnProperty('inner') && item.details.inner
                                     && item.details.hasOwnProperty('outer') && item.details.outer))) {
@@ -1573,83 +1551,75 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
                                         || rowIndex === rowEnd - 1 && colIndex === colStart - 1
                                         || rowIndex === rowEnd - 1 && colIndex === colEnd - 1) {
                                         if (rowIndex === rowStart - 1 && colIndex === colStart - 1) {
-                                            result.bdr = true
-                                            result.bdb = true
+                                            bdrs.push(true)
+                                            bdbs.push(true)
                                         }
                                         if (rowIndex === rowStart - 1 && colIndex === colEnd - 1) {
-                                            result.bdl = true
-                                            result.bdb = true
+                                            bdls.push(true)
+                                            bdbs.push(true)
                                         }
                                         if (rowIndex === rowEnd - 1 && colIndex === colStart - 1) {
-                                            result.bdr = true
-                                            result.bdt = true
+                                            bdts.push(true)
+                                            bdrs.push(true)
                                         }
                                         if (rowIndex === rowEnd - 1 && colIndex === colEnd - 1) {
-                                            result.bdl = true
-                                            result.bdt = true
+                                            bdls.push(true)
+                                            bdts.push(true)
                                         }
                                     } else {
                                         if (rowIndex === rowStart - 1) {
-                                            result.bdl = true
-                                            result.bdr = true
-                                            result.bdb = true
+                                            bdls.push(true)
+                                            bdrs.push(true)
+                                            bdbs.push(true)
                                         }
                                         if (rowIndex === rowEnd - 1) {
-                                            result.bdl = true
-                                            result.bdt = true
-                                            result.bdr = true
+                                            bdls.push(true)
+                                            bdts.push(true)
+                                            bdrs.push(true)
                                         }
                                         if (colIndex === colStart - 1) {
-                                            result.bdt = true
-                                            result.bdr = true
-                                            result.bdb = true
+                                            bdts.push(true)
+                                            bdrs.push(true)
+                                            bdbs.push(true)
                                         }
                                         if (colIndex === colEnd - 1) {
-                                            result.bdl = true
-                                            result.bdt = true
-                                            result.bdb = true
+                                            bdls.push(true)
+                                            bdts.push(true)
+                                            bdbs.push(true)
                                         }
                                     }
                                     if (rowIndex > rowStart - 1 && rowIndex < rowEnd - 1 && colIndex > colStart - 1 && colIndex < colEnd - 1) {
-                                        result.bdl = true
-                                        result.bdt = true
-                                        result.bdr = true
-                                        result.bdb = true
+                                        bdls.push(true)
+                                        bdts.push(true)
+                                        bdrs.push(true)
+                                        bdbs.push(true)
                                     }
                                 } else if (item.details.hasOwnProperty('outer') && item.details.outer) {
                                     if (rowIndex === rowStart - 1) {
-                                        result.bdt = true
+                                        bdts.push(true)
                                     }
                                     if (rowIndex === rowEnd - 1) {
-                                        result.bdb = true
+                                        bdbs.push(true)
                                     }
                                     if (colIndex === colStart - 1) {
-                                        result.bdl = true
+                                        bdls.push(true)
                                     }
                                     if (colIndex === colEnd - 1) {
-                                        result.bdr = true
+                                        bdrs.push(true)
                                     }
                                 }
                             } else {
                                 if (item.details.hasOwnProperty('left') && item.details.left && colIndex === colStart - 1) {
-                                    result.bdl = true
-                                } else if (item.details.hasOwnProperty('left') && !item.details.left && colIndex === colStart - 1) {
-                                    result.bdl = false
+                                    bdls.push(true)
                                 }
                                 if (item.details.hasOwnProperty('top') && item.details.top && rowIndex === rowStart - 1) {
-                                    result.bdt = true
-                                } else if (item.details.hasOwnProperty('top') && !item.details.top && rowIndex === rowStart - 1) {
-                                    result.bdt = false
+                                    bdts.push(true)
                                 }
                                 if (item.details.hasOwnProperty('right') && item.details.right && colIndex === colEnd - 1) {
-                                    result.bdr = true
-                                } else if (item.details.hasOwnProperty('right') && !item.details.right && colIndex === colEnd - 1) {
-                                    result.bdr = false
+                                    bdrs.push(true)
                                 }
                                 if (item.details.hasOwnProperty('bottom') && item.details.bottom && rowIndex === rowEnd - 1) {
-                                    result.bdb = true
-                                } else if (item.details.hasOwnProperty('bottom') && !item.details.bottom && rowIndex === rowEnd - 1) {
-                                    result.bdb = false
+                                    bdbs.push(true)
                                 }
                             }
                         }
@@ -1660,40 +1630,27 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
                     if (colIndex === colTarget - 1 && rowIndex === rowTarget - 1) {
                         if (item.hasOwnProperty('details')) {
                             if (item.details.hasOwnProperty('none') && item.details.none) {
-                                result.bdl = false
-                                result.bdt = false
-                                result.bdr = false
-                                result.bdb = false
+                                bdls.push('none')
+                                bdts.push('none')
+                                bdrs.push('none')
+                                bdbs.push('none')
                             } else if (item.details.hasOwnProperty('full') && item.details.full) {
-                                result.bdl = true
-                                result.bdt = true
-                                result.bdr = true
-                                result.bdb = true
-                            }  else if (item.details.hasOwnProperty('full') && !item.details.full) {
-                                result.bdl = false
-                                result.bdt = false
-                                result.bdr = false
-                                result.bdb = false
+                                bdls.push(true)
+                                bdts.push(true)
+                                bdrs.push(true)
+                                bdbs.push(true)
                             } else {
                                 if (item.details.hasOwnProperty('left') && item.details.left) {
-                                    result.bdl = true
-                                } else if (item.details.hasOwnProperty('left') && !item.details.left) {
-                                    result.bdl = false
+                                    bdls.push(true)
                                 }
                                 if (item.details.hasOwnProperty('top') && item.details.top) {
-                                    result.bdt = true
-                                } else if (item.details.hasOwnProperty('top') && !item.details.top) {
-                                    result.bdt = false
+                                    bdts.push(true)
                                 }
                                 if (item.details.hasOwnProperty('right') && item.details.right) {
-                                    result.bdr = true
-                                } else if (item.details.hasOwnProperty('right') && !item.details.right) {
-                                    result.bdr = false
+                                    bdrs.push(true)
                                 }
                                 if (item.details.hasOwnProperty('bottom') && item.details.bottom) {
-                                    result.bdb = true
-                                } else if (item.details.hasOwnProperty('bottom') && !item.details.bottom) {
-                                    result.bdb = false
+                                    bdbs.push(true)
                                 }
                             }
                         }
@@ -1701,147 +1658,46 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
                 }
             }
         })
-    }
-
-    return result
-}
-
-export function calcCellBorderCustom(colIndex: number, rowIndex: number, borders: { cells: Record<string, any>[] }) {
-    let result = {
-        bdl: false,
-        bdt: false,
-        bdr: false,
-        bdb: false
-    }
-    if (borders && borders.hasOwnProperty('cells') && borders.cells.length > 0) {
-        borders.cells.forEach((item: any) => {
-            if (item.p.indexOf(':') >= 0) {
-                const mArr = item.p.split(':')
-                let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''))
-                let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
-                let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
-                let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
-                if (colIndex >= colStart - 1 && colIndex <= colEnd - 1 && rowIndex >= rowStart - 1 && rowIndex <= rowEnd - 1 ) {
-                    if (item.hasOwnProperty('details')) {
-                        if (item.details.hasOwnProperty('full') && item.details.full.hasOwnProperty('v') && item.details.full.v) {
-                                result.bdl = true
-                                result.bdt = true
-                                result.bdr = true
-                                result.bdb = true
-                            } else if (item.details.hasOwnProperty('inner') && item.details.inner.hasOwnProperty('v') && item.details.inner.v
-                                && item.details.hasOwnProperty('outer') && item.details.outer.hasOwnProperty('v') && item.details.outer.v) {
-                                result.bdl = true
-                                result.bdt = true
-                                result.bdr = true
-                                result.bdb = true
-                            } else if (item.details.hasOwnProperty('inner') && item.details.inner.hasOwnProperty('v') && item.details.inner.v) {
-                                if (rowIndex === rowStart - 1 && colIndex === colStart - 1
-                                    || rowIndex === rowStart - 1 && colIndex === colEnd - 1
-                                    || rowIndex === rowEnd - 1 && colIndex === colStart - 1
-                                    || rowIndex === rowEnd - 1 && colIndex === colEnd - 1) {
-                                    if (rowIndex === rowStart - 1 && colIndex === colStart - 1) {
-                                        result.bdr = true
-                                        result.bdb = true
-                                    }
-                                    if (rowIndex === rowStart - 1 && colIndex === colEnd - 1) {
-                                        result.bdl = true
-                                        result.bdb = true
-                                    }
-                                    if (rowIndex === rowEnd - 1 && colIndex === colStart - 1) {
-                                        result.bdr = true
-                                        result.bdt = true
-                                    }
-                                    if (rowIndex === rowEnd - 1 && colIndex === colEnd - 1) {
-                                        result.bdl = true
-                                        result.bdt = true
-                                    }
-                                } else {
-                                    if (rowIndex === rowStart - 1) {
-                                        result.bdl = true
-                                        result.bdr = true
-                                        result.bdb = true
-                                    }
-                                    if (rowIndex === rowEnd - 1) {
-                                        result.bdl = true
-                                        result.bdt = true
-                                        result.bdr = true
-                                    }
-                                    if (colIndex === colStart - 1) {
-                                        result.bdt = true
-                                        result.bdr = true
-                                        result.bdb = true
-                                    }
-                                    if (colIndex === colEnd - 1) {
-                                        result.bdl = true
-                                        result.bdt = true
-                                        result.bdb = true
-                                    }
-                                }
-                                if (rowIndex > rowStart - 1 && rowIndex < rowEnd - 1 && colIndex > colStart - 1 && colIndex < colEnd - 1) {
-                                    result.bdl = true
-                                    result.bdt = true
-                                    result.bdr = true
-                                    result.bdb = true
-                                }
-                            } else if (item.details.hasOwnProperty('outer') && item.details.outer.hasOwnProperty('v') && item.details.outer.v) {
-                                if (rowIndex === rowStart - 1) {
-                                    result.bdt = true
-                                }
-                                if (rowIndex === rowEnd - 1) {
-                                    result.bdb = true
-                                }
-                                if (colIndex === colStart - 1) {
-                                    result.bdl = true
-                                }
-                                if (colIndex === colEnd - 1) {
-                                    result.bdr = true
-                                }
-                            } else {
-                                if (item.details.hasOwnProperty('left') && item.details.left.hasOwnProperty('v') && item.details.left.v && colIndex === colStart - 1) {
-                                    result.bdl = true
-                                }
-                                if (item.details.hasOwnProperty('top') && item.details.top.hasOwnProperty('v') && item.details.top.v && rowIndex === rowStart - 1) {
-                                    result.bdt = true
-                                }
-                                if (item.details.hasOwnProperty('right') && item.details.right.hasOwnProperty('v') && item.details.right.v && colIndex === colEnd - 1) {
-                                    result.bdr = true
-                                }
-                                if (item.details.hasOwnProperty('bottom') && item.details.bottom.hasOwnProperty('v') && item.details.bottom.v && rowIndex === rowEnd - 1) {
-                                    result.bdb = true
-                                }
-                            }
-                        }
-
-                }
-            } else {
-                let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''))
-                let rowTarget = parseInt(item.p.replace(/[^0-9]/ig, ''))
-                if (colIndex === colTarget - 1 && rowIndex === rowTarget - 1) {
-                    if (item.hasOwnProperty('details')) {
-                        // if (item.details.hasOwnProperty('full')) {
-                            if (item.details.hasOwnProperty('full') && item.details.full.hasOwnProperty('v') && item.details.full.v) {
-                                result.bdl = true
-                                result.bdt = true
-                                result.bdr = true
-                                result.bdb = true
-                            } else {
-                                if (item.details.hasOwnProperty('left') && item.details.left.hasOwnProperty('v') && item.details.left.v) {
-                                    result.bdl = true
-                                }
-                                if (item.details.hasOwnProperty('top') && item.details.top.hasOwnProperty('v') && item.details.top.v) {
-                                    result.bdt = true
-                                }
-                                if (item.details.hasOwnProperty('right') && item.details.right.hasOwnProperty('v') && item.details.right.v) {
-                                    result.bdr = true
-                                }
-                                if (item.details.hasOwnProperty('bottom') && item.details.bottom.hasOwnProperty('v') && item.details.bottom.v) {
-                                    result.bdb = true
-                                }
-                            }
-                    }
-                }
+        if (bdls.length > 0) {
+            if (bdls.lastIndexOf('none') >= 0) {
+                bdls = bdls.splice(0, bdls.lastIndexOf('none'))
             }
-        })
+            if (bdls.length > 0) {
+                result.bdl = bdls.reduce((pre, cur) => {
+                    return pre || cur
+                })
+            }
+        }
+        if (bdts.length > 0) {
+            if (bdts.lastIndexOf('none') >= 0) {
+                bdts = bdts.splice(0, bdts.lastIndexOf('none'))
+            }
+            if (bdts.length > 0) {
+                result.bdt = bdts.reduce((pre, cur) => {
+                    return pre || cur
+                })
+            }
+        }
+        if (bdrs.length > 0) {
+            if (bdrs.lastIndexOf('none') >= 0) {
+                bdrs = bdrs.splice(0, bdrs.lastIndexOf('none'))
+            }
+            if (bdrs.length > 0) {
+                result.bdr = bdrs.reduce((pre, cur) => {
+                    return pre || cur
+                })
+            }
+        }
+        if (bdbs.length > 0) {
+            if (bdbs.lastIndexOf('none') >= 0) {
+                bdbs = bdbs.splice(0, bdbs.lastIndexOf('none'))
+            }
+            if (bdbs.length > 0) {
+                result.bdb = bdbs.reduce((pre, cur) => {
+                    return pre || cur
+                })
+            }
+        }
     }
 
     return result
