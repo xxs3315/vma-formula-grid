@@ -60,6 +60,9 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                             Number(menu.param.row),
                         )
                     }
+                    if (menu.code === 'borderTop') {
+                        grid.setBorderTop()
+                    }
                 }
                 if (ctxMenuMethods.closeMenu) {
                     ctxMenuMethods.closeMenu()
@@ -141,6 +144,16 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     },
                 )
 
+                const cellTargetNode = DomTools.getEventTargetNode(
+                    event,
+                    refGridDivElem,
+                    `normal`,
+                    (target: any) => {
+                        const elem: any = target.parentNode.parentNode.parentNode.parentNode
+                        return elem !== document && elem.getAttribute('data-uid') === uId
+                    },
+                )
+
                 //
                 // const cornerTargetNode = DomTools.getEventTargetNode(
                 //     event,
@@ -174,6 +187,10 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                         row: rowTargetNode.targetElem.getAttribute('data-row'),
                         col: rowTargetNode.targetElem.getAttribute('data-col'),
                     })
+                }
+
+                if (cellTargetNode.flag) {
+                    openCtxMenu(event, 'cell', null)
                 }
             },
         }
@@ -212,6 +229,12 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options.push({name: '删除', code: 'deleteRow', disabled: false, visible: true, param,})
                 list.push(options)
             }
+            if (type === 'cell') {
+                let options = []
+                options.push({name: '上划线', code: 'borderTop', disabled: false, visible: true, param,})
+                list.push(options)
+            }
+
             event.preventDefault()
 
             const { scrollTop, scrollLeft } = DomTools.getDomNode()

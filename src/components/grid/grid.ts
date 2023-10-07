@@ -667,6 +667,9 @@ export default defineComponent({
                 const scrollBodyElem = (event.currentTarget || event.target) as HTMLDivElement
                 debounceScrollY(scrollBodyElem)
             },
+            updateCellBorder: () => {
+
+            },
             updateCurrentAreaStyle: () => {
                 if ($vmaFormulaGrid.reactiveData.currentArea
                     && $vmaFormulaGrid.reactiveData.currentArea.start !== null
@@ -1016,12 +1019,17 @@ export default defineComponent({
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
                         $vmaFormulaGrid.updateCurrentAreaStyle()
+                        $vmaFormulaGrid.updateCellBorder()
                     })
                     .then(() => {
                         $vmaFormulaGrid.calc()
                     })
 
                 updateCurrentCell()
+            },
+            setBorderTop: () => {
+                console.log('setBorderTop')
+                console.log($vmaFormulaGrid.reactiveData.currentArea)
             },
             updateColVisible: (type: string, colStart: number, colEnd: number) => {
                 if (type === 'showForwardCols') {

@@ -206,9 +206,11 @@ export interface VmaFormulaGridPrivateMethods {
     hideRow(row: number): void
     deleteColumn(col: number): void
     deleteRow(row: number): void
+    setBorderTop(): void
     calcCurrentCellEditorStyle(): void
     calcCurrentCellEditorDisplay(): void
     updateCurrentAreaStyle(): void
+    updateCellBorder(): void
 }
 
 export interface VmaFormulaGridConstructor extends VmaComponentInstance, VmaFormulaGridMethods, VmaFormulaGridPrivateMethods {

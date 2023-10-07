@@ -21,7 +21,7 @@ import {
 } from "../../../types";
 import {Guid} from "../../utils/guid.ts";
 import {
-    checkCellInMerges,
+    checkCellInMerges, getRealArea,
     getRenderDefaultRowHeight,
     getYSpaceFromRowHeights,
     isNumeric, isRowIndicatorActive
@@ -676,6 +676,51 @@ export default defineComponent({
                                                     } else if (event.button === 2) {
                                                         if (cf.index >= 0) {
                                                             console.log('button 2')
+                                                            console.log(rf.index, cf.index + 1)
+                                                            console.log($vmaFormulaGrid.reactiveData.currentArea)
+                                                            if ($vmaFormulaGrid.reactiveData.currentArea
+                                                                && $vmaFormulaGrid.reactiveData.currentArea.start !== null
+                                                                && $vmaFormulaGrid.reactiveData.currentArea.end != null) {
+                                                                const {sci, eci,
+                                                                    sri, eri} = getRealArea(renderDefaultColWidth.value,
+                                                                    $vmaFormulaGrid.reactiveData.columnWidthsChanged,
+                                                                    $vmaFormulaGrid.reactiveData.columnHidesChanged,
+                                                                    renderDefaultRowHeight.value,
+                                                                    $vmaFormulaGrid.reactiveData.rowHeightsChanged,
+                                                                    $vmaFormulaGrid.reactiveData.rowHidesChanged,
+                                                                    $vmaFormulaGrid.reactiveData.merges,
+                                                                    $vmaFormulaGrid.reactiveData.currentArea)
+                                                                if (rf.index >= sri && rf.index <= eri && cf.index >= sci && cf.index <= eci) {
+                                                                    console.log('in')
+                                                                } else {
+                                                                    console.log('out')
+                                                                    $vmaFormulaGrid.reactiveData.currentCellEditorActive = false
+                                                                    $vmaFormulaGrid.reactiveData.currentCell =
+                                                                        $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
+                                                                    $vmaFormulaGrid.reactiveData.currentCellEditorContent =
+                                                                        $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1].v
+
+                                                                    $vmaFormulaGrid.reactiveData.currentAreaStatus = true
+                                                                    $vmaFormulaGrid.reactiveData.currentArea = {
+                                                                        start: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1],
+                                                                        end: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
+                                                                    }
+                                                                }
+                                                            } else {
+                                                                console.log('out')
+                                                                $vmaFormulaGrid.reactiveData.currentCellEditorActive = false
+                                                                $vmaFormulaGrid.reactiveData.currentCell =
+                                                                    $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
+                                                                $vmaFormulaGrid.reactiveData.currentCellEditorContent =
+                                                                    $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1].v
+
+                                                                $vmaFormulaGrid.reactiveData.currentAreaStatus = true
+                                                                $vmaFormulaGrid.reactiveData.currentArea = {
+                                                                    start: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1],
+                                                                    end: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
+                                                                }
+                                                            }
+
                                                         }
                                                     }
                                                 }
