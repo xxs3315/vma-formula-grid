@@ -1268,6 +1268,8 @@ export default defineComponent({
                         }
                     }
                 }
+
+                console.log(gridReactiveData.borders)
             }
             if (type === 'deleteRow') {
                 const gridRowsVisibleChangedNew: Record<string, number> = {}

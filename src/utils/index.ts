@@ -1467,9 +1467,9 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
                             bdrs.push(true)
                             bdbs.push(true)
                         } else if (item.details.hasOwnProperty('outer') && item.details.outer) {
-                            bdls.push(item.p.indexOf(getColumnSymbol(colIndex + 1 - 1)) < 0)
+                            bdls.push(true)
                             bdts.push(rowIndex === 0)
-                            bdrs.push(item.p.indexOf(getColumnSymbol(colIndex + 1 + 1)) < 0)
+                            bdrs.push(true)
                             bdbs.push(rowIndex === rowLength - 1)
                         }  else {
                             if (item.details.hasOwnProperty('left') && item.details.left) {
@@ -1486,6 +1486,48 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
                             }
                         }
                     }
+                } else {
+                    item.p.forEach((i: any) => {
+                        if (typeof i === 'string' && i.indexOf(':') >= 0) {
+                            let rs: any[] = i.split(':')
+                            rs = rs.map(si => {
+                                return getColumnCount(si)
+                            })
+                            const colStart = Math.min(...rs)
+                            const colEnd = Math.max(...rs)
+                            if (colIndex + 1 >= colStart && colIndex + 1 <= colEnd) {
+                                if (item.details.hasOwnProperty('none') && item.details.none) {
+                                    bdls.push('none')
+                                    bdts.push('none')
+                                    bdrs.push('none')
+                                    bdbs.push('none')
+                                } else if (item.details.hasOwnProperty('full') && item.details.full) {
+                                    bdls.push(true)
+                                    bdts.push(true)
+                                    bdrs.push(true)
+                                    bdbs.push(true)
+                                } else if (item.details.hasOwnProperty('outer') && item.details.outer) {
+                                    bdls.push(colStart === colIndex + 1)
+                                    bdts.push(rowIndex === 0)
+                                    bdrs.push(colEnd === colIndex + 1)
+                                    bdbs.push(rowIndex === rowLength - 1)
+                                }  else {
+                                    if (item.details.hasOwnProperty('left') && item.details.left) {
+                                        bdls.push(true)
+                                    }
+                                    if (item.details.hasOwnProperty('top') && item.details.top) {
+                                        bdts.push(true)
+                                    }
+                                    if (item.details.hasOwnProperty('right') && item.details.right) {
+                                        bdrs.push(true)
+                                    }
+                                    if (item.details.hasOwnProperty('bottom') && item.details.bottom) {
+                                        bdbs.push(true)
+                                    }
+                                }
+                            }
+                        }
+                    })
                 }
             } else if (item.type === 'rows') {
                 if (item.p.indexOf(rowIndex + 1) >= 0) {
@@ -1502,9 +1544,9 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
                             bdbs.push(true)
                         } else if (item.details.hasOwnProperty('outer') && item.details.outer) {
                             bdls.push(colIndex === 0)
-                            bdts.push(item.p.indexOf(rowIndex + 1 - 1) < 0)
+                            bdts.push(true)
                             bdrs.push(colIndex === colLength - 1 - 1)
-                            bdbs.push(item.p.indexOf(rowIndex + 1 + 1) < 0)
+                            bdbs.push(true)
                         }  else {
                             if (item.details.hasOwnProperty('left') && item.details.left) {
                                 bdls.push(true)
@@ -1520,6 +1562,46 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
                             }
                         }
                     }
+                } else {
+                    item.p.forEach((i: any) => {
+                        if (typeof i === 'string' && i.indexOf(':') >= 0) {
+                            let rs: any[] = i.split(':')
+                            rs = rs.map(Number)
+                            const rowStart = Math.min(...rs)
+                            const rowEnd = Math.max(...rs)
+                            if (rowIndex + 1 >= rowStart && rowIndex + 1 <= rowEnd) {
+                                if (item.details.hasOwnProperty('none') && item.details.none) {
+                                    bdls.push(false)
+                                    bdts.push(false)
+                                    bdrs.push(false)
+                                    bdbs.push(false)
+                                } else if (item.details.hasOwnProperty('full') && item.details.full) {
+                                    bdls.push(true)
+                                    bdts.push(true)
+                                    bdrs.push(true)
+                                    bdbs.push(true)
+                                } else if (item.details.hasOwnProperty('outer') && item.details.outer) {
+                                    bdls.push(colIndex === 0)
+                                    bdts.push(rowStart === rowIndex + 1)
+                                    bdrs.push(colIndex === colLength - 1 - 1)
+                                    bdbs.push(rowEnd === rowIndex + 1)
+                                }  else {
+                                    if (item.details.hasOwnProperty('left') && item.details.left) {
+                                        bdls.push(true)
+                                    }
+                                    if (item.details.hasOwnProperty('top') && item.details.top) {
+                                        bdts.push(true)
+                                    }
+                                    if (item.details.hasOwnProperty('right') && item.details.right) {
+                                        bdrs.push(true)
+                                    }
+                                    if (item.details.hasOwnProperty('bottom') && item.details.bottom) {
+                                        bdbs.push(true)
+                                    }
+                                }
+                            }
+                        }
+                    })
                 }
             } else if (item.type === 'cells') {
                 if (item.p.indexOf(':') >= 0) {
