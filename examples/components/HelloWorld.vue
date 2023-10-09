@@ -392,7 +392,7 @@ export default defineComponent({
         {p: 'B4:E8', type: 'cells', details: {full: true}},
         {p: 'C5:D7', type: 'cells', details: {none: true}},
         {p: [1, 5, 6, 7, 8], type: 'rows', details: {full: true}},
-        {p: [25, 26, '30:40'], type: 'rows', details: {outer: true}},
+        {p: [25, 26, '40:40'], type: 'rows', details: {outer: true}},
         {p: 'J28', details: {}, type: 'cells'},
         {p: 'G7:K26', details: {full: true}, type: 'cells'},
         {p: 'J24:N30', details: {outer: true}, type: 'cells'},

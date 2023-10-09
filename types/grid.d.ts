@@ -210,7 +210,7 @@ export interface VmaFormulaGridPrivateMethods {
     calcCurrentCellEditorStyle(): void
     calcCurrentCellEditorDisplay(): void
     updateCurrentAreaStyle(): void
-    updateCellBorder(): void
+    updateCellStyle(): void
 }
 
 export interface VmaFormulaGridConstructor extends VmaComponentInstance, VmaFormulaGridMethods, VmaFormulaGridPrivateMethods {

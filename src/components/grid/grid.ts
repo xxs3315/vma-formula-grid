@@ -667,7 +667,7 @@ export default defineComponent({
                 const scrollBodyElem = (event.currentTarget || event.target) as HTMLDivElement
                 debounceScrollY(scrollBodyElem)
             },
-            updateCellBorder: () => {
+            updateCellStyle: () => {
 
             },
             updateCurrentAreaStyle: () => {
@@ -1019,7 +1019,7 @@ export default defineComponent({
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
                         $vmaFormulaGrid.updateCurrentAreaStyle()
-                        $vmaFormulaGrid.updateCellBorder()
+                        $vmaFormulaGrid.updateCellStyle()
                     })
                     .then(() => {
                         $vmaFormulaGrid.calc()
@@ -1322,6 +1322,82 @@ export default defineComponent({
                     }
                 })
                 gridReactiveData.merges = mergesNew
+
+                // bgc
+
+                // fgc
+
+                // borders
+                if ($vmaFormulaGrid.reactiveData.borders && $vmaFormulaGrid.reactiveData.borders.length > 0) {
+                    const bordersNew: Record<string, any>[] = []
+                    $vmaFormulaGrid.reactiveData.borders.forEach((borderItem: any) => {
+                        if (borderItem.hasOwnProperty('type') && (borderItem.type === 'rows' || borderItem.type === 'cells')) {
+                            if (borderItem.type === 'rows' && borderItem.hasOwnProperty('p') && borderItem.p.length > 0) {
+                                const posTemp: any[] = []
+                                borderItem.p.forEach((borderItemPos: string | number) => {
+                                    if (typeof borderItemPos === 'string' && borderItemPos.indexOf(':') >= 0) {
+                                        let rowRangeArr: any[] = borderItemPos.split(':')
+                                        rowRangeArr = rowRangeArr.map(Number)
+                                        let rowStart = Math.min(...rowRangeArr)
+                                        let rowEnd = Math.max(...rowRangeArr)
+                                        if (row! + 1 < rowStart) {
+                                            rowStart -= 1
+                                            rowEnd -= 1
+                                        } else if (row! + 1 >= rowStart && row! + 1 <= rowEnd) {
+                                            rowEnd -= 1
+                                        }
+                                        if (rowEnd >= rowStart) {
+                                            posTemp.push('' + rowStart + ':' + rowEnd)
+                                        }
+                                    } else if (typeof borderItemPos === 'number') {
+                                        if (row! + 1 < borderItemPos) {
+                                            posTemp.push(borderItemPos - 1)
+                                        } else if (row! + 1 > borderItemPos) {
+                                            posTemp.push(borderItemPos)
+                                        }
+                                    }
+                                })
+                                if (posTemp.length > 0) {
+                                    bordersNew.push(Object.assign({}, borderItem, {p: posTemp}))
+                                }
+                            }
+                            if (borderItem.type === 'cells' && borderItem.hasOwnProperty('p') && borderItem.p.length > 0) {
+                                if (borderItem.p.indexOf(':') >= 0) {
+                                    let cellRangeArr = borderItem.p.split(':')
+                                    let cellPrev = cellRangeArr[0]
+                                    let cellNext = cellRangeArr[1]
+                                    let cellPrevColStr = cellPrev.replace(/[0-9]/g, '')
+                                    let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/ig, ''))
+                                    let cellNextColStr = cellNext.replace(/[0-9]/g, '')
+                                    let cellNextRow = parseInt(cellNext.replace(/[^0-9]/ig, ''))
+                                    if (row! + 1 < Math.min(cellPrevRow, cellNextRow)) {
+                                        cellPrevRow -= 1
+                                        cellNextRow -= 1
+                                    } else if ((row! + 1 >= cellPrevRow && row! + 1 <= cellNextRow) || row! + 1 >= cellNextRow && row! + 1 <= cellPrevRow) {
+                                        if (cellNextRow > cellPrevRow) {
+                                            cellNextRow -= 1
+                                        } else {
+                                            cellPrevRow -= 1
+                                        }
+                                    }
+                                    bordersNew.push(Object.assign({}, borderItem, {p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow}))
+                                } else {
+                                    let cellColStr = borderItem.p.replace(/[0-9]/g, '')
+                                    let cellRow = parseInt(borderItem.p.replace(/[^0-9]/ig, ''))
+                                    if (row! + 1 < cellRow) {
+                                        cellRow -= 1
+                                        bordersNew.push(Object.assign({}, borderItem, {p: cellColStr + cellRow}))
+                                    } else if (row! + 1 > cellRow) {
+                                        bordersNew.push(Object.assign({}, borderItem, {p: cellColStr + cellRow}))
+                                    }
+                                }
+                            }
+                        } else if (borderItem.hasOwnProperty('type') && borderItem.type === 'columns') {
+                            bordersNew.push(Object.assign({}, borderItem))
+                        }
+                    })
+                    $vmaFormulaGrid.reactiveData.borders = bordersNew
+                }
 
                 if ($vmaFormulaGrid.reactiveData.currentArea
                     && $vmaFormulaGrid.reactiveData.currentArea.start !== null
