@@ -1534,6 +1534,82 @@ export default defineComponent({
                 })
                 gridReactiveData.columnWidthsChanged = gridColumnsWidthChangedNew
 
+                // bgc
+
+                // fgc
+
+                // borders
+                if ($vmaFormulaGrid.reactiveData.borders && $vmaFormulaGrid.reactiveData.borders.length > 0) {
+                    const bordersNew: Record<string, any>[] = []
+                    $vmaFormulaGrid.reactiveData.borders.forEach((borderItem: any) => {
+                        if (borderItem.hasOwnProperty('type') && (borderItem.type === 'columns' || borderItem.type === 'cells')) {
+                            if (borderItem.type === 'columns' && borderItem.hasOwnProperty('p') && borderItem.p.length > 0) {
+                                const posTemp: any[] = []
+                                borderItem.p.forEach((borderItemPos: string) => {
+                                    if (borderItemPos.indexOf(':') >= 0) {
+                                        let columnRangeArr: any[] = borderItemPos.split(':')
+                                        columnRangeArr = columnRangeArr.map((col: string) => {
+                                            return getColumnCount(col)
+                                        })
+                                        let columnStart = Math.min(...columnRangeArr)
+                                        let columnEnd = Math.max(...columnRangeArr)
+                                        if (col! + 1 <= columnStart) {
+                                            columnStart += 1
+                                            columnEnd += 1
+                                        } else if (col! + 1 > columnStart && col! + 1 <= columnEnd) {
+                                            columnEnd += 1
+                                        }
+                                        posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd))
+                                    } else {
+                                        if (col! + 1 <= getColumnCount(borderItemPos)) {
+                                            posTemp.push(getColumnSymbol(getColumnCount(borderItemPos) + 1))
+                                        } else {
+                                            posTemp.push(borderItemPos)
+                                        }
+                                    }
+                                })
+                                if (posTemp.length > 0) {
+                                    bordersNew.push(Object.assign({}, borderItem, {p: posTemp}))
+                                }
+                            }
+                            if (borderItem.type === 'cells' && borderItem.hasOwnProperty('p') && borderItem.p.length > 0) {
+                                if (borderItem.p.indexOf(':') >= 0) {
+                                    let cellRangeArr = borderItem.p.split(':')
+                                    let cellPrev = cellRangeArr[0]
+                                    let cellNext = cellRangeArr[1]
+                                    let cellPrevColStr = cellPrev.replace(/[0-9]/g, '')
+                                    let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/ig, ''))
+                                    let cellNextColStr = cellNext.replace(/[0-9]/g, '')
+                                    let cellNextRow = parseInt(cellNext.replace(/[^0-9]/ig, ''))
+                                    if (col! + 1 <= Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                        cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1)
+                                        cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1)
+                                    } else if ((col! + 1 > getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) || col! + 1 > getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr)) {
+                                        if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
+                                            cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1)
+                                        } else {
+                                            cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1)
+                                        }
+                                    }
+                                    bordersNew.push(Object.assign({}, borderItem, {p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow}))
+                                } else {
+                                    let cellColStr = borderItem.p.replace(/[0-9]/g, '')
+                                    let cellRow = parseInt(borderItem.p.replace(/[^0-9]/ig, ''))
+                                    if (col! + 1 <= getColumnCount(cellColStr)) {
+                                        cellColStr = getColumnSymbol(getColumnCount(cellColStr) + 1)
+                                        bordersNew.push(Object.assign({}, borderItem, {p: cellColStr + cellRow}))
+                                    } else {
+                                        bordersNew.push(Object.assign({}, borderItem, {p: cellColStr + cellRow}))
+                                    }
+                                }
+                            }
+                        } else if (borderItem.hasOwnProperty('type') && borderItem.type === 'rows') {
+                            bordersNew.push(Object.assign({}, borderItem))
+                        }
+                    })
+                    $vmaFormulaGrid.reactiveData.borders = bordersNew
+                }
+
                 const mergesNew: Record<string, any> = {}
                 Object.keys(gridReactiveData.merges).map((key) => {
                     const crArr = key.split(':')
@@ -1580,6 +1656,83 @@ export default defineComponent({
                     return null
                 })
                 gridReactiveData.rowHeightsChanged = gridRowsHeightChangedNew
+
+                // bgc
+
+                // fgc
+
+                // borders
+                if ($vmaFormulaGrid.reactiveData.borders && $vmaFormulaGrid.reactiveData.borders.length > 0) {
+                    const bordersNew: Record<string, any>[] = []
+                    $vmaFormulaGrid.reactiveData.borders.forEach((borderItem: any) => {
+                        if (borderItem.hasOwnProperty('type') && (borderItem.type === 'rows' || borderItem.type === 'cells')) {
+                            if (borderItem.type === 'rows' && borderItem.hasOwnProperty('p') && borderItem.p.length > 0) {
+                                const posTemp: any[] = []
+                                borderItem.p.forEach((borderItemPos: string | number) => {
+                                    if (typeof borderItemPos === 'string' && borderItemPos.indexOf(':') >= 0) {
+                                        let rowRangeArr: any[] = borderItemPos.split(':')
+                                        rowRangeArr = rowRangeArr.map(Number)
+                                        let rowStart = Math.min(...rowRangeArr)
+                                        let rowEnd = Math.max(...rowRangeArr)
+                                        if (row! + 1 <= rowStart) {
+                                            rowStart += 1
+                                            rowEnd += 1
+                                        } else if (row! + 1 > rowStart && row! + 1 <= rowEnd) {
+                                            rowEnd += 1
+                                        }
+                                        if (rowEnd >= rowStart) {
+                                            posTemp.push('' + rowStart + ':' + rowEnd)
+                                        }
+                                    } else if (typeof borderItemPos === 'number') {
+                                        if (row! + 1 <= borderItemPos) {
+                                            posTemp.push(borderItemPos + 1)
+                                        } else if (row! + 1 > borderItemPos) {
+                                            posTemp.push(borderItemPos)
+                                        }
+                                    }
+                                })
+                                if (posTemp.length > 0) {
+                                    bordersNew.push(Object.assign({}, borderItem, {p: posTemp}))
+                                }
+                            }
+                            if (borderItem.type === 'cells' && borderItem.hasOwnProperty('p') && borderItem.p.length > 0) {
+                                if (borderItem.p.indexOf(':') >= 0) {
+                                    let cellRangeArr = borderItem.p.split(':')
+                                    let cellPrev = cellRangeArr[0]
+                                    let cellNext = cellRangeArr[1]
+                                    let cellPrevColStr = cellPrev.replace(/[0-9]/g, '')
+                                    let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/ig, ''))
+                                    let cellNextColStr = cellNext.replace(/[0-9]/g, '')
+                                    let cellNextRow = parseInt(cellNext.replace(/[^0-9]/ig, ''))
+                                    if (row! + 1 <= Math.min(cellPrevRow, cellNextRow)) {
+                                        cellPrevRow += 1
+                                        cellNextRow += 1
+                                    } else if ((row! + 1 > cellPrevRow && row! + 1 <= cellNextRow) || row! + 1 > cellNextRow && row! + 1 <= cellPrevRow) {
+                                        if (cellNextRow > cellPrevRow) {
+                                            cellNextRow += 1
+                                        } else {
+                                            cellPrevRow += 1
+                                        }
+                                    }
+                                    bordersNew.push(Object.assign({}, borderItem, {p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow}))
+                                } else {
+                                    let cellColStr = borderItem.p.replace(/[0-9]/g, '')
+                                    let cellRow = parseInt(borderItem.p.replace(/[^0-9]/ig, ''))
+                                    if (row! + 1 <= cellRow) {
+                                        cellRow += 1
+                                        bordersNew.push(Object.assign({}, borderItem, {p: cellColStr + cellRow}))
+                                    } else if (row! + 1 > cellRow) {
+                                        bordersNew.push(Object.assign({}, borderItem, {p: cellColStr + cellRow}))
+                                    }
+                                }
+                            }
+                        } else if (borderItem.hasOwnProperty('type') && borderItem.type === 'columns') {
+                            bordersNew.push(Object.assign({}, borderItem))
+                        }
+                    })
+                    $vmaFormulaGrid.reactiveData.borders = bordersNew
+                    console.log($vmaFormulaGrid.reactiveData.borders)
+                }
 
                 const mergesNew: Record<string, any> = {}
                 Object.keys(gridReactiveData.merges).map((key) => {
