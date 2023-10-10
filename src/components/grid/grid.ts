@@ -1731,7 +1731,6 @@ export default defineComponent({
                         }
                     })
                     $vmaFormulaGrid.reactiveData.borders = bordersNew
-                    console.log($vmaFormulaGrid.reactiveData.borders)
                 }
 
                 const mergesNew: Record<string, any> = {}
