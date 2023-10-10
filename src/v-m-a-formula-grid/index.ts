@@ -2,7 +2,7 @@ import {VmaFormulaGridCore} from "../../types";
 import hooks from "./hooks.ts";
 import VmaFormulaGridCompContextMenuHook from '../components/context-menu/hooks'
 
-export const version = '1.0.23'
+export const version = '1.0.24'
 
 const installedPlugins: any[] = []
 
