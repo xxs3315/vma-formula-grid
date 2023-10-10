@@ -1259,19 +1259,19 @@ export default defineComponent({
                                         })
                                         let columnStart = Math.min(...columnRangeArr)
                                         let columnEnd = Math.max(...columnRangeArr)
-                                        if (col! < columnStart) {
+                                        if (col! + 1 < columnStart) {
                                             columnStart -= 1
                                             columnEnd -= 1
-                                        } else if (col! >= columnStart && col! <= columnEnd) {
+                                        } else if (col! + 1 >= columnStart && col! + 1 <= columnEnd) {
                                             columnEnd -= 1
                                         }
                                         if (columnEnd >= columnStart) {
                                             posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd))
                                         }
                                     } else {
-                                        if (col! < getColumnCount(borderItemPos)) {
+                                        if (col! + 1 < getColumnCount(borderItemPos)) {
                                             posTemp.push(getColumnSymbol(getColumnCount(borderItemPos) - 1))
-                                        } else if (col! > getColumnCount(borderItemPos)) {
+                                        } else if (col! + 1 > getColumnCount(borderItemPos)) {
                                             posTemp.push(borderItemPos)
                                         }
                                     }
@@ -1289,10 +1289,10 @@ export default defineComponent({
                                     let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/ig, ''))
                                     let cellNextColStr = cellNext.replace(/[0-9]/g, '')
                                     let cellNextRow = parseInt(cellNext.replace(/[^0-9]/ig, ''))
-                                    if (col! < Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                    if (col! + 1 < Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
                                         cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) - 1)
                                         cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1)
-                                    } else if ((col! >= getColumnCount(cellPrevColStr) && col! <= getColumnCount(cellNextColStr)) || col! >= getColumnCount(cellNextColStr) && col! <= getColumnCount(cellPrevColStr)) {
+                                    } else if ((col! + 1 >= getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) || col! + 1 >= getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr)) {
                                         if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
                                             cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1)
                                         } else {
@@ -1303,10 +1303,10 @@ export default defineComponent({
                                 } else {
                                     let cellColStr = borderItem.p.replace(/[0-9]/g, '')
                                     let cellRow = parseInt(borderItem.p.replace(/[^0-9]/ig, ''))
-                                    if (col! < getColumnCount(cellColStr)) {
+                                    if (col! + 1 < getColumnCount(cellColStr)) {
                                         cellColStr = getColumnSymbol(getColumnCount(cellColStr) - 1)
                                         bordersNew.push(Object.assign({}, borderItem, {p: cellColStr + cellRow}))
-                                    } else if (col! > getColumnCount(cellColStr)) {
+                                    } else if (col! + 1 > getColumnCount(cellColStr)) {
                                         bordersNew.push(Object.assign({}, borderItem, {p: cellColStr + cellRow}))
                                     }
                                 }
