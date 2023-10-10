@@ -1240,9 +1240,153 @@ export default defineComponent({
                 })
                 gridReactiveData.merges = mergesNew
 
-                // bgc
-
-                // fgc
+                // bgc fgc
+                if ($vmaFormulaGrid.reactiveData.styles) {
+                    if ($vmaFormulaGrid.reactiveData.styles && $vmaFormulaGrid.reactiveData.styles.bgc && $vmaFormulaGrid.reactiveData.styles.bgc.length > 0) {
+                        const bgcNew: Record<string, any>[] = []
+                        $vmaFormulaGrid.reactiveData.borders.forEach((bgcItem: any) => {
+                            if (bgcItem.hasOwnProperty('type') && (bgcItem.type === 'columns' || bgcItem.type === 'cells')) {
+                                if (bgcItem.type === 'columns' && bgcItem.hasOwnProperty('p') && bgcItem.p.length > 0) {
+                                    const posTemp: any[] = []
+                                    bgcItem.p.forEach((bgcItemPos: string) => {
+                                        if (bgcItemPos.indexOf(':') >= 0) {
+                                            let columnRangeArr: any[] = bgcItemPos.split(':')
+                                            columnRangeArr = columnRangeArr.map((col: string) => {
+                                                return getColumnCount(col)
+                                            })
+                                            let columnStart = Math.min(...columnRangeArr)
+                                            let columnEnd = Math.max(...columnRangeArr)
+                                            if (col! + 1 < columnStart) {
+                                                columnStart -= 1
+                                                columnEnd -= 1
+                                            } else if (col! + 1 >= columnStart && col! + 1 <= columnEnd) {
+                                                columnEnd -= 1
+                                            }
+                                            if (columnEnd >= columnStart) {
+                                                posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd))
+                                            }
+                                        } else {
+                                            if (col! + 1 < getColumnCount(bgcItemPos)) {
+                                                posTemp.push(getColumnSymbol(getColumnCount(bgcItemPos) - 1))
+                                            } else if (col! + 1 > getColumnCount(bgcItemPos)) {
+                                                posTemp.push(bgcItemPos)
+                                            }
+                                        }
+                                    })
+                                    if (posTemp.length > 0) {
+                                        bgcNew.push(Object.assign({}, bgcItem, {p: posTemp}))
+                                    }
+                                }
+                                if (bgcItem.type === 'cells' && bgcItem.hasOwnProperty('p') && bgcItem.p.length > 0) {
+                                    if (bgcItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = bgcItem.p.split(':')
+                                        let cellPrev = cellRangeArr[0]
+                                        let cellNext = cellRangeArr[1]
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '')
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/ig, ''))
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '')
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/ig, ''))
+                                        if (col! + 1 < Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                            cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) - 1)
+                                            cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1)
+                                        } else if ((col! + 1 >= getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) || col! + 1 >= getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr)) {
+                                            if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
+                                                cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1)
+                                            } else {
+                                                cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) - 1)
+                                            }
+                                        }
+                                        bgcNew.push(Object.assign({}, bgcItem, {p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow}))
+                                    } else {
+                                        let cellColStr = bgcItem.p.replace(/[0-9]/g, '')
+                                        let cellRow = parseInt(bgcItem.p.replace(/[^0-9]/ig, ''))
+                                        if (col! + 1 < getColumnCount(cellColStr)) {
+                                            cellColStr = getColumnSymbol(getColumnCount(cellColStr) - 1)
+                                            bgcNew.push(Object.assign({}, bgcItem, {p: cellColStr + cellRow}))
+                                        } else if (col! + 1 > getColumnCount(cellColStr)) {
+                                            bgcNew.push(Object.assign({}, bgcItem, {p: cellColStr + cellRow}))
+                                        }
+                                    }
+                                }
+                            } else if (bgcItem.hasOwnProperty('type') && bgcItem.type === 'rows') {
+                                bgcNew.push(Object.assign({}, bgcItem))
+                            }
+                        })
+                        $vmaFormulaGrid.reactiveData.styles.bgc = bgcNew
+                    }
+                    if ($vmaFormulaGrid.reactiveData.styles && $vmaFormulaGrid.reactiveData.styles.fgc && $vmaFormulaGrid.reactiveData.styles.fgc.length > 0) {
+                        const fgcNew: Record<string, any>[] = []
+                        $vmaFormulaGrid.reactiveData.borders.forEach((fgcItem: any) => {
+                            if (fgcItem.hasOwnProperty('type') && (fgcItem.type === 'columns' || fgcItem.type === 'cells')) {
+                                if (fgcItem.type === 'columns' && fgcItem.hasOwnProperty('p') && fgcItem.p.length > 0) {
+                                    const posTemp: any[] = []
+                                    fgcItem.p.forEach((fgcItemPos: string) => {
+                                        if (fgcItemPos.indexOf(':') >= 0) {
+                                            let columnRangeArr: any[] = fgcItemPos.split(':')
+                                            columnRangeArr = columnRangeArr.map((col: string) => {
+                                                return getColumnCount(col)
+                                            })
+                                            let columnStart = Math.min(...columnRangeArr)
+                                            let columnEnd = Math.max(...columnRangeArr)
+                                            if (col! + 1 < columnStart) {
+                                                columnStart -= 1
+                                                columnEnd -= 1
+                                            } else if (col! + 1 >= columnStart && col! + 1 <= columnEnd) {
+                                                columnEnd -= 1
+                                            }
+                                            if (columnEnd >= columnStart) {
+                                                posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd))
+                                            }
+                                        } else {
+                                            if (col! + 1 < getColumnCount(fgcItemPos)) {
+                                                posTemp.push(getColumnSymbol(getColumnCount(fgcItemPos) - 1))
+                                            } else if (col! + 1 > getColumnCount(fgcItemPos)) {
+                                                posTemp.push(fgcItemPos)
+                                            }
+                                        }
+                                    })
+                                    if (posTemp.length > 0) {
+                                        fgcNew.push(Object.assign({}, fgcItem, {p: posTemp}))
+                                    }
+                                }
+                                if (fgcItem.type === 'cells' && fgcItem.hasOwnProperty('p') && fgcItem.p.length > 0) {
+                                    if (fgcItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = fgcItem.p.split(':')
+                                        let cellPrev = cellRangeArr[0]
+                                        let cellNext = cellRangeArr[1]
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '')
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/ig, ''))
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '')
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/ig, ''))
+                                        if (col! + 1 < Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                            cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) - 1)
+                                            cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1)
+                                        } else if ((col! + 1 >= getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) || col! + 1 >= getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr)) {
+                                            if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
+                                                cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1)
+                                            } else {
+                                                cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) - 1)
+                                            }
+                                        }
+                                        fgcNew.push(Object.assign({}, fgcItem, {p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow}))
+                                    } else {
+                                        let cellColStr = fgcItem.p.replace(/[0-9]/g, '')
+                                        let cellRow = parseInt(fgcItem.p.replace(/[^0-9]/ig, ''))
+                                        if (col! + 1 < getColumnCount(cellColStr)) {
+                                            cellColStr = getColumnSymbol(getColumnCount(cellColStr) - 1)
+                                            fgcNew.push(Object.assign({}, fgcItem, {p: cellColStr + cellRow}))
+                                        } else if (col! + 1 > getColumnCount(cellColStr)) {
+                                            fgcNew.push(Object.assign({}, fgcItem, {p: cellColStr + cellRow}))
+                                        }
+                                    }
+                                }
+                            } else if (fgcItem.hasOwnProperty('type') && fgcItem.type === 'rows') {
+                                fgcNew.push(Object.assign({}, fgcItem))
+                            }
+                        })
+                        $vmaFormulaGrid.reactiveData.styles.fgc = fgcNew
+                    }
+                }
 
                 // borders
                 if ($vmaFormulaGrid.reactiveData.borders && $vmaFormulaGrid.reactiveData.borders.length > 0) {
@@ -1399,9 +1543,149 @@ export default defineComponent({
                 })
                 gridReactiveData.merges = mergesNew
 
-                // bgc
-
-                // fgc
+                // bgc fgc
+                if ($vmaFormulaGrid.reactiveData.styles) {
+                    if ($vmaFormulaGrid.reactiveData.styles && $vmaFormulaGrid.reactiveData.styles.bgc && $vmaFormulaGrid.reactiveData.styles.bgc.length > 0) {
+                        const bgcNew: Record<string, any>[] = []
+                        $vmaFormulaGrid.reactiveData.styles.bgc.forEach((bgcItem: any) => {
+                            if (bgcItem.hasOwnProperty('type') && (bgcItem.type === 'rows' || bgcItem.type === 'cells')) {
+                                if (bgcItem.type === 'rows' && bgcItem.hasOwnProperty('p') && bgcItem.p.length > 0) {
+                                    const posTemp: any[] = []
+                                    bgcItem.p.forEach((bgcItemPos: string | number) => {
+                                        if (typeof bgcItemPos === 'string' && bgcItemPos.indexOf(':') >= 0) {
+                                            let rowRangeArr: any[] = bgcItemPos.split(':')
+                                            rowRangeArr = rowRangeArr.map(Number)
+                                            let rowStart = Math.min(...rowRangeArr)
+                                            let rowEnd = Math.max(...rowRangeArr)
+                                            if (row! + 1 < rowStart) {
+                                                rowStart -= 1
+                                                rowEnd -= 1
+                                            } else if (row! + 1 >= rowStart && row! + 1 <= rowEnd) {
+                                                rowEnd -= 1
+                                            }
+                                            if (rowEnd >= rowStart) {
+                                                posTemp.push('' + rowStart + ':' + rowEnd)
+                                            }
+                                        } else if (typeof bgcItemPos === 'number') {
+                                            if (row! + 1 < bgcItemPos) {
+                                                posTemp.push(bgcItemPos - 1)
+                                            } else if (row! + 1 > bgcItemPos) {
+                                                posTemp.push(bgcItemPos)
+                                            }
+                                        }
+                                    })
+                                    if (posTemp.length > 0) {
+                                        bgcNew.push(Object.assign({}, bgcItem, {p: posTemp}))
+                                    }
+                                }
+                                if (bgcItem.type === 'cells' && bgcItem.hasOwnProperty('p') && bgcItem.p.length > 0) {
+                                    if (bgcItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = bgcItem.p.split(':')
+                                        let cellPrev = cellRangeArr[0]
+                                        let cellNext = cellRangeArr[1]
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '')
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/ig, ''))
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '')
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/ig, ''))
+                                        if (row! + 1 < Math.min(cellPrevRow, cellNextRow)) {
+                                            cellPrevRow -= 1
+                                            cellNextRow -= 1
+                                        } else if ((row! + 1 >= cellPrevRow && row! + 1 <= cellNextRow) || row! + 1 >= cellNextRow && row! + 1 <= cellPrevRow) {
+                                            if (cellNextRow > cellPrevRow) {
+                                                cellNextRow -= 1
+                                            } else {
+                                                cellPrevRow -= 1
+                                            }
+                                        }
+                                        bgcNew.push(Object.assign({}, bgcItem, {p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow}))
+                                    } else {
+                                        let cellColStr = bgcItem.p.replace(/[0-9]/g, '')
+                                        let cellRow = parseInt(bgcItem.p.replace(/[^0-9]/ig, ''))
+                                        if (row! + 1 < cellRow) {
+                                            cellRow -= 1
+                                            bgcNew.push(Object.assign({}, bgcItem, {p: cellColStr + cellRow}))
+                                        } else if (row! + 1 > cellRow) {
+                                            bgcNew.push(Object.assign({}, bgcItem, {p: cellColStr + cellRow}))
+                                        }
+                                    }
+                                }
+                            } else if (bgcItem.hasOwnProperty('type') && bgcItem.type === 'columns') {
+                                bgcNew.push(Object.assign({}, bgcItem))
+                            }
+                        })
+                        $vmaFormulaGrid.reactiveData.styles.bgc = bgcNew
+                    }
+                    if ($vmaFormulaGrid.reactiveData.styles && $vmaFormulaGrid.reactiveData.styles.fgc && $vmaFormulaGrid.reactiveData.styles.fgc.length > 0) {
+                        const fgcNew: Record<string, any>[] = []
+                        $vmaFormulaGrid.reactiveData.styles.fgc.forEach((fgcItem: any) => {
+                            if (fgcItem.hasOwnProperty('type') && (fgcItem.type === 'rows' || fgcItem.type === 'cells')) {
+                                if (fgcItem.type === 'rows' && fgcItem.hasOwnProperty('p') && fgcItem.p.length > 0) {
+                                    const posTemp: any[] = []
+                                    fgcItem.p.forEach((fgcItemPos: string | number) => {
+                                        if (typeof fgcItemPos === 'string' && fgcItemPos.indexOf(':') >= 0) {
+                                            let rowRangeArr: any[] = fgcItemPos.split(':')
+                                            rowRangeArr = rowRangeArr.map(Number)
+                                            let rowStart = Math.min(...rowRangeArr)
+                                            let rowEnd = Math.max(...rowRangeArr)
+                                            if (row! + 1 < rowStart) {
+                                                rowStart -= 1
+                                                rowEnd -= 1
+                                            } else if (row! + 1 >= rowStart && row! + 1 <= rowEnd) {
+                                                rowEnd -= 1
+                                            }
+                                            if (rowEnd >= rowStart) {
+                                                posTemp.push('' + rowStart + ':' + rowEnd)
+                                            }
+                                        } else if (typeof fgcItemPos === 'number') {
+                                            if (row! + 1 < fgcItemPos) {
+                                                posTemp.push(fgcItemPos - 1)
+                                            } else if (row! + 1 > fgcItemPos) {
+                                                posTemp.push(fgcItemPos)
+                                            }
+                                        }
+                                    })
+                                    if (posTemp.length > 0) {
+                                        fgcNew.push(Object.assign({}, fgcItem, {p: posTemp}))
+                                    }
+                                }
+                                if (fgcItem.type === 'cells' && fgcItem.hasOwnProperty('p') && fgcItem.p.length > 0) {
+                                    if (fgcItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = fgcItem.p.split(':')
+                                        let cellPrev = cellRangeArr[0]
+                                        let cellNext = cellRangeArr[1]
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '')
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/ig, ''))
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '')
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/ig, ''))
+                                        if (row! + 1 < Math.min(cellPrevRow, cellNextRow)) {
+                                            cellPrevRow -= 1
+                                            cellNextRow -= 1
+                                        } else if ((row! + 1 >= cellPrevRow && row! + 1 <= cellNextRow) || row! + 1 >= cellNextRow && row! + 1 <= cellPrevRow) {
+                                            if (cellNextRow > cellPrevRow) {
+                                                cellNextRow -= 1
+                                            } else {
+                                                cellPrevRow -= 1
+                                            }
+                                        }
+                                        fgcNew.push(Object.assign({}, fgcItem, {p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow}))
+                                    } else {
+                                        let cellColStr = fgcItem.p.replace(/[0-9]/g, '')
+                                        let cellRow = parseInt(fgcItem.p.replace(/[^0-9]/ig, ''))
+                                        if (row! + 1 < cellRow) {
+                                            cellRow -= 1
+                                            fgcNew.push(Object.assign({}, fgcItem, {p: cellColStr + cellRow}))
+                                        } else if (row! + 1 > cellRow) {
+                                            fgcNew.push(Object.assign({}, fgcItem, {p: cellColStr + cellRow}))
+                                        }
+                                    }
+                                }
+                            } else if (fgcItem.hasOwnProperty('type') && fgcItem.type === 'columns') {
+                                fgcNew.push(Object.assign({}, fgcItem))
+                            }
+                        })
+                        $vmaFormulaGrid.reactiveData.styles.fgc = fgcNew
+                    }
+                }
 
                 // borders
                 if ($vmaFormulaGrid.reactiveData.borders && $vmaFormulaGrid.reactiveData.borders.length > 0) {
@@ -1534,9 +1818,150 @@ export default defineComponent({
                 })
                 gridReactiveData.columnWidthsChanged = gridColumnsWidthChangedNew
 
-                // bgc
+                // bgc fgc
+                if ($vmaFormulaGrid.reactiveData.styles) {
+                    if ($vmaFormulaGrid.reactiveData.styles && $vmaFormulaGrid.reactiveData.styles.bgc && $vmaFormulaGrid.reactiveData.styles.bgc.length > 0) {
+                        const bgcNew: Record<string, any>[] = []
+                        $vmaFormulaGrid.reactiveData.styles.bgc.forEach((bgcItem: any) => {
+                            if (bgcItem.hasOwnProperty('type') && (bgcItem.type === 'columns' || bgcItem.type === 'cells')) {
+                                if (bgcItem.type === 'columns' && bgcItem.hasOwnProperty('p') && bgcItem.p.length > 0) {
+                                    const posTemp: any[] = []
+                                    bgcItem.p.forEach((bgcItemPos: string) => {
+                                        if (bgcItemPos.indexOf(':') >= 0) {
+                                            let columnRangeArr: any[] = bgcItemPos.split(':')
+                                            columnRangeArr = columnRangeArr.map((col: string) => {
+                                                return getColumnCount(col)
+                                            })
+                                            let columnStart = Math.min(...columnRangeArr)
+                                            let columnEnd = Math.max(...columnRangeArr)
+                                            if (col! + 1 <= columnStart) {
+                                                columnStart += 1
+                                                columnEnd += 1
+                                            } else if (col! + 1 > columnStart && col! + 1 <= columnEnd) {
+                                                columnEnd += 1
+                                            }
+                                            posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd))
+                                        } else {
+                                            if (col! + 1 <= getColumnCount(bgcItemPos)) {
+                                                posTemp.push(getColumnSymbol(getColumnCount(bgcItemPos) + 1))
+                                            } else {
+                                                posTemp.push(bgcItemPos)
+                                            }
+                                        }
+                                    })
+                                    if (posTemp.length > 0) {
+                                        bgcNew.push(Object.assign({}, bgcItem, {p: posTemp}))
+                                    }
+                                }
+                                if (bgcItem.type === 'cells' && bgcItem.hasOwnProperty('p') && bgcItem.p.length > 0) {
+                                    if (bgcItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = bgcItem.p.split(':')
+                                        let cellPrev = cellRangeArr[0]
+                                        let cellNext = cellRangeArr[1]
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '')
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/ig, ''))
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '')
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/ig, ''))
+                                        if (col! + 1 <= Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                            cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1)
+                                            cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1)
+                                        } else if ((col! + 1 > getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) || col! + 1 > getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr)) {
+                                            if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
+                                                cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1)
+                                            } else {
+                                                cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1)
+                                            }
+                                        }
+                                        bgcNew.push(Object.assign({}, bgcItem, {p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow}))
+                                    } else {
+                                        let cellColStr = bgcItem.p.replace(/[0-9]/g, '')
+                                        let cellRow = parseInt(bgcItem.p.replace(/[^0-9]/ig, ''))
+                                        if (col! + 1 <= getColumnCount(cellColStr)) {
+                                            cellColStr = getColumnSymbol(getColumnCount(cellColStr) + 1)
+                                            bgcNew.push(Object.assign({}, bgcItem, {p: cellColStr + cellRow}))
+                                        } else {
+                                            bgcNew.push(Object.assign({}, bgcItem, {p: cellColStr + cellRow}))
+                                        }
+                                    }
+                                }
+                            } else if (bgcItem.hasOwnProperty('type') && bgcItem.type === 'rows') {
+                                bgcNew.push(Object.assign({}, bgcItem))
+                            }
+                        })
+                        $vmaFormulaGrid.reactiveData.styles.bgc = bgcNew
+                    }
+                    if ($vmaFormulaGrid.reactiveData.styles && $vmaFormulaGrid.reactiveData.styles.fgc && $vmaFormulaGrid.reactiveData.styles.fgc.length > 0) {
+                        const fgcNew: Record<string, any>[] = []
+                        $vmaFormulaGrid.reactiveData.styles.fgc.forEach((fgcItem: any) => {
+                            if (fgcItem.hasOwnProperty('type') && (fgcItem.type === 'columns' || fgcItem.type === 'cells')) {
+                                if (fgcItem.type === 'columns' && fgcItem.hasOwnProperty('p') && fgcItem.p.length > 0) {
+                                    const posTemp: any[] = []
+                                    fgcItem.p.forEach((fgcItemPos: string) => {
+                                        if (fgcItemPos.indexOf(':') >= 0) {
+                                            let columnRangeArr: any[] = fgcItemPos.split(':')
+                                            columnRangeArr = columnRangeArr.map((col: string) => {
+                                                return getColumnCount(col)
+                                            })
+                                            let columnStart = Math.min(...columnRangeArr)
+                                            let columnEnd = Math.max(...columnRangeArr)
+                                            if (col! + 1 <= columnStart) {
+                                                columnStart += 1
+                                                columnEnd += 1
+                                            } else if (col! + 1 > columnStart && col! + 1 <= columnEnd) {
+                                                columnEnd += 1
+                                            }
+                                            posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd))
+                                        } else {
+                                            if (col! + 1 <= getColumnCount(fgcItemPos)) {
+                                                posTemp.push(getColumnSymbol(getColumnCount(fgcItemPos) + 1))
+                                            } else {
+                                                posTemp.push(fgcItemPos)
+                                            }
+                                        }
+                                    })
+                                    if (posTemp.length > 0) {
+                                        fgcNew.push(Object.assign({}, fgcItem, {p: posTemp}))
+                                    }
+                                }
+                                if (fgcItem.type === 'cells' && fgcItem.hasOwnProperty('p') && fgcItem.p.length > 0) {
+                                    if (fgcItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = fgcItem.p.split(':')
+                                        let cellPrev = cellRangeArr[0]
+                                        let cellNext = cellRangeArr[1]
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '')
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/ig, ''))
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '')
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/ig, ''))
+                                        if (col! + 1 <= Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                            cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1)
+                                            cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1)
+                                        } else if ((col! + 1 > getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) || col! + 1 > getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr)) {
+                                            if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
+                                                cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1)
+                                            } else {
+                                                cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1)
+                                            }
+                                        }
+                                        fgcNew.push(Object.assign({}, fgcItem, {p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow}))
+                                    } else {
+                                        let cellColStr = fgcItem.p.replace(/[0-9]/g, '')
+                                        let cellRow = parseInt(fgcItem.p.replace(/[^0-9]/ig, ''))
+                                        if (col! + 1 <= getColumnCount(cellColStr)) {
+                                            cellColStr = getColumnSymbol(getColumnCount(cellColStr) + 1)
+                                            fgcNew.push(Object.assign({}, fgcItem, {p: cellColStr + cellRow}))
+                                        } else {
+                                            fgcNew.push(Object.assign({}, fgcItem, {p: cellColStr + cellRow}))
+                                        }
+                                    }
+                                }
+                            } else if (fgcItem.hasOwnProperty('type') && fgcItem.type === 'rows') {
+                                fgcNew.push(Object.assign({}, fgcItem))
+                            }
+                        })
+                        $vmaFormulaGrid.reactiveData.styles.fgc = fgcNew
+                    }
+                }
 
-                // fgc
 
                 // borders
                 if ($vmaFormulaGrid.reactiveData.borders && $vmaFormulaGrid.reactiveData.borders.length > 0) {
@@ -1657,9 +2082,149 @@ export default defineComponent({
                 })
                 gridReactiveData.rowHeightsChanged = gridRowsHeightChangedNew
 
-                // bgc
-
-                // fgc
+                // bgc fgc
+                if ($vmaFormulaGrid.reactiveData.styles) {
+                    if ($vmaFormulaGrid.reactiveData.styles && $vmaFormulaGrid.reactiveData.styles.bgc && $vmaFormulaGrid.reactiveData.styles.bgc.length > 0) {
+                        const bgcNew: Record<string, any>[] = []
+                        $vmaFormulaGrid.reactiveData.styles.bgc.forEach((bgcItem: any) => {
+                            if (bgcItem.hasOwnProperty('type') && (bgcItem.type === 'rows' || bgcItem.type === 'cells')) {
+                                if (bgcItem.type === 'rows' && bgcItem.hasOwnProperty('p') && bgcItem.p.length > 0) {
+                                    const posTemp: any[] = []
+                                    bgcItem.p.forEach((bgcItemPos: string | number) => {
+                                        if (typeof bgcItemPos === 'string' && bgcItemPos.indexOf(':') >= 0) {
+                                            let rowRangeArr: any[] = bgcItemPos.split(':')
+                                            rowRangeArr = rowRangeArr.map(Number)
+                                            let rowStart = Math.min(...rowRangeArr)
+                                            let rowEnd = Math.max(...rowRangeArr)
+                                            if (row! + 1 <= rowStart) {
+                                                rowStart += 1
+                                                rowEnd += 1
+                                            } else if (row! + 1 > rowStart && row! + 1 <= rowEnd) {
+                                                rowEnd += 1
+                                            }
+                                            if (rowEnd >= rowStart) {
+                                                posTemp.push('' + rowStart + ':' + rowEnd)
+                                            }
+                                        } else if (typeof bgcItemPos === 'number') {
+                                            if (row! + 1 <= bgcItemPos) {
+                                                posTemp.push(bgcItemPos + 1)
+                                            } else if (row! + 1 > bgcItemPos) {
+                                                posTemp.push(bgcItemPos)
+                                            }
+                                        }
+                                    })
+                                    if (posTemp.length > 0) {
+                                        bgcNew.push(Object.assign({}, bgcItem, {p: posTemp}))
+                                    }
+                                }
+                                if (bgcItem.type === 'cells' && bgcItem.hasOwnProperty('p') && bgcItem.p.length > 0) {
+                                    if (bgcItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = bgcItem.p.split(':')
+                                        let cellPrev = cellRangeArr[0]
+                                        let cellNext = cellRangeArr[1]
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '')
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/ig, ''))
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '')
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/ig, ''))
+                                        if (row! + 1 <= Math.min(cellPrevRow, cellNextRow)) {
+                                            cellPrevRow += 1
+                                            cellNextRow += 1
+                                        } else if ((row! + 1 > cellPrevRow && row! + 1 <= cellNextRow) || row! + 1 > cellNextRow && row! + 1 <= cellPrevRow) {
+                                            if (cellNextRow > cellPrevRow) {
+                                                cellNextRow += 1
+                                            } else {
+                                                cellPrevRow += 1
+                                            }
+                                        }
+                                        bgcNew.push(Object.assign({}, bgcItem, {p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow}))
+                                    } else {
+                                        let cellColStr = bgcItem.p.replace(/[0-9]/g, '')
+                                        let cellRow = parseInt(bgcItem.p.replace(/[^0-9]/ig, ''))
+                                        if (row! + 1 <= cellRow) {
+                                            cellRow += 1
+                                            bgcNew.push(Object.assign({}, bgcItem, {p: cellColStr + cellRow}))
+                                        } else if (row! + 1 > cellRow) {
+                                            bgcNew.push(Object.assign({}, bgcItem, {p: cellColStr + cellRow}))
+                                        }
+                                    }
+                                }
+                            } else if (bgcItem.hasOwnProperty('type') && bgcItem.type === 'columns') {
+                                bgcNew.push(Object.assign({}, bgcItem))
+                            }
+                        })
+                        $vmaFormulaGrid.reactiveData.styles.bgc = bgcNew
+                    }
+                    if ($vmaFormulaGrid.reactiveData.styles && $vmaFormulaGrid.reactiveData.styles.fgc && $vmaFormulaGrid.reactiveData.styles.fgc.length > 0) {
+                        const fgcNew: Record<string, any>[] = []
+                        $vmaFormulaGrid.reactiveData.styles.fgc.forEach((fgcItem: any) => {
+                            if (fgcItem.hasOwnProperty('type') && (fgcItem.type === 'rows' || fgcItem.type === 'cells')) {
+                                if (fgcItem.type === 'rows' && fgcItem.hasOwnProperty('p') && fgcItem.p.length > 0) {
+                                    const posTemp: any[] = []
+                                    fgcItem.p.forEach((fgcItemPos: string | number) => {
+                                        if (typeof fgcItemPos === 'string' && fgcItemPos.indexOf(':') >= 0) {
+                                            let rowRangeArr: any[] = fgcItemPos.split(':')
+                                            rowRangeArr = rowRangeArr.map(Number)
+                                            let rowStart = Math.min(...rowRangeArr)
+                                            let rowEnd = Math.max(...rowRangeArr)
+                                            if (row! + 1 <= rowStart) {
+                                                rowStart += 1
+                                                rowEnd += 1
+                                            } else if (row! + 1 > rowStart && row! + 1 <= rowEnd) {
+                                                rowEnd += 1
+                                            }
+                                            if (rowEnd >= rowStart) {
+                                                posTemp.push('' + rowStart + ':' + rowEnd)
+                                            }
+                                        } else if (typeof fgcItemPos === 'number') {
+                                            if (row! + 1 <= fgcItemPos) {
+                                                posTemp.push(fgcItemPos + 1)
+                                            } else if (row! + 1 > fgcItemPos) {
+                                                posTemp.push(fgcItemPos)
+                                            }
+                                        }
+                                    })
+                                    if (posTemp.length > 0) {
+                                        fgcNew.push(Object.assign({}, fgcItem, {p: posTemp}))
+                                    }
+                                }
+                                if (fgcItem.type === 'cells' && fgcItem.hasOwnProperty('p') && fgcItem.p.length > 0) {
+                                    if (fgcItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = fgcItem.p.split(':')
+                                        let cellPrev = cellRangeArr[0]
+                                        let cellNext = cellRangeArr[1]
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '')
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/ig, ''))
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '')
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/ig, ''))
+                                        if (row! + 1 <= Math.min(cellPrevRow, cellNextRow)) {
+                                            cellPrevRow += 1
+                                            cellNextRow += 1
+                                        } else if ((row! + 1 > cellPrevRow && row! + 1 <= cellNextRow) || row! + 1 > cellNextRow && row! + 1 <= cellPrevRow) {
+                                            if (cellNextRow > cellPrevRow) {
+                                                cellNextRow += 1
+                                            } else {
+                                                cellPrevRow += 1
+                                            }
+                                        }
+                                        fgcNew.push(Object.assign({}, fgcItem, {p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow}))
+                                    } else {
+                                        let cellColStr = fgcItem.p.replace(/[0-9]/g, '')
+                                        let cellRow = parseInt(fgcItem.p.replace(/[^0-9]/ig, ''))
+                                        if (row! + 1 <= cellRow) {
+                                            cellRow += 1
+                                            fgcNew.push(Object.assign({}, fgcItem, {p: cellColStr + cellRow}))
+                                        } else if (row! + 1 > cellRow) {
+                                            fgcNew.push(Object.assign({}, fgcItem, {p: cellColStr + cellRow}))
+                                        }
+                                    }
+                                }
+                            } else if (fgcItem.hasOwnProperty('type') && fgcItem.type === 'columns') {
+                                fgcNew.push(Object.assign({}, fgcItem))
+                            }
+                        })
+                        $vmaFormulaGrid.reactiveData.styles.fgc = fgcNew
+                    }
+                }
 
                 // borders
                 if ($vmaFormulaGrid.reactiveData.borders && $vmaFormulaGrid.reactiveData.borders.length > 0) {

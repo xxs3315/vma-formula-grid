@@ -1369,12 +1369,34 @@ export function calcCellStyles(col: number, row: number, styles: { bgc: any[]; f
         let bg = ''
         styles.bgc.forEach(item => {
             if (item.type === 'columns') {
-                if (item.p && item.p.indexOf(getColumnSymbol(col + 1)) >= 0) {
-                    bg = item.color === 'none' ? '' : item.color
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string) => {
+                        if (pos.indexOf(':') >= 0) {
+                            const columnPosArr = pos.split(':')
+                            if (col + 1 >= getColumnCount(columnPosArr[0]) && col + 1 <= getColumnCount(columnPosArr[1])) {
+                                bg = !item.hasOwnProperty('color') || item.color === 'none' ? '' : item.color
+                            }
+                        } else {
+                            if (getColumnSymbol(col + 1) === pos.toUpperCase()) {
+                                bg = !item.hasOwnProperty('color') || item.color === 'none' ? '' : item.color
+                            }
+                        }
+                    })
                 }
             } else if (item.type === 'rows') {
-                if (item.p && item.p.indexOf(row + 1) >= 0) {
-                    bg = item.color === 'none' ? '' : item.color
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string | number) => {
+                        if (typeof pos === 'string' && pos.indexOf(':') >= 0) {
+                            let rowPosArr: any[] = pos.split(':')
+                            rowPosArr = rowPosArr.map(Number)
+                            if (row + 1 >= rowPosArr[0] && row + 1 <= rowPosArr[1]) {
+                                bg = !item.hasOwnProperty('color') || item.color === 'none' ? '' : item.color
+                            }
+                        }
+                        if (typeof pos === 'number' && row + 1 === pos) {
+                            bg = !item.hasOwnProperty('color') || item.color === 'none' ? '' : item.color
+                        }
+                    })
                 }
             } else if (item.type === 'cells') {
                 if (item.p.indexOf(':') >= 0) {
@@ -1403,12 +1425,34 @@ export function calcCellStyles(col: number, row: number, styles: { bgc: any[]; f
         let fg = ''
         styles.fgc.forEach(item => {
             if (item.type === 'columns') {
-                if (item.p && item.p.indexOf(getColumnSymbol(col + 1)) >= 0) {
-                    fg = item.color === 'none' ? '' : item.color
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string) => {
+                        if (pos.indexOf(':') >= 0) {
+                            const columnPosArr = pos.split(':')
+                            if (col + 1 >= getColumnCount(columnPosArr[0]) && col + 1 <= getColumnCount(columnPosArr[1])) {
+                                fg = !item.hasOwnProperty('color') || item.color === 'none' ? '' : item.color
+                            }
+                        } else {
+                            if (getColumnSymbol(col + 1) === pos.toUpperCase()) {
+                                fg = !item.hasOwnProperty('color') || item.color === 'none' ? '' : item.color
+                            }
+                        }
+                    })
                 }
             } else if (item.type === 'rows') {
-                if (item.p && item.p.indexOf(row + 1) >= 0) {
-                    fg = item.color === 'none' ? '' : item.color
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string | number) => {
+                        if (typeof pos === 'string' && pos.indexOf(':') >= 0) {
+                            let rowPosArr: any[] = pos.split(':')
+                            rowPosArr = rowPosArr.map(Number)
+                            if (row + 1 >= rowPosArr[0] && row + 1 <= rowPosArr[1]) {
+                                fg = !item.hasOwnProperty('color') || item.color === 'none' ? '' : item.color
+                            }
+                        }
+                        if (typeof pos === 'number' && row + 1 === pos) {
+                            fg = !item.hasOwnProperty('color') || item.color === 'none' ? '' : item.color
+                        }
+                    })
                 }
             } else if (item.type === 'cells') {
                 if (item.p.indexOf(':') >= 0) {
