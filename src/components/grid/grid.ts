@@ -1,11 +1,14 @@
 import {
-    ComponentOptions, ComponentPublicInstance,
+    ComponentOptions,
+    ComponentPublicInstance,
     computed,
     createCommentVNode,
     defineComponent,
     h,
-    nextTick, onBeforeUnmount,
-    onMounted, onUnmounted,
+    nextTick,
+    onBeforeUnmount,
+    onMounted,
+    onUnmounted,
     PropType,
     provide,
     reactive,
@@ -26,18 +29,25 @@ import {
 import {Guid} from "../../utils/guid.ts";
 import {
     calcCellBgType,
-    calcCellBorders, calcCellStyles,
-    calcVertexes, calcXOverlapMerges, calcYOverlapMerges, checkCellInMerges,
+    calcCellBorders,
+    calcCellStyles,
+    calcVertexes,
+    calcXOverlapMerges,
+    calcYOverlapMerges,
+    checkCellInMerges,
     filterVertexes,
-    getColumnCount, getColumnSymbol,
+    getColumnCount,
+    getColumnSymbol,
     getHeight,
     getIndexFromColumnWidths,
-    getIndexFromRowHeights, getRealArea,
+    getIndexFromRowHeights,
+    getRealArea,
     getRealVisibleHeightSize,
     getRealVisibleWidthSize,
     getRenderDefaultColWidth,
     getRenderDefaultRowHeight,
-    getRenderRowIndicatorWidth, getRowColSpanFromMerges,
+    getRenderRowIndicatorWidth,
+    getRowColSpanFromMerges,
     getWidth,
     getXSpaceFromColumnWidths,
     getYSpaceFromRowHeights,
@@ -1027,9 +1037,33 @@ export default defineComponent({
 
                 updateCurrentCell()
             },
-            setBorderTop: () => {
-                console.log('setBorderTop')
-                console.log($vmaFormulaGrid.reactiveData.currentArea)
+            setBorderTop: (type: 'cells' | 'rows' | 'columns') => {
+                if (type === 'cells') {
+                    const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.start.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.start.row + 1)
+                    const pEnd =  getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.end.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.end.row + 1)
+                    const p = pStart === pEnd ? pStart : pStart + ':' + pEnd
+                    gridReactiveData.borders.push({
+                        p: p,
+                        details: {
+                            top: true
+                        },
+                        type: 'cells'
+                    })
+                    for (let col = Math.min($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col);
+                         col <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col);
+                         col++
+                    ) {
+                        for (let row = Math.min($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row);
+                             row <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row);
+                             row++
+                        ) {
+                            const {bg} = calcCellStyles(col, row, $vmaFormulaGrid.reactiveData.styles)
+                            const {bdl: bdlCurrent, bdt: bdtCurrent, bdr: bdrCurrent, bdb: bdbCurrent} = calcCellBorders(col, row, gridReactiveData.borders, gridReactiveData.colConfs.length, gridReactiveData.rowConfs.length)
+                            $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].bgt = calcCellBgType(bg.length > 0, bdlCurrent, bdtCurrent, bdrCurrent, bdbCurrent)
+                            // TODO 修改bgt之后，会导致cell-active状态消失，待查明修正
+                        }
+                    }
+                }
             },
             updateColVisible: (type: string, colStart: number, colEnd: number) => {
                 if (type === 'showForwardCols') {
@@ -2912,16 +2946,16 @@ export default defineComponent({
 
                     if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('styles')) {
                         if (props.data.conf.styles.hasOwnProperty('bgc')) {
-                            gridReactiveData.styles.bgc = props.data.conf.styles.bgc
+                            gridReactiveData.styles.bgc = props.data.conf.styles.bgc.concat([])
                         }
                         if (props.data.conf.styles.hasOwnProperty('fgc')) {
-                            gridReactiveData.styles.fgc = props.data.conf.styles.fgc
+                            gridReactiveData.styles.fgc = props.data.conf.styles.fgc.concat([])
                         }
                     }
 
                     if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('borders')) {
                         if (props.data.conf.borders.length > 0) {
-                            gridReactiveData.borders = props.data.conf.borders
+                            gridReactiveData.borders = props.data.conf.borders.concat([])
                         }
                     }
 

@@ -369,7 +369,7 @@ export default defineComponent({
           {p: ['B', 'D', 'F'], type: 'columns', color: 'lightblue'},
           {p: [1, 3, 5], type: 'rows', color: '#FCCC99'},
           {p: [10, 11, 12, '23:27'], type: 'rows', color: '#88EEFF'},
-          {p: 'G7:L26', type: 'cells', color: 'rgba(66, 88, 99, 0.5)'},
+          {p: 'L26:G7', type: 'cells', color: 'rgba(66, 88, 99, 0.5)'},
           {p: 'J20', type: 'cells', color: '#88EEFF'},
           {p: 'J23', type: 'cells', color: 'none'},
         ],
@@ -396,6 +396,7 @@ export default defineComponent({
         {p: 'J28', details: {}, type: 'cells'},
         {p: 'G7:K26', details: {full: true}, type: 'cells'},
         {p: 'J24:N30', details: {outer: true}, type: 'cells'},
+        {p: 'J62:H60', details: {outer: true}, type: 'cells'},
       ]
     })
 

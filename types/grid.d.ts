@@ -206,7 +206,7 @@ export interface VmaFormulaGridPrivateMethods {
     hideRow(row: number): void
     deleteColumn(col: number): void
     deleteRow(row: number): void
-    setBorderTop(): void
+    setBorderTop(type: 'cells' | 'rows' | 'columns'): void
     calcCurrentCellEditorStyle(): void
     calcCurrentCellEditorDisplay(): void
     updateCurrentAreaStyle(): void

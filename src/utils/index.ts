@@ -1406,7 +1406,12 @@ export function calcCellStyles(col: number, row: number, styles: { bgc: any[]; f
                     let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
                     let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
                     let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
-                    if (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd) {
+                    if (
+                        col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd
+                        || col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowStart && row + 1 <= rowEnd
+                        || col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowEnd && row + 1 <= rowStart
+                        || col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowEnd && row + 1 <= rowStart
+                    ) {
                         bg = item.color === 'none' ? '' : item.color
                     }
                 } else {
@@ -1462,7 +1467,12 @@ export function calcCellStyles(col: number, row: number, styles: { bgc: any[]; f
                     let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
                     let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
                     let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
-                    if (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd) {
+                    if (
+                        col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd
+                        || col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowStart && row + 1 <= rowEnd
+                        || col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowEnd && row + 1 <= rowStart
+                        || col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowEnd && row + 1 <= rowStart
+                    ) {
                         fg = item.color === 'none' ? '' : item.color
                     }
                 } else {
@@ -1654,7 +1664,12 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
                     let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
                     let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
                     let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
-                    if (colIndex >= colStart - 1 && colIndex <= colEnd - 1 && rowIndex >= rowStart - 1 && rowIndex <= rowEnd - 1 ) {
+                    if (
+                        colIndex >= colStart - 1 && colIndex <= colEnd - 1 && rowIndex >= rowStart - 1 && rowIndex <= rowEnd - 1
+                        || colIndex >= colEnd - 1 && colIndex <= colStart - 1 && rowIndex >= rowStart - 1 && rowIndex <= rowEnd - 1
+                        || colIndex >= colStart - 1 && colIndex <= colEnd - 1 && rowIndex >= rowEnd - 1 && rowIndex <= rowStart - 1
+                        || colIndex >= colEnd - 1 && colIndex <= colStart - 1 && rowIndex >= rowEnd - 1 && rowIndex <= rowStart - 1
+                    ) {
                         if (item.hasOwnProperty('details')) {
                             if (item.details.hasOwnProperty('none') && item.details.none) {
                                 bdls.push('none')
@@ -1672,79 +1687,92 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
                                 || (item.details.hasOwnProperty('inner') && item.details.inner
                                     && item.details.hasOwnProperty('outer') && item.details.outer))) {
                                 if (item.details.hasOwnProperty('inner') && item.details.inner) {
-                                    if (rowIndex === rowStart - 1 && colIndex === colStart - 1
-                                        || rowIndex === rowStart - 1 && colIndex === colEnd - 1
-                                        || rowIndex === rowEnd - 1 && colIndex === colStart - 1
-                                        || rowIndex === rowEnd - 1 && colIndex === colEnd - 1) {
-                                        if (rowIndex === rowStart - 1 && colIndex === colStart - 1) {
+                                    if (rowIndex === Math.min(rowStart - 1, rowEnd - 1) && colIndex === Math.min(colStart - 1, colEnd - 1)
+                                        || rowIndex === Math.min(rowStart - 1, rowEnd - 1) && colIndex === Math.max(colStart - 1, colEnd - 1)
+                                        || rowIndex === Math.max(rowStart - 1, rowEnd - 1) && colIndex === Math.min(colStart - 1, colEnd - 1)
+                                        || rowIndex === Math.max(rowStart - 1, rowEnd - 1) && colIndex === Math.max(colStart - 1, colEnd - 1)) {
+                                        if (rowIndex === Math.min(rowStart - 1, rowEnd - 1) && colIndex === Math.min(colStart - 1, colEnd - 1)) {
                                             bdrs.push(true)
                                             bdbs.push(true)
                                         }
-                                        if (rowIndex === rowStart - 1 && colIndex === colEnd - 1) {
+                                        if (rowIndex === Math.min(rowStart - 1, rowEnd - 1) && colIndex === Math.max(colStart - 1, colEnd - 1)) {
                                             bdls.push(true)
                                             bdbs.push(true)
                                         }
-                                        if (rowIndex === rowEnd - 1 && colIndex === colStart - 1) {
+                                        if (rowIndex === Math.max(rowStart - 1, rowEnd - 1) && colIndex === Math.min(colStart - 1, colEnd - 1)) {
                                             bdts.push(true)
                                             bdrs.push(true)
                                         }
-                                        if (rowIndex === rowEnd - 1 && colIndex === colEnd - 1) {
+                                        if (rowIndex === Math.max(rowStart - 1, rowEnd - 1) && colIndex === Math.max(colStart - 1, colEnd - 1)) {
                                             bdls.push(true)
                                             bdts.push(true)
                                         }
                                     } else {
-                                        if (rowIndex === rowStart - 1) {
+                                        if (rowIndex === Math.min(rowStart - 1, rowEnd - 1)) {
                                             bdls.push(true)
                                             bdrs.push(true)
                                             bdbs.push(true)
                                         }
-                                        if (rowIndex === rowEnd - 1) {
+                                        if (rowIndex === Math.max(rowStart - 1, rowEnd - 1)) {
                                             bdls.push(true)
                                             bdts.push(true)
                                             bdrs.push(true)
                                         }
-                                        if (colIndex === colStart - 1) {
+                                        if (colIndex === Math.min(colStart - 1, colEnd - 1)) {
                                             bdts.push(true)
                                             bdrs.push(true)
                                             bdbs.push(true)
                                         }
-                                        if (colIndex === colEnd - 1) {
+                                        if (colIndex === Math.max(colStart - 1, colEnd - 1)) {
                                             bdls.push(true)
                                             bdts.push(true)
                                             bdbs.push(true)
                                         }
                                     }
-                                    if (rowIndex > rowStart - 1 && rowIndex < rowEnd - 1 && colIndex > colStart - 1 && colIndex < colEnd - 1) {
+                                    if (rowIndex > Math.min(rowStart - 1, rowEnd - 1) && rowIndex < Math.max(rowStart - 1, rowEnd - 1) && colIndex > Math.min(colStart - 1, colEnd - 1) && colIndex < Math.max(colStart - 1, colEnd - 1)) {
                                         bdls.push(true)
                                         bdts.push(true)
                                         bdrs.push(true)
                                         bdbs.push(true)
                                     }
                                 } else if (item.details.hasOwnProperty('outer') && item.details.outer) {
-                                    if (rowIndex === rowStart - 1) {
+                                    if (rowIndex === Math.min(rowStart - 1, rowEnd - 1)) {
                                         bdts.push(true)
                                     }
-                                    if (rowIndex === rowEnd - 1) {
+                                    if (rowIndex === Math.max(rowStart - 1, rowEnd - 1)) {
                                         bdbs.push(true)
                                     }
-                                    if (colIndex === colStart - 1) {
+                                    if (colIndex === Math.min(colStart - 1, colEnd - 1)) {
                                         bdls.push(true)
                                     }
-                                    if (colIndex === colEnd - 1) {
+                                    if (colIndex === Math.max(colStart - 1, colEnd - 1)) {
                                         bdrs.push(true)
+                                    }
+                                } else {
+                                    if (item.details.hasOwnProperty('left') && item.details.left && colIndex === Math.min(colStart - 1, colEnd - 1)) {
+                                        bdls.push(true)
+                                    }
+                                    if (item.details.hasOwnProperty('top') && item.details.top && rowIndex === Math.min(rowStart - 1, rowEnd - 1)) {
+                                        bdts.push(true)
+                                    }
+                                    if (item.details.hasOwnProperty('right') && item.details.right && colIndex === Math.max(colStart - 1, colEnd - 1)) {
+                                        bdrs.push(true)
+                                    }
+                                    if (item.details.hasOwnProperty('bottom') && item.details.bottom && rowIndex === Math.max(rowStart - 1, rowEnd - 1)) {
+                                        bdbs.push(true)
                                     }
                                 }
                             } else {
-                                if (item.details.hasOwnProperty('left') && item.details.left && colIndex === colStart - 1) {
+                                if (item.details.hasOwnProperty('left') && item.details.left && colIndex === Math.min(colStart - 1, colEnd - 1)) {
                                     bdls.push(true)
                                 }
-                                if (item.details.hasOwnProperty('top') && item.details.top && rowIndex === rowStart - 1) {
+                                if (item.details.hasOwnProperty('top') && item.details.top && rowIndex === Math.min(rowStart - 1, rowEnd - 1)) {
                                     bdts.push(true)
                                 }
-                                if (item.details.hasOwnProperty('right') && item.details.right && colIndex === colEnd - 1) {
+                                if (item.details.hasOwnProperty('right') && item.details.right && colIndex === Math.max(colStart - 1, colEnd - 1)) {
                                     bdrs.push(true)
                                 }
-                                if (item.details.hasOwnProperty('bottom') && item.details.bottom && rowIndex === rowEnd - 1) {
+                                if (item.details.hasOwnProperty('bottom') && item.details.bottom && rowIndex === Math.max(rowStart - 1, rowEnd - 1)) {
                                     bdbs.push(true)
                                 }
                             }

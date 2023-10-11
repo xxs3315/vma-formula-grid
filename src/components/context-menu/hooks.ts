@@ -61,7 +61,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                         )
                     }
                     if (menu.code === 'borderTop') {
-                        grid.setBorderTop()
+                        grid.setBorderTop('cells')
                     }
                 }
                 if (ctxMenuMethods.closeMenu) {
