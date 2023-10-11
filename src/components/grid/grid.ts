@@ -1037,16 +1037,23 @@ export default defineComponent({
 
                 updateCurrentCell()
             },
-            setBorderTop: (type: 'cells' | 'rows' | 'columns') => {
+            setCellBorder: (type: "cells" | "rows" | "columns", target: "l" | "t" | "r" | "b" | "none" | "full" | "outer" | "inner") => {
                 if (type === 'cells') {
+                    const pt: any = {}
+                    if (target === 'none') pt.none = true
+                    if (target === 'full') pt.full = true
+                    if (target === 'outer') pt.outer = true
+                    if (target === 'inner') pt.inner = true
+                    if (target === 'l') pt.left = true
+                    if (target === 't') pt.top = true
+                    if (target === 'r') pt.right = true
+                    if (target === 'b') pt.bottom = true
                     const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.start.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.start.row + 1)
                     const pEnd =  getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.end.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.end.row + 1)
                     const p = pStart === pEnd ? pStart : pStart + ':' + pEnd
                     gridReactiveData.borders.push({
                         p: p,
-                        details: {
-                            top: true
-                        },
+                        details: pt,
                         type: 'cells'
                     })
                     for (let col = Math.min($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col);

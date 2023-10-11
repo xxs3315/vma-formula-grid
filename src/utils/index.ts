@@ -1814,46 +1814,61 @@ export function calcCellBorders(colIndex: number, rowIndex: number, borders: any
         })
         if (bdls.length > 0) {
             if (bdls.lastIndexOf('none') >= 0) {
-                bdls = bdls.splice(0, bdls.lastIndexOf('none'))
+                bdls = bdls.lastIndexOf('none') === bdls.length - 1 ? [] : bdls.slice(bdls.lastIndexOf('none') + 1)
             }
             if (bdls.length > 0) {
                 result.bdl = bdls.reduce((pre, cur) => {
                     return pre || cur
                 })
+            } else {
+                result.bdl = false
             }
+        } else {
+            result.bdl = false
         }
         if (bdts.length > 0) {
             if (bdts.lastIndexOf('none') >= 0) {
-                bdts = bdts.splice(0, bdts.lastIndexOf('none'))
+                bdts = bdts.lastIndexOf('none') === bdts.length - 1 ? [] : bdts.slice(bdts.lastIndexOf('none') + 1)
             }
             if (bdts.length > 0) {
                 result.bdt = bdts.reduce((pre, cur) => {
                     return pre || cur
                 })
+            } else {
+                result.bdt = false
             }
+        } else {
+            result.bdt = false
         }
         if (bdrs.length > 0) {
             if (bdrs.lastIndexOf('none') >= 0) {
-                bdrs = bdrs.splice(0, bdrs.lastIndexOf('none'))
+                bdrs = bdrs.lastIndexOf('none') === bdrs.length - 1 ? [] : bdrs.slice(bdrs.lastIndexOf('none') + 1)
             }
             if (bdrs.length > 0) {
                 result.bdr = bdrs.reduce((pre, cur) => {
                     return pre || cur
                 })
+            } else {
+                result.bdr = false
             }
+        } else {
+            result.bdr = false
         }
         if (bdbs.length > 0) {
             if (bdbs.lastIndexOf('none') >= 0) {
-                bdbs = bdbs.splice(0, bdbs.lastIndexOf('none'))
+                bdbs = bdbs.lastIndexOf('none') === bdbs.length - 1 ? [] : bdbs.slice(bdbs.lastIndexOf('none') + 1)
             }
             if (bdbs.length > 0) {
                 result.bdb = bdbs.reduce((pre, cur) => {
                     return pre || cur
                 })
+            } else {
+                result.bdb = false
             }
+        } else {
+            result.bdb = false
         }
     }
-
     return result
 }
 
