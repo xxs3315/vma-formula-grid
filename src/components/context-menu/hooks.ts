@@ -252,14 +252,26 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
             }
             if (type === 'cell') {
                 let options = []
-                options.push({name: '无框线', code: 'borderNone', disabled: false, visible: true, param,})
-                options.push({name: '下框线', code: 'borderBottom', disabled: false, visible: true, param,})
-                options.push({name: '上框线', code: 'borderTop', disabled: false, visible: true, param,})
-                options.push({name: '左框线', code: 'borderLeft', disabled: false, visible: true, param,})
-                options.push({name: '右框线', code: 'borderRight', disabled: false, visible: true, param,})
-                options.push({name: '所有框线', code: 'borderFull', disabled: false, visible: true, param,})
-                options.push({name: '外侧框线', code: 'borderOuter', disabled: false, visible: true, param,})
-                options.push({name: '内部框线', code: 'borderInner', disabled: false, visible: true, param,})
+                let subOptions: any = []
+                subOptions.push({name: '无框线', code: 'borderNone', disabled: false, visible: true, param,})
+                subOptions.push({name: '所有框线', code: 'borderFull', disabled: false, visible: true, param,})
+                subOptions.push({name: '外侧框线', code: 'borderOuter', disabled: false, visible: true, param,})
+                subOptions.push({name: '内部框线', code: 'borderInner', disabled: false, visible: true, param,})
+                subOptions.push({name: '下框线', code: 'borderBottom', disabled: false, visible: true, param,})
+                subOptions.push({name: '上框线', code: 'borderTop', disabled: false, visible: true, param,})
+                subOptions.push({name: '左框线', code: 'borderLeft', disabled: false, visible: true, param,})
+                subOptions.push({name: '右框线', code: 'borderRight', disabled: false, visible: true, param,})
+                options.push({name: '边框', prefixIcon: 'info', code: 'cellBorder', disabled: false, visible: true, children: subOptions, param,})
+                list.push(options)
+                options = []
+                subOptions = []
+                subOptions.push({name: '无框线', code: 'borderNone', disabled: false, visible: true, param,})
+                options.push({name: '字体颜色', prefixIcon: 'info', code: 'fontColor', disabled: false, visible: true, children: subOptions, param,})
+                list.push(options)
+                options = []
+                subOptions = []
+                subOptions.push({name: '无框线', code: 'borderNone', disabled: false, visible: true, param,})
+                options.push({name: '填充颜色', prefixIcon: 'info', code: 'backgroundColor', disabled: false, visible: true, children: subOptions, param,})
                 list.push(options)
             }
 
