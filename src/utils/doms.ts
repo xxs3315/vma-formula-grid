@@ -1,3 +1,5 @@
+import {DragEventOptions} from "../../types";
+
 const inBrowser = typeof window !== 'undefined'
 const UA = inBrowser && window.navigator.userAgent.toLowerCase()
 const isIE = UA && /; msie|trident/i.test(UA) && !/ucbrowser/i.test(UA)
@@ -123,4 +125,62 @@ export function getAbsolutePos(elem: any) {
         visibleHeight,
         visibleWidth,
     }
+}
+
+function addEventListener(
+    element: HTMLElement | Document | Window | null,
+    event: string,
+    handler: EventListenerOrEventListenerObject,
+    options: boolean | AddEventListenerOptions = false
+): void {
+    if (element && event && handler) {
+        element.addEventListener(event, handler, options);
+    }
+}
+
+function removeEventListener(
+    element: HTMLElement | Document | Window | null,
+    event: string,
+    handler: EventListenerOrEventListenerObject,
+    options: boolean | EventListenerOptions = false
+): void {
+    if (element && event && handler) {
+        element.removeEventListener(event, handler, options);
+    }
+}
+
+export function triggerDragEvent(
+    element: HTMLElement,
+    options: DragEventOptions
+): void {
+    let isDragging = false;
+
+    const moveFn = function(event: Event) {
+        options.drag?.(event);
+    };
+
+    const upFn = (event: Event) => {
+        removeEventListener(document, "mousemove", moveFn);
+        removeEventListener(document, "mouseup", upFn);
+        document.onselectstart = null;
+        document.ondragstart = null;
+
+        isDragging = false;
+
+        options.end?.(event);
+    };
+
+    addEventListener(element, "mousedown", event => {
+        if (isDragging) return;
+        document.onselectstart = () => false;
+        document.ondragstart = () => false;
+        addEventListener(document, "mousemove", moveFn);
+        addEventListener(document, "mouseup", upFn);
+
+        isDragging = true;
+
+        options.start?.(event);
+    });
+
+    return;
 }
