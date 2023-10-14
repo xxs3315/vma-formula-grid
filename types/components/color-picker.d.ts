@@ -105,8 +105,39 @@ export interface VmaFormulaGridCompColorPickerLightnessConstructor extends VmaCo
     getRefs(): VmaFormulaGridCompColorPickerLightnessRefs
 }
 
-export interface DragEventOptions {
-    drag?: (event: Event) => void;
-    start?: (event: Event) => void;
-    end?: (event: Event) => void;
+
+export namespace VmaFormulaGridCompColorPickerDisplayPropTypes {
+    export type Size = SizeType
+    export type Type = ComponentType
 }
+
+export interface VmaFormulaGridCompColorPickerDisplayProps {
+    size?: VmaFormulaGridCompColorPickerDisplayPropTypes.Size
+    type?: VmaFormulaGridCompColorPickerDisplayPropTypes.Type
+}
+
+
+export interface VmaFormulaGridCompColorPickerDisplayMethods {
+}
+
+interface VmaFormulaGridCompColorPickerDisplayPrivateMethods {
+}
+
+export type VmaFormulaGridCompColorPickerDisplayOptions = VmaFormulaGridCompColorPickerDisplayProps
+
+export type VmaFormulaGridCompColorPickerDisplayEmits = ['change']
+
+export interface VmaFormulaGridCompColorPickerDisplayReactiveData {}
+
+export interface VmaFormulaGridCompColorPickerDisplayRefs {}
+
+export interface VmaFormulaGridCompColorPickerDisplayConstructor extends VmaComponentInstance, VmaFormulaGridCompColorPickerDisplayMethods, VmaFormulaGridCompColorPickerDisplayPrivateMethods {
+    props: VmaFormulaGridCompColorPickerDisplayOptions
+    context: SetupContext<VmaFormulaGridCompColorPickerDisplayEmits>
+    reactiveData: VmaFormulaGridCompColorPickerDisplayReactiveData
+    renderVN: RenderFunction
+
+    getRefs(): VmaFormulaGridCompColorPickerDisplayRefs
+}
+
+

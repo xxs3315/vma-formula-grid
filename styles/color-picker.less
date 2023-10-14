@@ -135,3 +135,141 @@
     }
   }
 }
+
+.vc-display {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .vc-current-color {
+    width: 50px;
+    height: 100%;
+    box-shadow: 3px 0 5px #00000014;
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+
+    &.vc-transparent {
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==);
+      background-repeat: repeat;
+    }
+
+    .color-cube {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .vc-color-input {
+    height: 100%;
+    flex: 1;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    position: relative;
+
+    input {
+      padding: 0;
+      border: 0;
+      outline: none;
+      cursor: pointer;
+      font-size: 14px;
+      text-align: center;
+      box-sizing: border-box;
+      background-color: $backGroundColor;
+      color: $color;
+      border-radius: 2px;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .vc-rgb-input {
+    flex: 1;
+    font-size: 12px;
+    color: $color;
+    text-align: center;
+
+    input {
+      padding: 4px 0;
+      margin-bottom: 2px;
+      border: 0;
+      outline: none;
+      cursor: pointer;
+      font-size: 14px;
+      text-align: center;
+      background-color: $backGroundColor;
+      color: $color;
+      border-radius: 2px;
+      width: 100%;
+    }
+  }
+
+  .vc-alpha-input {
+    width: 56px;
+    height: 100%;
+    border: none;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-radius: 2px;
+    font-size: 14px;
+
+    > input {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      text-align: center;
+      background-color: rgba(200, 200, 200, 0.25);
+      color: #666;
+      font-size: inherit;
+    }
+
+    &__inner {
+      padding: 10px 16px;
+      border-radius: 4px;
+      color: #000;
+      font-size: 14px;
+      line-height: 20px;
+      outline: none;
+      border: none;
+      display: block;
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+  }
+
+  .vc-input-toggle {
+    height: 10px;
+    width: 8px;
+    padding: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #efefef;
+    }
+
+    &::before {
+      content: "";
+      display: block;
+      border-bottom: 4px solid #888;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      margin-bottom: 2px;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      border-top: 4px solid #888;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+    }
+  }
+}
