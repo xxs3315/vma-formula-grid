@@ -176,3 +176,38 @@ export interface VmaFormulaGridCompColorPickerBoardConstructor extends VmaCompon
 }
 
 
+export namespace VmaFormulaGridCompColorPickerHuePropTypes {
+    export type Size = SizeType
+    export type Type = ComponentType
+}
+
+export interface VmaFormulaGridCompColorPickerHueProps {
+    size?: VmaFormulaGridCompColorPickerHuePropTypes.Size
+    type?: VmaFormulaGridCompColorPickerHuePropTypes.Type
+}
+
+
+export interface VmaFormulaGridCompColorPickerHueMethods {
+}
+
+interface VmaFormulaGridCompColorPickerHuePrivateMethods {
+}
+
+export type VmaFormulaGridCompColorPickerHueOptions = VmaFormulaGridCompColorPickerHueProps
+
+export type VmaFormulaGridCompColorPickerHueEmits = ['change']
+
+export interface VmaFormulaGridCompColorPickerHueReactiveData {}
+
+export interface VmaFormulaGridCompColorPickerHueRefs {}
+
+export interface VmaFormulaGridCompColorPickerHueConstructor extends VmaComponentInstance, VmaFormulaGridCompColorPickerHueMethods, VmaFormulaGridCompColorPickerHuePrivateMethods {
+    props: VmaFormulaGridCompColorPickerHueOptions
+    context: SetupContext<VmaFormulaGridCompColorPickerHueEmits>
+    reactiveData: VmaFormulaGridCompColorPickerHueReactiveData
+    renderVN: RenderFunction
+
+    getRefs(): VmaFormulaGridCompColorPickerHueRefs
+}
+
+
