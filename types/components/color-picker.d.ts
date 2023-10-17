@@ -21,7 +21,7 @@ interface VmaFormulaGridCompColorPickerPrivateMethods {
 
 export type VmaFormulaGridCompColorPickerOptions = VmaFormulaGridCompColorPickerProps
 
-export type VmaFormulaGridCompColorPickerEmits = []
+export type VmaFormulaGridCompColorPickerEmits = ["update:color", "change", "advanceChange"]
 
 export interface VmaFormulaGridCompColorPickerReactiveData {}
 
