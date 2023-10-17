@@ -1072,6 +1072,9 @@ export default defineComponent({
                     }
                 }
             },
+            setBackgroundColor: (type: 'cells' | 'rows' | 'columns') => {
+
+            },
             updateColVisible: (type: string, colStart: number, colEnd: number) => {
                 if (type === 'showForwardCols') {
                     if (Object.keys(gridReactiveData.columnHidesChanged).length) {

@@ -207,6 +207,7 @@ export interface VmaFormulaGridPrivateMethods {
     deleteColumn(col: number): void
     deleteRow(row: number): void
     setCellBorder(type: 'cells' | 'rows' | 'columns', target: 'l' | 't' | 'r' | 'b' | 'none' | 'full' | 'outer' | 'inner'): void
+    setBackgroundColor(type: 'cells' | 'rows' | 'columns'): void
     calcCurrentCellEditorStyle(): void
     calcCurrentCellEditorDisplay(): void
     updateCurrentAreaStyle(): void
