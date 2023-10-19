@@ -75,10 +75,10 @@ export default defineComponent({
 
         const renderVN = () => h('div',
             {
-                class: 'vc-display'
+                class: 'vma-formula-grid-display'
             },
             [h('div', {
-                    class: ['vc-current-color', 'vc-transparent']
+                    class: ['vma-formula-grid-current-color', 'vma-formula-grid-transparent']
                 },
                 h('div', {
                     class: 'color-cube',
@@ -89,7 +89,7 @@ export default defineComponent({
                         style: 'display: flex; flex: 1; gap: 4px; height: 100%'
                     },
                     [h('div', {
-                            class: 'vc-color-input'
+                            class: 'vma-formula-grid-color-input'
                         },
                         h('input', {
                             value: state.hex,
@@ -105,7 +105,7 @@ export default defineComponent({
                     state.rgba.map((item: any, index: number) => {
                         if (index < state.rgba!.length - 1) {
                             h('div', {
-                                style: 'vc-rgb-input'
+                                style: 'vma-formula-grid-rgb-input'
                             }, h('div', {}, h('input', {
                                 value: item,
                                 onInput: (e: Event) => onInputChange(e, index)
@@ -114,7 +114,7 @@ export default defineComponent({
                     }))
                 : createCommentVNode(),
             h('div', {
-                class: 'vc-input-toggle',
+                class: 'vma-formula-grid-input-toggle',
                 onClick: onInputTypeChange
             })
             ])

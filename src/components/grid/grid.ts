@@ -275,6 +275,7 @@ export default defineComponent({
         const refGridBodyLeftFixedTableColgroup = ref() as Ref<HTMLTableColElement>
 
         const refGridContextMenu = ref() as Ref<HTMLDivElement>
+        const refGridColorPicker = ref() as Ref<HTMLDivElement>
 
         const refCurrentCellEditor = ref() as Ref<ComponentPublicInstance>
 
@@ -438,6 +439,7 @@ export default defineComponent({
             rowIndicatorElWidth,
 
             refGridContextMenu,
+            refGridColorPicker,
 
             refCurrentCellEditor,
 
@@ -2417,6 +2419,9 @@ export default defineComponent({
                     : createCommentVNode(),
                 h(resolveComponent('VmaFormulaGridCompContextMenu') as ComponentOptions, {
                     ref: refGridContextMenu,
+                }),
+                h(resolveComponent('VmaFormulaGridCompColorPicker') as ComponentOptions, {
+                    ref: refGridColorPicker,
                 }),
                 // header left fixed
                 h(FormulaGridHeaderComponent, {

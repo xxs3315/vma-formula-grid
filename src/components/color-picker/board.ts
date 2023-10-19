@@ -104,21 +104,21 @@ export default defineComponent({
 
         const renderVN = () => h('div', {
             ref: boardElement,
-            class: ['vc-saturation', { 'vc-saturation__chrome': props.round, 'vc-saturation__hidden': props.hide }],
+            class: ['vma-formula-grid-saturation', { 'vma-formula-grid-saturation__chrome': props.round, 'vma-formula-grid-saturation__hidden': props.hide }],
             style: {
                 backgroundColor: state.hueColor
             },
             onClick: onClickBoard
         }, [
             h('div', {
-                class: 'vc-saturation__white'
+                class: 'vma-formula-grid-saturation__white'
             }),
             h('div', {
-                class: 'vc-vc-saturation__black'
+                class: 'vma-formula-grid-vma-formula-grid-saturation__black'
             }),
             h('div', {
                 ref: cursorElement,
-                class: 'vc-saturation__cursor',
+                class: 'vma-formula-grid-saturation__cursor',
                 style: getCursorStyle
             }),
         ])

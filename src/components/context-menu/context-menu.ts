@@ -37,7 +37,7 @@ export default defineComponent({
 
         const VmaFormulaGridCompColorPicker = resolveComponent('VmaFormulaGridCompColorPicker') as ComponentOptions
 
-        const {refGridContextMenu} = $vmaFormulaGrid.getRefs()
+        const {refGridContextMenu, refGridColorPicker} = $vmaFormulaGrid.getRefs()
 
         const {ctxMenuStore} = $vmaFormulaGrid.reactiveData
 
@@ -181,7 +181,16 @@ export default defineComponent({
                                                         option.children.map((child: any, cIndex: any) =>
                                                             child.visible
                                                                 ? child.type && child.type === 'colorPicker' ?
-                                                                    h(VmaFormulaGridCompColorPicker)
+                                                                    h('div', {
+                                                                        ref: refGridColorPicker,
+                                                                        class: [
+                                                                            'vma-formula-grid-fk-colorPicker',
+                                                                            {
+                                                                                'is--visible': ctxMenuStore.visible,
+                                                                            },
+                                                                        ],
+                                                                        style: ctxMenuStore.style,
+                                                                    })
                                                                     : h(
                                                                         'li',
                                                                         {

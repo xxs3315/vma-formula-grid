@@ -1,4 +1,21 @@
-.vc-compact {
+@import 'common';
+
+.vma-formula-grid-fk-colorPicker {
+  display: none;
+
+  &.is--visible {
+    position: absolute;
+    white-space: nowrap;
+    display: inline-block;
+    background-color: #fff;
+    border: 1px solid @gray-4;
+    box-shadow: 3px 3px 4px -2px rgba(0,0,0,.6);
+    z-index: 15;
+    min-width: 200px;
+  }
+}
+
+.vma-formula-grid-compact {
   margin-bottom: 15px;
   width: auto;
   box-shadow: 3px 0 5px rgba(0, 0, 0, 0.08);
@@ -69,7 +86,7 @@
   }
 }
 
-.vc-lightness-slider {
+.vma-formula-grid-lightness-slider {
   position: relative;
   margin-bottom: 15px;
   width: 100%;
@@ -136,13 +153,13 @@
   }
 }
 
-.vc-display {
+.vma-formula-grid-display {
   height: 28px;
   display: flex;
   align-items: center;
   gap: 8px;
 
-  .vc-current-color {
+  .vma-formula-grid-current-color {
     width: 50px;
     height: 100%;
     box-shadow: 3px 0 5px #00000014;
@@ -153,7 +170,7 @@
     display: inline-block;
     vertical-align: middle;
 
-    &.vc-transparent {
+    &.vma-formula-grid-transparent {
       background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==);
       background-repeat: repeat;
     }
@@ -164,7 +181,7 @@
     }
   }
 
-  .vc-color-input {
+  .vma-formula-grid-color-input {
     height: 100%;
     flex: 1;
     flex-shrink: 0;
@@ -187,7 +204,7 @@
     }
   }
 
-  .vc-rgb-input {
+  .vma-formula-grid-rgb-input {
     flex: 1;
     font-size: 12px;
     color: #666;
@@ -208,7 +225,7 @@
     }
   }
 
-  .vc-alpha-input {
+  .vma-formula-grid-alpha-input {
     width: 56px;
     height: 100%;
     border: none;
@@ -245,7 +262,7 @@
     }
   }
 
-  .vc-input-toggle {
+  .vma-formula-grid-input-toggle {
     height: 10px;
     width: 8px;
     padding: 4px;
@@ -274,7 +291,7 @@
   }
 }
 
-.vc-saturation {
+.vma-formula-grid-saturation {
   position: relative;
   margin-bottom: 15px;
   width: 100%;
@@ -322,7 +339,7 @@
   }
 }
 
-.vc-hue-slider {
+.vma-formula-grid-hue-slider {
   position: relative;
   margin-bottom: 15px;
   width: 100%;

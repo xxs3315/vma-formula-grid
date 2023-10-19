@@ -92,17 +92,17 @@ export default defineComponent({
         });
 
         const renderVN = () => h('div', {
-            class: ['vc-hue-slider', 'small-slider']
+            class: ['vma-formula-grid-hue-slider', 'small-slider']
         }, h('div', {
             ref: barElement,
-            class: 'vc-hue-slider__bar',
+            class: 'vma-formula-grid-hue-slider__bar',
             onClick: onClickSlider
         }, h('div', {
-            class: ['vc-hue-slider__bar-pointer', 'small-slider'],
+            class: ['vma-formula-grid-hue-slider__bar-pointer', 'small-slider'],
             ref: cursorElement,
             style: getCursorStyle
         }, h('div', {
-            class: 'vc-hue-slider__bar-handle'
+            class: 'vma-formula-grid-hue-slider__bar-handle'
         }))))
 
         watch(

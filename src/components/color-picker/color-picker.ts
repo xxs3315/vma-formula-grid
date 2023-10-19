@@ -1,4 +1,14 @@
-import {ComponentOptions, createCommentVNode, defineComponent, h, provide, reactive, ref, resolveComponent} from "vue";
+import {
+    ComponentOptions,
+    createCommentVNode,
+    defineComponent,
+    h,
+    onMounted,
+    provide,
+    reactive,
+    ref,
+    resolveComponent, Teleport
+} from "vue";
 import {Guid} from "../../utils/guid.ts";
 import {VmaFormulaGridCompColorPickerConstructor} from "../../../types";
 import {Color} from "./utils/color.ts";
@@ -12,6 +22,11 @@ export default defineComponent({
     emits: ["update:color", "change", "advanceChange"],
     setup(props, context) {
         const { emit } = context
+
+        onMounted( () => {
+            console.log(advancePanelShow.value)
+        })
+
         const colorInstance = props.color || new Color();
         const state = reactive({
             color: colorInstance,
@@ -39,6 +54,9 @@ export default defineComponent({
         };
 
         const onCompactChange = (color: string) => {
+            console.log('onCompactChange')
+            console.log(color)
+            console.log(advancePanelShow.value)
             if (color === "advance") {
                 advancePanelShow.value = true;
                 emit("advanceChange", true);
@@ -61,38 +79,43 @@ export default defineComponent({
             state.color.lightness = light;
         };
 
-        const renderVN = () => h('div', {
-            class: 'vc-fk-colorPicker'
-        }, h('div', {
-            class: 'vc-fk-colorPicker__inner'
-        }, [
-            h('div', {
-                class: 'vc-fk-colorPicker__header'
-            }, advancePanelShow.value ? h('span', {
-                style: {
-                    cursor: 'pointer'
-                },
-                onClick: onBack
-            }) : createCommentVNode()),
-            !advancePanelShow.value ? h(VmaFormulaGridCompColorPickerPalette, {
-                onChange: onCompactChange
-            }) : createCommentVNode(),
-            advancePanelShow.value ? h(VmaFormulaGridCompColorPickerBoard, {
-                color: state.color,
-                onChange: onBoardChange
-            }) : createCommentVNode(),
-            advancePanelShow.value ? h(VmaFormulaGridCompColorPickerHue, {
-                color: state.color,
-                onChange: onHueChange
-            }) : createCommentVNode(),
-            !advancePanelShow.value ? h(VmaFormulaGridCompColorPickerLightness, {
-                color: state.color,
-                onChange: onLightChange
-            }) : createCommentVNode(),
-            advancePanelShow.value ? h(VmaFormulaGridCompColorPickerDisplay, {
-                color: state.color,
-            }) : createCommentVNode(),
-        ]))
+        const renderVN = () => h(Teleport,
+            {
+                to: 'body',
+                disabled: false
+            },
+            [h('div', {
+                class: 'vma-formula-grid-fk-colorPicker'
+            }, h('div', {
+                class: 'vma-formula-grid-fk-colorPicker__inner'
+            }, [
+                h('div', {
+                    class: 'vma-formula-grid-fk-colorPicker__header'
+                }, advancePanelShow.value ? h('span', {
+                    style: {
+                        cursor: 'pointer'
+                    },
+                    onClick: onBack
+                }) : createCommentVNode()),
+                !advancePanelShow.value ? h(VmaFormulaGridCompColorPickerPalette, {
+                    onChange: onCompactChange
+                }) : createCommentVNode(),
+                advancePanelShow.value ? h(VmaFormulaGridCompColorPickerBoard, {
+                    color: state.color,
+                    onChange: onBoardChange
+                }) : createCommentVNode(),
+                advancePanelShow.value ? h(VmaFormulaGridCompColorPickerHue, {
+                    color: state.color,
+                    onChange: onHueChange
+                }) : createCommentVNode(),
+                !advancePanelShow.value ? h(VmaFormulaGridCompColorPickerLightness, {
+                    color: state.color,
+                    onChange: onLightChange
+                }) : createCommentVNode(),
+                advancePanelShow.value ? h(VmaFormulaGridCompColorPickerDisplay, {
+                    color: state.color,
+                }) : createCommentVNode(),
+            ]))])
 
         $vmaFormulaGridCompColorPicker.renderVN = renderVN
 

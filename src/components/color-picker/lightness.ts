@@ -141,18 +141,18 @@ export default defineComponent({
         };
 
         const renderVN = () => h('div', {
-            class: ['vc-lightness-slider', 'small-slider']
+            class: ['vma-formula-grid-lightness-slider', 'small-slider']
         }, h('div', {
             ref: barElement,
-            class: 'vc-lightness-slider__bar',
+            class: 'vma-formula-grid-lightness-slider__bar',
             style: getBackgroundStyle,
             onClick: onClickSider
         }, h('div', {
             ref: cursorElement,
-            class: ['vc-lightness-slider__bar-pointer', 'small-slider'],
+            class: ['vma-formula-grid-lightness-slider__bar-pointer', 'small-slider'],
             style: getCursorStyle
         }, h('div', {
-            class: 'vc-lightness-slider__bar-handle'
+            class: 'vma-formula-grid-lightness-slider__bar-handle'
         }))))
 
         $vmaFormulaGridCompColorPickerLightness.renderVN = renderVN

@@ -46,18 +46,18 @@ export default defineComponent({
         } as unknown as VmaFormulaGridCompColorPickerPaletteConstructor
 
         const renderVN = () => h('div', {
-            class: 'vc-compact'
+            class: 'vma-formula-grid-compact'
         }, defaultColors.map((row: string[]) => {
             h('div', {
-                    class: 'vc-compact__row'
+                    class: 'vma-formula-grid-compact__row'
                 },
                 row.map((color: string) => {
                     h('div', {
-                        class: 'vc-compact__color-cube--wrap',
+                        class: 'vma-formula-grid-compact__color-cube--wrap',
                         onClick: onColorChange(color)
                     }, h('div', {
                         class: [
-                            'vc-compact__color_cube',
+                            'vma-formula-grid-compact__color_cube',
                             {
                                 advance: color === 'advance',
                                 transparent: color === 'transparent',

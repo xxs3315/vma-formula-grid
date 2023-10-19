@@ -63,6 +63,7 @@ export interface VmaFormulaGridRefs {
     rowIndicatorElWidth: ComputedRef<number>
 
     refGridContextMenu: Ref<HTMLDivElement>
+    refGridColorPicker: Ref<HTMLDivElement>
 
     refCurrentCellEditor: Ref<ComponentPublicInstance>
 
