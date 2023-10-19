@@ -675,9 +675,6 @@ export default defineComponent({
                                                         }
                                                     } else if (event.button === 2) {
                                                         if (cf.index >= 0) {
-                                                            console.log('button 2')
-                                                            console.log(rf.index, cf.index + 1)
-                                                            console.log($vmaFormulaGrid.reactiveData.currentArea)
                                                             if ($vmaFormulaGrid.reactiveData.currentArea
                                                                 && $vmaFormulaGrid.reactiveData.currentArea.start !== null
                                                                 && $vmaFormulaGrid.reactiveData.currentArea.end != null) {

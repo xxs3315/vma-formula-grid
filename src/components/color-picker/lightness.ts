@@ -56,10 +56,10 @@ export default defineComponent({
         } as unknown as VmaFormulaGridCompColorPickerLightnessConstructor
 
         let color: any = props.color || new Color();
-        const [h, s, l] = color.HSL;
+        const [hue, s, l] = color.HSL;
 
         const state = reactive({
-            hue: h,
+            hue: hue,
             saturation: s,
             lightness: l,
         });

@@ -268,12 +268,12 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 list.push(options)
                 options = []
                 subOptions = []
-                subOptions.push({name: '无框线', code: 'borderNone', disabled: false, visible: true, param,})
+                subOptions.push({name: '无框线', code: 'borderNone', disabled: false, visible: true, param, type: 'colorPicker'})
                 options.push({name: '字体颜色', prefixIcon: 'info', code: 'fontColor', disabled: false, visible: true, children: subOptions, param,})
                 list.push(options)
                 options = []
                 subOptions = []
-                subOptions.push({name: '无框线', code: 'borderNone', disabled: false, visible: true, param,})
+                subOptions.push({name: '无框线', code: 'borderNone', disabled: false, visible: true, param, type: 'colorPicker'})
                 options.push({name: '填充颜色', prefixIcon: 'info', code: 'backgroundColor', disabled: false, visible: true, children: subOptions, param,})
                 list.push(options)
             }

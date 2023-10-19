@@ -5,6 +5,12 @@ import VmaFormulaGridBody from './body.ts'
 import VmaFormulaGridCompIcon from '../icon/icon.ts'
 import VmaFormulaGridCompContextMenu from '../context-menu/context-menu.ts'
 import VmaFormulaGridCompTextarea from '../textarea/textarea.ts'
+import VmaFormulaGridCompColorPicker from '../color-picker/color-picker.ts'
+import VmaFormulaGridCompColorPickerBoard from '../color-picker/board.ts'
+import VmaFormulaGridCompColorPickerDisplay from '../color-picker/display.ts'
+import VmaFormulaGridCompColorPickerHue from '../color-picker/hue.ts'
+import VmaFormulaGridCompColorPickerLightness from '../color-picker/lightness.ts'
+import VmaFormulaGridCompColorPickerPalette from '../color-picker/palette.ts'
 import {App} from "vue";
 
 
@@ -16,6 +22,12 @@ export const VmaFormulaGrid = Object.assign(VmaFormulaGridComp, {
         app.component('VmaFormulaGridCompIcon', VmaFormulaGridCompIcon)
         app.component('VmaFormulaGridCompTextarea', VmaFormulaGridCompTextarea)
         app.component('VmaFormulaGridCompContextMenu', VmaFormulaGridCompContextMenu)
+        app.component('VmaFormulaGridCompColorPickerBoard', VmaFormulaGridCompColorPickerBoard)
+        app.component('VmaFormulaGridCompColorPickerDisplay', VmaFormulaGridCompColorPickerDisplay)
+        app.component('VmaFormulaGridCompColorPickerHue', VmaFormulaGridCompColorPickerHue)
+        app.component('VmaFormulaGridCompColorPickerLightness', VmaFormulaGridCompColorPickerLightness)
+        app.component('VmaFormulaGridCompColorPickerPalette', VmaFormulaGridCompColorPickerPalette)
+        app.component('VmaFormulaGridCompColorPicker', VmaFormulaGridCompColorPicker)
     }
 })
 
