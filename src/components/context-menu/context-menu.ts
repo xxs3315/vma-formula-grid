@@ -186,7 +186,7 @@ export default defineComponent({
                                                                         class: [
                                                                             'vma-formula-grid-fk-colorPicker',
                                                                             {
-                                                                                'is--visible': ctxMenuStore.visible,
+                                                                                'is--visible': ctxMenuStore.selected,
                                                                             },
                                                                         ],
                                                                         style: ctxMenuStore.style,

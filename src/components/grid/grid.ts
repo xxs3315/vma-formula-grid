@@ -352,6 +352,11 @@ export default defineComponent({
                 list: [],
                 style: null,
             },
+            colorPickerStore: {
+                visible: false,
+                selectValue: null,
+                style: null,
+            },
             currentCell: null,
             currentCellBorderStyle: {
                 transform: 'translateX(0) translateY(0)',

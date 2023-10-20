@@ -153,6 +153,13 @@ export interface VmaFormulaGridReactiveData {
         [key: string]: any
     }
 
+    colorPickerStore: {
+        visible: boolean
+        selectValue: any
+        style: any
+        [key: string]: any
+    }
+
     currentCell: any
     currentCellBorderStyle: Record<string, any>
     currentCellEditorStyle: Record<string, any>
