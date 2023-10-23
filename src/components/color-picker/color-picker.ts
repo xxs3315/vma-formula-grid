@@ -64,9 +64,6 @@ export default defineComponent({
         };
 
         const onCompactChange = (color: string) => {
-            console.log('onCompactChange')
-            console.log(color)
-            console.log(advancePanelShow.value)
             if (color === "advance") {
                 advancePanelShow.value = true;
                 emit("advanceChange", true);

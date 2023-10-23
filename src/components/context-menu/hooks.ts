@@ -132,6 +132,31 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                             left: `${left}px`,
                         },
                     })
+                    nextTick(() => {
+                        const { scrollTop, scrollLeft, visibleHeight, visibleWidth } =
+                            DomTools.getDomNode()
+                        const { boundingTop: menuBoundingTop, boundingLeft: menuBoundingLeft } = getAbsolutePos(menuElem)
+                        const top = menuBoundingTop + scrollTop
+                        const left = menuBoundingLeft + scrollLeft
+                        const colorPickerElem = refGridColorPicker.value
+                        const clientHeight = colorPickerElem.clientHeight
+                        const clientWidth = colorPickerElem.clientWidth
+                        const { boundingTop, boundingLeft } = getAbsolutePos(colorPickerElem)
+                        const offsetTop = boundingTop + clientHeight - visibleHeight
+                        const offsetLeft = boundingLeft + clientWidth - visibleWidth
+                        if (offsetTop > -10) {
+                            reactiveData.colorPickerStore.style.top = `${Math.max(
+                                scrollTop + 2,
+                                top - clientHeight - 2,
+                            )}px`
+                        }
+                        if (offsetLeft > -10) {
+                            reactiveData.colorPickerStore.style.left = `${Math.max(
+                                scrollLeft + 2,
+                                left - clientWidth - 2,
+                            )}px`
+                        }
+                    })
                 } else {
                     const { ctxMenuStore, colorPickerStore } = reactiveData
                     event.preventDefault()

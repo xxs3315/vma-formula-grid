@@ -687,10 +687,7 @@ export default defineComponent({
                                                                     $vmaFormulaGrid.reactiveData.rowHidesChanged,
                                                                     $vmaFormulaGrid.reactiveData.merges,
                                                                     $vmaFormulaGrid.reactiveData.currentArea)
-                                                                if (rf.index >= sri && rf.index <= eri && cf.index >= sci && cf.index <= eci) {
-                                                                    console.log('in')
-                                                                } else {
-                                                                    console.log('out')
+                                                                if (!(rf.index >= sri && rf.index <= eri && cf.index >= sci && cf.index <= eci)) {
                                                                     $vmaFormulaGrid.reactiveData.currentCellEditorActive = false
                                                                     $vmaFormulaGrid.reactiveData.currentCell =
                                                                         $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
@@ -704,7 +701,6 @@ export default defineComponent({
                                                                     }
                                                                 }
                                                             } else {
-                                                                console.log('out')
                                                                 $vmaFormulaGrid.reactiveData.currentCellEditorActive = false
                                                                 $vmaFormulaGrid.reactiveData.currentCell =
                                                                     $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
