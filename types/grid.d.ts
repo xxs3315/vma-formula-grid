@@ -154,6 +154,7 @@ export interface VmaFormulaGridReactiveData {
     }
 
     colorPickerStore: {
+        selected: any
         visible: boolean
         selectValue: any
         style: any

@@ -9,7 +9,7 @@ import {DomTools, getAbsolutePos} from "../../utils/doms.ts";
 const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
     setupGrid(grid): void | { [p: string]: any } {
         const { uId, reactiveData } = grid
-        const { refGridContextMenu, refGridDiv } = grid.getRefs()
+        const { refGridContextMenu, refGridColorPicker, refGridDiv } = grid.getRefs()
 
         let ctxMenuMethods = {} as VmaFormulaGridCompContextMenuMethods
         let ctxMenuPrivateMethods = {} as VmaFormulaGridCompContextMenuPrivateMethods
@@ -22,6 +22,11 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     selectChild: null,
                     showChild: false,
                     list: [],
+                })
+                Object.assign(reactiveData.colorPickerStore, {
+                    selected: null,
+                    visible: false,
+                    selectValue: null,
                 })
                 return nextTick()
             }
@@ -101,46 +106,75 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
             },
             ctxMenuMouseoverEvent(event: any, option: any, child?: any): void {
                 const menuElem = event.currentTarget
-                const { ctxMenuStore } = reactiveData
-                event.preventDefault()
-                event.stopPropagation()
-                ctxMenuStore.selected = option
-                ctxMenuStore.selectChild = child
-                if (!child) {
-                    ctxMenuStore.showChild =
-                        option && option.children && option.children.length > 0
-                    if (ctxMenuStore.showChild) {
-                        nextTick(() => {
-                            const childWrapperElem = menuElem.nextElementSibling
-                            if (childWrapperElem) {
-                                const {
-                                    boundingTop,
-                                    boundingLeft,
-                                    visibleHeight,
-                                    visibleWidth,
-                                } = getAbsolutePos(menuElem)
-                                const posTop = boundingTop + menuElem.offsetHeight
-                                const posLeft = boundingLeft + menuElem.offsetWidth
-                                let left = ''
-                                let right = ''
-                                // 是否超出右侧
-                                if (posLeft + childWrapperElem.offsetWidth > visibleWidth - 10) {
-                                    left = 'auto'
-                                    right = `${menuElem.offsetWidth}px`
+                if (option.type && option.type === 'colorPicker') {
+                    const { ctxMenuStore } = reactiveData
+                    event.preventDefault()
+                    event.stopPropagation()
+
+                    ctxMenuStore.selected = option
+                    ctxMenuStore.selectChild = null
+
+                    const { scrollTop, scrollLeft } = DomTools.getDomNode()
+                    const {
+                        boundingTop,
+                        boundingLeft,
+                    } = getAbsolutePos(menuElem)
+                    const posTop = boundingTop
+                    const posLeft = boundingLeft + menuElem.offsetWidth
+                    const top = posTop + scrollTop - 4
+                    const left = posLeft + scrollLeft + 4
+                    Object.assign(reactiveData.colorPickerStore, {
+                        visible: true,
+                        selected: option,
+                        selectValue: null,
+                        style: {
+                            top: `${top}px`,
+                            left: `${left}px`,
+                        },
+                    })
+                } else {
+                    const { ctxMenuStore, colorPickerStore } = reactiveData
+                    event.preventDefault()
+                    event.stopPropagation()
+                    ctxMenuStore.selected = option
+                    ctxMenuStore.selectChild = child
+                    colorPickerStore.visible = false
+                    if (!child) {
+                        ctxMenuStore.showChild =
+                            option && option.children && option.children.length > 0
+                        if (ctxMenuStore.showChild) {
+                            nextTick(() => {
+                                const childWrapperElem = menuElem.nextElementSibling
+                                if (childWrapperElem) {
+                                    const {
+                                        boundingTop,
+                                        boundingLeft,
+                                        visibleHeight,
+                                        visibleWidth,
+                                    } = getAbsolutePos(menuElem)
+                                    const posTop = boundingTop + menuElem.offsetHeight
+                                    const posLeft = boundingLeft + menuElem.offsetWidth
+                                    let left = ''
+                                    let right = ''
+                                    // 是否超出右侧
+                                    if (posLeft + childWrapperElem.offsetWidth > visibleWidth - 10) {
+                                        left = 'auto'
+                                        right = `${menuElem.offsetWidth}px`
+                                    }
+                                    // 是否超出底部
+                                    let top = ''
+                                    let bottom = ''
+                                    if (posTop + childWrapperElem.offsetHeight > visibleHeight - 10) {
+                                        top = 'auto'
+                                        bottom = '0'
+                                    }
+                                    childWrapperElem.style.left = left
+                                    childWrapperElem.style.right = right
+                                    childWrapperElem.style.top = top
+                                    childWrapperElem.style.bottom = bottom
                                 }
-                                // 是否超出底部
-                                let top = ''
-                                let bottom = ''
-                                if (posTop + childWrapperElem.offsetHeight > visibleHeight - 10) {
-                                    top = 'auto'
-                                    bottom = '0'
-                                }
-                                childWrapperElem.style.left = left
-                                childWrapperElem.style.right = right
-                                childWrapperElem.style.top = top
-                                childWrapperElem.style.bottom = bottom
-                            }
-                        })
+                            })
+                        }
                     }
                 }
             },
@@ -268,13 +302,11 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 list.push(options)
                 options = []
                 subOptions = []
-                subOptions.push({name: '无框线', code: 'borderNone', disabled: false, visible: true, param, type: 'colorPicker'})
-                options.push({name: '字体颜色', prefixIcon: 'info', code: 'fontColor', disabled: false, visible: true, children: subOptions, param,})
+                options.push({name: '字体颜色', prefixIcon: 'info', code: 'fontColor', disabled: false, visible: true, children: subOptions, param, type: 'colorPicker'})
                 list.push(options)
                 options = []
                 subOptions = []
-                subOptions.push({name: '无框线', code: 'borderNone', disabled: false, visible: true, param, type: 'colorPicker'})
-                options.push({name: '填充颜色', prefixIcon: 'info', code: 'backgroundColor', disabled: false, visible: true, children: subOptions, param,})
+                options.push({name: '填充颜色', prefixIcon: 'info', code: 'backgroundColor', disabled: false, visible: true, children: subOptions, param, type: 'colorPicker'})
                 list.push(options)
             }
 

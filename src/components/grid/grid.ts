@@ -353,6 +353,7 @@ export default defineComponent({
                 style: null,
             },
             colorPickerStore: {
+                selected: null,
                 visible: false,
                 selectValue: null,
                 style: null,

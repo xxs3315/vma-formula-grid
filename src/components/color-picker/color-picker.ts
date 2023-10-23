@@ -2,7 +2,7 @@ import {
     ComponentOptions,
     createCommentVNode,
     defineComponent,
-    h,
+    h, inject,
     onMounted,
     provide,
     reactive,
@@ -10,7 +10,11 @@ import {
     resolveComponent, Teleport
 } from "vue";
 import {Guid} from "../../utils/guid.ts";
-import {VmaFormulaGridCompColorPickerConstructor} from "../../../types";
+import {
+    VmaFormulaGridCompColorPickerConstructor,
+    VmaFormulaGridConstructor,
+    VmaFormulaGridMethods, VmaFormulaGridPrivateMethods
+} from "../../../types";
 import {Color} from "./utils/color.ts";
 import propTypes from "vue-types";
 
@@ -26,6 +30,12 @@ export default defineComponent({
         onMounted( () => {
             console.log(advancePanelShow.value)
         })
+
+        const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
+
+        const { colorPickerStore } = $vmaFormulaGrid.reactiveData
+
+        const {refGridColorPicker} = $vmaFormulaGrid.getRefs()
 
         const colorInstance = props.color || new Color();
         const state = reactive({
@@ -85,7 +95,12 @@ export default defineComponent({
                 disabled: false
             },
             [h('div', {
-                class: 'vma-formula-grid-fk-colorPicker'
+                ref: refGridColorPicker,
+                class: ['vma-formula-grid-fk-colorPicker',
+                    {
+                        'is--visible': colorPickerStore.visible
+                    }],
+                style: colorPickerStore.style
             }, h('div', {
                 class: 'vma-formula-grid-fk-colorPicker__inner'
             }, [

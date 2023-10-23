@@ -35,8 +35,6 @@ export default defineComponent({
 
         const GridCompIconComponent = resolveComponent('VmaFormulaGridCompIcon') as ComponentOptions
 
-        const VmaFormulaGridCompColorPicker = resolveComponent('VmaFormulaGridCompColorPicker') as ComponentOptions
-
         const {refGridContextMenu, refGridColorPicker} = $vmaFormulaGrid.getRefs()
 
         const {ctxMenuStore} = $vmaFormulaGrid.reactiveData
@@ -77,7 +75,7 @@ export default defineComponent({
                                     key: optionsIndex,
                                 },
                                 options.map((option: any, optionIndex: any) => {
-                                    const hasChildMenus = option.children && option.children.length
+                                    const hasChildMenus = option.children && option.children.length || option.type && option.type === 'colorPicker'
                                     return !option.visible
                                         ? null
                                         : h(
@@ -167,7 +165,7 @@ export default defineComponent({
                                                         ),
                                                     ],
                                                 ),
-                                                hasChildMenus
+                                                hasChildMenus && !(option.type && option.type === 'colorPicker')
                                                     ? h(
                                                         'ul',
                                                         {
@@ -180,84 +178,73 @@ export default defineComponent({
                                                         },
                                                         option.children.map((child: any, cIndex: any) =>
                                                             child.visible
-                                                                ? child.type && child.type === 'colorPicker' ?
-                                                                    h('div', {
-                                                                        ref: refGridColorPicker,
+                                                                ? h(
+                                                                    'li',
+                                                                    {
                                                                         class: [
-                                                                            'vma-formula-grid-fk-colorPicker',
                                                                             {
-                                                                                'is--visible': ctxMenuStore.selected,
+                                                                                'link--disabled': child.disabled,
+                                                                                'link--active': child === ctxMenuStore.selectChild,
                                                                             },
                                                                         ],
-                                                                        style: ctxMenuStore.style,
-                                                                    })
-                                                                    : h(
-                                                                        'li',
+                                                                        key: `${optionsIndex}_${optionIndex}_${cIndex}`,
+                                                                    },
+                                                                    h(
+                                                                        'a',
                                                                         {
-                                                                            class: [
-                                                                                {
-                                                                                    'link--disabled': child.disabled,
-                                                                                    'link--active': child === ctxMenuStore.selectChild,
-                                                                                },
-                                                                            ],
-                                                                            key: `${optionsIndex}_${optionIndex}_${cIndex}`,
-                                                                        },
-                                                                        h(
-                                                                            'a',
-                                                                            {
-                                                                                class: 'link',
-                                                                                onClick(event: Event) {
-                                                                                    if ($vmaFormulaGrid.ctxMenuLinkEvent) {
-                                                                                        $vmaFormulaGrid.ctxMenuLinkEvent(event, child,)
-                                                                                    }
-                                                                                },
-                                                                                onMouseover(event: Event) {
-                                                                                    if ($vmaFormulaGrid.ctxMenuMouseoverEvent) {
-                                                                                        $vmaFormulaGrid.ctxMenuMouseoverEvent(event, option, child,)
-                                                                                    }
-                                                                                },
-                                                                                onMouseout(event: Event) {
-                                                                                    if ($vmaFormulaGrid.ctxMenuMouseoutEvent) {
-                                                                                        $vmaFormulaGrid.ctxMenuMouseoutEvent(event, option,)
-                                                                                    }
-                                                                                },
+                                                                            class: 'link',
+                                                                            onClick(event: Event) {
+                                                                                if ($vmaFormulaGrid.ctxMenuLinkEvent) {
+                                                                                    $vmaFormulaGrid.ctxMenuLinkEvent(event, child,)
+                                                                                }
                                                                             },
-                                                                            [
-                                                                                h(
-                                                                                    'i',
-                                                                                    {
-                                                                                        class: [
-                                                                                            'link-prefix',
-                                                                                            child.prefixIcon,
-                                                                                        ],
-                                                                                    },
-                                                                                    child.prefixIcon
-                                                                                        ? h(GridCompIconComponent, {
-                                                                                            name: child.prefixIcon,
-                                                                                            size: 'mini',
-                                                                                            translateY: 1,
-                                                                                        })
-                                                                                        : createCommentVNode(),
-                                                                                ),
-                                                                                h(
-                                                                                    'span',
-                                                                                    {
-                                                                                        class: 'link-content',
-                                                                                        style: {
-                                                                                            fontFamily: child.item,
-                                                                                        },
-                                                                                    },
-                                                                                    child.name,
-                                                                                ),
-                                                                                h('i', {
+                                                                            onMouseover(event: Event) {
+                                                                                if ($vmaFormulaGrid.ctxMenuMouseoverEvent) {
+                                                                                    $vmaFormulaGrid.ctxMenuMouseoverEvent(event, option, child,)
+                                                                                }
+                                                                            },
+                                                                            onMouseout(event: Event) {
+                                                                                if ($vmaFormulaGrid.ctxMenuMouseoutEvent) {
+                                                                                    $vmaFormulaGrid.ctxMenuMouseoutEvent(event, option,)
+                                                                                }
+                                                                            },
+                                                                        },
+                                                                        [
+                                                                            h(
+                                                                                'i',
+                                                                                {
                                                                                     class: [
-                                                                                        'link-suffix',
-                                                                                        option.suffixIcon,
+                                                                                        'link-prefix',
+                                                                                        child.prefixIcon,
                                                                                     ],
-                                                                                }),
-                                                                            ],
-                                                                        ),
-                                                                    )
+                                                                                },
+                                                                                child.prefixIcon
+                                                                                    ? h(GridCompIconComponent, {
+                                                                                        name: child.prefixIcon,
+                                                                                        size: 'mini',
+                                                                                        translateY: 1,
+                                                                                    })
+                                                                                    : createCommentVNode(),
+                                                                            ),
+                                                                            h(
+                                                                                'span',
+                                                                                {
+                                                                                    class: 'link-content',
+                                                                                    style: {
+                                                                                        fontFamily: child.item,
+                                                                                    },
+                                                                                },
+                                                                                child.name,
+                                                                            ),
+                                                                            h('i', {
+                                                                                class: [
+                                                                                    'link-suffix',
+                                                                                    option.suffixIcon,
+                                                                                ],
+                                                                            }),
+                                                                        ],
+                                                                    ),
+                                                                )
                                                                 : null,
                                                         ),
                                                     )
