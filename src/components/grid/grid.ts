@@ -2478,10 +2478,11 @@ export default defineComponent({
             if ($vmaFormulaGrid.closeMenu) {
                 const { ctxMenuStore } = gridReactiveData
                 const ctxMenu = refGridContextMenu.value
+                const colorPicker = refGridColorPicker.value
                 if (
                     ctxMenuStore.visible &&
                     ctxMenu &&
-                    !DomTools.getEventTargetNode(event, ctxMenu).flag
+                    !(DomTools.getEventTargetNode(event, ctxMenu).flag || DomTools.getEventTargetNode(event, colorPicker).flag)
                 ) {
                     $vmaFormulaGrid.closeMenu()
                 }
@@ -2492,10 +2493,11 @@ export default defineComponent({
             if ($vmaFormulaGrid.closeMenu) {
                 const { ctxMenuStore } = gridReactiveData
                 const ctxMenu = refGridContextMenu.value
+                const colorPicker = refGridColorPicker.value
                 if (
                     ctxMenuStore.visible &&
                     ctxMenu &&
-                    !DomTools.getEventTargetNode(event, ctxMenu).flag
+                    !(DomTools.getEventTargetNode(event, ctxMenu).flag || DomTools.getEventTargetNode(event, colorPicker).flag)
                 ) {
                     $vmaFormulaGrid.closeMenu()
                 }
@@ -2506,10 +2508,11 @@ export default defineComponent({
             if ($vmaFormulaGrid.closeMenu) {
                 const { ctxMenuStore } = gridReactiveData
                 const ctxMenu = refGridContextMenu.value
+                const colorPicker = refGridColorPicker.value
                 if (
                     ctxMenuStore.visible &&
                     ctxMenu &&
-                    !DomTools.getEventTargetNode(event, ctxMenu).flag
+                    !(DomTools.getEventTargetNode(event, ctxMenu).flag || DomTools.getEventTargetNode(event, colorPicker).flag)
                 ) {
                     $vmaFormulaGrid.closeMenu()
                 }
