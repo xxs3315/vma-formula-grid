@@ -135,22 +135,25 @@ export default defineComponent({
         const onClickSider = (event: Event) => {
             const target = event.target;
 
+            console.log(target)
+
             if (target !== barElement.value) {
+                console.log(123)
                 onMoveBar(event as MouseEvent);
             }
         };
 
         const renderVN = () => h('div', {
-            class: ['vma-formula-grid-lightness-slider', 'small-slider']
+            class: ['vma-formula-grid-lightness-slider']
         }, h('div', {
             ref: barElement,
             class: 'vma-formula-grid-lightness-slider__bar',
-            style: getBackgroundStyle,
+            style: getBackgroundStyle.value,
             onClick: onClickSider
         }, h('div', {
             ref: cursorElement,
             class: ['vma-formula-grid-lightness-slider__bar-pointer', 'small-slider'],
-            style: getCursorStyle
+            style: getCursorStyle.value
         }, h('div', {
             class: 'vma-formula-grid-lightness-slider__bar-handle'
         }))))

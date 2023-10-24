@@ -7,7 +7,7 @@ import {
     provide,
     reactive,
     ref,
-    resolveComponent, Teleport
+    resolveComponent, Teleport, watch
 } from "vue";
 import {Guid} from "../../utils/guid.ts";
 import {
@@ -28,7 +28,8 @@ export default defineComponent({
         const { emit } = context
 
         onMounted( () => {
-            console.log(advancePanelShow.value)
+            console.log(props.color)
+            console.log('advancePanelShow.value', advancePanelShow.value)
         })
 
         const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
@@ -64,6 +65,7 @@ export default defineComponent({
         };
 
         const onCompactChange = (color: string) => {
+            console.log('onCompactChange', 'color', color)
             if (color === "advance") {
                 advancePanelShow.value = true;
                 emit("advanceChange", true);
@@ -108,7 +110,9 @@ export default defineComponent({
                         cursor: 'pointer'
                     },
                     onClick: onBack
-                }) : createCommentVNode()),
+                }, h('div', {
+                    class: 'back'
+                })) : createCommentVNode()),
                 !advancePanelShow.value ? h(VmaFormulaGridCompColorPickerPalette, {
                     onChange: onCompactChange
                 }) : createCommentVNode(),
@@ -124,14 +128,25 @@ export default defineComponent({
                     color: state.color,
                     onChange: onLightChange
                 }) : createCommentVNode(),
-                advancePanelShow.value ? h(VmaFormulaGridCompColorPickerDisplay, {
+                h(VmaFormulaGridCompColorPickerDisplay, {
                     color: state.color,
-                }) : createCommentVNode(),
+                }),
             ]))])
 
         $vmaFormulaGridCompColorPicker.renderVN = renderVN
 
         provide('$vmaFormulaGridCompColorPicker', $vmaFormulaGridCompColorPicker)
+
+        watch(() => state.color,
+            () => {
+                state.hex = state.color.hex;
+                state.rgb = state.color.toRgbString();
+                // updateColorHistoryFn();
+                emit("update:color", state.color);
+                emit("change", state.color);
+            },
+            {deep: true}
+        )
 
         return $vmaFormulaGridCompColorPicker
     },

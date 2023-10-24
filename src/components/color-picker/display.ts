@@ -1,4 +1,4 @@
-import {computed, createCommentVNode, defineComponent, h, provide, reactive, ref} from "vue";
+import {computed, createCommentVNode, defineComponent, h, provide, reactive, ref, watch} from "vue";
 import {Guid} from "../../utils/guid.ts";
 import {VmaFormulaGridCompColorPickerDisplayConstructor} from "../../../types";
 import propTypes from "vue-types";
@@ -11,6 +11,7 @@ export default defineComponent({
     props: {
         color: propTypes.instanceOf(Color),
     },
+    emits: ['update:color', 'change'],
     setup(props, context) {
         const{ emit } = context
 
@@ -71,6 +72,7 @@ export default defineComponent({
 
         const onInputTypeChange = () => {
             inputType.value = inputType.value === "rgba" ? "hex" : "rgba";
+            console.log(inputType.value)
         };
 
         const renderVN = () => h('div',
@@ -82,7 +84,7 @@ export default defineComponent({
                 },
                 h('div', {
                     class: 'color-cube',
-                    style: getBgColorStyle
+                    style: getBgColorStyle.value
                 })),
             inputType.value === 'hex' ?
                 h('div', {
@@ -104,12 +106,17 @@ export default defineComponent({
 
                     state.rgba.map((item: any, index: number) => {
                         if (index < state.rgba!.length - 1) {
-                            h('div', {
-                                style: 'vma-formula-grid-rgb-input'
-                            }, h('div', {}, h('input', {
+                            return h('div', {
+                                class: 'vma-formula-grid-rgb-input'
+                            }, h('div', {}, [h('input', {
                                 value: item,
                                 onInput: (e: Event) => onInputChange(e, index)
-                            })))
+                            }),
+                            h('div', {
+                                style: {
+                                    marginTop: '-2px'
+                                }
+                            }, `${['R', 'G', 'B'][index]}`)]))
                         }
                     }))
                 : createCommentVNode(),
@@ -122,6 +129,29 @@ export default defineComponent({
         $vmaFormulaGridCompColorPickerDisplay.renderVN = renderVN
 
         provide('$vmaFormulaGridCompColorPickerDisplay', $vmaFormulaGridCompColorPickerDisplay)
+
+        watch(
+            () => props.color!,
+            (value: Color) => {
+                if (value) {
+                    state.color = value;
+                    state.alpha = Math.floor(state.color.alpha) + "%";
+                    state.hex = state.color.hex;
+                    state.rgba = state.color.RGB;
+                }
+            },
+            { deep: true }
+        );
+
+        watch(
+            () => state.color,
+            () => {
+                if (state.color) {
+                    state.previewBgColor = state.color.toRgbString();
+                }
+            },
+            { deep: true }
+        );
 
         return $vmaFormulaGridCompColorPickerDisplay
     },

@@ -48,13 +48,13 @@ export default defineComponent({
         const renderVN = () => h('div', {
             class: 'vma-formula-grid-compact'
         }, defaultColors.map((row: string[]) => {
-            h('div', {
+            return h('div', {
                     class: 'vma-formula-grid-compact__row'
                 },
                 row.map((color: string) => {
-                    h('div', {
+                    return h('div', {
                         class: 'vma-formula-grid-compact__color-cube--wrap',
-                        onClick: onColorChange(color)
+                        onClick: () => onColorChange(color)
                     }, h('div', {
                         class: [
                             'vma-formula-grid-compact__color_cube',

@@ -92,7 +92,7 @@ export default defineComponent({
         });
 
         const renderVN = () => h('div', {
-            class: ['vma-formula-grid-hue-slider', 'small-slider']
+            class: ['vma-formula-grid-hue-slider']
         }, h('div', {
             ref: barElement,
             class: 'vma-formula-grid-hue-slider__bar',

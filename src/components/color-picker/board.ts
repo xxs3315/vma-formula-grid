@@ -114,13 +114,13 @@ export default defineComponent({
                 class: 'vma-formula-grid-saturation__white'
             }),
             h('div', {
-                class: 'vma-formula-grid-vma-formula-grid-saturation__black'
+                class: 'vma-formula-grid-saturation__black'
             }),
             h('div', {
                 ref: cursorElement,
                 class: 'vma-formula-grid-saturation__cursor',
-                style: getCursorStyle
-            }),
+                style: getCursorStyle.value
+            }, h('div')),
         ])
 
         onMounted(() => {
