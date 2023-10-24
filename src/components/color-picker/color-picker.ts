@@ -27,11 +27,6 @@ export default defineComponent({
     setup(props, context) {
         const { emit } = context
 
-        onMounted( () => {
-            console.log(props.color)
-            console.log('advancePanelShow.value', advancePanelShow.value)
-        })
-
         const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
 
         const { colorPickerStore } = $vmaFormulaGrid.reactiveData
