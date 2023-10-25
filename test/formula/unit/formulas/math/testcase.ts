@@ -369,7 +369,6 @@ const TestCase = {
     'SQRTPI(2)': 2.506628275,
     'SQRTPI(-1)': FormulaError.NUM,
   },
-  // TODO: Start from here.
 
   SUM: {
     'SUM(1,2,3)': 6,

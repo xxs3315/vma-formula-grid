@@ -736,18 +736,18 @@ export default defineComponent({
                                 $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.width = `${w}px`
                             })
 
-                        refGridBodyTable.value
-                            .querySelectorAll('.cell-active')
-                            .forEach((elem: any, index: any) => {
-                                elem.classList.remove('cell-active')
-                            })
-                        for (let i = sri; i <= eri; i++) {
-                            for (let j = sci; j <= eci; j++) {
-                                refGridBodyTable.value
-                                    .querySelectorAll(`td[data-row="${i}"][data-col="${j}"]`)
-                                    .forEach((cellElem: any) => cellElem.classList.add('cell-active'))
-                            }
-                        }
+                        // refGridBodyTable.value
+                        //     .querySelectorAll('.cell-active')
+                        //     .forEach((elem: any, index: any) => {
+                        //         elem.classList.remove('cell-active')
+                        //     })
+                        // for (let i = sri; i <= eri; i++) {
+                        //     for (let j = sci; j <= eci; j++) {
+                        //         refGridBodyTable.value
+                        //             .querySelectorAll(`td[data-row="${i}"][data-col="${j}"]`)
+                        //             .forEach((cellElem: any) => cellElem.classList.add('cell-active'))
+                        //     }
+                        // }
                     })
                 } else {
                     $vmaFormulaGrid.reactiveData.currentAreaBorderStyle = {
@@ -757,11 +757,11 @@ export default defineComponent({
                         width: 0,
                         height: 0
                     }
-                    refGridBodyTable.value
-                        .querySelectorAll('.cell-active')
-                        .forEach((elem: any, index: any) => {
-                            elem.classList.remove('cell-active')
-                        })
+                    // refGridBodyTable.value
+                    //     .querySelectorAll('.cell-active')
+                    //     .forEach((elem: any, index: any) => {
+                    //         elem.classList.remove('cell-active')
+                    //     })
                 }
             },
             calcCurrentCellEditorStyle: () => {
@@ -1075,7 +1075,6 @@ export default defineComponent({
                             const {bg} = calcCellStyles(col, row, $vmaFormulaGrid.reactiveData.styles)
                             const {bdl: bdlCurrent, bdt: bdtCurrent, bdr: bdrCurrent, bdb: bdbCurrent} = calcCellBorders(col, row, gridReactiveData.borders, gridReactiveData.colConfs.length, gridReactiveData.rowConfs.length)
                             $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].bgt = calcCellBgType(bg.length > 0, bdlCurrent, bdtCurrent, bdrCurrent, bdbCurrent)
-                            // TODO 修改bgt之后，会导致cell-active状态消失，待查明修正
                         }
                     }
                 }
@@ -1102,7 +1101,6 @@ export default defineComponent({
                             const {bdl: bdlCurrent, bdt: bdtCurrent, bdr: bdrCurrent, bdb: bdbCurrent} = calcCellBorders(col, row, gridReactiveData.borders, gridReactiveData.colConfs.length, gridReactiveData.rowConfs.length)
                             $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].bg = bg
                             $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].bgt = calcCellBgType(bg.length > 0, bdlCurrent, bdtCurrent, bdrCurrent, bdbCurrent)
-                            // TODO 修改bgt之后，会导致cell-active状态消失，待查明修正
                         }
                     }
                 }

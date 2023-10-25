@@ -443,6 +443,23 @@ export default defineComponent({
             }
         }
 
+        const isCellActive = (col: number, row: number): boolean => {
+            if ($vmaFormulaGrid.reactiveData.currentArea
+                && $vmaFormulaGrid.reactiveData.currentArea.start !== null
+                && $vmaFormulaGrid.reactiveData.currentArea.end != null) {
+                const {sci, eci, sri, eri} = getRealArea(renderDefaultColWidth.value,
+                    $vmaFormulaGrid.reactiveData.columnWidthsChanged,
+                    $vmaFormulaGrid.reactiveData.columnHidesChanged,
+                    renderDefaultRowHeight.value,
+                    $vmaFormulaGrid.reactiveData.rowHeightsChanged,
+                    $vmaFormulaGrid.reactiveData.rowHidesChanged,
+                    $vmaFormulaGrid.reactiveData.merges,
+                    $vmaFormulaGrid.reactiveData.currentArea)
+                return col >= sci && col <= eci && row >= sri && row <= eri
+            }
+            return false
+        }
+
         const renderBodyRows = () => {
             const trs: any = []
             for (let index = $vmaFormulaGrid.reactiveData.yStart; index <= $vmaFormulaGrid.reactiveData.yEnd; index++) {
@@ -642,6 +659,7 @@ export default defineComponent({
                                                 'normal',
                                                 `${$vmaFormulaGrid.props.type}`,
                                                 `cell-bg-${cell.bgt}`,
+                                                {'cell-active': isCellActive(cf.index, rf.index)}
                                             ],
                                             style: {
                                                 // overflow: 'hidden',
