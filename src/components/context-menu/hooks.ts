@@ -89,9 +89,6 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     if (menu.code === 'borderNone') {
                         grid.setCellBorder('cells', 'none')
                     }
-                    if (menu.code === 'backgroundColor') {
-                        grid.setBackgroundColor('cells')
-                    }
                 }
                 if (ctxMenuMethods.closeMenu) {
                     ctxMenuMethods.closeMenu()

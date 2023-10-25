@@ -36,6 +36,7 @@ export default defineComponent({
         const colorInstance = props.color || new Color();
         const state = reactive({
             color: colorInstance,
+            mode: 'normal',
             hex: colorInstance.toHexString(),
             rgb: colorInstance.toRgbString(),
         });
@@ -60,12 +61,17 @@ export default defineComponent({
         };
 
         const onCompactChange = (color: string) => {
-            console.log('onCompactChange', 'color', color)
             if (color === "advance") {
                 advancePanelShow.value = true;
+                state.mode = 'advance'
                 emit("advanceChange", true);
+            } else if (color === 'transparent') {
+                state.color.hex = color;
+                state.mode = 'transparent'
+                emit("advanceChange", false);
             } else {
                 state.color.hex = color;
+                state.mode = 'normal'
                 emit("advanceChange", false);
             }
         };
@@ -137,8 +143,8 @@ export default defineComponent({
                 state.hex = state.color.hex;
                 state.rgb = state.color.toRgbString();
                 // updateColorHistoryFn();
-                emit("update:color", state.color);
-                emit("change", state.color);
+                emit("update:color", {color: state.color, mode: state.mode});
+                emit("change", {color: state.color, mode: state.mode});
             },
             {deep: true}
         )

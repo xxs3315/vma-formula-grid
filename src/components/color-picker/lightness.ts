@@ -134,9 +134,6 @@ export default defineComponent({
 
         const onClickSider = (event: Event) => {
             const target = event.target;
-
-            console.log(target)
-
             if (target !== barElement.value) {
                 console.log(123)
                 onMoveBar(event as MouseEvent);

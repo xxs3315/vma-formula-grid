@@ -1080,8 +1080,56 @@ export default defineComponent({
                     }
                 }
             },
-            setBackgroundColor: (type: 'cells' | 'rows' | 'columns') => {
-
+            setBackgroundColor: (type: 'cells' | 'rows' | 'columns', mode: 'none' | 'normal', color: any) => {
+                if (type === 'cells') {
+                    const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.start.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.start.row + 1)
+                    const pEnd =  getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.end.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.end.row + 1)
+                    const p = pStart === pEnd ? pStart : pStart + ':' + pEnd
+                    gridReactiveData.styles.bgc.push({
+                        p: p,
+                        color: mode === 'none' ? 'none' : color,
+                        type: 'cells'
+                    })
+                    for (let col = Math.min($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col);
+                         col <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col);
+                         col++
+                    ) {
+                        for (let row = Math.min($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row);
+                             row <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row);
+                             row++
+                        ) {
+                            const {bg} = calcCellStyles(col, row, $vmaFormulaGrid.reactiveData.styles)
+                            const {bdl: bdlCurrent, bdt: bdtCurrent, bdr: bdrCurrent, bdb: bdbCurrent} = calcCellBorders(col, row, gridReactiveData.borders, gridReactiveData.colConfs.length, gridReactiveData.rowConfs.length)
+                            $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].bg = bg
+                            $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].bgt = calcCellBgType(bg.length > 0, bdlCurrent, bdtCurrent, bdrCurrent, bdbCurrent)
+                            // TODO 修改bgt之后，会导致cell-active状态消失，待查明修正
+                        }
+                    }
+                }
+            },
+            setFontColor: (type: 'cells' | 'rows' | 'columns', mode: 'none' | 'normal', color: any) => {
+                if (type === 'cells') {
+                    const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.start.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.start.row + 1)
+                    const pEnd =  getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.end.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.end.row + 1)
+                    const p = pStart === pEnd ? pStart : pStart + ':' + pEnd
+                    gridReactiveData.styles.fgc.push({
+                        p: p,
+                        color: mode === 'none' ? 'none' : color,
+                        type: 'cells'
+                    })
+                    for (let col = Math.min($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col);
+                         col <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col);
+                         col++
+                    ) {
+                        for (let row = Math.min($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row);
+                             row <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row);
+                             row++
+                        ) {
+                            const {fg} = calcCellStyles(col, row, $vmaFormulaGrid.reactiveData.styles)
+                            $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].fg = fg
+                        }
+                    }
+                }
             },
             updateColVisible: (type: string, colStart: number, colEnd: number) => {
                 if (type === 'showForwardCols') {
@@ -2428,6 +2476,22 @@ export default defineComponent({
                 }),
                 h(resolveComponent('VmaFormulaGridCompColorPicker') as ComponentOptions, {
                     ref: refGridColorPicker,
+                    onChange: (color: any) => {
+                        if (gridReactiveData.colorPickerStore.selected && gridReactiveData.colorPickerStore.selected.code === 'backgroundColor') {
+                            if (color.mode && color.mode === 'transparent') {
+                                $vmaFormulaGrid.setBackgroundColor('cells', 'none', null)
+                            } else {
+                                $vmaFormulaGrid.setBackgroundColor('cells', 'normal', color.color.toHexString())
+                            }
+                        }
+                        if (gridReactiveData.colorPickerStore.selected && gridReactiveData.colorPickerStore.selected.code === 'fontColor') {
+                            if (color.mode && color.mode === 'transparent') {
+                                $vmaFormulaGrid.setFontColor('cells', 'none', null)
+                            } else {
+                                $vmaFormulaGrid.setFontColor('cells', 'normal', color.color.toHexString())
+                            }
+                        }
+                    }
                 }),
                 // header left fixed
                 h(FormulaGridHeaderComponent, {
