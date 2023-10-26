@@ -706,7 +706,18 @@ export default defineComponent({
 
             },
             mergeCells: () => {
-
+                const key = '' + ($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + '_' + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1) + ':' + ($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + '_' + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1)
+                const value = {
+                    colStart: $vmaFormulaGrid.reactiveData.currentAreaSci + 1,
+                    colEnd: $vmaFormulaGrid.reactiveData.currentAreaEci + 1,
+                    colSpan: $vmaFormulaGrid.reactiveData.currentAreaEci + 1 - ($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + 1,
+                    rowStart: $vmaFormulaGrid.reactiveData.currentAreaSri + 1,
+                    rowEnd: $vmaFormulaGrid.reactiveData.currentAreaEri + 1,
+                    rowSpan: $vmaFormulaGrid.reactiveData.currentAreaEri + 1 - ($vmaFormulaGrid.reactiveData.currentAreaSri + 1) + 1
+                }
+                Object.assign($vmaFormulaGrid.reactiveData.merges, {[key]: value})
+                $vmaFormulaGrid.reactiveData.currentSheetData[$vmaFormulaGrid.reactiveData.currentAreaSri][$vmaFormulaGrid.reactiveData.currentAreaSci + 1].colSpan = value.colSpan
+                $vmaFormulaGrid.reactiveData.currentSheetData[$vmaFormulaGrid.reactiveData.currentAreaSri][$vmaFormulaGrid.reactiveData.currentAreaSci + 1].rowSpan = value.rowSpan
             },
             unmergeCells: () => {
 
