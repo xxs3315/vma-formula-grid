@@ -736,9 +736,6 @@ export default defineComponent({
                 if ($vmaFormulaGrid.reactiveData.currentArea
                     && $vmaFormulaGrid.reactiveData.currentArea.start !== null
                     && $vmaFormulaGrid.reactiveData.currentArea.end != null) {
-
-
-                    console.time('1')
                     const leftSpaceWidth = getXSpaceFromColumnWidths(
                         $vmaFormulaGrid.reactiveData.xStart,
                         renderDefaultColWidth.value,
@@ -752,8 +749,6 @@ export default defineComponent({
                         $vmaFormulaGrid.reactiveData.rowHeightsChanged,
                         $vmaFormulaGrid.reactiveData.rowHidesChanged
                     )
-                    console.timeEnd('1')
-
                     nextTick(() => {
                         const cellElems: NodeListOf<any> = refGridBodyTable.value
                             .querySelectorAll(

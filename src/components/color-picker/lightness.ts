@@ -132,10 +132,9 @@ export default defineComponent({
             }
         };
 
-        const onClickSider = (event: Event) => {
+        const onClickSlider = (event: Event) => {
             const target = event.target;
             if (target !== barElement.value) {
-                console.log(123)
                 onMoveBar(event as MouseEvent);
             }
         };
@@ -146,7 +145,7 @@ export default defineComponent({
             ref: barElement,
             class: 'vma-formula-grid-lightness-slider__bar',
             style: getBackgroundStyle.value,
-            onClick: onClickSider
+            onClick: onClickSlider
         }, h('div', {
             ref: cursorElement,
             class: ['vma-formula-grid-lightness-slider__bar-pointer', 'small-slider'],
