@@ -706,6 +706,9 @@ export default defineComponent({
 
             },
             mergeCells: () => {
+                if ($vmaFormulaGrid.reactiveData.currentAreaSci === $vmaFormulaGrid.reactiveData.currentAreaEci && $vmaFormulaGrid.reactiveData.currentAreaSri === $vmaFormulaGrid.reactiveData.currentAreaEri) {
+                    return
+                }
                 const key = '' + ($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + '_' + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1) + ':' + ($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + '_' + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1)
                 const value = {
                     colStart: $vmaFormulaGrid.reactiveData.currentAreaSci + 1,
@@ -718,9 +721,53 @@ export default defineComponent({
                 Object.assign($vmaFormulaGrid.reactiveData.merges, {[key]: value})
                 $vmaFormulaGrid.reactiveData.currentSheetData[$vmaFormulaGrid.reactiveData.currentAreaSri][$vmaFormulaGrid.reactiveData.currentAreaSci + 1].colSpan = value.colSpan
                 $vmaFormulaGrid.reactiveData.currentSheetData[$vmaFormulaGrid.reactiveData.currentAreaSri][$vmaFormulaGrid.reactiveData.currentAreaSci + 1].rowSpan = value.rowSpan
+                nextTick(() => {
+                    $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                    $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                    $vmaFormulaGrid.reCalcCurrentAreaPos()
+                    $vmaFormulaGrid.updateCurrentAreaStyle()
+                    $vmaFormulaGrid.calc()
+                })
             },
             unmergeCells: () => {
-
+                const reservedMerges: Record<string, any> = {}
+                const removedMerges: Record<string, any> = {}
+                Object.keys($vmaFormulaGrid.reactiveData.merges).map((key: string) => {
+                    let cellRangeArr = key.split(':')
+                    let cellStartColRow = cellRangeArr[0].split('_')
+                    let cellEndColRow = cellRangeArr[1].split('_')
+                    let cellStartCol = Number(cellStartColRow[0])
+                    let cellStartRow = Number(cellStartColRow[1])
+                    let cellEndCol = Number(cellEndColRow[0])
+                    let cellEndRow = Number(cellEndColRow[1])
+                    if (
+                        !(cellStartCol - 1 >= $vmaFormulaGrid.reactiveData.currentAreaSci && cellStartCol - 1 <= $vmaFormulaGrid.reactiveData.currentAreaEci
+                        && cellEndCol - 1 >= $vmaFormulaGrid.reactiveData.currentAreaSci && cellEndCol - 1 <= $vmaFormulaGrid.reactiveData.currentAreaEci
+                        && cellStartRow - 1 >= $vmaFormulaGrid.reactiveData.currentAreaSri && cellStartRow - 1 <= $vmaFormulaGrid.reactiveData.currentAreaEri
+                        && cellEndRow - 1 >= $vmaFormulaGrid.reactiveData.currentAreaSri && cellEndRow - 1 <= $vmaFormulaGrid.reactiveData.currentAreaEri)
+                    ) {
+                        reservedMerges[key] = Object.assign({}, $vmaFormulaGrid.reactiveData.merges[key])
+                    } else {
+                        removedMerges[key] = Object.assign({}, $vmaFormulaGrid.reactiveData.merges[key])
+                    }
+                })
+                console.log(reservedMerges, removedMerges)
+                Object.keys(removedMerges).map((key) => {
+                    let cellRangeArr = key.split(':')
+                    let cellStartColRow = cellRangeArr[0].split('_')
+                    let cellStartCol = Number(cellStartColRow[0])
+                    let cellStartRow = Number(cellStartColRow[1])
+                    $vmaFormulaGrid.reactiveData.currentSheetData[cellStartRow - 1][cellStartCol - 1 + 1].colSpan = 1
+                    $vmaFormulaGrid.reactiveData.currentSheetData[cellStartRow - 1][cellStartCol - 1 + 1].rowSpan = 1
+                })
+                $vmaFormulaGrid.reactiveData.merges = reservedMerges
+                nextTick(() => {
+                    $vmaFormulaGrid.calcCurrentCellEditorStyle()
+                    $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                    $vmaFormulaGrid.reCalcCurrentAreaPos()
+                    $vmaFormulaGrid.updateCurrentAreaStyle()
+                    $vmaFormulaGrid.calc()
+                })
             },
             reCalcCurrentAreaPos: () => {
                 if ($vmaFormulaGrid.reactiveData.currentArea
