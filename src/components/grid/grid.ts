@@ -1075,8 +1075,8 @@ export default defineComponent({
                     if (target === 't') pt.top = true
                     if (target === 'r') pt.right = true
                     if (target === 'b') pt.bottom = true
-                    const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.start.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.start.row + 1)
-                    const pEnd =  getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.end.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.end.row + 1)
+                    const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1)
+                    const pEnd =  getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1)
                     const p = pStart === pEnd ? pStart : pStart + ':' + pEnd
                     gridReactiveData.borders.push({
                         p: p,
@@ -1094,8 +1094,8 @@ export default defineComponent({
             },
             setBackgroundColor: (type: 'cells' | 'rows' | 'columns', mode: 'none' | 'normal', color: any) => {
                 if (type === 'cells') {
-                    const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.start.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.start.row + 1)
-                    const pEnd =  getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.end.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.end.row + 1)
+                    const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1)
+                    const pEnd =  getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1)
                     const p = pStart === pEnd ? pStart : pStart + ':' + pEnd
                     gridReactiveData.styles.bgc.push({
                         p: p,
@@ -1114,8 +1114,8 @@ export default defineComponent({
             },
             setFontColor: (type: 'cells' | 'rows' | 'columns', mode: 'none' | 'normal', color: any) => {
                 if (type === 'cells') {
-                    const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.start.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.start.row + 1)
-                    const pEnd =  getColumnSymbol($vmaFormulaGrid.reactiveData.currentArea.end.col + 1) + ($vmaFormulaGrid.reactiveData.currentArea.end.row + 1)
+                    const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1)
+                    const pEnd =  getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1)
                     const p = pStart === pEnd ? pStart : pStart + ':' + pEnd
                     gridReactiveData.styles.fgc.push({
                         p: p,
