@@ -231,6 +231,8 @@ export interface VmaFormulaGridPrivateMethods {
     reCalcCurrentAreaPos(): void
     updateCurrentAreaStyle(): void
     updateCellStyle(): void
+    mergeCells(): void
+    unmergeCells(): void
 }
 
 export interface VmaFormulaGridConstructor extends VmaComponentInstance, VmaFormulaGridMethods, VmaFormulaGridPrivateMethods {

@@ -89,6 +89,12 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     if (menu.code === 'borderNone') {
                         grid.setCellBorder('cells', 'none')
                     }
+                    if (menu.code === 'mergeCells') {
+                        grid.mergeCells()
+                    }
+                    if (menu.code === 'unmergeCells') {
+                        grid.unmergeCells()
+                    }
                 }
                 if (ctxMenuMethods.closeMenu) {
                     ctxMenuMethods.closeMenu()
@@ -329,6 +335,14 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options = []
                 subOptions = []
                 options.push({name: '填充颜色', prefixIcon: 'info', code: 'backgroundColor', disabled: false, visible: true, children: subOptions, param, type: 'colorPicker'})
+                list.push(options)
+                options = []
+                subOptions = []
+                options.push({name: '合并', prefixIcon: 'info', code: 'mergeCells', disabled: false, visible: true, children: subOptions, param})
+                list.push(options)
+                options = []
+                subOptions = []
+                options.push({name: '取消合并', prefixIcon: 'info', code: 'unmergeCells', disabled: false, visible: true, children: subOptions, param})
                 list.push(options)
             }
 

@@ -100,7 +100,7 @@ export default defineComponent({
         }, h('div', {
             class: ['vma-formula-grid-hue-slider__bar-pointer', 'small-slider'],
             ref: cursorElement,
-            style: getCursorStyle
+            style: getCursorStyle.value
         }, h('div', {
             class: 'vma-formula-grid-hue-slider__bar-handle'
         }))))

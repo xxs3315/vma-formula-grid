@@ -705,6 +705,12 @@ export default defineComponent({
             updateCellStyle: () => {
 
             },
+            mergeCells: () => {
+
+            },
+            unmergeCells: () => {
+
+            },
             reCalcCurrentAreaPos: () => {
                 if ($vmaFormulaGrid.reactiveData.currentArea
                     && $vmaFormulaGrid.reactiveData.currentArea.start !== null
