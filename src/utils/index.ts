@@ -1239,34 +1239,40 @@ export function getRealArea(columnWidth: number,
     } else {
         // multi cells
         let mergeColRows: any[] = []
+        let sci = startColIndex
+        let eci = endColIndex
+        let sri = startRowIndex
+        let eri = endRowIndex
         Object.keys(merges).forEach((key: string) => {
             let mergesIntersectCol = false
             let mergesIntersectRow = false
-            let startCol = [Math.min(startColIndex + 1, endColIndex + 1),Math.min(merges[key].colStart, merges[key].colEnd)]
-            let endCol = [Math.max(startColIndex + 1, endColIndex + 1),Math.max(merges[key].colStart, merges[key].colEnd)]
+            let startCol = [Math.min(sci + 1, eci + 1),Math.min(merges[key].colStart, merges[key].colEnd)]
+            let endCol = [Math.max(sci + 1, eci + 1),Math.max(merges[key].colStart, merges[key].colEnd)]
             if (Math.max(...startCol) <= Math.min(...endCol)) {
                 mergesIntersectCol = true
             }
-            let startRow = [Math.min(startRowIndex + 1, endRowIndex + 1),Math.min(merges[key].rowStart, merges[key].rowEnd)]
-            let endRow = [Math.max(startRowIndex + 1, endRowIndex + 1),Math.max(merges[key].rowStart, merges[key].rowEnd)]
+            let startRow = [Math.min(sri + 1, eri + 1),Math.min(merges[key].rowStart, merges[key].rowEnd)]
+            let endRow = [Math.max(sri + 1, eri + 1),Math.max(merges[key].rowStart, merges[key].rowEnd)]
             if (Math.max(...startRow) <= Math.min(...endRow)) {
                 mergesIntersectRow = true
             }
             if (mergesIntersectCol && mergesIntersectRow) {
                 mergeColRows.push(merges[key])
+                sci = Math.min(sci, merges[key].colStart - 1)
+                eci = Math.max(eci, merges[key].colEnd - 1)
+                sri = Math.min(sri, merges[key].rowStart - 1)
+                eri = Math.max(eri, merges[key].rowEnd - 1)
             }
         })
         if (mergeColRows.length > 0) {
-            const sci = Math.min(startColIndex, ...mergeColRows.map(item => item.colStart))
-            const eci = Math.max(endColIndex, ...mergeColRows.map(item => item.colEnd - 1))
-            const sri = Math.min(startRowIndex, ...mergeColRows.map(item => item.rowStart))
-            const eri = Math.max(endRowIndex, ...mergeColRows.map(item => item.rowEnd - 1))
             result.w = getCurrentAreaWidth(sci, eci, columnWidth, changedColumnWidths, changedColumnVisibles)
-            result.h = getCurrentAreaHeight(sri, eri,rowHeight, changedRowHeights, changedRowVisibles)
+            result.h = getCurrentAreaHeight(sri, eri, rowHeight, changedRowHeights, changedRowVisibles)
             result.sci = sci
             result.eci = eci
             result.sri = sri
             result.eri = eri
+            result.startRowIndex = sri
+            result.startColIndex = sci
         } else {
             result.w = getCurrentAreaWidth(startColIndex, endColIndex, columnWidth, changedColumnWidths, changedColumnVisibles)
             result.h = getCurrentAreaHeight(startRowIndex, endRowIndex,rowHeight, changedRowHeights, changedRowVisibles)
