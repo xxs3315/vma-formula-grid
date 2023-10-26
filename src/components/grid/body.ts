@@ -24,7 +24,7 @@ import {
     checkCellInMerges, getRealArea,
     getRenderDefaultRowHeight,
     getYSpaceFromRowHeights,
-    isNumeric, isRowIndicatorActive
+    isNumeric
 } from "../../utils";
 import {Cell} from "./internals/cell.ts";
 import {DomTools} from "../../utils/doms.ts";
@@ -390,6 +390,7 @@ export default defineComponent({
                     nextTick(() => {
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.reCalcCurrentAreaPos()
                         $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
                 })
@@ -407,8 +408,11 @@ export default defineComponent({
             )
             if (eventTargetNode && eventTargetNode.flag) {
                 const targetElem: any = eventTargetNode.targetElem
-                $vmaFormulaGrid.reactiveData.currentArea.end = $vmaFormulaGrid.reactiveData.currentSheetData[Number(targetElem.attributes['data-row'].value)][Number(targetElem.attributes['data-col'].value) + 1]
-                $vmaFormulaGrid.updateCurrentAreaStyle()
+                if ($vmaFormulaGrid.reactiveData.currentArea.end === null || !($vmaFormulaGrid.reactiveData.currentArea.end.row === Number(targetElem.attributes['data-row'].value) && $vmaFormulaGrid.reactiveData.currentArea.end.col === Number(targetElem.attributes['data-col'].value))) {
+                    $vmaFormulaGrid.reactiveData.currentArea.end = $vmaFormulaGrid.reactiveData.currentSheetData[Number(targetElem.attributes['data-row'].value)][Number(targetElem.attributes['data-col'].value) + 1]
+                    $vmaFormulaGrid.reCalcCurrentAreaPos()
+                    $vmaFormulaGrid.updateCurrentAreaStyle()
+                }
             }
         }
 
@@ -416,10 +420,26 @@ export default defineComponent({
             const domMousemove = document.onmousemove
             const domMouseup = document.onmouseup
 
+            const eventTargetNode: any = DomTools.getEventTargetNode(
+                event,
+                refGridBodyTable,
+                `normal`,
+                (target: any) =>
+                    target.attributes.hasOwnProperty('data-row') &&
+                    target.attributes.hasOwnProperty('data-col')
+            )
+
             const updateEvent = (event: MouseEvent) => {
                 event.stopPropagation()
                 event.preventDefault()
                 mousemoveHandler(event)
+            }
+
+            if (eventTargetNode && eventTargetNode.flag) {
+                const targetElem: any = eventTargetNode.targetElem
+                $vmaFormulaGrid.reactiveData.currentArea.end = $vmaFormulaGrid.reactiveData.currentSheetData[Number(targetElem.attributes['data-row'].value)][Number(targetElem.attributes['data-col'].value) + 1]
+                $vmaFormulaGrid.reCalcCurrentAreaPos()
+                $vmaFormulaGrid.updateCurrentAreaStyle()
             }
 
             document.onmousemove = updateEvent
@@ -438,26 +458,18 @@ export default defineComponent({
                 if (eventTargetNode && eventTargetNode.flag) {
                     const targetElem: any = eventTargetNode.targetElem
                     $vmaFormulaGrid.reactiveData.currentArea.end = $vmaFormulaGrid.reactiveData.currentSheetData[Number(targetElem.attributes['data-row'].value)][Number(targetElem.attributes['data-col'].value) + 1]
+                    $vmaFormulaGrid.reCalcCurrentAreaPos()
                     $vmaFormulaGrid.updateCurrentAreaStyle()
                 }
             }
         }
 
         const isCellActive = (col: number, row: number): boolean => {
-            if ($vmaFormulaGrid.reactiveData.currentArea
-                && $vmaFormulaGrid.reactiveData.currentArea.start !== null
-                && $vmaFormulaGrid.reactiveData.currentArea.end != null) {
-                const {sci, eci, sri, eri} = getRealArea(renderDefaultColWidth.value,
-                    $vmaFormulaGrid.reactiveData.columnWidthsChanged,
-                    $vmaFormulaGrid.reactiveData.columnHidesChanged,
-                    renderDefaultRowHeight.value,
-                    $vmaFormulaGrid.reactiveData.rowHeightsChanged,
-                    $vmaFormulaGrid.reactiveData.rowHidesChanged,
-                    $vmaFormulaGrid.reactiveData.merges,
-                    $vmaFormulaGrid.reactiveData.currentArea)
-                return col >= sci && col <= eci && row >= sri && row <= eri
-            }
-            return false
+            return col >= $vmaFormulaGrid.reactiveData.currentAreaSci && col <= $vmaFormulaGrid.reactiveData.currentAreaEci && row >= $vmaFormulaGrid.reactiveData.currentAreaSri && row <= $vmaFormulaGrid.reactiveData.currentAreaEri
+        }
+
+        const isRowIndicatorActive = (row: number): boolean => {
+            return row >= $vmaFormulaGrid.reactiveData.currentAreaSri && row <= $vmaFormulaGrid.reactiveData.currentAreaEri
         }
 
         const renderBodyRows = () => {
@@ -479,16 +491,7 @@ export default defineComponent({
                                 class: [
                                     'row-indicator',
                                     `${$vmaFormulaGrid.props.type}`,
-                                    {'row-indicator-active':
-                                            isRowIndicatorActive(rf.index,
-                                                $vmaFormulaGrid.reactiveData.currentArea,
-                                                renderDefaultColWidth.value,
-                                                $vmaFormulaGrid.reactiveData.columnWidthsChanged,
-                                                $vmaFormulaGrid.reactiveData.columnHidesChanged,
-                                                renderDefaultRowHeight.value,
-                                                $vmaFormulaGrid.reactiveData.rowHeightsChanged,
-                                                $vmaFormulaGrid.reactiveData.rowHidesChanged,
-                                                $vmaFormulaGrid.reactiveData.merges)},
+                                    {'row-indicator-active': isRowIndicatorActive(rf.index)}
                                 ],
                                 style: {
                                     overflow: 'hidden',
@@ -670,6 +673,7 @@ export default defineComponent({
                                             },
                                             onMouseup: (_: MouseEvent) => {
                                                 $vmaFormulaGrid.reactiveData.currentAreaStatus = false
+                                                $vmaFormulaGrid.reCalcCurrentAreaPos()
                                                 $vmaFormulaGrid.updateCurrentAreaStyle()
                                             },
                                             onMousedown: (event: MouseEvent) => {
@@ -685,7 +689,7 @@ export default defineComponent({
                                                             $vmaFormulaGrid.reactiveData.currentAreaStatus = true
                                                             $vmaFormulaGrid.reactiveData.currentArea = {
                                                                 start: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1],
-                                                                end: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1]
+                                                                end: null
                                                             }
                                                             nextTick(() => {
                                                                 resizeCurrentSelectArea(event)

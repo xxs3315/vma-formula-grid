@@ -2010,56 +2010,56 @@ export function calcCellBgType(hasBg: boolean, hasBdl: boolean, hasBdt: boolean,
     return '17'
 }
 
-export function isRowIndicatorActive(index: number,
-                              currentArea: { start: any; end: any },
-                              renderDefaultColWidth: number,
-                              columnWidthsChanged: Record<string, number>,
-                              columnHidesChanged: Record<string, number>,
-                              renderDefaultRowHeight: number,
-                              rowHeightsChanged: Record<string, number>,
-                              rowHidesChanged: Record<string, number>,
-                              merges: Record<string, any>) {
-    if (currentArea
-        && currentArea.start !== null
-        && currentArea.end != null) {
-        const {sri, eri} = getRealArea(renderDefaultColWidth,
-            columnWidthsChanged,
-            columnHidesChanged,
-            renderDefaultRowHeight,
-            rowHeightsChanged,
-            rowHidesChanged,
-            merges,
-            currentArea)
-        if (index >= sri && index <= eri) {
-            return true
-        }
-    }
-    return false
-}
-
-export function isColumnIndicatorActive(index: number,
-                                     currentArea: { start: any; end: any },
-                                     renderDefaultColWidth: number,
-                                     columnWidthsChanged: Record<string, number>,
-                                     columnHidesChanged: Record<string, number>,
-                                     renderDefaultRowHeight: number,
-                                     rowHeightsChanged: Record<string, number>,
-                                     rowHidesChanged: Record<string, number>,
-                                     merges: Record<string, any>) {
-    if (currentArea
-        && currentArea.start !== null
-        && currentArea.end != null) {
-        const {sci, eci} = getRealArea(renderDefaultColWidth,
-            columnWidthsChanged,
-            columnHidesChanged,
-            renderDefaultRowHeight,
-            rowHeightsChanged,
-            rowHidesChanged,
-            merges,
-            currentArea)
-        if (index >= sci && index <= eci) {
-            return true
-        }
-    }
-    return false
-}
+// export function isRowIndicatorActive(index: number,
+//                               currentArea: { start: any; end: any },
+//                               renderDefaultColWidth: number,
+//                               columnWidthsChanged: Record<string, number>,
+//                               columnHidesChanged: Record<string, number>,
+//                               renderDefaultRowHeight: number,
+//                               rowHeightsChanged: Record<string, number>,
+//                               rowHidesChanged: Record<string, number>,
+//                               merges: Record<string, any>) {
+//     if (currentArea
+//         && currentArea.start !== null
+//         && currentArea.end != null) {
+//         const {sri, eri} = getRealArea(renderDefaultColWidth,
+//             columnWidthsChanged,
+//             columnHidesChanged,
+//             renderDefaultRowHeight,
+//             rowHeightsChanged,
+//             rowHidesChanged,
+//             merges,
+//             currentArea)
+//         if (index >= sri && index <= eri) {
+//             return true
+//         }
+//     }
+//     return false
+// }
+//
+// export function isColumnIndicatorActive(index: number,
+//                                      currentArea: { start: any; end: any },
+//                                      renderDefaultColWidth: number,
+//                                      columnWidthsChanged: Record<string, number>,
+//                                      columnHidesChanged: Record<string, number>,
+//                                      renderDefaultRowHeight: number,
+//                                      rowHeightsChanged: Record<string, number>,
+//                                      rowHidesChanged: Record<string, number>,
+//                                      merges: Record<string, any>) {
+//     if (currentArea
+//         && currentArea.start !== null
+//         && currentArea.end != null) {
+//         const {sci, eci} = getRealArea(renderDefaultColWidth,
+//             columnWidthsChanged,
+//             columnHidesChanged,
+//             renderDefaultRowHeight,
+//             rowHeightsChanged,
+//             rowHidesChanged,
+//             merges,
+//             currentArea)
+//         if (index >= sci && index <= eci) {
+//             return true
+//         }
+//     }
+//     return false
+// }

@@ -24,8 +24,6 @@ import {
     getColumnSymbol,
     getRenderDefaultColWidth,
     getXSpaceFromColumnWidths,
-    isColumnIndicatorActive,
-    isRowIndicatorActive
 } from "../../utils";
 
 export default defineComponent({
@@ -57,6 +55,11 @@ export default defineComponent({
             renderDefaultRowHeight,
             renderDefaultColWidth
         } = $vmaFormulaGrid.getRefs()
+
+
+        const isColumnIndicatorActive = (col: number): boolean => {
+            return col >= $vmaFormulaGrid.reactiveData.currentAreaSci && col <= $vmaFormulaGrid.reactiveData.currentAreaEci
+        }
 
         const renderHeaderColgroup = () => {
             const cols: any = []
@@ -135,16 +138,7 @@ export default defineComponent({
                                 class: [
                                     'column-indicator',
                                     `${$vmaFormulaGrid.props.type}`,
-                                    {'column-indicator-active':
-                                            isColumnIndicatorActive(cf.index,
-                                                $vmaFormulaGrid.reactiveData.currentArea,
-                                                renderDefaultColWidth.value,
-                                                $vmaFormulaGrid.reactiveData.columnWidthsChanged,
-                                                $vmaFormulaGrid.reactiveData.columnHidesChanged,
-                                                renderDefaultRowHeight.value,
-                                                $vmaFormulaGrid.reactiveData.rowHeightsChanged,
-                                                $vmaFormulaGrid.reactiveData.rowHidesChanged,
-                                                $vmaFormulaGrid.reactiveData.merges)},
+                                    {'column-indicator-active': isColumnIndicatorActive(cf.index)},
                                 ]
                             }, [
                                 h(
@@ -340,6 +334,7 @@ export default defineComponent({
                     nextTick(() => {
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.reCalcCurrentAreaPos()
                         $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
                 })

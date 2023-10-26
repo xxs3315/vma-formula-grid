@@ -154,6 +154,7 @@ export default defineComponent({
                     .then(() => {
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.reCalcCurrentAreaPos()
                         $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
             })
@@ -225,6 +226,7 @@ export default defineComponent({
             $vmaFormulaGrid.recalculate(false).then(() => {
                 $vmaFormulaGrid.calcCurrentCellEditorStyle()
                 $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                $vmaFormulaGrid.reCalcCurrentAreaPos()
                 $vmaFormulaGrid.updateCurrentAreaStyle()
             })
         })
@@ -388,6 +390,14 @@ export default defineComponent({
                 width: 0,
                 height: 0
             },
+            currentAreaSri: -1,
+            currentAreaEri: -1,
+            currentAreaSci: -1,
+            currentAreaEci: -1,
+            currentAreaH: -1,
+            currentAreaW: -1,
+            currentAreaStartColIndex: -1,
+            currentAreaStartRowIndex: -1,
             styles: {
                 bgc: [],
                 fgc: []
@@ -410,6 +420,13 @@ export default defineComponent({
             () => {
                 $vmaFormulaGrid.calcCurrentCellEditorDisplay()
             }
+        )
+
+        watch(() => gridReactiveData.currentArea,
+            () => {
+                $vmaFormulaGrid.reCalcCurrentAreaPos()
+            },
+            {deep: true}
         )
 
         const gridRefs: VmaFormulaGridRefs = {
@@ -688,12 +705,40 @@ export default defineComponent({
             updateCellStyle: () => {
 
             },
+            reCalcCurrentAreaPos: () => {
+                if ($vmaFormulaGrid.reactiveData.currentArea
+                    && $vmaFormulaGrid.reactiveData.currentArea.start !== null
+                    && $vmaFormulaGrid.reactiveData.currentArea.end != null) {
+                    const {
+                        w, h,
+                        sci, eci,
+                        sri, eri,
+                        startRowIndex, startColIndex
+                    } = getRealArea(renderDefaultColWidth.value,
+                        $vmaFormulaGrid.reactiveData.columnWidthsChanged,
+                        $vmaFormulaGrid.reactiveData.columnHidesChanged,
+                        renderDefaultRowHeight.value,
+                        $vmaFormulaGrid.reactiveData.rowHeightsChanged,
+                        $vmaFormulaGrid.reactiveData.rowHidesChanged,
+                        gridReactiveData.merges,
+                        $vmaFormulaGrid.reactiveData.currentArea)
+                    gridReactiveData.currentAreaSci = sci
+                    gridReactiveData.currentAreaEci = eci
+                    gridReactiveData.currentAreaSri = sri
+                    gridReactiveData.currentAreaEri = eri
+                    gridReactiveData.currentAreaH = h
+                    gridReactiveData.currentAreaW = w
+                    gridReactiveData.currentAreaStartColIndex = startColIndex
+                    gridReactiveData.currentAreaStartRowIndex = startRowIndex
+                }
+            },
             updateCurrentAreaStyle: () => {
                 if ($vmaFormulaGrid.reactiveData.currentArea
                     && $vmaFormulaGrid.reactiveData.currentArea.start !== null
                     && $vmaFormulaGrid.reactiveData.currentArea.end != null) {
 
 
+                    console.time('1')
                     const leftSpaceWidth = getXSpaceFromColumnWidths(
                         $vmaFormulaGrid.reactiveData.xStart,
                         renderDefaultColWidth.value,
@@ -707,47 +752,20 @@ export default defineComponent({
                         $vmaFormulaGrid.reactiveData.rowHeightsChanged,
                         $vmaFormulaGrid.reactiveData.rowHidesChanged
                     )
+                    console.timeEnd('1')
 
                     nextTick(() => {
-                        const {w, h,
-                            sci, eci,
-                            sri, eri,
-                            startRowIndex, startColIndex} = getRealArea(renderDefaultColWidth.value,
-                            $vmaFormulaGrid.reactiveData.columnWidthsChanged,
-                            $vmaFormulaGrid.reactiveData.columnHidesChanged,
-                            renderDefaultRowHeight.value,
-                            $vmaFormulaGrid.reactiveData.rowHeightsChanged,
-                            $vmaFormulaGrid.reactiveData.rowHidesChanged,
-                            gridReactiveData.merges,
-                            $vmaFormulaGrid.reactiveData.currentArea)
-                        refGridBodyTable.value
+                        const cellElems: NodeListOf<any> = refGridBodyTable.value
                             .querySelectorAll(
-                                `td[data-row="${startRowIndex}"][data-col="${startColIndex}"]`
+                                `td[data-row="${$vmaFormulaGrid.reactiveData.currentAreaStartRowIndex}"][data-col="${$vmaFormulaGrid.reactiveData.currentAreaStartColIndex}"]`
                             )
-                            .forEach((cellElem: any) => {
-                                const borderMarginLeft = `${
-                                    leftSpaceWidth + cellElem.offsetLeft - 1
-                                }px`
-                                const borderMarginTop = `${
-                                    topSpaceHeight + cellElem.offsetTop - 1
-                                }px`
-                                $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.transform = `translateX(${borderMarginLeft}) translateY(${borderMarginTop})`
-                                $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.height = `${h}px`
-                                $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.width = `${w}px`
-                            })
-
-                        // refGridBodyTable.value
-                        //     .querySelectorAll('.cell-active')
-                        //     .forEach((elem: any, index: any) => {
-                        //         elem.classList.remove('cell-active')
-                        //     })
-                        // for (let i = sri; i <= eri; i++) {
-                        //     for (let j = sci; j <= eci; j++) {
-                        //         refGridBodyTable.value
-                        //             .querySelectorAll(`td[data-row="${i}"][data-col="${j}"]`)
-                        //             .forEach((cellElem: any) => cellElem.classList.add('cell-active'))
-                        //     }
-                        // }
+                        if (cellElems.length > 0) {
+                            const borderMarginLeft = leftSpaceWidth + cellElems[0].offsetLeft - 1
+                            const borderMarginTop = topSpaceHeight + cellElems[0].offsetTop - 1
+                            $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.transform = `translateX(${borderMarginLeft}px) translateY(${borderMarginTop}px)`
+                            $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.height = `${$vmaFormulaGrid.reactiveData.currentAreaH}px`
+                            $vmaFormulaGrid.reactiveData.currentAreaBorderStyle.width = `${$vmaFormulaGrid.reactiveData.currentAreaW}px`
+                        }
                     })
                 } else {
                     $vmaFormulaGrid.reactiveData.currentAreaBorderStyle = {
@@ -757,11 +775,6 @@ export default defineComponent({
                         width: 0,
                         height: 0
                     }
-                    // refGridBodyTable.value
-                    //     .querySelectorAll('.cell-active')
-                    //     .forEach((elem: any, index: any) => {
-                    //         elem.classList.remove('cell-active')
-                    //     })
                 }
             },
             calcCurrentCellEditorStyle: () => {
@@ -862,6 +875,7 @@ export default defineComponent({
                     .then(() => {
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.reCalcCurrentAreaPos()
                         $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
                     .then(() => {
@@ -913,6 +927,7 @@ export default defineComponent({
                     .then(() => {
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.reCalcCurrentAreaPos()
                         $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
                     .then(() => {
@@ -925,6 +940,7 @@ export default defineComponent({
                 $vmaFormulaGrid.recalculate(false).then(() => {
                     $vmaFormulaGrid.calcCurrentCellEditorStyle()
                     $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                    $vmaFormulaGrid.reCalcCurrentAreaPos()
                     $vmaFormulaGrid.updateCurrentAreaStyle()
                 })
             },
@@ -934,6 +950,7 @@ export default defineComponent({
                 $vmaFormulaGrid.recalculate(false).then(() => {
                     $vmaFormulaGrid.calcCurrentCellEditorStyle()
                     $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                    $vmaFormulaGrid.reCalcCurrentAreaPos()
                     $vmaFormulaGrid.updateCurrentAreaStyle()
                 })
             },
@@ -984,6 +1001,7 @@ export default defineComponent({
                     .then(() => {
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                        $vmaFormulaGrid.reCalcCurrentAreaPos()
                         $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
                     .then(() => {
@@ -1037,7 +1055,8 @@ export default defineComponent({
                         $vmaFormulaGrid.calcCurrentCellEditorStyle()
                         $vmaFormulaGrid.calcCurrentCellEditorDisplay()
                         $vmaFormulaGrid.updateCurrentAreaStyle()
-                        $vmaFormulaGrid.updateCellStyle()
+                        $vmaFormulaGrid.reCalcCurrentAreaPos()
+                        $vmaFormulaGrid.updateCurrentAreaStyle()
                     })
                     .then(() => {
                         $vmaFormulaGrid.calc()
@@ -1064,14 +1083,8 @@ export default defineComponent({
                         details: pt,
                         type: 'cells'
                     })
-                    for (let col = Math.min($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col);
-                         col <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col);
-                         col++
-                    ) {
-                        for (let row = Math.min($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row);
-                             row <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row);
-                             row++
-                        ) {
+                    for (let col = $vmaFormulaGrid.reactiveData.currentAreaSci; col <= $vmaFormulaGrid.reactiveData.currentAreaEci; col++) {
+                        for (let row = $vmaFormulaGrid.reactiveData.currentAreaSri; row <= $vmaFormulaGrid.reactiveData.currentAreaEri; row++) {
                             const {bg} = calcCellStyles(col, row, $vmaFormulaGrid.reactiveData.styles)
                             const {bdl: bdlCurrent, bdt: bdtCurrent, bdr: bdrCurrent, bdb: bdbCurrent} = calcCellBorders(col, row, gridReactiveData.borders, gridReactiveData.colConfs.length, gridReactiveData.rowConfs.length)
                             $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].bgt = calcCellBgType(bg.length > 0, bdlCurrent, bdtCurrent, bdrCurrent, bdbCurrent)
@@ -1089,14 +1102,8 @@ export default defineComponent({
                         color: mode === 'none' ? 'none' : color,
                         type: 'cells'
                     })
-                    for (let col = Math.min($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col);
-                         col <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col);
-                         col++
-                    ) {
-                        for (let row = Math.min($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row);
-                             row <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row);
-                             row++
-                        ) {
+                    for (let col = $vmaFormulaGrid.reactiveData.currentAreaSci; col <= $vmaFormulaGrid.reactiveData.currentAreaEci; col++) {
+                        for (let row = $vmaFormulaGrid.reactiveData.currentAreaSri; row <= $vmaFormulaGrid.reactiveData.currentAreaEri; row++) {
                             const {bg} = calcCellStyles(col, row, $vmaFormulaGrid.reactiveData.styles)
                             const {bdl: bdlCurrent, bdt: bdtCurrent, bdr: bdrCurrent, bdb: bdbCurrent} = calcCellBorders(col, row, gridReactiveData.borders, gridReactiveData.colConfs.length, gridReactiveData.rowConfs.length)
                             $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].bg = bg
@@ -1115,14 +1122,8 @@ export default defineComponent({
                         color: mode === 'none' ? 'none' : color,
                         type: 'cells'
                     })
-                    for (let col = Math.min($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col);
-                         col <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.col, $vmaFormulaGrid.reactiveData.currentArea.end.col);
-                         col++
-                    ) {
-                        for (let row = Math.min($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row);
-                             row <= Math.max($vmaFormulaGrid.reactiveData.currentArea.start.row, $vmaFormulaGrid.reactiveData.currentArea.end.row);
-                             row++
-                        ) {
+                    for (let col = $vmaFormulaGrid.reactiveData.currentAreaSci; col <= $vmaFormulaGrid.reactiveData.currentAreaEci; col++) {
+                        for (let row = $vmaFormulaGrid.reactiveData.currentAreaSri; row <= $vmaFormulaGrid.reactiveData.currentAreaEri; row++) {
                             const {fg} = calcCellStyles(col, row, $vmaFormulaGrid.reactiveData.styles)
                             $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].fg = fg
                         }
@@ -1160,6 +1161,7 @@ export default defineComponent({
                         $vmaFormulaGrid.recalculate(false).then(() => {
                             $vmaFormulaGrid.calcCurrentCellEditorStyle()
                             $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                            $vmaFormulaGrid.reCalcCurrentAreaPos()
                             $vmaFormulaGrid.updateCurrentAreaStyle()
                         })
                     }
@@ -1194,6 +1196,7 @@ export default defineComponent({
                         $vmaFormulaGrid.recalculate(false).then(() => {
                             $vmaFormulaGrid.calcCurrentCellEditorStyle()
                             $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                            $vmaFormulaGrid.reCalcCurrentAreaPos()
                             $vmaFormulaGrid.updateCurrentAreaStyle()
                         })
                     }
@@ -1227,6 +1230,7 @@ export default defineComponent({
                         $vmaFormulaGrid.recalculate(false).then(() => {
                             $vmaFormulaGrid.calcCurrentCellEditorStyle()
                             $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                            $vmaFormulaGrid.reCalcCurrentAreaPos()
                             $vmaFormulaGrid.updateCurrentAreaStyle()
                         })
                     }
@@ -1258,6 +1262,7 @@ export default defineComponent({
                         $vmaFormulaGrid.recalculate(false).then(() => {
                             $vmaFormulaGrid.calcCurrentCellEditorStyle()
                             $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+                            $vmaFormulaGrid.reCalcCurrentAreaPos()
                             $vmaFormulaGrid.updateCurrentAreaStyle()
                         })
                     }
@@ -2850,6 +2855,7 @@ export default defineComponent({
             }
             $vmaFormulaGrid.calcCurrentCellEditorStyle()
             $vmaFormulaGrid.calcCurrentCellEditorDisplay()
+            $vmaFormulaGrid.reCalcCurrentAreaPos()
             $vmaFormulaGrid.updateCurrentAreaStyle()
         }
 

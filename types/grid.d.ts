@@ -173,6 +173,14 @@ export interface VmaFormulaGridReactiveData {
         end: any
     }
     currentAreaBorderStyle: Record<string, any>
+    currentAreaSri: number
+    currentAreaEri: number
+    currentAreaSci: number
+    currentAreaEci: number
+    currentAreaW: number
+    currentAreaH: number
+    currentAreaStartRowIndex: number
+    currentAreaStartColIndex: number
 
     styles: {
         bgc: any[],
@@ -220,6 +228,7 @@ export interface VmaFormulaGridPrivateMethods {
     setFontColor(type: 'cells' | 'rows' | 'columns', mode: 'none' | 'normal', color: any): void
     calcCurrentCellEditorStyle(): void
     calcCurrentCellEditorDisplay(): void
+    reCalcCurrentAreaPos(): void
     updateCurrentAreaStyle(): void
     updateCellStyle(): void
 }
