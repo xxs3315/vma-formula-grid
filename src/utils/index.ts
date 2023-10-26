@@ -1179,6 +1179,8 @@ export function getRealArea(columnWidth: number,
     let endRowSpan = 1
     let startColSpan = 1
     let startRowSpan = 1
+
+    // TODO problem??
     if (currentArea.start.row === endRowIndex && currentArea.start.col === endColIndex) {
         endColSpan = currentArea.start.colSpan
         endRowSpan = currentArea.start.rowSpan
