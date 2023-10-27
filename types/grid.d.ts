@@ -184,7 +184,10 @@ export interface VmaFormulaGridReactiveData {
 
     styles: {
         bgc: any[],
-        fgc: any[]
+        fgc: any[],
+        b: any[],
+        i: any[],
+        u: any[],
     }
 
     borders: any[]
@@ -226,6 +229,7 @@ export interface VmaFormulaGridPrivateMethods {
     setCellBorder(type: 'cells' | 'rows' | 'columns', target: 'l' | 't' | 'r' | 'b' | 'none' | 'full' | 'outer' | 'inner'): void
     setBackgroundColor(type: 'cells' | 'rows' | 'columns', mode: 'none' | 'normal', color: any): void
     setFontColor(type: 'cells' | 'rows' | 'columns', mode: 'none' | 'normal', color: any): void
+    setFontStyle(type: 'cells' | 'rows' | 'columns', mode: 'fontBold' | 'fontItalic' | 'fontUnderline' | 'fontSizeUp' | 'fontSizeDown', v: boolean): void
     calcCurrentCellEditorStyle(): void
     calcCurrentCellEditorDisplay(): void
     reCalcCurrentAreaPos(): void

@@ -5,6 +5,7 @@ import {
 } from "../../../types";
 import {nextTick} from "vue";
 import {DomTools, getAbsolutePos} from "../../utils/doms.ts";
+import {calcCellStyles} from "../../utils";
 
 const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
     setupGrid(grid): void | { [p: string]: any } {
@@ -94,6 +95,48 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     }
                     if (menu.code === 'unmergeCells') {
                         grid.unmergeCells()
+                    }
+                    if (menu.code === 'fontBold') {
+                        let initValue = false
+                        for (let col = reactiveData.currentAreaSci; col <= reactiveData.currentAreaEci; col++) {
+                            for (let row = reactiveData.currentAreaSri; row <= reactiveData.currentAreaEri; row++) {
+                                if (reactiveData.currentSheetData[row][col + 1].b) {
+                                    initValue = true
+                                    break
+                                }
+                            }
+                        }
+                        grid.setFontStyle('cells', 'fontBold', initValue)
+                    }
+                    if (menu.code === 'fontItalic') {
+                        let initValue = false
+                        for (let col = reactiveData.currentAreaSci; col <= reactiveData.currentAreaEci; col++) {
+                            for (let row = reactiveData.currentAreaSri; row <= reactiveData.currentAreaEri; row++) {
+                                if (reactiveData.currentSheetData[row][col + 1].i) {
+                                    initValue = true
+                                    break
+                                }
+                            }
+                        }
+                        grid.setFontStyle('cells', 'fontItalic', initValue)
+                    }
+                    if (menu.code === 'fontUnderline') {
+                        let initValue = false
+                        for (let col = reactiveData.currentAreaSci; col <= reactiveData.currentAreaEci; col++) {
+                            for (let row = reactiveData.currentAreaSri; row <= reactiveData.currentAreaEri; row++) {
+                                if (reactiveData.currentSheetData[row][col + 1].u) {
+                                    initValue = true
+                                    break
+                                }
+                            }
+                        }
+                        grid.setFontStyle('cells', 'fontUnderline', initValue)
+                    }
+                    if (menu.code === 'fontSizeUp') {
+                        grid.setFontStyle('cells', 'fontSizeUp', true)
+                    }
+                    if (menu.code === 'fontSizeDown') {
+                        grid.setFontStyle('cells', 'fontSizeDown', true)
                     }
                 }
                 if (ctxMenuMethods.closeMenu) {
@@ -240,27 +283,6 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     },
                 )
 
-                //
-                // const cornerTargetNode = DomTools.getEventTargetNode(
-                //     event,
-                //     refGridDivElem,
-                //     `grid-corner`,
-                //     (target: any) => {
-                //         const elem = target.parentNode.parentNode.parentNode.parentNode
-                //         return elem !== document && elem.getAttribute('data-uid') === uId
-                //     },
-                // )
-                //
-                // const cellTargetNode = DomTools.getEventTargetNode(
-                //     event,
-                //     refGridDivElem,
-                //     `normal`,
-                //     (target: any) => {
-                //         const elem: any = target.parentNode.parentNode.parentNode.parentNode
-                //         return elem !== document && elem.getAttribute('data-uid') === uId
-                //     },
-                // )
-
                 if (columnTargetNode.flag) {
                     openCtxMenu(event, 'column-indicator', {
                         row: columnTargetNode.targetElem.getAttribute('data-row'),
@@ -343,6 +365,15 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options = []
                 subOptions = []
                 options.push({name: '取消合并', prefixIcon: 'info', code: 'unmergeCells', disabled: false, visible: true, children: subOptions, param})
+                list.push(options)
+                options = []
+                subOptions = []
+                subOptions.push({name: '粗体', code: 'fontBold', disabled: false, visible: true, param,})
+                subOptions.push({name: '斜体', code: 'fontItalic', disabled: false, visible: true, param,})
+                subOptions.push({name: '下划线', code: 'fontUnderline', disabled: false, visible: true, param,})
+                subOptions.push({name: '增大字体', code: 'fontSizeUp', disabled: false, visible: true, param,})
+                subOptions.push({name: '减小字体', code: 'fontSizeDown', disabled: false, visible: true, param,})
+                options.push({name: '字体', prefixIcon: 'info', code: 'fontStyle', disabled: false, visible: true, children: subOptions, param,})
                 list.push(options)
             }
 

@@ -669,7 +669,10 @@ export default defineComponent({
                                                 height: cell.rowSpan! > 1 ? '100%' : 'inherit',
                                                 width: cell.colSpan! > 1 ? '100%' : 'inherit',
                                                 '--cellBgCustom': cell.bg,
-                                                color: cell.fg
+                                                color: cell.fg,
+                                                fontWeight: cell.b ? 'bold' : 'normal',
+                                                fontStyle: cell.i ? 'italic' : 'normal',
+                                                textDecoration: cell.u ? 'underline' : 'none',
                                             },
                                             onMouseup: (_: MouseEvent) => {
                                                 $vmaFormulaGrid.reactiveData.currentAreaStatus = false

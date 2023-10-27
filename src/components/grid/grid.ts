@@ -400,7 +400,10 @@ export default defineComponent({
             currentAreaStartRowIndex: -1,
             styles: {
                 bgc: [],
-                fgc: []
+                fgc: [],
+                b: [],
+                i: [],
+                u: [],
             },
             borders: []
         }) as VmaFormulaGridReactiveData
@@ -924,7 +927,7 @@ export default defineComponent({
                         row.splice(
                             colNumber + 1,
                             0,
-                            new Cell(index, colNumber, 1, 1, null, null, null, null, false, -1, '17', '', '', null, null, null, null) as Cell & { [key: string]: string },
+                            new Cell(index, colNumber, 1, 1, null, null, null, null, false, -1, '17', '', '', null, null, null, null, false, false, false) as Cell & { [key: string]: string },
                         )
                         return null
                     },
@@ -977,7 +980,7 @@ export default defineComponent({
                 const aNewRow: Cell[] = []
                 for (let i = -1; i < gridReactiveData.colConfs.length - 1; i++) {
                     aNewRow.push(
-                        new Cell(Number(rowNumber), i, 1, 1, null, null, null, null, false, -1, '17', '', '', null, null, null, null) as Cell & { [key: string]: string },
+                        new Cell(Number(rowNumber), i, 1, 1, null, null, null, null, false, -1, '17', '', '', null, null, null, null, false, false, false) as Cell & { [key: string]: string },
                     )
                 }
                 gridReactiveData.currentSheetData.splice(Number(rowNumber), 0, aNewRow)
@@ -1185,6 +1188,58 @@ export default defineComponent({
                         for (let row = $vmaFormulaGrid.reactiveData.currentAreaSri; row <= $vmaFormulaGrid.reactiveData.currentAreaEri; row++) {
                             const {fg} = calcCellStyles(col, row, $vmaFormulaGrid.reactiveData.styles)
                             $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].fg = fg
+                        }
+                    }
+                }
+            },
+            setFontStyle: (type: 'cells' | 'rows' | 'columns', mode: 'fontBold' | 'fontItalic' | 'fontUnderline' | 'fontSizeUp' | 'fontSizeDown', v: boolean) => {
+                if (type === 'cells') {
+                    if (mode === 'fontBold') {
+                        const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1)
+                        const pEnd =  getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1)
+                        const p = pStart === pEnd ? pStart : pStart + ':' + pEnd
+                        gridReactiveData.styles.b.push({
+                            p: p,
+                            v: !v,
+                            type: 'cells'
+                        })
+                        for (let col = $vmaFormulaGrid.reactiveData.currentAreaSci; col <= $vmaFormulaGrid.reactiveData.currentAreaEci; col++) {
+                            for (let row = $vmaFormulaGrid.reactiveData.currentAreaSri; row <= $vmaFormulaGrid.reactiveData.currentAreaEri; row++) {
+                                const {b} = calcCellStyles(col, row, $vmaFormulaGrid.reactiveData.styles)
+                                $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].b = b
+                            }
+                        }
+                    }
+                    if (mode === 'fontItalic') {
+                        const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1)
+                        const pEnd =  getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1)
+                        const p = pStart === pEnd ? pStart : pStart + ':' + pEnd
+                        gridReactiveData.styles.i.push({
+                            p: p,
+                            v: !v,
+                            type: 'cells'
+                        })
+                        for (let col = $vmaFormulaGrid.reactiveData.currentAreaSci; col <= $vmaFormulaGrid.reactiveData.currentAreaEci; col++) {
+                            for (let row = $vmaFormulaGrid.reactiveData.currentAreaSri; row <= $vmaFormulaGrid.reactiveData.currentAreaEri; row++) {
+                                const {i} = calcCellStyles(col, row, $vmaFormulaGrid.reactiveData.styles)
+                                $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].i = i
+                            }
+                        }
+                    }
+                    if (mode === 'fontUnderline') {
+                        const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1)
+                        const pEnd =  getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1)
+                        const p = pStart === pEnd ? pStart : pStart + ':' + pEnd
+                        gridReactiveData.styles.u.push({
+                            p: p,
+                            v: !v,
+                            type: 'cells'
+                        })
+                        for (let col = $vmaFormulaGrid.reactiveData.currentAreaSci; col <= $vmaFormulaGrid.reactiveData.currentAreaEci; col++) {
+                            for (let row = $vmaFormulaGrid.reactiveData.currentAreaSri; row <= $vmaFormulaGrid.reactiveData.currentAreaEri; row++) {
+                                const {u} = calcCellStyles(col, row, $vmaFormulaGrid.reactiveData.styles)
+                                $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].u = u
+                            }
                         }
                     }
                 }
@@ -3102,6 +3157,15 @@ export default defineComponent({
                         if (props.data.conf.styles.hasOwnProperty('fgc')) {
                             gridReactiveData.styles.fgc = props.data.conf.styles.fgc.concat([])
                         }
+                        if (props.data.conf.styles.hasOwnProperty('b')) {
+                            gridReactiveData.styles.b = props.data.conf.styles.b.concat([])
+                        }
+                        if (props.data.conf.styles.hasOwnProperty('i')) {
+                            gridReactiveData.styles.i = props.data.conf.styles.i.concat([])
+                        }
+                        if (props.data.conf.styles.hasOwnProperty('u')) {
+                            gridReactiveData.styles.u = props.data.conf.styles.u.concat([])
+                        }
                     }
 
                     if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('borders')) {
@@ -3178,7 +3242,7 @@ export default defineComponent({
                             }
 
                             const {rowSpan, colSpan} = getRowColSpanFromMerges(colIndex, rowIndex + 1, gridReactiveData.merges)
-                            const {fg, bg} = calcCellStyles(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.styles)
+                            const {fg, bg, b, i, u} = calcCellStyles(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.styles)
                             const {bdl: bdlCurrent, bdt: bdtCurrent, bdr: bdrCurrent, bdb: bdbCurrent} = calcCellBorders(colIndex - 1, rowIndex, gridReactiveData.borders, gridReactiveData.colConfs.length, gridReactiveData.rowConfs.length)
                             const bgt = calcCellBgType(bg.length > 0, bdlCurrent, bdtCurrent, bdrCurrent, bdbCurrent)
                             gridReactiveData.currentSheetData[rowIndex][colIndex] = new Cell(
@@ -3199,6 +3263,9 @@ export default defineComponent({
                                 bdtCurrent,
                                 bdrCurrent,
                                 bdbCurrent,
+                                b,
+                                i,
+                                u
                             )
                         })
                     })

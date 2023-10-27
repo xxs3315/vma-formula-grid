@@ -382,6 +382,33 @@ export default defineComponent({
           {p: 'G7:L26', color: 'rgba(220, 48, 46, 0.8)', type: 'cells'},
           {p: 'J20', type: 'cells', color: 'none'},
           {p: 'J23', type: 'cells', color: '#88EEFF'},
+        ],
+        b:[
+          {p: ['A', 'C', 'D', 'o:r'], type: 'columns', v: true},
+          {p: ['B', 'D', 'F'], type: 'columns', v: true},
+          {p: [1, 3, 5], type: 'rows', v: true},
+          {p: [10, 11, 12, '23:27'], type: 'rows', v: true},
+          {p: 'L26:G7', type: 'cells', v: true},
+          {p: 'J20', type: 'cells', v: true},
+          {p: 'J23', type: 'cells', v: true},
+        ],
+        i:[
+          {p: ['A', 'C', 'D', 'o:r'], type: 'columns', v: true},
+          {p: ['B', 'D', 'F'], type: 'columns', v: true},
+          {p: [1, 3, 5], type: 'rows', v: true},
+          {p: [10, 11, 12, '23:27'], type: 'rows', v: true},
+          {p: 'L26:G7', type: 'cells', v: true},
+          {p: 'J20', type: 'cells', v: true},
+          {p: 'J23', type: 'cells', v: true},
+        ],
+        u:[
+          {p: ['A', 'C', 'D', 'o:r'], type: 'columns', v: true},
+          {p: ['B', 'D', 'F'], type: 'columns', v: true},
+          {p: [1, 3, 5], type: 'rows', v: true},
+          {p: [10, 11, 12, '23:27'], type: 'rows', v: true},
+          {p: 'L26:G7', type: 'cells', v: true},
+          {p: 'J20', type: 'cells', v: true},
+          {p: 'J23', type: 'cells', v: true},
         ]
       },
       borders: [

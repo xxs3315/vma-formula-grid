@@ -16,9 +16,12 @@ export class Cell {
     bdt?: any
     bdr?: any
     bdb?: any
+    b?: boolean
+    i?: boolean
+    u?: boolean
 
     constructor(row: number, col: number, rowSpan: number, colSpan: number, v: any, mv: any, fd: any, se: any, ss: boolean, st: number,
-                bgt: string, bg: any, fg: any, bdl: any, bdt: any, bdr: any, bdb: any) {
+                bgt: string, bg: any, fg: any, bdl: any, bdt: any, bdr: any, bdb: any, b: boolean, i: boolean, u: boolean) {
         this.row = row;
         this.col = col;
         this.rowSpan = rowSpan;
@@ -36,5 +39,8 @@ export class Cell {
         this.bdt = bdt;
         this.bdr = bdr;
         this.bdb = bdb;
+        this.b = b;
+        this.i = i;
+        this.u = u;
     }
 }

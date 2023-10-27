@@ -1394,10 +1394,13 @@ export function calcYOverlapMerges(offsetStartIndex: number, merges: Record<stri
 }
 
 
-export function calcCellStyles(col: number, row: number, styles: { bgc: any[]; fgc: any[] }) {
+export function calcCellStyles(col: number, row: number, styles: { bgc: any[]; fgc: any[]; b: any[]; i: any[]; u: any[]; }) {
     let result = {
         fg: '',
-        bg: ''
+        bg: '',
+        b: false,
+        i: false,
+        u: false,
     }
     if (styles.hasOwnProperty('bgc') && styles.bgc.length > 0) {
         let bg = ''
@@ -1519,6 +1522,189 @@ export function calcCellStyles(col: number, row: number, styles: { bgc: any[]; f
             }
         })
         result.fg = fg
+    }
+
+    if (styles.hasOwnProperty('b') && styles.b.length > 0) {
+        let b = false
+        styles.b.forEach(item => {
+            if (item.type === 'columns') {
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string) => {
+                        if (pos.indexOf(':') >= 0) {
+                            const columnPosArr = pos.split(':')
+                            if (col + 1 >= getColumnCount(columnPosArr[0]) && col + 1 <= getColumnCount(columnPosArr[1])) {
+                                b = item.hasOwnProperty('v') && item.v
+                            }
+                        } else {
+                            if (getColumnSymbol(col + 1) === pos.toUpperCase()) {
+                                b = item.hasOwnProperty('v') && item.v
+                            }
+                        }
+                    })
+                }
+            } else if (item.type === 'rows') {
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string | number) => {
+                        if (typeof pos === 'string' && pos.indexOf(':') >= 0) {
+                            let rowPosArr: any[] = pos.split(':')
+                            rowPosArr = rowPosArr.map(Number)
+                            if (row + 1 >= rowPosArr[0] && row + 1 <= rowPosArr[1]) {
+                                b = item.hasOwnProperty('v') && item.v
+                            }
+                        }
+                        if (typeof pos === 'number' && row + 1 === pos) {
+                            b = item.hasOwnProperty('v') && item.v
+                        }
+                    })
+                }
+            } else if (item.type === 'cells') {
+                if (item.p.indexOf(':') >= 0) {
+                    const mArr = item.p.split(':')
+
+                    let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''))
+                    let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
+                    let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
+                    let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
+                    if (
+                        col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd
+                        || col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowStart && row + 1 <= rowEnd
+                        || col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowEnd && row + 1 <= rowStart
+                        || col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowEnd && row + 1 <= rowStart
+                    ) {
+                        b = item.hasOwnProperty('v') && item.v
+                    }
+                } else {
+                    let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''))
+                    let rowTarget = parseInt(item.p.replace(/[^0-9]/ig, ''))
+                    if (col + 1 === colTarget && row + 1 === rowTarget) {
+                        b = item.hasOwnProperty('v') && item.v
+                    }
+                }
+            }
+        })
+        result.b = b
+    }
+
+    if (styles.hasOwnProperty('i') && styles.i.length > 0) {
+        let i = false
+        styles.i.forEach(item => {
+            if (item.type === 'columns') {
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string) => {
+                        if (pos.indexOf(':') >= 0) {
+                            const columnPosArr = pos.split(':')
+                            if (col + 1 >= getColumnCount(columnPosArr[0]) && col + 1 <= getColumnCount(columnPosArr[1])) {
+                                i = item.hasOwnProperty('v') && item.v
+                            }
+                        } else {
+                            if (getColumnSymbol(col + 1) === pos.toUpperCase()) {
+                                i = item.hasOwnProperty('v') && item.v
+                            }
+                        }
+                    })
+                }
+            } else if (item.type === 'rows') {
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string | number) => {
+                        if (typeof pos === 'string' && pos.indexOf(':') >= 0) {
+                            let rowPosArr: any[] = pos.split(':')
+                            rowPosArr = rowPosArr.map(Number)
+                            if (row + 1 >= rowPosArr[0] && row + 1 <= rowPosArr[1]) {
+                                i = item.hasOwnProperty('v') && item.v
+                            }
+                        }
+                        if (typeof pos === 'number' && row + 1 === pos) {
+                            i = item.hasOwnProperty('v') && item.v
+                        }
+                    })
+                }
+            } else if (item.type === 'cells') {
+                if (item.p.indexOf(':') >= 0) {
+                    const mArr = item.p.split(':')
+
+                    let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''))
+                    let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
+                    let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
+                    let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
+                    if (
+                        col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd
+                        || col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowStart && row + 1 <= rowEnd
+                        || col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowEnd && row + 1 <= rowStart
+                        || col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowEnd && row + 1 <= rowStart
+                    ) {
+                        i = item.hasOwnProperty('v') && item.v
+                    }
+                } else {
+                    let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''))
+                    let rowTarget = parseInt(item.p.replace(/[^0-9]/ig, ''))
+                    if (col + 1 === colTarget && row + 1 === rowTarget) {
+                        i = item.hasOwnProperty('v') && item.v
+                    }
+                }
+            }
+        })
+        result.i = i
+    }
+
+    if (styles.hasOwnProperty('u') && styles.u.length > 0) {
+        let u = false
+        styles.u.forEach(item => {
+            if (item.type === 'columns') {
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string) => {
+                        if (pos.indexOf(':') >= 0) {
+                            const columnPosArr = pos.split(':')
+                            if (col + 1 >= getColumnCount(columnPosArr[0]) && col + 1 <= getColumnCount(columnPosArr[1])) {
+                                u = item.hasOwnProperty('v') && item.v
+                            }
+                        } else {
+                            if (getColumnSymbol(col + 1) === pos.toUpperCase()) {
+                                u = item.hasOwnProperty('v') && item.v
+                            }
+                        }
+                    })
+                }
+            } else if (item.type === 'rows') {
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string | number) => {
+                        if (typeof pos === 'string' && pos.indexOf(':') >= 0) {
+                            let rowPosArr: any[] = pos.split(':')
+                            rowPosArr = rowPosArr.map(Number)
+                            if (row + 1 >= rowPosArr[0] && row + 1 <= rowPosArr[1]) {
+                                u = item.hasOwnProperty('v') && item.v
+                            }
+                        }
+                        if (typeof pos === 'number' && row + 1 === pos) {
+                            u = item.hasOwnProperty('v') && item.v
+                        }
+                    })
+                }
+            } else if (item.type === 'cells') {
+                if (item.p.indexOf(':') >= 0) {
+                    const mArr = item.p.split(':')
+
+                    let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''))
+                    let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''))
+                    let rowStart = parseInt(mArr[0].replace(/[^0-9]/ig, ''))
+                    let rowEnd = parseInt(mArr[1].replace(/[^0-9]/ig, ''))
+                    if (
+                        col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd
+                        || col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowStart && row + 1 <= rowEnd
+                        || col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowEnd && row + 1 <= rowStart
+                        || col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowEnd && row + 1 <= rowStart
+                    ) {
+                        u = item.hasOwnProperty('v') && item.v
+                    }
+                } else {
+                    let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''))
+                    let rowTarget = parseInt(item.p.replace(/[^0-9]/ig, ''))
+                    if (col + 1 === colTarget && row + 1 === rowTarget) {
+                        u = item.hasOwnProperty('v') && item.v
+                    }
+                }
+            }
+        })
+        result.u = u
     }
     
 
