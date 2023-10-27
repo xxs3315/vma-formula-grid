@@ -5,7 +5,7 @@ import {
 } from "../../../types";
 import {nextTick} from "vue";
 import {DomTools, getAbsolutePos} from "../../utils/doms.ts";
-import {calcCellStyles} from "../../utils";
+import {checkCellInMerges} from "../../utils";
 
 const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
     setupGrid(grid): void | { [p: string]: any } {
@@ -100,7 +100,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                         let initValue = false
                         for (let col = reactiveData.currentAreaSci; col <= reactiveData.currentAreaEci; col++) {
                             for (let row = reactiveData.currentAreaSri; row <= reactiveData.currentAreaEri; row++) {
-                                if (reactiveData.currentSheetData[row][col + 1].b) {
+                                if (reactiveData.currentSheetData[row][col + 1].b && !checkCellInMerges(col + 1, row + 1, reactiveData.merges)) {
                                     initValue = true
                                     break
                                 }
@@ -112,7 +112,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                         let initValue = false
                         for (let col = reactiveData.currentAreaSci; col <= reactiveData.currentAreaEci; col++) {
                             for (let row = reactiveData.currentAreaSri; row <= reactiveData.currentAreaEri; row++) {
-                                if (reactiveData.currentSheetData[row][col + 1].i) {
+                                if (reactiveData.currentSheetData[row][col + 1].i && !checkCellInMerges(col + 1, row + 1, reactiveData.merges)) {
                                     initValue = true
                                     break
                                 }
@@ -124,7 +124,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                         let initValue = false
                         for (let col = reactiveData.currentAreaSci; col <= reactiveData.currentAreaEci; col++) {
                             for (let row = reactiveData.currentAreaSri; row <= reactiveData.currentAreaEri; row++) {
-                                if (reactiveData.currentSheetData[row][col + 1].u) {
+                                if (reactiveData.currentSheetData[row][col + 1].u && !checkCellInMerges(col + 1, row + 1, reactiveData.merges)) {
                                     initValue = true
                                     break
                                 }
