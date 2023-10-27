@@ -1245,27 +1245,53 @@ export function getRealArea(columnWidth: number,
         let eci = endColIndex
         let sri = startRowIndex
         let eri = endRowIndex
-        Object.keys(merges).forEach((key: string) => {
+        const mergesUnCompared = Object.assign({}, merges)
+        let mergesUnComparedKeys = Object.keys(mergesUnCompared)
+        while (mergesUnComparedKeys.length > 0) {
             let mergesIntersectCol = false
             let mergesIntersectRow = false
-            let startCol = [Math.min(sci + 1, eci + 1),Math.min(merges[key].colStart, merges[key].colEnd)]
-            let endCol = [Math.max(sci + 1, eci + 1),Math.max(merges[key].colStart, merges[key].colEnd)]
+            let startCol = [Math.min(sci + 1, eci + 1),Math.min(merges[mergesUnComparedKeys[0]].colStart, merges[mergesUnComparedKeys[0]].colEnd)]
+            let endCol = [Math.max(sci + 1, eci + 1),Math.max(merges[mergesUnComparedKeys[0]].colStart, merges[mergesUnComparedKeys[0]].colEnd)]
             if (Math.max(...startCol) <= Math.min(...endCol)) {
                 mergesIntersectCol = true
             }
-            let startRow = [Math.min(sri + 1, eri + 1),Math.min(merges[key].rowStart, merges[key].rowEnd)]
-            let endRow = [Math.max(sri + 1, eri + 1),Math.max(merges[key].rowStart, merges[key].rowEnd)]
+            let startRow = [Math.min(sri + 1, eri + 1),Math.min(merges[mergesUnComparedKeys[0]].rowStart, merges[mergesUnComparedKeys[0]].rowEnd)]
+            let endRow = [Math.max(sri + 1, eri + 1),Math.max(merges[mergesUnComparedKeys[0]].rowStart, merges[mergesUnComparedKeys[0]].rowEnd)]
             if (Math.max(...startRow) <= Math.min(...endRow)) {
                 mergesIntersectRow = true
             }
             if (mergesIntersectCol && mergesIntersectRow) {
-                mergeColRows.push(merges[key])
-                sci = Math.min(sci, merges[key].colStart - 1)
-                eci = Math.max(eci, merges[key].colEnd - 1)
-                sri = Math.min(sri, merges[key].rowStart - 1)
-                eri = Math.max(eri, merges[key].rowEnd - 1)
+                mergeColRows.push(merges[mergesUnComparedKeys[0]])
+                sci = Math.min(sci, merges[mergesUnComparedKeys[0]].colStart - 1)
+                eci = Math.max(eci, merges[mergesUnComparedKeys[0]].colEnd - 1)
+                sri = Math.min(sri, merges[mergesUnComparedKeys[0]].rowStart - 1)
+                eri = Math.max(eri, merges[mergesUnComparedKeys[0]].rowEnd - 1)
             }
-        })
+            Object.keys(merges).forEach((key: string) => {
+                if (key !== mergesUnComparedKeys[0]) {
+                    let mergesIntersectCol = false
+                    let mergesIntersectRow = false
+                    let startCol = [Math.min(sci + 1, eci + 1),Math.min(merges[key].colStart, merges[key].colEnd)]
+                    let endCol = [Math.max(sci + 1, eci + 1),Math.max(merges[key].colStart, merges[key].colEnd)]
+                    if (Math.max(...startCol) <= Math.min(...endCol)) {
+                        mergesIntersectCol = true
+                    }
+                    let startRow = [Math.min(sri + 1, eri + 1),Math.min(merges[key].rowStart, merges[key].rowEnd)]
+                    let endRow = [Math.max(sri + 1, eri + 1),Math.max(merges[key].rowStart, merges[key].rowEnd)]
+                    if (Math.max(...startRow) <= Math.min(...endRow)) {
+                        mergesIntersectRow = true
+                    }
+                    if (mergesIntersectCol && mergesIntersectRow) {
+                        mergeColRows.push(merges[key])
+                        sci = Math.min(sci, merges[key].colStart - 1)
+                        eci = Math.max(eci, merges[key].colEnd - 1)
+                        sri = Math.min(sri, merges[key].rowStart - 1)
+                        eri = Math.max(eri, merges[key].rowEnd - 1)
+                    }
+                }
+            })
+            mergesUnComparedKeys.splice(0, 1)
+        }
         if (mergeColRows.length > 0) {
             result.w = getCurrentAreaWidth(sci, eci, columnWidth, changedColumnWidths, changedColumnVisibles)
             result.h = getCurrentAreaHeight(sri, eri, rowHeight, changedRowHeights, changedRowVisibles)
@@ -1275,6 +1301,7 @@ export function getRealArea(columnWidth: number,
             result.eri = eri
             result.startRowIndex = sri
             result.startColIndex = sci
+            console.log(sci, eci, sri, eri)
         } else {
             result.w = getCurrentAreaWidth(startColIndex, endColIndex, columnWidth, changedColumnWidths, changedColumnVisibles)
             result.h = getCurrentAreaHeight(startRowIndex, endRowIndex,rowHeight, changedRowHeights, changedRowVisibles)
