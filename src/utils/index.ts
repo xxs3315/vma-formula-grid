@@ -1301,7 +1301,6 @@ export function getRealArea(columnWidth: number,
             result.eri = eri
             result.startRowIndex = sri
             result.startColIndex = sci
-            console.log(sci, eci, sri, eri)
         } else {
             result.w = getCurrentAreaWidth(startColIndex, endColIndex, columnWidth, changedColumnWidths, changedColumnVisibles)
             result.h = getCurrentAreaHeight(startRowIndex, endRowIndex,rowHeight, changedRowHeights, changedRowVisibles)
