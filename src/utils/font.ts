@@ -217,13 +217,13 @@ const fonts = {
 };
 
 export const supportedFonts = () => {
-	const sfs: any[] = []
+	const sfs: any[] = [];
 	Object.values(fonts).forEach((fontGroup: any) => {
 		fontGroup.forEach((font: any) => {
 			if (isSupportFontFamily(font.en)) {
-				sfs.push(font)
+				sfs.push(font);
 			}
-		})
-	})
-	return sfs
-}
+		});
+	});
+	return sfs;
+};

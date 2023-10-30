@@ -63,7 +63,7 @@ import { DepParser, FormulaParser } from "../../formula";
 import GlobalEvent from "../../utils/events.ts";
 import VmaFormulaGrid from "../../v-m-a-formula-grid";
 import { DomTools } from "../../utils/doms.ts";
-import {supportedFonts} from "../../utils/font.ts";
+import { supportedFonts } from "../../utils/font.ts";
 
 export default defineComponent({
 	name: "VmaFormulaGrid",
@@ -113,57 +113,63 @@ export default defineComponent({
 		let resizeObserver: ResizeObserver;
 
 		onMounted(() => {
-			loadData().then(() => {
-				$vmaFormulaGrid
-					.recalculate(true)
-					.then(() => {
-						const el = refGridDiv.value;
-						const parentEl = $vmaFormulaGrid.getParentElem();
-						resizeObserver = createResizeEvent(() => {
-							$vmaFormulaGrid.recalculate(true);
-						});
-						if (el) {
-							resizeObserver.observe(el);
-						}
-						if (parentEl) {
-							resizeObserver.observe(parentEl);
-						}
-						GlobalEvent.on(
-							$vmaFormulaGrid,
-							"mousewheel",
-							handleGlobalMousewheelEvent,
-						);
-						GlobalEvent.on(
-							$vmaFormulaGrid,
-							"mousedown",
-							handleGlobalMousedownEvent,
-						);
-						GlobalEvent.on(
-							$vmaFormulaGrid,
-							"keydown",
-							handleGlobalKeydownEvent,
-						);
-						if ($vmaFormulaGrid.handleContextmenuEvent) {
+			loadData()
+				.then(() => {
+					$vmaFormulaGrid
+						.recalculate(true)
+						.then(() => {
+							const el = refGridDiv.value;
+							const parentEl = $vmaFormulaGrid.getParentElem();
+							resizeObserver = createResizeEvent(() => {
+								$vmaFormulaGrid.recalculate(true);
+							});
+							if (el) {
+								resizeObserver.observe(el);
+							}
+							if (parentEl) {
+								resizeObserver.observe(parentEl);
+							}
 							GlobalEvent.on(
 								$vmaFormulaGrid,
-								"contextmenu",
-								$vmaFormulaGrid.handleContextmenuEvent,
+								"mousewheel",
+								handleGlobalMousewheelEvent,
 							);
-						}
-						GlobalEvent.on($vmaFormulaGrid, "resize", handleGlobalResizeEvent);
-					})
-					.then(() => {
-						$vmaFormulaGrid.calc();
-					})
-					.then(() => {
-						$vmaFormulaGrid.calcCurrentCellEditorStyle();
-						$vmaFormulaGrid.calcCurrentCellEditorDisplay();
-						$vmaFormulaGrid.reCalcCurrentAreaPos();
-						$vmaFormulaGrid.updateCurrentAreaStyle();
-					});
-			}).finally(() => {
-				gridReactiveData.supportedFonts = supportedFonts()
-			});
+							GlobalEvent.on(
+								$vmaFormulaGrid,
+								"mousedown",
+								handleGlobalMousedownEvent,
+							);
+							GlobalEvent.on(
+								$vmaFormulaGrid,
+								"keydown",
+								handleGlobalKeydownEvent,
+							);
+							if ($vmaFormulaGrid.handleContextmenuEvent) {
+								GlobalEvent.on(
+									$vmaFormulaGrid,
+									"contextmenu",
+									$vmaFormulaGrid.handleContextmenuEvent,
+								);
+							}
+							GlobalEvent.on(
+								$vmaFormulaGrid,
+								"resize",
+								handleGlobalResizeEvent,
+							);
+						})
+						.then(() => {
+							$vmaFormulaGrid.calc();
+						})
+						.then(() => {
+							$vmaFormulaGrid.calcCurrentCellEditorStyle();
+							$vmaFormulaGrid.calcCurrentCellEditorDisplay();
+							$vmaFormulaGrid.reCalcCurrentAreaPos();
+							$vmaFormulaGrid.updateCurrentAreaStyle();
+						});
+				})
+				.finally(() => {
+					gridReactiveData.supportedFonts = supportedFonts();
+				});
 		});
 
 		onBeforeUnmount(() => {
@@ -187,55 +193,57 @@ export default defineComponent({
 			() => props.data,
 			() => {
 				reset().then(() => {
-					loadData().then(() => {
-						$vmaFormulaGrid
-							.recalculate(true)
-							.then(() => {
-								const el = refGridDiv.value;
-								const parentEl = $vmaFormulaGrid.getParentElem();
-								resizeObserver = createResizeEvent(() => {
-									$vmaFormulaGrid.recalculate(true);
-								});
-								if (el) {
-									resizeObserver.observe(el);
-								}
-								if (parentEl) {
-									resizeObserver.observe(parentEl);
-								}
-								GlobalEvent.on(
-									$vmaFormulaGrid,
-									"mousewheel",
-									handleGlobalMousewheelEvent,
-								);
-								GlobalEvent.on(
-									$vmaFormulaGrid,
-									"mousedown",
-									handleGlobalMousedownEvent,
-								);
-								GlobalEvent.on(
-									$vmaFormulaGrid,
-									"keydown",
-									handleGlobalKeydownEvent,
-								);
-								if ($vmaFormulaGrid.handleContextmenuEvent) {
+					loadData()
+						.then(() => {
+							$vmaFormulaGrid
+								.recalculate(true)
+								.then(() => {
+									const el = refGridDiv.value;
+									const parentEl = $vmaFormulaGrid.getParentElem();
+									resizeObserver = createResizeEvent(() => {
+										$vmaFormulaGrid.recalculate(true);
+									});
+									if (el) {
+										resizeObserver.observe(el);
+									}
+									if (parentEl) {
+										resizeObserver.observe(parentEl);
+									}
 									GlobalEvent.on(
 										$vmaFormulaGrid,
-										"contextmenu",
-										$vmaFormulaGrid.handleContextmenuEvent,
+										"mousewheel",
+										handleGlobalMousewheelEvent,
 									);
-								}
-								GlobalEvent.on(
-									$vmaFormulaGrid,
-									"resize",
-									handleGlobalResizeEvent,
-								);
-							})
-							.finally(() => {
-								$vmaFormulaGrid.calc();
-							});
-					}).finally(() => {
-						gridReactiveData.supportedFonts = supportedFonts()
-					});
+									GlobalEvent.on(
+										$vmaFormulaGrid,
+										"mousedown",
+										handleGlobalMousedownEvent,
+									);
+									GlobalEvent.on(
+										$vmaFormulaGrid,
+										"keydown",
+										handleGlobalKeydownEvent,
+									);
+									if ($vmaFormulaGrid.handleContextmenuEvent) {
+										GlobalEvent.on(
+											$vmaFormulaGrid,
+											"contextmenu",
+											$vmaFormulaGrid.handleContextmenuEvent,
+										);
+									}
+									GlobalEvent.on(
+										$vmaFormulaGrid,
+										"resize",
+										handleGlobalResizeEvent,
+									);
+								})
+								.finally(() => {
+									$vmaFormulaGrid.calc();
+								});
+						})
+						.finally(() => {
+							gridReactiveData.supportedFonts = supportedFonts();
+						});
 				});
 			},
 			{
@@ -453,7 +461,7 @@ export default defineComponent({
 				u: [],
 			},
 			borders: [],
-			supportedFonts: []
+			supportedFonts: [],
 		}) as VmaFormulaGridReactiveData;
 
 		watch(
