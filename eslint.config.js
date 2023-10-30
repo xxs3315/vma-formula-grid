@@ -8,5 +8,7 @@ module.exports = so1ve({
     yaml: false,
 
     // `.eslintignore` is no longer supported in Flat config, use `ignores` instead
-    ignores: [],
+    ignores: [
+        '**/formula/**/*.ts'
+    ],
 });
