@@ -191,6 +191,8 @@ export interface VmaFormulaGridReactiveData {
     }
 
     borders: any[]
+
+    supportedFonts: any[]
 }
 
 export interface VmaFormulaGridProps {

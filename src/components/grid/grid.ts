@@ -63,6 +63,7 @@ import { DepParser, FormulaParser } from "../../formula";
 import GlobalEvent from "../../utils/events.ts";
 import VmaFormulaGrid from "../../v-m-a-formula-grid";
 import { DomTools } from "../../utils/doms.ts";
+import {supportedFonts} from "../../utils/font.ts";
 
 export default defineComponent({
 	name: "VmaFormulaGrid",
@@ -160,6 +161,8 @@ export default defineComponent({
 						$vmaFormulaGrid.reCalcCurrentAreaPos();
 						$vmaFormulaGrid.updateCurrentAreaStyle();
 					});
+			}).finally(() => {
+				gridReactiveData.supportedFonts = supportedFonts()
 			});
 		});
 
@@ -230,6 +233,8 @@ export default defineComponent({
 							.finally(() => {
 								$vmaFormulaGrid.calc();
 							});
+					}).finally(() => {
+						gridReactiveData.supportedFonts = supportedFonts()
 					});
 				});
 			},
@@ -448,6 +453,7 @@ export default defineComponent({
 				u: [],
 			},
 			borders: [],
+			supportedFonts: []
 		}) as VmaFormulaGridReactiveData;
 
 		watch(
