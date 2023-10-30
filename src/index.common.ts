@@ -1,4 +1,4 @@
-import * as VMAFormulaGridExport from './all'
+import * as VMAFormulaGridExport from "./all";
 
-export * from './all'
-export default VMAFormulaGridExport
+export * from "./all";
+export default VMAFormulaGridExport;

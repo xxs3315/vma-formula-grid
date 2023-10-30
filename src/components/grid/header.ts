@@ -1,394 +1,495 @@
 import {
-    ComponentOptions,
-    createCommentVNode,
-    defineComponent,
-    h,
-    inject,
-    PropType,
-    reactive,
-    resolveComponent,
-    nextTick
+	ComponentOptions,
+	createCommentVNode,
+	defineComponent,
+	h,
+	inject,
+	PropType,
+	reactive,
+	resolveComponent,
+	nextTick,
 } from "vue";
-import {Guid} from "../../utils/guid.ts";
+import { Guid } from "../../utils/guid.ts";
 import {
-    VmaFormulaGridConstructor,
-    VmaFormulaGridMethods,
-    VmaFormulaGridPrivateMethods,
-    VmaFormulaGridHeaderConstructor,
-    VmaFormulaGridHeaderMethods,
-    VmaFormulaGridHeaderPrivateMethods,
-    VmaFormulaGridHeaderPropTypes
+	VmaFormulaGridConstructor,
+	VmaFormulaGridMethods,
+	VmaFormulaGridPrivateMethods,
+	VmaFormulaGridHeaderConstructor,
+	VmaFormulaGridHeaderMethods,
+	VmaFormulaGridHeaderPrivateMethods,
+	VmaFormulaGridHeaderPropTypes,
 } from "../../../types";
-import {DomTools} from "../../utils/doms.ts";
+import { DomTools } from "../../utils/doms.ts";
 import {
-    getColumnSymbol,
-    getRenderDefaultColWidth,
-    getXSpaceFromColumnWidths,
+	getColumnSymbol,
+	getRenderDefaultColWidth,
+	getXSpaceFromColumnWidths,
 } from "../../utils";
 
 export default defineComponent({
-    name: 'VmaFormulaGridHeader',
-    props: {
-        fixed: {
-            type: String as PropType<VmaFormulaGridHeaderPropTypes.Fixed>,
-            default: 'center',
-        },
-    },
-    setup(props, context) {
+	name: "VmaFormulaGridHeader",
+	props: {
+		fixed: {
+			type: String as PropType<VmaFormulaGridHeaderPropTypes.Fixed>,
+			default: "center",
+		},
+	},
+	setup(props, context) {
+		const $vmaFormulaGrid = inject(
+			"$vmaFormulaGrid",
+			{} as VmaFormulaGridConstructor &
+				VmaFormulaGridMethods &
+				VmaFormulaGridPrivateMethods,
+		);
 
-        const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
+		const GridCompIconComponent = resolveComponent(
+			"VmaFormulaGridCompIcon",
+		) as ComponentOptions;
 
-        const GridCompIconComponent = resolveComponent('VmaFormulaGridCompIcon') as ComponentOptions
+		const gridHeaderReactiveData = reactive({});
 
-        const gridHeaderReactiveData = reactive({})
+		const {
+			refGridDiv,
+			refGridHeaderTable,
+			refGridHeaderTableWrapperDiv,
+			refGridHeaderLeftFixedTable,
+			refGridHeaderLeftFixedTableWrapperDiv,
+			refGridHeaderTableColgroup,
+			refGridHeaderLeftFixedTableColgroup,
+			refGridHeaderLeftFixedXLineDiv,
+			refColumnResizeBarDiv,
+			renderDefaultRowHeight,
+			renderDefaultColWidth,
+		} = $vmaFormulaGrid.getRefs();
 
-        const {
-            refGridDiv,
-            refGridHeaderTable,
-            refGridHeaderTableWrapperDiv,
-            refGridHeaderLeftFixedTable,
-            refGridHeaderLeftFixedTableWrapperDiv,
-            refGridHeaderTableColgroup,
-            refGridHeaderLeftFixedTableColgroup,
-            refGridHeaderLeftFixedXLineDiv,
-            refColumnResizeBarDiv,
-            renderDefaultRowHeight,
-            renderDefaultColWidth
-        } = $vmaFormulaGrid.getRefs()
+		const isColumnIndicatorActive = (col: number): boolean => {
+			return (
+				col >= $vmaFormulaGrid.reactiveData.currentAreaSci &&
+				col <= $vmaFormulaGrid.reactiveData.currentAreaEci
+			);
+		};
 
+		const renderHeaderColgroup = () => {
+			const cols: any = [];
+			if ($vmaFormulaGrid.reactiveData.colConfs.length > 0) {
+				if ($vmaFormulaGrid.reactiveData.xStart !== -1) {
+					cols.push(
+						h("col", {
+							idx: -1,
+							style: {
+								width: `${$vmaFormulaGrid.reactiveData.colConfs[0].width}px`,
+							},
+						}),
+					);
+				}
+				for (
+					let index = $vmaFormulaGrid.reactiveData.xStart;
+					index <= $vmaFormulaGrid.reactiveData.xEnd;
+					index++
+				) {
+					if (index >= $vmaFormulaGrid.reactiveData.colConfs.length - 1) {
+						break;
+					}
+					cols.push(
+						h("col", {
+							idx: index,
+							style: {
+								width: $vmaFormulaGrid.reactiveData.colConfs[index + 1].visible
+									? typeof $vmaFormulaGrid.reactiveData.colConfs[index + 1]
+											.width === "string"
+										? `${renderDefaultColWidth.value}px`
+										: `${
+												$vmaFormulaGrid.reactiveData.colConfs[index + 1].width
+										  }px`
+									: "0px",
+							},
+						}),
+					);
+				}
+			}
+			return cols;
+		};
 
-        const isColumnIndicatorActive = (col: number): boolean => {
-            return col >= $vmaFormulaGrid.reactiveData.currentAreaSci && col <= $vmaFormulaGrid.reactiveData.currentAreaEci
-        }
+		const renderHeaderRows = () => {
+			const tr = [];
 
-        const renderHeaderColgroup = () => {
-            const cols: any = []
-            if ($vmaFormulaGrid.reactiveData.colConfs.length > 0) {
-                if ($vmaFormulaGrid.reactiveData.xStart !== -1) {
-                    cols.push(
-                        h('col', {
-                            idx: -1,
-                            style: {
-                                width: `${$vmaFormulaGrid.reactiveData.colConfs[0].width}px`,
-                            },
-                        })
-                    )
-                }
-                for (let index = $vmaFormulaGrid.reactiveData.xStart; index <= $vmaFormulaGrid.reactiveData.xEnd; index++) {
-                    if (index >= $vmaFormulaGrid.reactiveData.colConfs.length - 1) {
-                        break
-                    }
-                    cols.push(
-                        h('col', {
-                            idx: index,
-                            style: {
-                                width: $vmaFormulaGrid.reactiveData.colConfs[index + 1].visible ? (typeof $vmaFormulaGrid.reactiveData.colConfs[index + 1].width === 'string' ? `${renderDefaultColWidth.value}px` : `${$vmaFormulaGrid.reactiveData.colConfs[index + 1].width}px`) : '0px',
-                            },
-                        })
-                    )
-                }
-            }
-            return cols
-        }
+			const cols: any = [];
+			if ($vmaFormulaGrid.reactiveData.xStart !== -1) {
+				cols.push(
+					h("th", {
+						"data-cat": "grid-corner",
+						"data-type": `${$vmaFormulaGrid.props.type}`,
+						"data-row": 0,
+						"data-col": -1,
+						class: ["grid-corner", `${$vmaFormulaGrid.props.type}`],
+					}),
+				);
+			}
+			for (
+				let index = $vmaFormulaGrid.reactiveData.xStart;
+				index <= $vmaFormulaGrid.reactiveData.xEnd;
+				index++
+			) {
+				if (index >= $vmaFormulaGrid.reactiveData.colConfs.length - 1) {
+					break;
+				}
+				if (index === -1) {
+					cols.push(
+						h("th", {
+							"data-cat": "grid-corner",
+							"data-type": `${$vmaFormulaGrid.props.type}`,
+							"data-row": 0,
+							"data-col": -1,
+							class: ["grid-corner", `${$vmaFormulaGrid.props.type}`],
+						}),
+					);
+				} else {
+					if (props.fixed === "center") {
+						const cf: any = $vmaFormulaGrid.reactiveData.colConfs[index + 1];
+						cols.push(
+							h(
+								"th",
+								{
+									"data-cat": "column-indicator",
+									"data-type": `${$vmaFormulaGrid.props.type}`,
+									"data-row": 0,
+									"data-col": cf.index,
+									class: [
+										"column-indicator",
+										`${$vmaFormulaGrid.props.type}`,
+										{
+											"column-indicator-active": isColumnIndicatorActive(
+												cf.index,
+											),
+										},
+									],
+								},
+								[
+									h(
+										"div",
+										{
+											class: ["cell", `${$vmaFormulaGrid.props.type}`],
+											style: {
+												display: "flex",
+												justifyContent: "center",
+												alignItems: "center",
+											},
+										},
+										h(
+											"div",
+											{
+												class: ["cell-content"],
+											},
+											getColumnSymbol(cf.index + 1),
+										),
+									),
+									$vmaFormulaGrid.props.columnResizable
+										? h("div", {
+												class: [
+													"column-resize-handler",
+													`${$vmaFormulaGrid.props.type}`,
+												],
+												onMousedown: (event: MouseEvent) => {
+													resizeColumnMousedown(event);
+													event.stopPropagation();
+												},
+										  })
+										: createCommentVNode(),
+									$vmaFormulaGrid.reactiveData.columnHidesChanged &&
+									Object.keys($vmaFormulaGrid.reactiveData.columnHidesChanged)
+										.length > 0 &&
+									$vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(
+										`${cf.index}`,
+									)
+										? h(
+												"div",
+												{
+													class: ["column-hide-info-frontward"],
+													onClick: (event: MouseEvent) => {
+														event.stopPropagation();
+														const refGridDivElem = refGridDiv.value;
+														const columnHideInfoFrontwardTargetNode =
+															DomTools.getEventTargetNode(
+																event,
+																refGridDivElem,
+																`column-hide-info-frontward`,
+																(target: any) => {
+																	const elem =
+																		target.parentNode.parentNode.parentNode
+																			.parentNode.parentNode;
+																	return (
+																		elem !== document &&
+																		elem.getAttribute("data-uid") ===
+																			$vmaFormulaGrid.uId
+																	);
+																},
+															);
+														if (columnHideInfoFrontwardTargetNode.flag) {
+															const elem =
+																columnHideInfoFrontwardTargetNode.targetElem;
+															const targetElem: any = elem.parentElement!;
+															$vmaFormulaGrid.updateColVisible(
+																"showForwardCols",
+																targetElem.attributes["data-col"].value,
+																targetElem.attributes["data-col"].value,
+															);
+														}
+													},
+												},
+												h(GridCompIconComponent, {
+													name: "ellipsis-h",
+													size: $vmaFormulaGrid.props.size,
+													scaleX: 0.7,
+													scaleY: 0.7,
+												}),
+										  )
+										: createCommentVNode(),
+									$vmaFormulaGrid.reactiveData.columnHidesChanged &&
+									Object.keys($vmaFormulaGrid.reactiveData.columnHidesChanged)
+										.length > 0 &&
+									$vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(
+										`${cf.index + 1 + 1}`,
+									)
+										? h(
+												"div",
+												{
+													class: ["column-hide-info-backward"],
+													onClick: (event: MouseEvent) => {
+														event.stopPropagation();
+														const refGridDivElem = refGridDiv.value;
+														const columnHideInfoBackwardTargetNode =
+															DomTools.getEventTargetNode(
+																event,
+																refGridDivElem,
+																`column-hide-info-backward`,
+																(target: any) => {
+																	const elem =
+																		target.parentNode.parentNode.parentNode
+																			.parentNode.parentNode;
+																	return (
+																		elem !== document &&
+																		elem.getAttribute("data-uid") ===
+																			$vmaFormulaGrid.uId
+																	);
+																},
+															);
+														if (columnHideInfoBackwardTargetNode.flag) {
+															const elem =
+																columnHideInfoBackwardTargetNode.targetElem;
+															const targetElem: any = elem.parentElement!;
+															$vmaFormulaGrid.updateColVisible(
+																"showBackwardCols",
+																targetElem.attributes["data-col"].value,
+																targetElem.attributes["data-col"].value,
+															);
+														}
+													},
+												},
+												h(GridCompIconComponent, {
+													name: "ellipsis-h",
+													size: $vmaFormulaGrid.props.size,
+													scaleX: 0.7,
+													scaleY: 0.7,
+												}),
+										  )
+										: createCommentVNode(),
+								],
+							),
+						);
+					}
+				}
+			}
 
-        const renderHeaderRows = () => {
-            const tr = []
+			cols.concat(
+				$vmaFormulaGrid.reactiveData.scrollbarWidth
+					? [
+							h("th", {
+								"data-cat": "gutter-corner",
+								"data-type": `${$vmaFormulaGrid.props.type}`,
+								"data-row": 0,
+								"data-col": $vmaFormulaGrid.reactiveData.colConfs.length,
+								class: ["gutter-corner", `${$vmaFormulaGrid.props.type}`],
+							}),
+					  ]
+					: createCommentVNode(),
+			);
 
-            const cols: any = []
-            if ($vmaFormulaGrid.reactiveData.xStart !== -1) {
-                cols.push(
-                    h('th', {
-                        'data-cat': 'grid-corner',
-                        'data-type': `${$vmaFormulaGrid.props.type}`,
-                        'data-row': 0,
-                        'data-col': -1,
-                        class: [
-                            'grid-corner',
-                            `${$vmaFormulaGrid.props.type}`
-                        ]
-                    })
-                )
-            }
-            for (let index = $vmaFormulaGrid.reactiveData.xStart; index <= $vmaFormulaGrid.reactiveData.xEnd; index++) {
-                if (index >= $vmaFormulaGrid.reactiveData.colConfs.length - 1) {
-                    break
-                }
-                if (index === -1) {
-                    cols.push(
-                        h('th', {
-                            'data-cat': 'grid-corner',
-                            'data-type': `${$vmaFormulaGrid.props.type}`,
-                            'data-row': 0,
-                            'data-col': -1,
-                            class: [
-                                'grid-corner',
-                                `${$vmaFormulaGrid.props.type}`
-                            ]
-                        })
-                    )
-                } else {
-                    if (props.fixed === 'center') {
-                        const cf: any = $vmaFormulaGrid.reactiveData.colConfs[index + 1]
-                        cols.push(
-                            h('th', {
-                                'data-cat': 'column-indicator',
-                                'data-type': `${$vmaFormulaGrid.props.type}`,
-                                'data-row': 0,
-                                'data-col': cf.index,
-                                class: [
-                                    'column-indicator',
-                                    `${$vmaFormulaGrid.props.type}`,
-                                    {'column-indicator-active': isColumnIndicatorActive(cf.index)},
-                                ]
-                            }, [
-                                h(
-                                    'div',
-                                    {
-                                        class: ['cell', `${$vmaFormulaGrid.props.type}`],
-                                        style: {
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                        },
-                                    },
-                                    h(
-                                        'div',
-                                        {
-                                            class: ['cell-content'],
-                                        },
-                                        getColumnSymbol(cf.index + 1)
-                                    )
-                                ),
-                                $vmaFormulaGrid.props.columnResizable
-                                    ? h('div', {
-                                        class: ['column-resize-handler', `${$vmaFormulaGrid.props.type}`],
-                                        onMousedown: (event: MouseEvent) => {
-                                            resizeColumnMousedown(event)
-                                            event.stopPropagation()
-                                        },
-                                    })
-                                    : createCommentVNode(),
-                                $vmaFormulaGrid.reactiveData.columnHidesChanged &&
-                                Object.keys($vmaFormulaGrid.reactiveData.columnHidesChanged).length > 0 &&
-                                $vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(`${cf.index}`) ?
-                                h(
-                                    'div',
-                                    {
-                                        class: ['column-hide-info-frontward'],
-                                        onClick: (event: MouseEvent) => {
-                                            event.stopPropagation()
-                                            const refGridDivElem = refGridDiv.value
-                                            const columnHideInfoFrontwardTargetNode = DomTools.getEventTargetNode(
-                                                event,
-                                                refGridDivElem,
-                                                `column-hide-info-frontward`,
-                                                (target: any) => {
-                                                    const elem = target.parentNode.parentNode.parentNode.parentNode.parentNode
-                                                    return elem !== document && elem.getAttribute('data-uid') === $vmaFormulaGrid.uId
-                                                },
-                                            )
-                                            if (columnHideInfoFrontwardTargetNode.flag) {
-                                                const elem = columnHideInfoFrontwardTargetNode.targetElem
-                                                const targetElem: any = elem.parentElement!
-                                                $vmaFormulaGrid.updateColVisible(
-                                                    'showForwardCols',
-                                                    targetElem.attributes['data-col'].value,
-                                                    targetElem.attributes['data-col'].value
-                                                )
-                                            }
-                                        },
-                                    },
-                                    h(GridCompIconComponent, {
-                                        name: 'ellipsis-h',
-                                        size: $vmaFormulaGrid.props.size,
-                                        scaleX: 0.7,
-                                        scaleY: 0.7
-                                    })
-                                ) : createCommentVNode(),
-                                $vmaFormulaGrid.reactiveData.columnHidesChanged &&
-                                Object.keys($vmaFormulaGrid.reactiveData.columnHidesChanged).length > 0 &&
-                                $vmaFormulaGrid.reactiveData.columnHidesChanged.hasOwnProperty(`${cf.index + 1 + 1}`) ?
-                                h(
-                                    'div',
-                                    {
-                                        class: ['column-hide-info-backward'],
-                                        onClick: (event: MouseEvent) => {
-                                            event.stopPropagation()
-                                            const refGridDivElem = refGridDiv.value
-                                            const columnHideInfoBackwardTargetNode = DomTools.getEventTargetNode(
-                                                event,
-                                                refGridDivElem,
-                                                `column-hide-info-backward`,
-                                                (target: any) => {
-                                                    const elem = target.parentNode.parentNode.parentNode.parentNode.parentNode
-                                                    return elem !== document && elem.getAttribute('data-uid') === $vmaFormulaGrid.uId
-                                                },
-                                            )
-                                            if (columnHideInfoBackwardTargetNode.flag) {
-                                                const elem = columnHideInfoBackwardTargetNode.targetElem
-                                                const targetElem: any = elem.parentElement!
-                                                $vmaFormulaGrid.updateColVisible(
-                                                    'showBackwardCols',
-                                                    targetElem.attributes['data-col'].value,
-                                                    targetElem.attributes['data-col'].value
-                                                )
-                                            }
-                                        },
-                                    },
-                                    h(GridCompIconComponent, {
-                                        name: 'ellipsis-h',
-                                        size: $vmaFormulaGrid.props.size,
-                                        scaleX: 0.7,
-                                        scaleY: 0.7
-                                    })
-                                ) : createCommentVNode(),
-                            ])
-                        )
-                    }
-                }
-            }
+			tr.push(
+				h(
+					"tr",
+					{
+						style: {
+							height: `${renderDefaultRowHeight.value}px`,
+						},
+					},
+					cols,
+				),
+			);
 
-            cols.concat(
-                $vmaFormulaGrid.reactiveData.scrollbarWidth
-                    ? [
-                        h('th', {
-                            'data-cat': 'gutter-corner',
-                            'data-type': `${$vmaFormulaGrid.props.type}`,
-                            'data-row': 0,
-                            'data-col': $vmaFormulaGrid.reactiveData.colConfs.length,
-                            class: [
-                                'gutter-corner',
-                                `${$vmaFormulaGrid.props.type}`
-                            ]
-                        }),
-                    ]
-                    : createCommentVNode()
-            )
+			return tr;
+		};
 
-            tr.push(
-                h(
-                    'tr',
-                    {
-                        style: {
-                            height: `${renderDefaultRowHeight.value}px`,
-                        },
-                    },
-                    cols
-                )
-            )
+		const resizeColumnMousedown = (event: MouseEvent) => {
+			const { clientX: dragClientX } = event;
+			const domMousemove = document.onmousemove;
+			const domMouseup = document.onmouseup;
+			const dragBtnElem = event.target as HTMLDivElement;
+			const wrapperElem = refGridHeaderTableWrapperDiv.value;
+			const pos = DomTools.getOffsetPos(dragBtnElem, wrapperElem);
+			const dragBtnWidth = dragBtnElem.clientWidth;
+			const columnWidth = getRenderDefaultColWidth(
+				$vmaFormulaGrid.props.defaultColumnWidth,
+				$vmaFormulaGrid.props.size!,
+			);
+			const leftSpaceWidth = getXSpaceFromColumnWidths(
+				$vmaFormulaGrid.reactiveData.xStart,
+				renderDefaultColWidth.value,
+				$vmaFormulaGrid.reactiveData.columnWidthsChanged,
+				$vmaFormulaGrid.reactiveData.columnHidesChanged,
+			);
+			const dragBtnOffsetWidth = dragBtnWidth;
+			const dragPosLeft =
+				pos.left + Math.floor(dragBtnOffsetWidth) + leftSpaceWidth;
+			const cell = dragBtnElem.parentNode as HTMLTableCellElement;
+			const dragMinLeft = Math.max(
+				pos.left - cell.clientWidth + dragBtnOffsetWidth,
+				0,
+			);
+			let dragLeft = 0;
+			const resizeBarElem = refColumnResizeBarDiv.value;
+			resizeBarElem.style.left = `${
+				pos.left + dragBtnOffsetWidth + leftSpaceWidth
+			}px`;
+			resizeBarElem.style.display = "block";
 
-            return tr
-        }
+			// 处理拖动事件
+			const updateEvent = (event: MouseEvent) => {
+				event.stopPropagation();
+				event.preventDefault();
+				const offsetX = event.clientX - dragClientX;
+				const left = dragPosLeft + offsetX;
+				dragLeft = Math.max(left, dragMinLeft);
+				resizeBarElem.style.left = `${dragLeft}px`;
+			};
 
-        const resizeColumnMousedown = (event: MouseEvent) => {
-            const {clientX: dragClientX} = event
-            const domMousemove = document.onmousemove
-            const domMouseup = document.onmouseup
-            const dragBtnElem = event.target as HTMLDivElement
-            const wrapperElem = refGridHeaderTableWrapperDiv.value
-            const pos = DomTools.getOffsetPos(dragBtnElem, wrapperElem)
-            const dragBtnWidth = dragBtnElem.clientWidth
-            const columnWidth = getRenderDefaultColWidth($vmaFormulaGrid.props.defaultColumnWidth, $vmaFormulaGrid.props.size!)
-            const leftSpaceWidth = getXSpaceFromColumnWidths(
-                $vmaFormulaGrid.reactiveData.xStart,
-                renderDefaultColWidth.value,
-                $vmaFormulaGrid.reactiveData.columnWidthsChanged,
-                $vmaFormulaGrid.reactiveData.columnHidesChanged
-            )
-            const dragBtnOffsetWidth = dragBtnWidth
-            const dragPosLeft = pos.left + Math.floor(dragBtnOffsetWidth) + leftSpaceWidth
-            const cell = dragBtnElem.parentNode as HTMLTableCellElement
-            const dragMinLeft = Math.max(pos.left - cell.clientWidth + dragBtnOffsetWidth, 0)
-            let dragLeft = 0
-            const resizeBarElem = refColumnResizeBarDiv.value
-            resizeBarElem.style.left = `${pos.left + dragBtnOffsetWidth + leftSpaceWidth}px`
-            resizeBarElem.style.display = 'block'
+			document.onmousemove = updateEvent;
 
-            // 处理拖动事件
-            const updateEvent = (event: MouseEvent) => {
-                event.stopPropagation()
-                event.preventDefault()
-                const offsetX = event.clientX - dragClientX
-                const left = dragPosLeft + offsetX
-                dragLeft = Math.max(left, dragMinLeft)
-                resizeBarElem.style.left = `${dragLeft}px`
-            }
+			document.onmouseup = () => {
+				document.onmousemove = domMousemove;
+				document.onmouseup = domMouseup;
+				resizeBarElem.style.display = "none";
+				if (dragBtnElem.parentElement!.getAttribute("data-col")) {
+					const columnConfig = $vmaFormulaGrid.reactiveData.colConfs.find(
+						(item) =>
+							item.index ===
+							parseInt(
+								dragBtnElem.parentElement!.getAttribute("data-col")!,
+								10,
+							),
+					);
+					if (columnConfig) {
+						columnConfig.width = Math.max(
+							dragBtnElem.parentElement!.clientWidth + dragLeft - dragPosLeft,
+							6,
+						);
+						$vmaFormulaGrid.reactiveData.columnWidthsChanged[
+							`${columnConfig.index + 1}`
+						] = columnConfig.width;
+						$vmaFormulaGrid.reactiveData.gridWidth +=
+							columnConfig.width - columnWidth;
+					}
+				}
 
-            document.onmousemove = updateEvent
+				dragBtnElem.parentElement!.style.width = `${Math.max(
+					dragBtnElem.parentElement!.clientWidth + dragLeft - dragPosLeft,
+					6,
+				)}px`;
+				$vmaFormulaGrid.recalculate(true).then(() => {
+					nextTick(() => {
+						$vmaFormulaGrid.calcCurrentCellEditorStyle();
+						$vmaFormulaGrid.calcCurrentCellEditorDisplay();
+						$vmaFormulaGrid.reCalcCurrentAreaPos();
+						$vmaFormulaGrid.updateCurrentAreaStyle();
+					});
+				});
+			};
+		};
 
-            document.onmouseup = () => {
-                document.onmousemove = domMousemove
-                document.onmouseup = domMouseup
-                resizeBarElem.style.display = 'none'
-                if (dragBtnElem.parentElement!.getAttribute('data-col')) {
-                    const columnConfig = $vmaFormulaGrid.reactiveData.colConfs.find(item => item.index === parseInt(dragBtnElem.parentElement!.getAttribute('data-col')!, 10))
-                    if (columnConfig) {
-                        columnConfig.width = Math.max(dragBtnElem.parentElement!.clientWidth + dragLeft - dragPosLeft, 6)
-                        $vmaFormulaGrid.reactiveData.columnWidthsChanged[`${columnConfig.index + 1}`] = columnConfig.width
-                        $vmaFormulaGrid.reactiveData.gridWidth += columnConfig.width - columnWidth
-                    }
-                }
+		const renderVN = () =>
+			h(
+				"div",
+				{
+					ref:
+						props.fixed === "center"
+							? refGridHeaderTableWrapperDiv
+							: refGridHeaderLeftFixedTableWrapperDiv,
+					class: ["header-wrapper", `${$vmaFormulaGrid.props.type}`],
+				},
+				[
+					h("div", {
+						ref: refGridHeaderLeftFixedXLineDiv,
+						style: {
+							float: "left",
+							height: `1px`,
+							marginTop: `-1px`,
+						},
+					}),
+					h(
+						"table",
+						{
+							ref:
+								props.fixed === "center"
+									? refGridHeaderTable
+									: refGridHeaderLeftFixedTable,
+							class: ["header", `${$vmaFormulaGrid.props.type}`],
+						},
+						[
+							h(
+								"colgroup",
+								{
+									ref:
+										props.fixed === "center"
+											? refGridHeaderTableColgroup
+											: refGridHeaderLeftFixedTableColgroup,
+								},
+								renderHeaderColgroup().concat(
+									$vmaFormulaGrid.reactiveData.scrollbarWidth
+										? [
+												h("col", {
+													idx: $vmaFormulaGrid.reactiveData.colConfs.length - 1,
+													style: {
+														width: `${$vmaFormulaGrid.reactiveData.scrollbarWidth}px`,
+													},
+												}),
+										  ]
+										: [createCommentVNode()],
+								),
+							),
+							h(
+								"thead",
+								{
+									class: [`${$vmaFormulaGrid.props.type}`],
+								},
+								renderHeaderRows(),
+							),
+						],
+					),
+				],
+			);
 
-                dragBtnElem.parentElement!.style.width = `${Math.max(dragBtnElem.parentElement!.clientWidth + dragLeft - dragPosLeft, 6)}px`
-                $vmaFormulaGrid.recalculate(true).then(() => {
-                    nextTick(() => {
-                        $vmaFormulaGrid.calcCurrentCellEditorStyle()
-                        $vmaFormulaGrid.calcCurrentCellEditorDisplay()
-                        $vmaFormulaGrid.reCalcCurrentAreaPos()
-                        $vmaFormulaGrid.updateCurrentAreaStyle()
-                    })
-                })
-            }
-        }
+		const $vmaFormulaGridHeader = {
+			uId: Guid.create().toString(),
+			props,
+			context,
+			reactiveData: gridHeaderReactiveData,
+			renderVN: renderVN,
+		} as unknown as VmaFormulaGridHeaderConstructor &
+			VmaFormulaGridHeaderMethods &
+			VmaFormulaGridHeaderPrivateMethods;
 
-        const renderVN = () => h('div', {
-            ref: props.fixed === 'center' ? refGridHeaderTableWrapperDiv : refGridHeaderLeftFixedTableWrapperDiv,
-            class: ['header-wrapper', `${$vmaFormulaGrid.props.type}`],
-        }, [
-            h('div', {
-                ref: refGridHeaderLeftFixedXLineDiv,
-                style: {
-                    float: 'left',
-                    height: `1px`,
-                    marginTop: `-1px`,
-                },
-            }),
-            h('table', {
-                ref: props.fixed === 'center' ? refGridHeaderTable : refGridHeaderLeftFixedTable,
-                class: ['header', `${$vmaFormulaGrid.props.type}`],
-            }, [
-                h('colgroup', {
-                        ref: props.fixed === 'center' ? refGridHeaderTableColgroup : refGridHeaderLeftFixedTableColgroup
-                    },
-                    renderHeaderColgroup().concat(
-                        $vmaFormulaGrid.reactiveData.scrollbarWidth
-                            ? [
-                                h('col', {
-                                    idx: $vmaFormulaGrid.reactiveData.colConfs.length - 1,
-                                    style: {
-                                        width: `${$vmaFormulaGrid.reactiveData.scrollbarWidth}px`,
-                                    },
-                                }),
-                            ]
-                            : [createCommentVNode()]
-                    )),
-                h('thead', {
-                    class: [`${$vmaFormulaGrid.props.type}`],
-                }, renderHeaderRows())
-            ])
-        ])
-
-        const $vmaFormulaGridHeader = {
-            uId: Guid.create().toString(),
-            props,
-            context,
-            reactiveData: gridHeaderReactiveData,
-            renderVN: renderVN,
-        } as unknown as VmaFormulaGridHeaderConstructor & VmaFormulaGridHeaderMethods & VmaFormulaGridHeaderPrivateMethods
-
-        return $vmaFormulaGridHeader
-    },
-    render() {
-        return this.renderVN()
-    },
-})
+		return $vmaFormulaGridHeader;
+	},
+	render() {
+		return this.renderVN();
+	},
+});

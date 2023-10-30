@@ -9,6 +9,7 @@ module.exports = so1ve({
 
     // `.eslintignore` is no longer supported in Flat config, use `ignores` instead
     ignores: [
+        '**/formula/**/*.js',
         '**/formula/**/*.ts'
     ],
 });
