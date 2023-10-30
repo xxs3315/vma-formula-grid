@@ -315,35 +315,6 @@ export interface VmaFormulaGridBodyConstructor extends VmaComponentInstance, Vma
     getRefs(): VmaFormulaGridBodyRefs
 }
 
-// export type VmaFormulaGridCellType = 'normal' | 'column-indicator' | 'row-indicator' | 'grid-corner'
-//
-// export namespace VmaFormulaGridCellPropTypes {
-//     export type Cat = VmaFormulaGridCellType
-//     export type Type = ComponentType
-// }
-//
-// export interface VmaFormulaGridCellProps {
-//     cat?: VmaFormulaGridCellPropTypes.Cat
-//     type?: VmaFormulaGridCellPropTypes.Type
-// }
-//
-// export interface VmaFormulaGridCellMethods {
-// }
-//
-// export interface VmaFormulaGridCellPrivateMethods {
-// }
-//
-// export type VmaFormulaGridCellOptions = VmaFormulaGridCellProps
-//
-// export interface VmaFormulaGridCellConstructor extends VmaComponentInstance, VmaFormulaGridCellMethods, VmaFormulaGridCellPrivateMethods {
-//     props: VmaFormulaGridCellOptions
-//     context: SetupContext<VmaFormulaGridCellEmits>
-//     reactiveData: VmaFormulaGridCellReactiveData
-//     renderVN: RenderFunction
-//
-//     getRefs(): VmaFormulaGridCellRefs
-// }
-
 export interface DragEventOptions {
     drag?: (event: Event) => void;
     start?: (event: Event) => void;
