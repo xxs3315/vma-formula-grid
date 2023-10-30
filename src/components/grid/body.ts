@@ -958,6 +958,8 @@ export default defineComponent({
 												fontWeight: cell.b ? "bold" : "normal",
 												fontStyle: cell.i ? "italic" : "normal",
 												textDecoration: cell.u ? "underline" : "none",
+												fontFamily: cell.ff,
+												fontSize: cell.fs ? cell.fs + "px" : null,
 											},
 											onMouseup: (_: MouseEvent) => {
 												$vmaFormulaGrid.reactiveData.currentAreaStatus = false;

@@ -9,16 +9,18 @@ export class Cell {
 	mv: any;
 	ss?: boolean; // 计算状态，已计算：true；未计算：false
 	st?: number; // 计算时间戳
-	bgt?: string;
-	bg?: any;
-	fg?: any;
-	bdl?: any;
-	bdt?: any;
-	bdr?: any;
-	bdb?: any;
-	b?: boolean;
-	i?: boolean;
-	u?: boolean;
+	bgt?: string; //背景类型
+	bg?: any; // 背景色
+	fg?: any; // 前景色
+	bdl?: any; // 左边框
+	bdt?: any; // 上边框
+	bdr?: any; // 右边框
+	bdb?: any; // 下边框
+	b?: boolean; // 粗体
+	i?: boolean; // 斜体
+	u?: boolean; // 下划线
+	ff?: any;
+	fs?: any;
 
 	constructor(
 		row: number,
@@ -41,6 +43,8 @@ export class Cell {
 		b: boolean,
 		i: boolean,
 		u: boolean,
+		ff: any,
+		fs: any,
 	) {
 		this.row = row;
 		this.col = col;
@@ -62,5 +66,7 @@ export class Cell {
 		this.b = b;
 		this.i = i;
 		this.u = u;
+		this.ff = ff;
+		this.fs = fs;
 	}
 }

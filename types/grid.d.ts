@@ -193,6 +193,7 @@ export interface VmaFormulaGridReactiveData {
     borders: any[]
 
     supportedFonts: any[]
+    supportedFontSizes: any[]
 }
 
 export interface VmaFormulaGridProps {
@@ -231,7 +232,7 @@ export interface VmaFormulaGridPrivateMethods {
     setCellBorder(type: 'cells' | 'rows' | 'columns', target: 'l' | 't' | 'r' | 'b' | 'none' | 'full' | 'outer' | 'inner'): void
     setBackgroundColor(type: 'cells' | 'rows' | 'columns', mode: 'none' | 'normal', color: any): void
     setFontColor(type: 'cells' | 'rows' | 'columns', mode: 'none' | 'normal', color: any): void
-    setFontStyle(type: 'cells' | 'rows' | 'columns', mode: 'fontBold' | 'fontItalic' | 'fontUnderline' | 'fontSizeUp' | 'fontSizeDown', v: boolean): void
+    setFontStyle(type: 'cells' | 'rows' | 'columns', mode: 'fontBold' | 'fontItalic' | 'fontUnderline' | 'fontSelect' | 'fontSizeSelect' | 'fontSizeUp' | 'fontSizeDown', v: any): void
     calcCurrentCellEditorStyle(): void
     calcCurrentCellEditorDisplay(): void
     reCalcCurrentAreaPos(): void

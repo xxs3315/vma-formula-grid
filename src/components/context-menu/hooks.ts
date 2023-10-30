@@ -547,6 +547,22 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
 					param,
 				});
 				subOptions.push({
+					name: "选择字体",
+					code: "fontSelect",
+					disabled: false,
+					visible: true,
+					param,
+					type: "fontSelect",
+				});
+				subOptions.push({
+					name: "选择字体尺寸",
+					code: "fontSizeSelect",
+					disabled: false,
+					visible: true,
+					param,
+					type: "fontSizeSelect",
+				});
+				subOptions.push({
 					name: "增大字体",
 					code: "fontSizeUp",
 					disabled: false,
