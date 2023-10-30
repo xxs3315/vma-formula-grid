@@ -11,7 +11,7 @@ function isSupportFontFamily(f: any) {
 	const a = 100,
 		i = 100;
 	const c = document.createElement("canvas");
-	const b: any = c.getContext("2d");
+	const b: any = c.getContext("2d", { willReadFrequently: true });
 	c.width = a;
 	c.height = i;
 	b.textAlign = "center";
