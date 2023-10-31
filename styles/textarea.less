@@ -1,4 +1,4 @@
-@import url('common');
+@import url("common");
 
 @textarea-mini-size: 12px;
 @textarea-mini-font-size: 12px;
@@ -23,169 +23,169 @@
 @textarea-disabled-background-color: @gray-4;
 
 .vma-formula-grid-textarea {
-  position: relative;
-  display: block;
-  text-align: left;
-  border-radius: 0;
-  box-sizing: border-box;
-  cursor: pointer;
-  user-select: none;
-  line-height: normal;
+	position: relative;
+	display: block;
+	text-align: left;
+	border-radius: 0;
+	box-sizing: border-box;
+	cursor: pointer;
+	user-select: none;
+	line-height: normal;
 
-  .count-helper {
-    position: absolute;
-    width: auto;
-    min-width: 1px;
-    height: auto;
-    visibility: hidden;
-  }
+	.count-helper {
+		position: absolute;
+		width: auto;
+		min-width: 1px;
+		height: auto;
+		visibility: hidden;
+	}
 
-  &.is--disabled {
-    .prefix,
-    .suffix {
-      cursor: no-drop;
-    }
-  }
+	&.is--disabled {
+		.prefix,
+		.suffix {
+			cursor: no-drop;
+		}
+	}
 
-  &:not(.is--disabled) {
-    .clear-icon {
-      cursor: pointer;
-    }
+	&:not(.is--disabled) {
+		.clear-icon {
+			cursor: pointer;
+		}
 
-    &.is--active {
-      &.default {
-        .inner-textarea {
-          border-top: 1px solid @textarea-default-color;
-          border-bottom: 1px solid @textarea-default-color;
-          border-right: 1px solid @textarea-default-color;
-          border-left: 1px solid @textarea-default-color;
-        }
-      }
+		&.is--active {
+			&.default {
+				.inner-textarea {
+					border-top: 1px solid @textarea-default-color;
+					border-bottom: 1px solid @textarea-default-color;
+					border-right: 1px solid @textarea-default-color;
+					border-left: 1px solid @textarea-default-color;
+				}
+			}
 
-      &.primary {
-        .inner-textarea {
-          border-top: 1px solid @textarea-primary-color;
-          border-bottom: 1px solid @textarea-primary-color;
-          border-right: 1px solid @textarea-primary-color;
-          border-left: 1px solid @textarea-primary-color;
-        }
-      }
+			&.primary {
+				.inner-textarea {
+					border-top: 1px solid @textarea-primary-color;
+					border-bottom: 1px solid @textarea-primary-color;
+					border-right: 1px solid @textarea-primary-color;
+					border-left: 1px solid @textarea-primary-color;
+				}
+			}
 
-      &.success {
-        .inner-textarea {
-          border-top: 1px solid @textarea-success-color;
-          border-bottom: 1px solid @textarea-success-color;
-          border-right: 1px solid @textarea-success-color;
-          border-left: 1px solid @textarea-success-color;
-        }
-      }
+			&.success {
+				.inner-textarea {
+					border-top: 1px solid @textarea-success-color;
+					border-bottom: 1px solid @textarea-success-color;
+					border-right: 1px solid @textarea-success-color;
+					border-left: 1px solid @textarea-success-color;
+				}
+			}
 
-      &.warning {
-        .inner-textarea {
-          border-top: 1px solid @textarea-warning-color;
-          border-bottom: 1px solid @textarea-warning-color;
-          border-right: 1px solid @textarea-warning-color;
-          border-left: 1px solid @textarea-warning-color;
-        }
-      }
+			&.warning {
+				.inner-textarea {
+					border-top: 1px solid @textarea-warning-color;
+					border-bottom: 1px solid @textarea-warning-color;
+					border-right: 1px solid @textarea-warning-color;
+					border-left: 1px solid @textarea-warning-color;
+				}
+			}
 
-      &.danger {
-        .inner-textarea {
-          border-top: 1px solid @textarea-danger-color;
-          border-bottom: 1px solid @textarea-danger-color;
-          border-right: 1px solid @textarea-danger-color;
-          border-left: 1px solid @textarea-danger-color;
-        }
-      }
-    }
-  }
+			&.danger {
+				.inner-textarea {
+					border-top: 1px solid @textarea-danger-color;
+					border-bottom: 1px solid @textarea-danger-color;
+					border-right: 1px solid @textarea-danger-color;
+					border-left: 1px solid @textarea-danger-color;
+				}
+			}
+		}
+	}
 
-  &.xxx-large {
-    font-size: @textarea-xxx-large-font-size;
+	&.xxx-large {
+		font-size: @textarea-xxx-large-font-size;
 
-    .inner-textarea {
-      min-height: @textarea-xxx-large-size;
-    }
-  }
+		.inner-textarea {
+			min-height: @textarea-xxx-large-size;
+		}
+	}
 
-  &.xx-large {
-    font-size: @textarea-xx-large-font-size;
+	&.xx-large {
+		font-size: @textarea-xx-large-font-size;
 
-    .inner-textarea {
-      min-height: @textarea-xx-large-size;
-    }
-  }
+		.inner-textarea {
+			min-height: @textarea-xx-large-size;
+		}
+	}
 
-  &.x-large {
-    font-size: @textarea-x-large-font-size;
+	&.x-large {
+		font-size: @textarea-x-large-font-size;
 
-    .inner-textarea {
-      min-height: @textarea-x-large-size;
-    }
-  }
+		.inner-textarea {
+			min-height: @textarea-x-large-size;
+		}
+	}
 
-  &.large {
-    font-size: @textarea-large-font-size;
+	&.large {
+		font-size: @textarea-large-font-size;
 
-    .inner-textarea {
-      min-height: @textarea-large-size;
-    }
-  }
+		.inner-textarea {
+			min-height: @textarea-large-size;
+		}
+	}
 
-  &.normal {
-    font-size: @textarea-normal-font-size;
+	&.normal {
+		font-size: @textarea-normal-font-size;
 
-    .inner-textarea {
-      min-height: @textarea-normal-size;
-    }
-  }
+		.inner-textarea {
+			min-height: @textarea-normal-size;
+		}
+	}
 
-  &.small {
-    font-size: @textarea-small-font-size;
+	&.small {
+		font-size: @textarea-small-font-size;
 
-    .inner-textarea {
-      min-height: @textarea-small-size;
-    }
-  }
+		.inner-textarea {
+			min-height: @textarea-small-size;
+		}
+	}
 
-  &.mini {
-    font-size: @textarea-mini-font-size;
+	&.mini {
+		font-size: @textarea-mini-font-size;
 
-    .inner-textarea {
-      min-height: @textarea-mini-size;
-    }
-  }
+		.inner-textarea {
+			min-height: @textarea-mini-size;
+		}
+	}
 
-  .inner-textarea {
-    overflow: auto;
-    padding: 1px;
-    margin: 0;
-    width: 100%;
-    font-size: inherit;
-    color: @gray-8;
-    background-color: #fff;
-    border: 1px solid @gray-4;
-    border-radius: 0;
-    outline: 0;
-    box-shadow: none;
-    line-height: inherit;
+	.inner-textarea {
+		overflow: auto;
+		padding: 1px;
+		margin: 0;
+		width: 100%;
+		font-size: inherit;
+		color: @gray-8;
+		background-color: #fff;
+		border: 1px solid @gray-4;
+		border-radius: 0;
+		outline: 0;
+		box-shadow: none;
+		line-height: inherit;
 
-    &::placeholder {
-      color: @gray-5;
-    }
+		&::placeholder {
+			color: @gray-5;
+		}
 
-    &[disabled] {
-      cursor: not-allowed;
-      color: @textarea-disabled-color;
-      background-color: @textarea-disabled-background-color;
-    }
+		&[disabled] {
+			cursor: not-allowed;
+			color: @textarea-disabled-color;
+			background-color: @textarea-disabled-background-color;
+		}
 
-    &--wrap {
-      white-space: pre-wrap;
-    }
+		&--wrap {
+			white-space: pre-wrap;
+		}
 
-    &--nowrap {
-      white-space: pre;
-    }
-  }
+		&--nowrap {
+			white-space: pre;
+		}
+	}
 }

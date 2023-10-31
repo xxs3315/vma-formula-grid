@@ -1099,9 +1099,12 @@ export default defineComponent({
 											h(
 												"span",
 												{
-													class: ["cell-content", {
-														"italic": cell.i
-													}],
+													class: [
+														"cell-content",
+														{
+															"italic": cell.i,
+														},
+													],
 												},
 												getCellContent(cell),
 											),

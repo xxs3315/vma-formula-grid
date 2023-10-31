@@ -42,8 +42,7 @@ export default defineComponent({
 			"VmaFormulaGridCompIcon",
 		) as ComponentOptions;
 
-		const { refGridContextMenu} =
-			$vmaFormulaGrid.getRefs();
+		const { refGridContextMenu } = $vmaFormulaGrid.getRefs();
 
 		const { ctxMenuStore } = $vmaFormulaGrid.reactiveData;
 

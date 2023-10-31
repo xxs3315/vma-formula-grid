@@ -1,213 +1,220 @@
-import {RenderFunction, SetupContext} from "vue";
-import {ComponentType, SizeType, VmaComponentInstance} from "../grid";
-import {VmaFormulaGridCompColorPickerPropTypes, VmaFormulaGridCompColorPickerProps} from "./context-menu";
+import { RenderFunction, SetupContext } from "vue";
+import { ComponentType, SizeType, VmaComponentInstance } from "../grid";
+import {
+	VmaFormulaGridCompColorPickerPropTypes,
+	VmaFormulaGridCompColorPickerProps,
+} from "./context-menu";
 
 export namespace VmaFormulaGridCompColorPickerPropTypes {
-    export type Size = SizeType
-    export type Type = ComponentType
+	export type Size = SizeType;
+	export type Type = ComponentType;
 }
 
 export interface VmaFormulaGridCompColorPickerProps {
-    size?: VmaFormulaGridCompColorPickerPropTypes.Size
-    type?: VmaFormulaGridCompColorPickerPropTypes.Type
+	size?: VmaFormulaGridCompColorPickerPropTypes.Size;
+	type?: VmaFormulaGridCompColorPickerPropTypes.Type;
 }
 
+export interface VmaFormulaGridCompColorPickerMethods {}
 
-export interface VmaFormulaGridCompColorPickerMethods {
-}
+interface VmaFormulaGridCompColorPickerPrivateMethods {}
 
-interface VmaFormulaGridCompColorPickerPrivateMethods {
-}
+export type VmaFormulaGridCompColorPickerOptions =
+	VmaFormulaGridCompColorPickerProps;
 
-export type VmaFormulaGridCompColorPickerOptions = VmaFormulaGridCompColorPickerProps
-
-export type VmaFormulaGridCompColorPickerEmits = ["update:color", "change", "advanceChange"]
+export type VmaFormulaGridCompColorPickerEmits = [
+	"update:color",
+	"change",
+	"advanceChange",
+];
 
 export interface VmaFormulaGridCompColorPickerReactiveData {}
 
 export interface VmaFormulaGridCompColorPickerRefs {}
 
-export interface VmaFormulaGridCompColorPickerConstructor extends VmaComponentInstance, VmaFormulaGridCompColorPickerMethods, VmaFormulaGridCompColorPickerPrivateMethods {
-    props: VmaFormulaGridCompColorPickerOptions
-    context: SetupContext<VmaFormulaGridCompColorPickerEmits>
-    reactiveData: VmaFormulaGridCompColorPickerReactiveData
-    renderVN: RenderFunction
+export interface VmaFormulaGridCompColorPickerConstructor
+	extends VmaComponentInstance,
+		VmaFormulaGridCompColorPickerMethods,
+		VmaFormulaGridCompColorPickerPrivateMethods {
+	props: VmaFormulaGridCompColorPickerOptions;
+	context: SetupContext<VmaFormulaGridCompColorPickerEmits>;
+	reactiveData: VmaFormulaGridCompColorPickerReactiveData;
+	renderVN: RenderFunction;
 
-    getRefs(): VmaFormulaGridCompColorPickerRefs
+	getRefs(): VmaFormulaGridCompColorPickerRefs;
 }
 
 export namespace VmaFormulaGridCompColorPickerPalettePropTypes {
-    export type Size = SizeType
-    export type Type = ComponentType
+	export type Size = SizeType;
+	export type Type = ComponentType;
 }
 
 export interface VmaFormulaGridCompColorPickerPaletteProps {
-    size?: VmaFormulaGridCompColorPickerPalettePropTypes.Size
-    type?: VmaFormulaGridCompColorPickerPalettePropTypes.Type
+	size?: VmaFormulaGridCompColorPickerPalettePropTypes.Size;
+	type?: VmaFormulaGridCompColorPickerPalettePropTypes.Type;
 }
 
+export interface VmaFormulaGridCompColorPickerPaletteMethods {}
 
-export interface VmaFormulaGridCompColorPickerPaletteMethods {
-}
+interface VmaFormulaGridCompColorPickerPalettePrivateMethods {}
 
-interface VmaFormulaGridCompColorPickerPalettePrivateMethods {
-}
+export type VmaFormulaGridCompColorPickerPaletteOptions =
+	VmaFormulaGridCompColorPickerPaletteProps;
 
-export type VmaFormulaGridCompColorPickerPaletteOptions = VmaFormulaGridCompColorPickerPaletteProps
-
-export type VmaFormulaGridCompColorPickerPaletteEmits = ['change']
+export type VmaFormulaGridCompColorPickerPaletteEmits = ["change"];
 
 export interface VmaFormulaGridCompColorPickerPaletteReactiveData {}
 
 export interface VmaFormulaGridCompColorPickerPaletteRefs {}
 
-export interface VmaFormulaGridCompColorPickerPaletteConstructor extends VmaComponentInstance, VmaFormulaGridCompColorPickerPaletteMethods, VmaFormulaGridCompColorPickerPalettePrivateMethods {
-    props: VmaFormulaGridCompColorPickerPaletteOptions
-    context: SetupContext<VmaFormulaGridCompColorPickerPaletteEmits>
-    reactiveData: VmaFormulaGridCompColorPickerPaletteReactiveData
-    renderVN: RenderFunction
+export interface VmaFormulaGridCompColorPickerPaletteConstructor
+	extends VmaComponentInstance,
+		VmaFormulaGridCompColorPickerPaletteMethods,
+		VmaFormulaGridCompColorPickerPalettePrivateMethods {
+	props: VmaFormulaGridCompColorPickerPaletteOptions;
+	context: SetupContext<VmaFormulaGridCompColorPickerPaletteEmits>;
+	reactiveData: VmaFormulaGridCompColorPickerPaletteReactiveData;
+	renderVN: RenderFunction;
 
-    getRefs(): VmaFormulaGridCompColorPickerPaletteRefs
+	getRefs(): VmaFormulaGridCompColorPickerPaletteRefs;
 }
 
-
 export namespace VmaFormulaGridCompColorPickerLightnessPropTypes {
-    export type Size = SizeType
-    export type Type = ComponentType
+	export type Size = SizeType;
+	export type Type = ComponentType;
 }
 
 export interface VmaFormulaGridCompColorPickerLightnessProps {
-    size?: VmaFormulaGridCompColorPickerLightnessPropTypes.Size
-    type?: VmaFormulaGridCompColorPickerLightnessPropTypes.Type
+	size?: VmaFormulaGridCompColorPickerLightnessPropTypes.Size;
+	type?: VmaFormulaGridCompColorPickerLightnessPropTypes.Type;
 }
 
+export interface VmaFormulaGridCompColorPickerLightnessMethods {}
 
-export interface VmaFormulaGridCompColorPickerLightnessMethods {
-}
+interface VmaFormulaGridCompColorPickerLightnessPrivateMethods {}
 
-interface VmaFormulaGridCompColorPickerLightnessPrivateMethods {
-}
+export type VmaFormulaGridCompColorPickerLightnessOptions =
+	VmaFormulaGridCompColorPickerLightnessProps;
 
-export type VmaFormulaGridCompColorPickerLightnessOptions = VmaFormulaGridCompColorPickerLightnessProps
-
-export type VmaFormulaGridCompColorPickerLightnessEmits = ['change']
+export type VmaFormulaGridCompColorPickerLightnessEmits = ["change"];
 
 export interface VmaFormulaGridCompColorPickerLightnessReactiveData {}
 
 export interface VmaFormulaGridCompColorPickerLightnessRefs {}
 
-export interface VmaFormulaGridCompColorPickerLightnessConstructor extends VmaComponentInstance, VmaFormulaGridCompColorPickerLightnessMethods, VmaFormulaGridCompColorPickerLightnessPrivateMethods {
-    props: VmaFormulaGridCompColorPickerLightnessOptions
-    context: SetupContext<VmaFormulaGridCompColorPickerLightnessEmits>
-    reactiveData: VmaFormulaGridCompColorPickerLightnessReactiveData
-    renderVN: RenderFunction
+export interface VmaFormulaGridCompColorPickerLightnessConstructor
+	extends VmaComponentInstance,
+		VmaFormulaGridCompColorPickerLightnessMethods,
+		VmaFormulaGridCompColorPickerLightnessPrivateMethods {
+	props: VmaFormulaGridCompColorPickerLightnessOptions;
+	context: SetupContext<VmaFormulaGridCompColorPickerLightnessEmits>;
+	reactiveData: VmaFormulaGridCompColorPickerLightnessReactiveData;
+	renderVN: RenderFunction;
 
-    getRefs(): VmaFormulaGridCompColorPickerLightnessRefs
+	getRefs(): VmaFormulaGridCompColorPickerLightnessRefs;
 }
 
-
 export namespace VmaFormulaGridCompColorPickerDisplayPropTypes {
-    export type Size = SizeType
-    export type Type = ComponentType
+	export type Size = SizeType;
+	export type Type = ComponentType;
 }
 
 export interface VmaFormulaGridCompColorPickerDisplayProps {
-    size?: VmaFormulaGridCompColorPickerDisplayPropTypes.Size
-    type?: VmaFormulaGridCompColorPickerDisplayPropTypes.Type
+	size?: VmaFormulaGridCompColorPickerDisplayPropTypes.Size;
+	type?: VmaFormulaGridCompColorPickerDisplayPropTypes.Type;
 }
 
+export interface VmaFormulaGridCompColorPickerDisplayMethods {}
 
-export interface VmaFormulaGridCompColorPickerDisplayMethods {
-}
+interface VmaFormulaGridCompColorPickerDisplayPrivateMethods {}
 
-interface VmaFormulaGridCompColorPickerDisplayPrivateMethods {
-}
+export type VmaFormulaGridCompColorPickerDisplayOptions =
+	VmaFormulaGridCompColorPickerDisplayProps;
 
-export type VmaFormulaGridCompColorPickerDisplayOptions = VmaFormulaGridCompColorPickerDisplayProps
-
-export type VmaFormulaGridCompColorPickerDisplayEmits = ['change']
+export type VmaFormulaGridCompColorPickerDisplayEmits = ["change"];
 
 export interface VmaFormulaGridCompColorPickerDisplayReactiveData {}
 
 export interface VmaFormulaGridCompColorPickerDisplayRefs {}
 
-export interface VmaFormulaGridCompColorPickerDisplayConstructor extends VmaComponentInstance, VmaFormulaGridCompColorPickerDisplayMethods, VmaFormulaGridCompColorPickerDisplayPrivateMethods {
-    props: VmaFormulaGridCompColorPickerDisplayOptions
-    context: SetupContext<VmaFormulaGridCompColorPickerDisplayEmits>
-    reactiveData: VmaFormulaGridCompColorPickerDisplayReactiveData
-    renderVN: RenderFunction
+export interface VmaFormulaGridCompColorPickerDisplayConstructor
+	extends VmaComponentInstance,
+		VmaFormulaGridCompColorPickerDisplayMethods,
+		VmaFormulaGridCompColorPickerDisplayPrivateMethods {
+	props: VmaFormulaGridCompColorPickerDisplayOptions;
+	context: SetupContext<VmaFormulaGridCompColorPickerDisplayEmits>;
+	reactiveData: VmaFormulaGridCompColorPickerDisplayReactiveData;
+	renderVN: RenderFunction;
 
-    getRefs(): VmaFormulaGridCompColorPickerDisplayRefs
+	getRefs(): VmaFormulaGridCompColorPickerDisplayRefs;
 }
 
-
 export namespace VmaFormulaGridCompColorPickerBoardPropTypes {
-    export type Size = SizeType
-    export type Type = ComponentType
+	export type Size = SizeType;
+	export type Type = ComponentType;
 }
 
 export interface VmaFormulaGridCompColorPickerBoardProps {
-    size?: VmaFormulaGridCompColorPickerBoardPropTypes.Size
-    type?: VmaFormulaGridCompColorPickerBoardPropTypes.Type
+	size?: VmaFormulaGridCompColorPickerBoardPropTypes.Size;
+	type?: VmaFormulaGridCompColorPickerBoardPropTypes.Type;
 }
 
+export interface VmaFormulaGridCompColorPickerBoardMethods {}
 
-export interface VmaFormulaGridCompColorPickerBoardMethods {
-}
+interface VmaFormulaGridCompColorPickerBoardPrivateMethods {}
 
-interface VmaFormulaGridCompColorPickerBoardPrivateMethods {
-}
+export type VmaFormulaGridCompColorPickerBoardOptions =
+	VmaFormulaGridCompColorPickerBoardProps;
 
-export type VmaFormulaGridCompColorPickerBoardOptions = VmaFormulaGridCompColorPickerBoardProps
-
-export type VmaFormulaGridCompColorPickerBoardEmits = ['change']
+export type VmaFormulaGridCompColorPickerBoardEmits = ["change"];
 
 export interface VmaFormulaGridCompColorPickerBoardReactiveData {}
 
 export interface VmaFormulaGridCompColorPickerBoardRefs {}
 
-export interface VmaFormulaGridCompColorPickerBoardConstructor extends VmaComponentInstance, VmaFormulaGridCompColorPickerBoardMethods, VmaFormulaGridCompColorPickerBoardPrivateMethods {
-    props: VmaFormulaGridCompColorPickerBoardOptions
-    context: SetupContext<VmaFormulaGridCompColorPickerBoardEmits>
-    reactiveData: VmaFormulaGridCompColorPickerBoardReactiveData
-    renderVN: RenderFunction
+export interface VmaFormulaGridCompColorPickerBoardConstructor
+	extends VmaComponentInstance,
+		VmaFormulaGridCompColorPickerBoardMethods,
+		VmaFormulaGridCompColorPickerBoardPrivateMethods {
+	props: VmaFormulaGridCompColorPickerBoardOptions;
+	context: SetupContext<VmaFormulaGridCompColorPickerBoardEmits>;
+	reactiveData: VmaFormulaGridCompColorPickerBoardReactiveData;
+	renderVN: RenderFunction;
 
-    getRefs(): VmaFormulaGridCompColorPickerBoardRefs
+	getRefs(): VmaFormulaGridCompColorPickerBoardRefs;
 }
 
-
 export namespace VmaFormulaGridCompColorPickerHuePropTypes {
-    export type Size = SizeType
-    export type Type = ComponentType
+	export type Size = SizeType;
+	export type Type = ComponentType;
 }
 
 export interface VmaFormulaGridCompColorPickerHueProps {
-    size?: VmaFormulaGridCompColorPickerHuePropTypes.Size
-    type?: VmaFormulaGridCompColorPickerHuePropTypes.Type
+	size?: VmaFormulaGridCompColorPickerHuePropTypes.Size;
+	type?: VmaFormulaGridCompColorPickerHuePropTypes.Type;
 }
 
+export interface VmaFormulaGridCompColorPickerHueMethods {}
 
-export interface VmaFormulaGridCompColorPickerHueMethods {
-}
+interface VmaFormulaGridCompColorPickerHuePrivateMethods {}
 
-interface VmaFormulaGridCompColorPickerHuePrivateMethods {
-}
+export type VmaFormulaGridCompColorPickerHueOptions =
+	VmaFormulaGridCompColorPickerHueProps;
 
-export type VmaFormulaGridCompColorPickerHueOptions = VmaFormulaGridCompColorPickerHueProps
-
-export type VmaFormulaGridCompColorPickerHueEmits = ['change']
+export type VmaFormulaGridCompColorPickerHueEmits = ["change"];
 
 export interface VmaFormulaGridCompColorPickerHueReactiveData {}
 
 export interface VmaFormulaGridCompColorPickerHueRefs {}
 
-export interface VmaFormulaGridCompColorPickerHueConstructor extends VmaComponentInstance, VmaFormulaGridCompColorPickerHueMethods, VmaFormulaGridCompColorPickerHuePrivateMethods {
-    props: VmaFormulaGridCompColorPickerHueOptions
-    context: SetupContext<VmaFormulaGridCompColorPickerHueEmits>
-    reactiveData: VmaFormulaGridCompColorPickerHueReactiveData
-    renderVN: RenderFunction
+export interface VmaFormulaGridCompColorPickerHueConstructor
+	extends VmaComponentInstance,
+		VmaFormulaGridCompColorPickerHueMethods,
+		VmaFormulaGridCompColorPickerHuePrivateMethods {
+	props: VmaFormulaGridCompColorPickerHueOptions;
+	context: SetupContext<VmaFormulaGridCompColorPickerHueEmits>;
+	reactiveData: VmaFormulaGridCompColorPickerHueReactiveData;
+	renderVN: RenderFunction;
 
-    getRefs(): VmaFormulaGridCompColorPickerHueRefs
+	getRefs(): VmaFormulaGridCompColorPickerHueRefs;
 }
-
-
