@@ -5,6 +5,8 @@ import VmaFormulaGridBody from "./body.ts";
 import VmaFormulaGridCompIcon from "../icon/icon.ts";
 import VmaFormulaGridCompContextMenu from "../context-menu/context-menu.ts";
 import VmaFormulaGridCompTextarea from "../textarea/textarea.ts";
+import VmaFormulaGridCompButton from "../button/button.ts";
+import VmaFormulaGridCompLoading from "../loading/loading.ts";
 import VmaFormulaGridCompColorPicker from "../color-picker/color-picker.ts";
 import VmaFormulaGridCompColorPickerBoard from "../color-picker/board.ts";
 import VmaFormulaGridCompColorPickerDisplay from "../color-picker/display.ts";
@@ -20,6 +22,8 @@ export const VmaFormulaGrid = Object.assign(VmaFormulaGridComp, {
 		app.component("VmaFormulaGridBody", VmaFormulaGridBody);
 		app.component("VmaFormulaGridCompIcon", VmaFormulaGridCompIcon);
 		app.component("VmaFormulaGridCompTextarea", VmaFormulaGridCompTextarea);
+		app.component("VmaFormulaGridCompButton", VmaFormulaGridCompButton);
+		app.component("VmaFormulaGridCompLoading", VmaFormulaGridCompLoading);
 		app.component(
 			"VmaFormulaGridCompContextMenu",
 			VmaFormulaGridCompContextMenu,
