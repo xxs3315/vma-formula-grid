@@ -261,7 +261,7 @@ export default defineComponent({
 																							],
 																							key: `${optionsIndex}_${optionIndex}_${cIndex}`,
 																						},
-																						h(
+																						[h(
 																							"select",
 																							{
 																								onChange: (event: any) => {
@@ -283,7 +283,7 @@ export default defineComponent({
 																									});
 																								},
 																							),
-																						),
+																						)],
 																				  )
 																				: null;
 																		} else {
