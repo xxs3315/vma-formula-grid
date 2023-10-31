@@ -2307,6 +2307,15 @@
           text-overflow: ellipsis;
           white-space: nowrap;
           word-break: keep-all;
+
+          .cell-content {
+            &.italic {
+              -webkit-transform: skew(-10deg); /* for Chrome||Safari */
+              -ms-transform: skew(-10deg); /* for IE */
+              -moz-transform:skew(-10deg);/* for Firefox */
+              -o-transform:skew(-10deg);/* for Opera */
+            }
+          }
         }
       }
 

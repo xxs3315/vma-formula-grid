@@ -956,7 +956,6 @@ export default defineComponent({
 												"--cellBgCustom": cell.bg,
 												color: cell.fg,
 												fontWeight: cell.b ? "bold" : "normal",
-												fontStyle: cell.i ? "italic" : "normal",
 												textDecoration: cell.u ? "underline" : "none",
 												fontFamily: cell.ff,
 												fontSize: cell.fs ? cell.fs + "px" : null,
@@ -1100,7 +1099,9 @@ export default defineComponent({
 											h(
 												"span",
 												{
-													class: ["cell-content"],
+													class: ["cell-content", {
+														"italic": cell.i
+													}],
 												},
 												getCellContent(cell),
 											),
