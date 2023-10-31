@@ -261,29 +261,31 @@ export default defineComponent({
 																							],
 																							key: `${optionsIndex}_${optionIndex}_${cIndex}`,
 																						},
-																						[h(
-																							"select",
-																							{
-																								onChange: (event: any) => {
-																									console.log(
-																										event.target.value,
-																									);
-																									$vmaFormulaGrid.setFontStyle(
-																										"cells",
-																										"fontSizeSelect",
-																										event.target.value,
-																									);
+																						[
+																							h(
+																								"select",
+																								{
+																									onChange: (event: any) => {
+																										console.log(
+																											event.target.value,
+																										);
+																										$vmaFormulaGrid.setFontStyle(
+																											"cells",
+																											"fontSizeSelect",
+																											event.target.value,
+																										);
+																									},
 																								},
-																							},
-																							$vmaFormulaGrid.reactiveData.supportedFontSizes.map(
-																								(fontSize: any) => {
-																									return h("option", {
-																										value: fontSize,
-																										label: fontSize,
-																									});
-																								},
+																								$vmaFormulaGrid.reactiveData.supportedFontSizes.map(
+																									(fontSize: any) => {
+																										return h("option", {
+																											value: fontSize,
+																											label: fontSize,
+																										});
+																									},
+																								),
 																							),
-																						)],
+																						],
 																				  )
 																				: null;
 																		} else {
