@@ -11,10 +11,10 @@ import {
 } from "vue";
 
 import { Guid } from "../../utils/guid";
-import { VmaFormulaGridCompLoadingPropTypes } from "../../../types";
 import {
 	VmaFormulaGridCompButtonConstructor,
 	VmaFormulaGridCompButtonPropTypes,
+	VmaFormulaGridCompLoadingPropTypes,
 } from "../../../types";
 
 export default defineComponent({
@@ -57,7 +57,7 @@ export default defineComponent({
 		} as unknown as VmaFormulaGridCompButtonConstructor;
 
 		const LoadingComponent = resolveComponent(
-			"VmaFormulaGridCompLoading",
+			"VmaFormulaGridCompButton",
 		) as ComponentOptions;
 
 		const IconComponent = resolveComponent(
@@ -150,7 +150,7 @@ export default defineComponent({
 		};
 
 		const classNames = computed(() => {
-			const cns = ["vma-grid-button", props.size, props.type];
+			const cns = ["vma-formula-grid-button", props.size, props.type];
 			if (props.plain) {
 				cns.push("plain");
 			}

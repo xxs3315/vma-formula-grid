@@ -42,6 +42,10 @@ export default defineComponent({
 			"VmaFormulaGridCompIcon",
 		) as ComponentOptions;
 
+		const GridCompButtonComponent = resolveComponent(
+			"VmaFormulaGridCompButton",
+		) as ComponentOptions;
+
 		const { refGridContextMenu } = $vmaFormulaGrid.getRefs();
 
 		const { ctxMenuStore } = $vmaFormulaGrid.reactiveData;
@@ -265,6 +269,9 @@ export default defineComponent({
 																							h(
 																								"select",
 																								{
+																									style: {
+																										minWidth: '120px'
+																									},
 																									onChange: (event: any) => {
 																										console.log(
 																											event.target.value,
@@ -284,6 +291,22 @@ export default defineComponent({
 																										});
 																									},
 																								),
+																							),
+																							h(
+																								GridCompButtonComponent,
+																								{
+																									icon: 'font_size_up',
+																									type: 'primary',
+																									size: 'small'
+																								}
+																							),
+																							h(
+																								GridCompButtonComponent,
+																								{
+																									icon: 'font_size_down',
+																									type: 'primary',
+																									size: 'small'
+																								}
 																							),
 																						],
 																				  )

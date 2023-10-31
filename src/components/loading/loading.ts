@@ -151,7 +151,7 @@ export default defineComponent({
 				"div",
 				{
 					class: [
-						"vma-grid-loading",
+						"vma-formula-grid-loading",
 						{
 							vertical: props.vertical,
 						},
