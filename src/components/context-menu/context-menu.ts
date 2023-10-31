@@ -202,7 +202,6 @@ export default defineComponent({
 																},
 																option.children.map(
 																	(child: any, cIndex: any) => {
-																		console.log(child.type);
 																		if (child.type === "fontSelect") {
 																			return child.visible
 																				? h(
