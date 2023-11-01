@@ -228,6 +228,30 @@ export const supportedFonts = () => {
 	return sfs;
 };
 
+export const getFontFamilyEnFromCh = (ch: string) => {
+	let en = "";
+	Object.values(fonts).forEach((fontGroup: any) => {
+		fontGroup.forEach((font: any) => {
+			if (font.ch === ch) {
+				en = font.en;
+			}
+		});
+	});
+	return en;
+};
+
+export const getFontFamilyChFromEn = (en: string) => {
+	let ch = "";
+	Object.values(fonts).forEach((fontGroup: any) => {
+		fontGroup.forEach((font: any) => {
+			if (font.en === en) {
+				ch = font.ch;
+			}
+		});
+	});
+	return ch;
+};
+
 export const supportedFontSizes = () => [
 	6, 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 64, 72,
 ];

@@ -17,6 +17,7 @@ import {
 	resolveComponent,
 	Teleport,
 } from "vue";
+import { getDefaultFontSize } from "../../utils";
 
 export default defineComponent({
 	name: "VmaFormulaGridCompContextMenu",
@@ -226,9 +227,6 @@ export default defineComponent({
 																							"select",
 																							{
 																								onChange: (event: any) => {
-																									console.log(
-																										event.target.value,
-																									);
 																									$vmaFormulaGrid.setFontStyle(
 																										"cells",
 																										"fontSelect",
@@ -270,12 +268,9 @@ export default defineComponent({
 																								"select",
 																								{
 																									style: {
-																										minWidth: '120px'
+																										minWidth: "120px",
 																									},
 																									onChange: (event: any) => {
-																										console.log(
-																											event.target.value,
-																										);
 																										$vmaFormulaGrid.setFontStyle(
 																											"cells",
 																											"fontSizeSelect",
@@ -292,22 +287,72 @@ export default defineComponent({
 																									},
 																								),
 																							),
-																							h(
-																								GridCompButtonComponent,
-																								{
-																									icon: 'font_size_up',
-																									type: 'primary',
-																									size: 'small'
-																								}
-																							),
-																							h(
-																								GridCompButtonComponent,
-																								{
-																									icon: 'font_size_down',
-																									type: 'primary',
-																									size: 'small'
-																								}
-																							),
+																							h(GridCompButtonComponent, {
+																								icon: "font_size_up",
+																								type: "primary",
+																								size: "small",
+																								onClick: (_: any) => {
+																									let initValue =
+																										$vmaFormulaGrid.reactiveData
+																											.currentSheetData[
+																											$vmaFormulaGrid
+																												.reactiveData
+																												.currentAreaSri
+																										][
+																											$vmaFormulaGrid
+																												.reactiveData
+																												.currentAreaSci + 1
+																										].fs;
+																									if (
+																										initValue === null ||
+																										initValue === ""
+																									) {
+																										initValue =
+																											getDefaultFontSize(
+																												$vmaFormulaGrid.props
+																													.size!,
+																											);
+																									}
+																									$vmaFormulaGrid.setFontStyle(
+																										"cells",
+																										"fontSizeUp",
+																										initValue,
+																									);
+																								},
+																							}),
+																							h(GridCompButtonComponent, {
+																								icon: "font_size_down",
+																								type: "primary",
+																								size: "small",
+																								onClick: (_: any) => {
+																									let initValue =
+																										$vmaFormulaGrid.reactiveData
+																											.currentSheetData[
+																											$vmaFormulaGrid
+																												.reactiveData
+																												.currentAreaSri
+																										][
+																											$vmaFormulaGrid
+																												.reactiveData
+																												.currentAreaSci + 1
+																										].fs;
+																									if (
+																										initValue === null ||
+																										initValue === ""
+																									) {
+																										initValue =
+																											getDefaultFontSize(
+																												$vmaFormulaGrid.props
+																													.size!,
+																											);
+																									}
+																									$vmaFormulaGrid.setFontStyle(
+																										"cells",
+																										"fontSizeDown",
+																										initValue,
+																									);
+																								},
+																							}),
 																						],
 																				  )
 																				: null;

@@ -409,7 +409,25 @@ export default defineComponent({
           {p: 'L26:G7', type: 'cells', v: true},
           {p: 'J20', type: 'cells', v: true},
           {p: 'J23', type: 'cells', v: true},
-        ]
+        ],
+        fs:[
+          {p: ['A', 'C', 'D', 'o:r'], type: 'columns', v: 12},
+          {p: ['B', 'D', 'F'], type: 'columns', v: 18},
+          {p: [1, 3, 5], type: 'rows', v: 18},
+          {p: [10, 11, 12, '23:27'], type: 'rows', v: 16},
+          {p: 'L26:G7', type: 'cells', v: 28},
+          {p: 'J20', type: 'cells', v: 'none'},
+          {p: 'J23', type: 'cells', v: 36},
+        ],
+        ff:[
+          {p: ['A', 'C', 'D', 'o:r'], type: 'columns', v: '黑体'},
+          {p: ['B', 'D', 'F'], type: 'columns', v: '楷体'},
+          {p: [1, 3, 5], type: 'rows', v: '微软雅黑'},
+          {p: [10, 11, 12, '23:27'], type: 'rows', v: '微软雅黑'},
+          {p: 'L26:G7', type: 'cells', v: '微软雅黑'},
+          {p: 'J20', type: 'cells', v: 'none'},
+          {p: 'J23', type: 'cells', v: '仿宋'},
+        ],
       },
       borders: [
         {p: ['A', 'C', 'D', 'o:q'], type: 'columns', details: {full: true}},

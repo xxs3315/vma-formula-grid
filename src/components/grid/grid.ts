@@ -63,7 +63,11 @@ import { DepParser, FormulaParser } from "../../formula";
 import GlobalEvent from "../../utils/events.ts";
 import VmaFormulaGrid from "../../v-m-a-formula-grid";
 import { DomTools } from "../../utils/doms.ts";
-import { supportedFonts, supportedFontSizes } from "../../utils/font.ts";
+import {
+	getFontFamilyChFromEn,
+	supportedFonts,
+	supportedFontSizes,
+} from "../../utils/font.ts";
 
 export default defineComponent({
 	name: "VmaFormulaGrid",
@@ -461,6 +465,8 @@ export default defineComponent({
 				b: [],
 				i: [],
 				u: [],
+				ff: [],
+				fs: [],
 			},
 			borders: [],
 			supportedFonts: [],
@@ -903,7 +909,6 @@ export default defineComponent({
 						);
 					}
 				});
-				console.log(reservedMerges, removedMerges);
 				Object.keys(removedMerges).map((key) => {
 					let cellRangeArr = key.split(":");
 					let cellStartColRow = cellRangeArr[0].split("_");
@@ -1644,18 +1649,19 @@ export default defineComponent({
 						}
 					}
 					if (mode === "fontSelect") {
-						// const pStart =
-						// 	getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) +
-						// 	($vmaFormulaGrid.reactiveData.currentAreaSri + 1);
-						// const pEnd =
-						// 	getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) +
-						// 	($vmaFormulaGrid.reactiveData.currentAreaEri + 1);
-						// const p = pStart === pEnd ? pStart : pStart + ":" + pEnd;
-						// gridReactiveData.styles.u.push({
-						// 	p: p,
-						// 	v: !v,
-						// 	type: "cells",
-						// });
+						const pStart =
+							getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) +
+							($vmaFormulaGrid.reactiveData.currentAreaSri + 1);
+						const pEnd =
+							getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) +
+							($vmaFormulaGrid.reactiveData.currentAreaEri + 1);
+						const p = pStart === pEnd ? pStart : pStart + ":" + pEnd;
+						const ff = getFontFamilyChFromEn(v);
+						gridReactiveData.styles.ff.push({
+							p: p,
+							v: ff ? ff : "none",
+							type: "cells",
+						});
 						for (
 							let col = $vmaFormulaGrid.reactiveData.currentAreaSci;
 							col <= $vmaFormulaGrid.reactiveData.currentAreaEci;
@@ -1666,29 +1672,24 @@ export default defineComponent({
 								row <= $vmaFormulaGrid.reactiveData.currentAreaEri;
 								row++
 							) {
-								// const { u } = calcCellStyles(
-								// 	col,
-								// 	row,
-								// 	$vmaFormulaGrid.reactiveData.styles,
-								// );
 								$vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].ff =
 									v;
 							}
 						}
 					}
 					if (mode === "fontSizeSelect") {
-						// const pStart =
-						// 	getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) +
-						// 	($vmaFormulaGrid.reactiveData.currentAreaSri + 1);
-						// const pEnd =
-						// 	getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) +
-						// 	($vmaFormulaGrid.reactiveData.currentAreaEri + 1);
-						// const p = pStart === pEnd ? pStart : pStart + ":" + pEnd;
-						// gridReactiveData.styles.u.push({
-						// 	p: p,
-						// 	v: !v,
-						// 	type: "cells",
-						// });
+						const pStart =
+							getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) +
+							($vmaFormulaGrid.reactiveData.currentAreaSri + 1);
+						const pEnd =
+							getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) +
+							($vmaFormulaGrid.reactiveData.currentAreaEri + 1);
+						const p = pStart === pEnd ? pStart : pStart + ":" + pEnd;
+						gridReactiveData.styles.fs.push({
+							p: p,
+							v: v ? v : "none",
+							type: "cells",
+						});
 						for (
 							let col = $vmaFormulaGrid.reactiveData.currentAreaSci;
 							col <= $vmaFormulaGrid.reactiveData.currentAreaEci;
@@ -1699,13 +1700,66 @@ export default defineComponent({
 								row <= $vmaFormulaGrid.reactiveData.currentAreaEri;
 								row++
 							) {
-								// const { u } = calcCellStyles(
-								// 	col,
-								// 	row,
-								// 	$vmaFormulaGrid.reactiveData.styles,
-								// );
 								$vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].fs =
 									v;
+							}
+						}
+					}
+					if (mode === "fontSizeUp") {
+						const pStart =
+							getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) +
+							($vmaFormulaGrid.reactiveData.currentAreaSri + 1);
+						const pEnd =
+							getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) +
+							($vmaFormulaGrid.reactiveData.currentAreaEri + 1);
+						const p = pStart === pEnd ? pStart : pStart + ":" + pEnd;
+						const targetValue = Math.min(144, Number(v) + 4);
+						gridReactiveData.styles.fs.push({
+							p: p,
+							v: targetValue,
+							type: "cells",
+						});
+						for (
+							let col = $vmaFormulaGrid.reactiveData.currentAreaSci;
+							col <= $vmaFormulaGrid.reactiveData.currentAreaEci;
+							col++
+						) {
+							for (
+								let row = $vmaFormulaGrid.reactiveData.currentAreaSri;
+								row <= $vmaFormulaGrid.reactiveData.currentAreaEri;
+								row++
+							) {
+								$vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].fs =
+									targetValue;
+							}
+						}
+					}
+					if (mode === "fontSizeDown") {
+						const pStart =
+							getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) +
+							($vmaFormulaGrid.reactiveData.currentAreaSri + 1);
+						const pEnd =
+							getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) +
+							($vmaFormulaGrid.reactiveData.currentAreaEri + 1);
+						const p = pStart === pEnd ? pStart : pStart + ":" + pEnd;
+						const targetValue = Math.max(6, Number(v) - 4);
+						gridReactiveData.styles.fs.push({
+							p: p,
+							v: targetValue,
+							type: "cells",
+						});
+						for (
+							let col = $vmaFormulaGrid.reactiveData.currentAreaSci;
+							col <= $vmaFormulaGrid.reactiveData.currentAreaEci;
+							col++
+						) {
+							for (
+								let row = $vmaFormulaGrid.reactiveData.currentAreaSri;
+								row <= $vmaFormulaGrid.reactiveData.currentAreaEri;
+								row++
+							) {
+								$vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].fs =
+									targetValue;
 							}
 						}
 					}
@@ -4582,6 +4636,12 @@ export default defineComponent({
 						if (props.data.conf.styles.hasOwnProperty("u")) {
 							gridReactiveData.styles.u = props.data.conf.styles.u.concat([]);
 						}
+						if (props.data.conf.styles.hasOwnProperty("ff")) {
+							gridReactiveData.styles.ff = props.data.conf.styles.ff.concat([]);
+						}
+						if (props.data.conf.styles.hasOwnProperty("fs")) {
+							gridReactiveData.styles.fs = props.data.conf.styles.fs.concat([]);
+						}
 					}
 
 					if (
@@ -4722,7 +4782,7 @@ export default defineComponent({
 								rowIndex + 1,
 								gridReactiveData.merges,
 							);
-							const { fg, bg, b, i, u } = calcCellStyles(
+							const { fg, bg, b, i, u, ff, fs } = calcCellStyles(
 								colIndex - 1,
 								rowIndex,
 								$vmaFormulaGrid.reactiveData.styles,
@@ -4775,8 +4835,8 @@ export default defineComponent({
 								b,
 								i,
 								u,
-								null,
-								null,
+								ff,
+								fs,
 							);
 						});
 					});

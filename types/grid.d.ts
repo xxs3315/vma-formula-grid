@@ -199,6 +199,8 @@ export interface VmaFormulaGridReactiveData {
 		b: any[];
 		i: any[];
 		u: any[];
+		ff: any[];
+		fs: any[];
 	};
 
 	borders: any[];

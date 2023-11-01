@@ -1,4 +1,5 @@
 import { VmaFormulaGridPropTypes } from "../../types";
+import { getFontFamilyChFromEn, getFontFamilyEnFromCh } from "./font.ts";
 
 export function isNumeric(val: string | number): val is string {
 	return typeof val === "number" || /^\d+(\.\d+)?$/.test(val);
@@ -1659,14 +1660,32 @@ export function calcYOverlapMerges(
 export function calcCellStyles(
 	col: number,
 	row: number,
-	styles: { bgc: any[]; fgc: any[]; b: any[]; i: any[]; u: any[] },
+	styles: {
+		bgc: any[];
+		fgc: any[];
+		b: any[];
+		i: any[];
+		u: any[];
+		ff: any[];
+		fs: any[];
+	},
 ) {
-	let result = {
+	let result: {
+		ff: string | null;
+		fg: string;
+		b: boolean;
+		bg: string;
+		u: boolean;
+		i: boolean;
+		fs: null;
+	} = {
 		fg: "",
 		bg: "",
 		b: false,
 		i: false,
 		u: false,
+		ff: null,
+		fs: null,
 	};
 	if (styles.hasOwnProperty("bgc") && styles.bgc.length > 0) {
 		let bg = "";
@@ -2070,6 +2089,177 @@ export function calcCellStyles(
 			}
 		});
 		result.u = u;
+	}
+
+	if (styles.hasOwnProperty("ff") && styles.u.length > 0) {
+		let ff: string | null = "";
+		styles.ff.forEach((item) => {
+			if (item.type === "columns") {
+				if (item.p && item.p.length > 0) {
+					item.p.forEach((pos: string) => {
+						if (pos.indexOf(":") >= 0) {
+							const columnPosArr = pos.split(":");
+							if (
+								col + 1 >= getColumnCount(columnPosArr[0]) &&
+								col + 1 <= getColumnCount(columnPosArr[1])
+							) {
+								ff =
+									item.hasOwnProperty("v") && item.v !== "none"
+										? getFontFamilyEnFromCh(item.v)
+										: null;
+							}
+						} else {
+							if (getColumnSymbol(col + 1) === pos.toUpperCase()) {
+								ff =
+									item.hasOwnProperty("v") && item.v !== "none"
+										? getFontFamilyEnFromCh(item.v)
+										: null;
+							}
+						}
+					});
+				}
+			} else if (item.type === "rows") {
+				if (item.p && item.p.length > 0) {
+					item.p.forEach((pos: string | number) => {
+						if (typeof pos === "string" && pos.indexOf(":") >= 0) {
+							let rowPosArr: any[] = pos.split(":");
+							rowPosArr = rowPosArr.map(Number);
+							if (row + 1 >= rowPosArr[0] && row + 1 <= rowPosArr[1]) {
+								ff =
+									item.hasOwnProperty("v") && item.v !== "none"
+										? getFontFamilyEnFromCh(item.v)
+										: null;
+							}
+						}
+						if (typeof pos === "number" && row + 1 === pos) {
+							ff =
+								item.hasOwnProperty("v") && item.v !== "none"
+									? getFontFamilyEnFromCh(item.v)
+									: null;
+						}
+					});
+				}
+			} else if (item.type === "cells") {
+				if (item.p.indexOf(":") >= 0) {
+					const mArr = item.p.split(":");
+
+					let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ""));
+					let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ""));
+					let rowStart = parseInt(mArr[0].replace(/[^0-9]/gi, ""));
+					let rowEnd = parseInt(mArr[1].replace(/[^0-9]/gi, ""));
+					if (
+						(col + 1 >= colStart &&
+							col + 1 <= colEnd &&
+							row + 1 >= rowStart &&
+							row + 1 <= rowEnd) ||
+						(col + 1 >= colEnd &&
+							col + 1 <= colStart &&
+							row + 1 >= rowStart &&
+							row + 1 <= rowEnd) ||
+						(col + 1 >= colStart &&
+							col + 1 <= colEnd &&
+							row + 1 >= rowEnd &&
+							row + 1 <= rowStart) ||
+						(col + 1 >= colEnd &&
+							col + 1 <= colStart &&
+							row + 1 >= rowEnd &&
+							row + 1 <= rowStart)
+					) {
+						ff = item.hasOwnProperty("v") && item.v;
+					}
+				} else {
+					let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ""));
+					let rowTarget = parseInt(item.p.replace(/[^0-9]/gi, ""));
+					if (col + 1 === colTarget && row + 1 === rowTarget) {
+						ff =
+							item.hasOwnProperty("v") && item.v !== "none"
+								? getFontFamilyEnFromCh(item.v)
+								: null;
+					}
+				}
+			}
+		});
+		result.ff = ff;
+	}
+
+	if (styles.hasOwnProperty("fs") && styles.u.length > 0) {
+		let fs = null;
+		styles.fs.forEach((item) => {
+			if (item.type === "columns") {
+				if (item.p && item.p.length > 0) {
+					item.p.forEach((pos: string) => {
+						if (pos.indexOf(":") >= 0) {
+							const columnPosArr = pos.split(":");
+							if (
+								col + 1 >= getColumnCount(columnPosArr[0]) &&
+								col + 1 <= getColumnCount(columnPosArr[1])
+							) {
+								fs =
+									item.hasOwnProperty("v") && item.v !== "none" ? item.v : null;
+							}
+						} else {
+							if (getColumnSymbol(col + 1) === pos.toUpperCase()) {
+								fs =
+									item.hasOwnProperty("v") && item.v !== "none" ? item.v : null;
+							}
+						}
+					});
+				}
+			} else if (item.type === "rows") {
+				if (item.p && item.p.length > 0) {
+					item.p.forEach((pos: string | number) => {
+						if (typeof pos === "string" && pos.indexOf(":") >= 0) {
+							let rowPosArr: any[] = pos.split(":");
+							rowPosArr = rowPosArr.map(Number);
+							if (row + 1 >= rowPosArr[0] && row + 1 <= rowPosArr[1]) {
+								fs =
+									item.hasOwnProperty("v") && item.v !== "none" ? item.v : null;
+							}
+						}
+						if (typeof pos === "number" && row + 1 === pos) {
+							fs =
+								item.hasOwnProperty("v") && item.v !== "none" ? item.v : null;
+						}
+					});
+				}
+			} else if (item.type === "cells") {
+				if (item.p.indexOf(":") >= 0) {
+					const mArr = item.p.split(":");
+
+					let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ""));
+					let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ""));
+					let rowStart = parseInt(mArr[0].replace(/[^0-9]/gi, ""));
+					let rowEnd = parseInt(mArr[1].replace(/[^0-9]/gi, ""));
+					if (
+						(col + 1 >= colStart &&
+							col + 1 <= colEnd &&
+							row + 1 >= rowStart &&
+							row + 1 <= rowEnd) ||
+						(col + 1 >= colEnd &&
+							col + 1 <= colStart &&
+							row + 1 >= rowStart &&
+							row + 1 <= rowEnd) ||
+						(col + 1 >= colStart &&
+							col + 1 <= colEnd &&
+							row + 1 >= rowEnd &&
+							row + 1 <= rowStart) ||
+						(col + 1 >= colEnd &&
+							col + 1 <= colStart &&
+							row + 1 >= rowEnd &&
+							row + 1 <= rowStart)
+					) {
+						fs = item.hasOwnProperty("v") && item.v;
+					}
+				} else {
+					let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ""));
+					let rowTarget = parseInt(item.p.replace(/[^0-9]/gi, ""));
+					if (col + 1 === colTarget && row + 1 === rowTarget) {
+						fs = item.hasOwnProperty("v") && item.v !== "none" ? item.v : null;
+					}
+				}
+			}
+		});
+		result.fs = fs;
 	}
 
 	return result;
@@ -2757,56 +2947,17 @@ export function calcCellBgType(
 	return "17";
 }
 
-// export function isRowIndicatorActive(index: number,
-//                               currentArea: { start: any; end: any },
-//                               renderDefaultColWidth: number,
-//                               columnWidthsChanged: Record<string, number>,
-//                               columnHidesChanged: Record<string, number>,
-//                               renderDefaultRowHeight: number,
-//                               rowHeightsChanged: Record<string, number>,
-//                               rowHidesChanged: Record<string, number>,
-//                               merges: Record<string, any>) {
-//     if (currentArea
-//         && currentArea.start !== null
-//         && currentArea.end != null) {
-//         const {sri, eri} = getRealArea(renderDefaultColWidth,
-//             columnWidthsChanged,
-//             columnHidesChanged,
-//             renderDefaultRowHeight,
-//             rowHeightsChanged,
-//             rowHidesChanged,
-//             merges,
-//             currentArea)
-//         if (index >= sri && index <= eri) {
-//             return true
-//         }
-//     }
-//     return false
-// }
-//
-// export function isColumnIndicatorActive(index: number,
-//                                      currentArea: { start: any; end: any },
-//                                      renderDefaultColWidth: number,
-//                                      columnWidthsChanged: Record<string, number>,
-//                                      columnHidesChanged: Record<string, number>,
-//                                      renderDefaultRowHeight: number,
-//                                      rowHeightsChanged: Record<string, number>,
-//                                      rowHidesChanged: Record<string, number>,
-//                                      merges: Record<string, any>) {
-//     if (currentArea
-//         && currentArea.start !== null
-//         && currentArea.end != null) {
-//         const {sci, eci} = getRealArea(renderDefaultColWidth,
-//             columnWidthsChanged,
-//             columnHidesChanged,
-//             renderDefaultRowHeight,
-//             rowHeightsChanged,
-//             rowHidesChanged,
-//             merges,
-//             currentArea)
-//         if (index >= sci && index <= eci) {
-//             return true
-//         }
-//     }
-//     return false
-// }
+export function getDefaultFontSize(
+	size: "large" | "normal" | "small" | "mini",
+) {
+	if (size === "large") {
+		return 16;
+	} else if (size === "normal") {
+		return 14;
+	} else if (size === "small") {
+		return 12;
+	} else if (size === "mini") {
+		return 10;
+	}
+	return 14;
+}

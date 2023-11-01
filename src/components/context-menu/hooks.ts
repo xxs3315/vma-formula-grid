@@ -5,7 +5,7 @@ import {
 } from "../../../types";
 import { nextTick } from "vue";
 import { DomTools, getAbsolutePos } from "../../utils/doms.ts";
-import { checkCellInMerges } from "../../utils";
+import { checkCellInMerges, getDefaultFontSize } from "../../utils";
 
 const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
 	setupGrid(grid): void | { [p: string]: any } {
@@ -154,12 +154,6 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
 							}
 						}
 						grid.setFontStyle("cells", "fontUnderline", initValue);
-					}
-					if (menu.code === "fontSizeUp") {
-						grid.setFontStyle("cells", "fontSizeUp", true);
-					}
-					if (menu.code === "fontSizeDown") {
-						grid.setFontStyle("cells", "fontSizeDown", true);
 					}
 				}
 				if (ctxMenuMethods.closeMenu) {
