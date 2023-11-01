@@ -1,21 +1,13 @@
-import { VmaFormulaGridConstructor } from "./grid";
+import { VmaFormulaGridConstructor } from './grid';
 
 export namespace VmaFormulaGridGlobalHooksHandlers {
-	export type name = "VmaFormulaGrid";
-	export interface HookOptions {
-		setupGrid?(grid: VmaFormulaGridConstructor): void | { [key: string]: any };
-	}
+    export type name = 'VmaFormulaGrid';
+    export interface HookOptions {
+        setupGrid?(grid: VmaFormulaGridConstructor): void | { [key: string]: any };
+    }
 }
 
 export interface VmaFormulaGridGlobalHooks {
-	add(
-		type: string,
-		options: VmaFormulaGridGlobalHooksHandlers.HookOptions,
-	): VmaFormulaGridGlobalHooks;
-	forEach(
-		callback: (
-			options: VmaFormulaGridGlobalHooksHandlers.HookOptions,
-			type: string,
-		) => void,
-	): void;
+    add(type: string, options: VmaFormulaGridGlobalHooksHandlers.HookOptions): VmaFormulaGridGlobalHooks;
+    forEach(callback: (options: VmaFormulaGridGlobalHooksHandlers.HookOptions, type: string) => void): void;
 }

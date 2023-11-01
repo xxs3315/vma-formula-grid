@@ -1,25 +1,22 @@
-import { VmaFormulaGridGlobalHooks } from "../hooks";
+import { VmaFormulaGridGlobalHooks } from '../hooks';
 
 export interface VmaFormulaGridPluginObject {
-	install(vmaFormulaGrid: VmaFormulaGridCore, ...options: any[]): void;
-	[key: string]: any;
+    install(vmaFormulaGrid: VmaFormulaGridCore, ...options: any[]): void;
+    [key: string]: any;
 }
 
-export type VmaFormulaGridGlobalUse = (
-	plugin: VmaFormulaGridPluginObject,
-	...options: any[]
-) => VmaFormulaGridCore;
+export type VmaFormulaGridGlobalUse = (plugin: VmaFormulaGridPluginObject, ...options: any[]) => VmaFormulaGridCore;
 
 export interface VmaFormulaGridCore {
-	version: string;
+    version: string;
 
-	hooks: VmaFormulaGridGlobalHooks;
+    hooks: VmaFormulaGridGlobalHooks;
 
-	use: VmaFormulaGridGlobalUse;
+    use: VmaFormulaGridGlobalUse;
 }
 
 export const VMAFormulaGrid: VmaFormulaGridCore;
 
-export * from "./all";
+export * from './all';
 
 export default VMAFormulaGrid;
