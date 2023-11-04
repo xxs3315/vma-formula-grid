@@ -78,6 +78,11 @@
     -webkit-appearance: none;
     vertical-align: middle;
     line-height: normal;
+    user-select: none;
+
+    &:focus {
+        outline: 0;
+    }
 
     &::before {
         position: absolute;
@@ -306,7 +311,7 @@
 
     // align-items are ignored when flex container is a button in legacy safari
     // see: https://bugs.webkit.org/show_bug.cgi?id=169700
-    &.content {
+    .content {
         display: flex;
         align-items: center;
         justify-content: center;

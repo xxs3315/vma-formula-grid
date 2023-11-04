@@ -473,20 +473,6 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     param,
                     type: 'fontSizeSelect',
                 });
-                subOptions.push({
-                    name: '增大字体',
-                    code: 'fontSizeUp',
-                    disabled: false,
-                    visible: true,
-                    param,
-                });
-                subOptions.push({
-                    name: '减小字体',
-                    code: 'fontSizeDown',
-                    disabled: false,
-                    visible: true,
-                    param,
-                });
                 options.push({
                     name: '字体',
                     prefixIcon: 'info',

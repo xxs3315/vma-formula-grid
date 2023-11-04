@@ -50,7 +50,7 @@ export default defineComponent({
             if (props.loading) {
                 text = props.loadingText;
             } else {
-                text = slots.default ? slots.default({}) : () => props.text;
+                text = slots.default ? slots.default({}) : props.text;
             }
 
             if (text) {
@@ -62,9 +62,7 @@ export default defineComponent({
                     text,
                 );
             }
-            return h('span', {
-                class: ['text'],
-            });
+            return createCommentVNode();
         };
         const renderLoadingIcon = () => {
             if (slots.loading) {
