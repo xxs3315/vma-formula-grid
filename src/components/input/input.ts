@@ -1,4 +1,4 @@
-import { defineComponent, h, Teleport, ref, Ref, computed, reactive, inject, nextTick, watch, onUnmounted, PropType } from 'vue'
+import { defineComponent, h, ref, Ref, computed, reactive, inject, nextTick, watch, onUnmounted, PropType } from 'vue'
 
 export default defineComponent({
   name: 'VmaFormulaGridCompIcon',
@@ -14,7 +14,6 @@ export default defineComponent({
     maxlength: [String, Number] as PropType<VmaInputPropTypes.Maxlength>,
     autocomplete: { type: String as PropType<VmaInputPropTypes.Autocomplete>, default: 'off' },
     align: String as PropType<VmaInputPropTypes.Align>,
-    form: String as PropType<VmaInputPropTypes.Form>,
     className: String as PropType<VmaInputPropTypes.ClassName>,
     size: { type: String as PropType<VmaInputPropTypes.Size>, default: () => GlobalConfig.input.size || GlobalConfig.size },
     multiple: Boolean as PropType<VmaInputPropTypes.Multiple>,
