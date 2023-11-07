@@ -1290,7 +1290,7 @@ export default defineComponent({
                         const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1);
                         const pEnd = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1);
                         const p = pStart === pEnd ? pStart : pStart + ':' + pEnd;
-                        const targetValue = Math.min(144, Number(v) + 4);
+                        const targetValue = Math.min(288, Number(v) + 4);
                         gridReactiveData.styles.fs.push({
                             p: p,
                             v: targetValue,
