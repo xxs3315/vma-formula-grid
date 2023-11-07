@@ -2402,3 +2402,71 @@ export function getDefaultFontSize(size: 'large' | 'normal' | 'small' | 'mini') 
     }
     return 14;
 }
+
+export function toString(obj: number | string | unknown[]): string {
+    return '' + (obj === null || obj === undefined ? '' : obj);
+}
+
+export function toNumber(num: number | string | null | undefined): number {
+    if (num === null || num === undefined) {
+        return 0;
+    }
+    if (typeof num === 'number') {
+        return Number(num);
+    }
+    const result = parseFloat(num);
+    if (!isNaN(result)) {
+        return result;
+    }
+    return 0;
+}
+
+export function toInteger(num: number | string | null | undefined): number {
+    if (num === null || num === undefined) {
+        return 0;
+    }
+    if (typeof num === 'number') {
+        return Math.trunc(Number(num));
+    }
+    const result = parseInt(num);
+    if (!isNaN(result)) {
+        return result;
+    }
+    return 0;
+}
+
+export function floor(num: number | string, digits?: number): number {
+    const numRest = toNumber(num);
+    const rest = numRest;
+    if (numRest) {
+        digits = digits === undefined ? 0 : digits;
+        const numString = toString(numRest);
+        const nums = numString.split('.');
+        const intPart = nums[0];
+        const floatPart = nums[1] === undefined ? '' : nums[1];
+        const floatString = floatPart.substring(0, digits! + 1);
+        const rest = intPart + (floatString ? '.' + floatString : '');
+        if (digits! >= floatPart.length) {
+            return toNumber(rest);
+        }
+        if (digits! > 0) {
+            const ratio = Math.pow(10, digits!);
+            return Math.floor(numRest * ratio) / ratio;
+        } else {
+            return Math.floor(numRest);
+        }
+    }
+    return rest;
+}
+
+let zIndex = 1
+let lastZIndex = 2
+
+export function nextZIndex() {
+    lastZIndex = zIndex++
+    return lastZIndex
+}
+
+export function getLastZIndex() {
+    return lastZIndex
+}

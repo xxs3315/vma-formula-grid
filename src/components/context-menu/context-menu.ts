@@ -25,8 +25,8 @@ export default defineComponent({
         const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
 
         const GridCompIconComponent = resolveComponent('VmaFormulaGridCompIcon') as ComponentOptions;
-
         const GridCompButtonComponent = resolveComponent('VmaFormulaGridCompButton') as ComponentOptions;
+        const GridCompSelectComponent = resolveComponent('VmaFormulaGridCompSelect') as ComponentOptions;
 
         const { refGridContextMenu } = $vmaFormulaGrid.getRefs();
 
@@ -195,20 +195,19 @@ export default defineComponent({
                                                                                                 })
                                                                                               : createCommentVNode(),
                                                                                       ),
-                                                                                      h(
-                                                                                          'select',
-                                                                                          {
-                                                                                              onChange: (event: any) => {
-                                                                                                  $vmaFormulaGrid.setFontStyle('cells', 'fontSelect', event.target.value);
-                                                                                              },
-                                                                                          },
-                                                                                          $vmaFormulaGrid.reactiveData.supportedFonts.map((font: any) => {
-                                                                                              return h('option', {
+                                                                                      h(GridCompSelectComponent, {
+                                                                                          size: 'mini',
+                                                                                          options: $vmaFormulaGrid.reactiveData.supportedFonts.map((font: any) => {
+                                                                                              return {
                                                                                                   value: font.en,
                                                                                                   label: font.ch,
-                                                                                              });
+                                                                                                  disabled: false
+                                                                                              };
                                                                                           }),
-                                                                                      ),
+                                                                                          onChange: (event: any) => {
+                                                                                              $vmaFormulaGrid.setFontStyle('cells', 'fontSelect', event.value);
+                                                                                          },
+                                                                                      }),
                                                                                       h('i', {
                                                                                           class: ['link-suffix', option.suffixIcon],
                                                                                       }),
@@ -248,23 +247,22 @@ export default defineComponent({
                                                                                                 })
                                                                                               : createCommentVNode(),
                                                                                       ),
-                                                                                      h(
-                                                                                          'select',
-                                                                                          {
-                                                                                              style: {
-                                                                                                  minWidth: '120px',
-                                                                                              },
-                                                                                              onChange: (event: any) => {
-                                                                                                  $vmaFormulaGrid.setFontStyle('cells', 'fontSizeSelect', event.target.value);
-                                                                                              },
+                                                                                      h(GridCompSelectComponent, {
+                                                                                          size: 'mini',
+                                                                                          style: {
+                                                                                              width: '80px'
                                                                                           },
-                                                                                          $vmaFormulaGrid.reactiveData.supportedFontSizes.map((fontSize: any) => {
-                                                                                              return h('option', {
+                                                                                          options: $vmaFormulaGrid.reactiveData.supportedFontSizes.map((fontSize: any) => {
+                                                                                              return {
                                                                                                   value: fontSize,
                                                                                                   label: fontSize,
-                                                                                              });
+                                                                                                  disabled: false
+                                                                                              };
                                                                                           }),
-                                                                                      ),
+                                                                                          onChange: (event: any) => {
+                                                                                              $vmaFormulaGrid.setFontStyle('cells', 'fontSizeSelect', event.value);
+                                                                                          },
+                                                                                      }),
                                                                                       h(GridCompButtonComponent, {
                                                                                           icon: 'font_size_up',
                                                                                           type: 'primary',

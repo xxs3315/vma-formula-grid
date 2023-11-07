@@ -316,3 +316,21 @@ export interface DragEventOptions {
     start?: (event: Event) => void;
     end?: (event: Event) => void;
 }
+
+export namespace VmaFormulaGridCompGlobalRendererHandles {
+    /**
+     * 选项参数
+     */
+    export interface RenderOptionProps {
+        value?: string;
+        label?: string;
+    }
+
+    /**
+     * 分组选项参数
+     */
+    export interface RenderOptionGroupProps {
+        options?: string;
+        label?: string;
+    }
+}

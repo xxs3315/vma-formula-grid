@@ -1,0 +1,96 @@
+@import './common';
+
+.vma-formula-grid-select {
+    position: relative;
+    display: inline-block;
+    width: 180px;
+    color: @gray-6;
+    text-align: left;
+    &:not(.is--disabled) {
+        & > .vma-formula-grid-input--inner-input {
+            cursor: pointer;
+        }
+    }
+
+    &--large {
+        font-size: @select-large-font-size;
+    }
+
+    &--normal {
+        font-size: @select-normal-font-size;
+    }
+
+    &--small {
+        font-size: @select-small-font-size;
+    }
+
+    &--mini {
+        font-size: @select-mini-font-size;
+    }
+
+    &--panel {
+        display: none;
+        position: absolute;
+        left: 0;
+        padding: 4px 0;
+        color: @gray-7;
+        text-align: left;
+        background-color: @white;
+        &:not(.is--transfer) {
+            min-width: 100%;
+        }
+        &.is--transfer {
+            position: fixed;
+        }
+        &.animate--leave {
+            display: block;
+            opacity: 0;
+            transform: scaleY(0.5);
+            transition:
+                transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+                opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-origin: center top;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+            &[placement='top'] {
+                transform-origin: center bottom;
+            }
+        }
+        &.animate--enter {
+            opacity: 1;
+            transform: scaleY(1);
+        }
+    }
+
+    &-option--wrapper {
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: 4px 0;
+        max-height: 200px;
+        border-radius: 0;
+        border: 1px solid @gray-5;
+        box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    &-option {
+        padding: 0 10px;
+        max-width: 400px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &.is--selected {
+            font-weight: 700;
+            color: @blue;
+        }
+        &:not(.is--disabled) {
+            cursor: pointer;
+            &.is--hover {
+                background-color: @gray-3;
+            }
+        }
+        &.is--disabled {
+            color: @gray-5;
+            cursor: no-drop;
+        }
+    }
+}

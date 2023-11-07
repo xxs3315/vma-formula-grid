@@ -1,0 +1,118 @@
+@import './common';
+
+.vma-formula-grid-input {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    cursor: pointer;
+    user-select: none;
+    min-width: 48px;
+
+    &.is--disabled {
+        .vma-formula-grid-input--prefix,
+        .vma-formula-grid-input--suffix {
+            cursor: no-drop;
+        }
+    }
+
+    &:not(.is--disabled) {
+        .vma-formula-grid-input--clear-icon {
+            cursor: pointer;
+        }
+        &.is--active {
+            .vma-formula-grid-input--inner-input {
+                border: 1px solid @blue;
+            }
+        }
+    }
+
+    &.is--prefix {
+        .vma-formula-grid-input--inner-input {
+            padding-left: 1.5em;
+        }
+    }
+
+    &.is--suffix {
+        .vma-formula-grid-input--inner-input {
+            padding-right: 1.5em;
+        }
+        &:hover {
+            .vma-formula-grid-input--suffix {
+                &.is--clear {
+                    color: @gray-7;
+                    .vma-formula-grid-input--suffix-icon {
+                        display: none;
+                    }
+                    .vma-formula-grid-input--suffix-clear-icon {
+                        display: inline;
+                    }
+                }
+            }
+        }
+    }
+
+    &--large {
+        height: @input-large-size;
+        line-height: calc(@input-large-size - 2px);
+        font-size: @input-large-font-size;
+    }
+
+    &--normal {
+        height: @input-normal-size;
+        line-height: calc(@input-normal-size - 2px);
+        font-size: @input-normal-font-size;
+    }
+
+    &--small {
+        height: @input-small-size;
+        line-height: calc(@input-small-size - 2px);
+        font-size: @input-small-font-size;
+    }
+
+    &--mini {
+        height: @input-mini-size;
+        line-height: calc(@input-mini-size - 2px);
+        font-size: @input-mini-font-size;
+    }
+
+    &--inner-input {
+        //width: 100%;
+        height: 100%;
+        border-radius: 0;
+        outline: 0;
+        padding: 0 0.6em;
+        color: @gray-7;
+        border: 1px solid @gray-4;
+        background-color: #fff;
+        box-shadow: none;
+        font-size: inherit;
+        &::placeholder {
+            color: @gray-5;
+        }
+        &[disabled] {
+            cursor: not-allowed;
+            color: @input-disabled-color;
+            background-color: @input-disabled-background-color;
+        }
+    }
+
+    &--prefix,
+    &--suffix {
+        display: flex;
+        position: absolute;
+        top: 1px;
+        width: 1.5em;
+        height: 100%;
+        user-select: none;
+        align-items: flex-start;
+        justify-content: center;
+        color: @gray-5;
+    }
+
+    &--suffix {
+        right: 0.2em;
+        &-clear-icon {
+            display: none;
+        }
+    }
+}

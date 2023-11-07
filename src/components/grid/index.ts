@@ -13,6 +13,10 @@ import VmaFormulaGridCompColorPickerDisplay from '../color-picker/display.ts';
 import VmaFormulaGridCompColorPickerHue from '../color-picker/hue.ts';
 import VmaFormulaGridCompColorPickerLightness from '../color-picker/lightness.ts';
 import VmaFormulaGridCompColorPickerPalette from '../color-picker/palette.ts';
+import VmaFormulaGridCompInput from '../input/input.ts';
+import VmaFormulaGridCompSelect from '../select/select.ts';
+import VmaFormulaGridCompSelectOptionGroup from '../select/option-group.ts';
+import VmaFormulaGridCompSelectOption from '../select/option.ts';
 import { App } from 'vue';
 
 export const VmaFormulaGrid = Object.assign(VmaFormulaGridComp, {
@@ -31,6 +35,10 @@ export const VmaFormulaGrid = Object.assign(VmaFormulaGridComp, {
         app.component('VmaFormulaGridCompColorPickerLightness', VmaFormulaGridCompColorPickerLightness);
         app.component('VmaFormulaGridCompColorPickerPalette', VmaFormulaGridCompColorPickerPalette);
         app.component('VmaFormulaGridCompColorPicker', VmaFormulaGridCompColorPicker);
+        app.component('VmaFormulaGridCompInput', VmaFormulaGridCompInput);
+        app.component('VmaFormulaGridCompSelect', VmaFormulaGridCompSelect);
+        app.component('VmaFormulaGridCompSelectOptionGroup', VmaFormulaGridCompSelectOptionGroup);
+        app.component('VmaFormulaGridCompSelectOption', VmaFormulaGridCompSelectOption);
     },
 });
 

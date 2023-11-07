@@ -21,6 +21,8 @@ export default defineConfig({
                     { text: 'foobar', link: '/basic-components/basic-components-foo' },
                     { text: '图标', link: '/basic-components/basic-components-icon' },
                     { text: '按钮', link: '/basic-components/basic-components-button' },
+                    { text: '输入框', link: '/basic-components/basic-components-input' },
+                    { text: '加载器', link: '/basic-components/basic-components-loading' },
                     { text: '单选框', link: '/basic-components/basic-components-radio' },
                     {
                         text: '复选框',
@@ -36,7 +38,7 @@ export default defineConfig({
                     },
                     {
                         text: '下拉框',
-                        link: '/basic-components/basic-components-textarea',
+                        link: '/basic-components/basic-components-select',
                     },
                     {
                         text: '下拉容器',
