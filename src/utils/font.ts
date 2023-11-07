@@ -252,4 +252,4 @@ export const getFontFamilyChFromEn = (en: string) => {
     return ch;
 };
 
-export const supportedFontSizes = () => [6, 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 64, 72];
+export const supportedFontSizes = () => [6, 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 64, 72, 144, 288];
