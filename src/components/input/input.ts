@@ -341,7 +341,7 @@ export default defineComponent({
             if (!inputImmediate) {
                 emitModelValue(inputValue, event);
             }
-            reactiveData.isActivated = false
+            reactiveData.isActivated = false;
             inputMethods.dispatchEvent('blur', { value: inputValue }, event);
         };
 

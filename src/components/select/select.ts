@@ -12,7 +12,7 @@ import {
 import { VmaFormulaGridCompGlobalRendererHandles } from '../../../types';
 import { DomTools } from '../../utils/doms';
 import GlobalEvent from '../../utils/events';
-import {getLastZIndex, nextZIndex, toNumber, toString} from '../../utils';
+import { getLastZIndex, nextZIndex, toNumber, toString } from '../../utils';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompSelect',
@@ -309,16 +309,16 @@ export default defineComponent({
                         scrollToOption(currOption);
                     }
                 }, 10);
-                updateZIndex()
+                updateZIndex();
                 updatePlacement();
             }
         };
 
         const updateZIndex = () => {
             if (reactiveData.panelIndex < getLastZIndex()) {
-                reactiveData.panelIndex = nextZIndex()
+                reactiveData.panelIndex = nextZIndex();
             }
-        }
+        };
 
         const findOffsetOption = (optionValue: any, isUpArrow: any) => {
             const { visibleOptionList, visibleGroupList } = reactiveData;

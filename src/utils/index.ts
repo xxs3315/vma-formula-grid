@@ -2459,14 +2459,14 @@ export function floor(num: number | string, digits?: number): number {
     return rest;
 }
 
-let zIndex = 1
-let lastZIndex = 2
+let zIndex = 1;
+let lastZIndex = 2;
 
 export function nextZIndex() {
-    lastZIndex = zIndex++
-    return lastZIndex
+    lastZIndex = zIndex++;
+    return lastZIndex;
 }
 
 export function getLastZIndex() {
-    return lastZIndex
+    return lastZIndex;
 }

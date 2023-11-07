@@ -201,7 +201,7 @@ export default defineComponent({
                                                                                               return {
                                                                                                   value: font.en,
                                                                                                   label: font.ch,
-                                                                                                  disabled: false
+                                                                                                  disabled: false,
                                                                                               };
                                                                                           }),
                                                                                           onChange: (event: any) => {
@@ -250,13 +250,13 @@ export default defineComponent({
                                                                                       h(GridCompSelectComponent, {
                                                                                           size: 'mini',
                                                                                           style: {
-                                                                                              width: '80px'
+                                                                                              width: '80px',
                                                                                           },
                                                                                           options: $vmaFormulaGrid.reactiveData.supportedFontSizes.map((fontSize: any) => {
                                                                                               return {
                                                                                                   value: fontSize,
                                                                                                   label: fontSize,
-                                                                                                  disabled: false
+                                                                                                  disabled: false,
                                                                                               };
                                                                                           }),
                                                                                           onChange: (event: any) => {

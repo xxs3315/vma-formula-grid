@@ -1,6 +1,6 @@
 import { SizeType, VmaFormulaGridCompComponentInstance } from './grid';
 import { Ref, RenderFunction, SetupContext } from 'vue';
-import {ComponentType} from "../grid";
+import { ComponentType } from '../grid';
 
 export interface VmaFormulaGridCompInputConstructor extends VmaFormulaGridCompComponentInstance, VmaFormulaGridCompInputMethods {
     props: VmaFormulaGridCompInputProps;
@@ -43,7 +43,7 @@ export interface VmaFormulaGridCompInputProps {
 
 export namespace VmaFormulaGridCompInputPropTypes {
     export type Size = SizeType;
-    export type Type = ComponentType
+    export type Type = ComponentType;
     export type ModelValue = string | number | Date | null;
     export type Immediate = boolean;
     export type Name = string;
