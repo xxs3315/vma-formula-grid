@@ -4,6 +4,10 @@
     display: none;
     line-height: normal;
 
+    .vma-formula-grid-input {
+        width: 100%;
+    }
+
     &.is--visible {
         position: absolute;
         white-space: nowrap;
@@ -31,8 +35,8 @@
         }
 
         > li {
-            a {
-                span {
+            > a {
+                > span {
                     margin-left: 12px;
                 }
             }
@@ -60,11 +64,11 @@
                 &.link {
                     width: 100%;
                 }
-                span {
+                > span {
                     flex-grow: 1;
                     margin: 0 6px;
                 }
-                i {
+                > i {
                     width: 18px;
                     display: flex;
                     align-items: center;

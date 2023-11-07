@@ -247,55 +247,72 @@ export default defineComponent({
                                                                                                 })
                                                                                               : createCommentVNode(),
                                                                                       ),
-                                                                                      h(GridCompSelectComponent, {
-                                                                                          size: 'mini',
-                                                                                          style: {
-                                                                                              width: '80px',
+                                                                                      h(
+                                                                                          'div',
+                                                                                          {
+                                                                                              style: {
+                                                                                                  display: 'flex',
+                                                                                                  alignItems: 'center',
+                                                                                                  justifyContent: 'center',
+                                                                                                  flexWrap: 'nowrap',
+                                                                                              },
                                                                                           },
-                                                                                          options: $vmaFormulaGrid.reactiveData.supportedFontSizes.map((fontSize: any) => {
-                                                                                              return {
-                                                                                                  value: fontSize,
-                                                                                                  label: fontSize,
-                                                                                                  disabled: false,
-                                                                                              };
-                                                                                          }),
-                                                                                          onChange: (event: any) => {
-                                                                                              $vmaFormulaGrid.setFontStyle('cells', 'fontSizeSelect', event.value);
-                                                                                          },
-                                                                                      }),
-                                                                                      h(GridCompButtonComponent, {
-                                                                                          icon: 'font_size_up',
-                                                                                          type: 'primary',
-                                                                                          size: 'mini',
-                                                                                          style: {
-                                                                                              marginLeft: '4px',
-                                                                                          },
-                                                                                          onClick: (_: any) => {
-                                                                                              let initValue =
-                                                                                                  $vmaFormulaGrid.reactiveData.currentSheetData[
-                                                                                                      $vmaFormulaGrid.reactiveData.currentAreaSri
-                                                                                                  ][$vmaFormulaGrid.reactiveData.currentAreaSci + 1].fs;
-                                                                                              if (initValue === null || initValue === '') {
-                                                                                                  initValue = getDefaultFontSize($vmaFormulaGrid.props.size!);
-                                                                                              }
-                                                                                              $vmaFormulaGrid.setFontStyle('cells', 'fontSizeUp', initValue);
-                                                                                          },
-                                                                                      }),
-                                                                                      h(GridCompButtonComponent, {
-                                                                                          icon: 'font_size_down',
-                                                                                          type: 'primary',
-                                                                                          size: 'mini',
-                                                                                          onClick: (_: any) => {
-                                                                                              let initValue =
-                                                                                                  $vmaFormulaGrid.reactiveData.currentSheetData[
-                                                                                                      $vmaFormulaGrid.reactiveData.currentAreaSri
-                                                                                                  ][$vmaFormulaGrid.reactiveData.currentAreaSci + 1].fs;
-                                                                                              if (initValue === null || initValue === '') {
-                                                                                                  initValue = getDefaultFontSize($vmaFormulaGrid.props.size!);
-                                                                                              }
-                                                                                              $vmaFormulaGrid.setFontStyle('cells', 'fontSizeDown', initValue);
-                                                                                          },
-                                                                                      }),
+                                                                                          [
+                                                                                              h(GridCompSelectComponent, {
+                                                                                                  size: 'mini',
+                                                                                                  style: {
+                                                                                                      width: '100px',
+                                                                                                      flex: '0 1 auto',
+                                                                                                  },
+                                                                                                  options: $vmaFormulaGrid.reactiveData.supportedFontSizes.map((fontSize: any) => {
+                                                                                                      return {
+                                                                                                          value: fontSize,
+                                                                                                          label: fontSize,
+                                                                                                          disabled: false,
+                                                                                                      };
+                                                                                                  }),
+                                                                                                  onChange: (event: any) => {
+                                                                                                      $vmaFormulaGrid.setFontStyle('cells', 'fontSizeSelect', event.value);
+                                                                                                  },
+                                                                                              }),
+                                                                                              h(GridCompButtonComponent, {
+                                                                                                  icon: 'font_size_up',
+                                                                                                  type: 'primary',
+                                                                                                  size: 'mini',
+                                                                                                  style: {
+                                                                                                      marginLeft: '4px',
+                                                                                                  },
+                                                                                                  onClick: (_: any) => {
+                                                                                                      let initValue =
+                                                                                                          $vmaFormulaGrid.reactiveData.currentSheetData[
+                                                                                                              $vmaFormulaGrid.reactiveData.currentAreaSri
+                                                                                                          ][$vmaFormulaGrid.reactiveData.currentAreaSci + 1].fs;
+                                                                                                      if (initValue === null || initValue === '') {
+                                                                                                          initValue = getDefaultFontSize($vmaFormulaGrid.props.size!);
+                                                                                                      }
+                                                                                                      $vmaFormulaGrid.setFontStyle('cells', 'fontSizeUp', initValue);
+                                                                                                  },
+                                                                                              }),
+                                                                                              h(GridCompButtonComponent, {
+                                                                                                  icon: 'font_size_down',
+                                                                                                  type: 'primary',
+                                                                                                  size: 'mini',
+                                                                                                  style: {
+                                                                                                      marginLeft: '4px',
+                                                                                                  },
+                                                                                                  onClick: (_: any) => {
+                                                                                                      let initValue =
+                                                                                                          $vmaFormulaGrid.reactiveData.currentSheetData[
+                                                                                                              $vmaFormulaGrid.reactiveData.currentAreaSri
+                                                                                                          ][$vmaFormulaGrid.reactiveData.currentAreaSci + 1].fs;
+                                                                                                      if (initValue === null || initValue === '') {
+                                                                                                          initValue = getDefaultFontSize($vmaFormulaGrid.props.size!);
+                                                                                                      }
+                                                                                                      $vmaFormulaGrid.setFontStyle('cells', 'fontSizeDown', initValue);
+                                                                                                  },
+                                                                                              }),
+                                                                                          ],
+                                                                                      ),
                                                                                       h('i', {
                                                                                           class: ['link-suffix', option.suffixIcon],
                                                                                       }),
