@@ -6,7 +6,7 @@ import {
     VmaFormulaGridMethods,
     VmaFormulaGridPrivateMethods,
 } from '../../../types';
-import { ComponentOptions, createCommentVNode, defineComponent, h, inject, PropType, provide, resolveComponent, Teleport } from 'vue';
+import { ComponentOptions, createCommentVNode, defineComponent, h, inject, PropType, provide, ref, resolveComponent, Teleport } from 'vue';
 import { getDefaultFontSize } from '../../utils';
 
 export default defineComponent({
@@ -42,6 +42,9 @@ export default defineComponent({
             console.log(comp, menu);
             return createCommentVNode();
         };
+
+        let fontValue = ref('');
+        let fontSizeValue = ref<number>();
 
         const renderVN = () =>
             h(
@@ -197,6 +200,10 @@ export default defineComponent({
                                                                                       ),
                                                                                       h(GridCompSelectComponent, {
                                                                                           size: 'mini',
+                                                                                          modelValue: fontValue.value,
+                                                                                          'onUpdate:modelValue': (value: any) => {
+                                                                                              fontValue.value = value;
+                                                                                          },
                                                                                           options: $vmaFormulaGrid.reactiveData.supportedFonts.map((font: any) => {
                                                                                               return {
                                                                                                   value: font.en,
@@ -259,6 +266,10 @@ export default defineComponent({
                                                                                           },
                                                                                           [
                                                                                               h(GridCompSelectComponent, {
+                                                                                                  modelValue: fontSizeValue.value,
+                                                                                                  'onUpdate:modelValue': (value: any) => {
+                                                                                                      fontSizeValue.value = Number(value);
+                                                                                                  },
                                                                                                   size: 'mini',
                                                                                                   style: {
                                                                                                       width: '100px',

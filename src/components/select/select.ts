@@ -4,7 +4,6 @@ import {
     VmaFormulaGridCompSelectConstructor,
     VmaFormulaGridCompSelectEmits,
     VmaFormulaGridCompSelectMethods,
-    VmaFormulaGridCompSelectPrivateMethods,
     VmaFormulaGridCompSelectPrivateRef,
     VmaFormulaGridCompSelectPropTypes,
     VmaFormulaGridCompSelectReactiveData,
@@ -109,7 +108,7 @@ export default defineComponent({
 
         const computeLabelField = computed(() => {
             const propsOpts = computePropsOpts.value;
-            return propsOpts ? propsOpts.label || 'label' : 'value';
+            return propsOpts ? propsOpts.label || 'label' : 'label';
         });
 
         const setCurrentOption = (option: any) => {

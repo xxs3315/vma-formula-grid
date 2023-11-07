@@ -37,11 +37,7 @@ export default defineComponent({
 
       const changeEvent = (obj) => {
         console.log(obj);
-        // console.log(val42)
-        // console.log(val43)
-        // console.log(val44)
-        // console.log(val45)
-      }
+      };
 
       return {
         changeEvent,
