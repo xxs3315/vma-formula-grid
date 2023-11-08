@@ -1,4 +1,4 @@
-import { defineComponent, provide } from 'vue';
+import {defineComponent, h, provide} from 'vue';
 import { Guid } from '../../utils/guid.ts';
 import { VmaFormulaGridCompCodeMirrorConstructor } from '../../../types';
 
