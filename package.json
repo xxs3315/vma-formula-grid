@@ -10,7 +10,7 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "shx rm -rf dist && rollup --config rollup.config.ts --configPlugin typescript",
     "test": "jest",
     "prettier:check": "prettier src/**/*.ts styles/**/*.less types/**/*.d.ts --check",

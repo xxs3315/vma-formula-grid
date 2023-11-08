@@ -436,6 +436,7 @@ export default defineComponent({
             () => gridReactiveData.currentArea,
             () => {
                 $vmaFormulaGrid.reCalcCurrentAreaPos();
+                $vmaFormulaGrid.updateCurrentAreaStyle();
             },
             { deep: true },
         );
