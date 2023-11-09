@@ -45,9 +45,10 @@ description: 基础表格-基础
 
 <script setup lang="ts">
   import { reactive, shallowRef, computed, onMounted } from 'vue';
+  import {spreadsheet} from "codemirror-lang-spreadsheet";
 
   const consoleLog = console.log;
-  const code = shallowRef(`console.log('Hello World')`);
+  const code = shallowRef(`= A1 * 6`);
   const view = shallowRef();
   const config = reactive({
     disabled: false,
@@ -57,7 +58,7 @@ description: 基础表格-基础
     placeholder: 'input...',
     backgroundColor: 'lightgrey',
     language: '',
-    phrases: 'en-us'
+    phrases: {}
   });
 
   const handleReady = (payload) => {
@@ -65,7 +66,12 @@ description: 基础表格-基础
   };
 
   const extensions = computed(() => {
-    const result = [];
+    const result = [
+        spreadsheet({
+            idiom: "en-US",
+            decimalSeparator: "."
+        })
+    ];
     return result
   });
 
