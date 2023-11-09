@@ -200,6 +200,7 @@ export default defineComponent({
                                                                                       ),
                                                                                       h(GridCompSelectComponent, {
                                                                                           size: 'mini',
+                                                                                          placeholder: '选择字体',
                                                                                           modelValue: fontValue.value,
                                                                                           'onUpdate:modelValue': (value: any) => {
                                                                                               fontValue.value = value;
@@ -267,6 +268,7 @@ export default defineComponent({
                                                                                           [
                                                                                               h(GridCompSelectComponent, {
                                                                                                   modelValue: fontSizeValue.value,
+                                                                                                  placeholder: '选择字体大小',
                                                                                                   'onUpdate:modelValue': (value: any) => {
                                                                                                       fontSizeValue.value = Number(value);
                                                                                                   },
