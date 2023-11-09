@@ -29,8 +29,8 @@ export default defineConfig({
                         link: '/basic-components/basic-components-checkbox',
                     },
                     {
-                        text: '加载器',
-                        link: '/basic-components/basic-components-loading',
+                        text: '编辑器',
+                        link: '/basic-components/basic-components-code-mirror',
                     },
                     {
                         text: '文本域',

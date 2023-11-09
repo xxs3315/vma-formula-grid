@@ -8,24 +8,133 @@ description: 基础表格-基础
 
 ## 基本用法
 
-<p><vma-formula-grid-comp-input size="mini" placeholder="迷你尺寸"/></p>
-<p><vma-formula-grid-comp-input size="small" placeholder="小尺寸" /></p>
-<p><vma-formula-grid-comp-input placeholder="默认尺寸" /></p>
-<p><vma-formula-grid-comp-input size="large" placeholder="大尺寸" /></p>
-
-<p><vma-formula-grid-comp-input size="mini" prefix-icon="bookmark" placeholder="前置图标迷你尺寸" /></p>
-<p><vma-formula-grid-comp-input size="small" suffix-icon="bookmark" placeholder="后置图标小尺寸" /></p>
-<p><vma-formula-grid-comp-input prefix-icon="bookmark" suffix-icon="bookmark" placeholder="前后图标默认尺寸" /></p>
-<p><vma-formula-grid-comp-input size="large" prefix-icon="bookmark" suffix-icon="bookmark" placeholder="前后图标大尺寸" /></p>
-
-<p><vma-formula-grid-comp-input size="mini" placeholder="可清除状态" clearable /></p>
-<p><vma-formula-grid-comp-input size="normal" prefix-icon="bookmark" suffix-icon="angle-down" placeholder="带图标可清除状态" v-model="inputValue" clearable /></p>
-<p><vma-formula-grid-comp-input size="small" suffix-icon="angle-down" placeholder="只读状态" readonly /></p>
-<p><vma-formula-grid-comp-input size="large" prefix-icon="bookmark" suffix-icon="angle-down" placeholder="禁用状态" disabled /></p>
+<p>
+        <vma-formula-grid-comp-button type="default" size="large">大尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="default">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="default" size="small">小尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="default" size="mini">迷你尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="primary" size="large">大尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="primary">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="primary" size="small">小尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="primary" size="mini">迷你尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="success" size="large">大尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="success">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="success" size="small">小尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="success" size="mini">迷你尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="warning" size="large">大尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="warning">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="warning" size="small">小尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="warning" size="mini">迷你尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="danger" size="large">大尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="danger">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="danger" size="small">小尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="danger" size="mini">迷你尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="primary" size="large">大尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="primary">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="primary" size="small">小尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="primary" size="mini">迷你尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="success" size="large">大尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="success">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="success" size="small">小尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="success" size="mini">迷你尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="warning" size="large">大尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="warning">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="warning" size="small">小尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="warning" size="mini">迷你尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="danger" size="large">大尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="danger">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="danger" size="small">小尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="danger" size="mini">迷你尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain disabled type="danger" size="large">大尺寸按钮 </vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain disabled type="danger">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain disabled type="danger" size="small">小尺寸按钮 </vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain disabled type="danger" size="mini">迷你尺寸按钮 </vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain loading disabled type="danger" size="large" loading-text="加载中..."
+          >大尺寸按钮
+        </vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain loading disabled type="danger" loading-text="加载中..."
+          >默认尺寸按钮
+        </vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain loading disabled type="danger" size="small" loading-text="加载中..."
+          >小尺寸按钮
+        </vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain disabled type="danger" size="mini" loading-text="加载中..."
+          >迷你尺寸按钮
+        </vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button
+          plain
+          loading
+          disabled
+          type="danger"
+          size="large"
+          loading-text="加载中..."
+          loading-category="spinner"
+          >大尺寸按钮
+        </vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain loading disabled type="danger" loading-text="加载中..."
+          >默认尺寸按钮
+        </vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="danger" size="small" loading-text="加载中..." @click="clickEvent"
+          >~~点我点我~~
+        </vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button
+          plain
+          :loading="isLoading"
+          :disabled="isLoading"
+          type="danger"
+          size="mini"
+          loading-text="加载中..."
+          >迷你尺寸按钮
+        </vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="default" size="large" icon="businesscard">大尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="default" icon="businesscard">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="default" size="small" icon="bookmark" icon-position="right"
+          >小尺寸按钮</vma-formula-grid-comp-button
+        >
+        <vma-formula-grid-comp-button type="default" size="mini" icon="bookmark" icon-position="right"
+          >迷你尺寸按钮</vma-formula-grid-comp-button
+        >
+        <vma-formula-grid-comp-button type="primary" size="large" icon="businesscard">大尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="success" icon="businesscard">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="warning" size="small" icon="bookmark">小尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="danger" size="mini" icon="bookmark">迷你尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="primary" size="large" icon="bookmark">大尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="success" icon="bookmark">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="warning" size="small" icon="bookmark">小尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="danger" size="mini" icon="bookmark">迷你尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round plain type="primary" size="large" icon="bookmark" icon-position="right"
+          >大尺寸按钮</vma-formula-grid-comp-button
+        >
+        <vma-formula-grid-comp-button round plain type="success" icon="bookmark" icon-position="right"
+          >默认尺寸按钮</vma-formula-grid-comp-button
+        >
+        <vma-formula-grid-comp-button round plain type="warning" size="small" icon="bookmark">小尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round plain type="danger" size="mini" icon="bookmark">迷你尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round type="primary" size="large" icon="bookmark">大尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round type="success" icon="bookmark">默认尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round type="warning" size="small" icon="bookmark">小尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round type="danger" size="mini" icon="bookmark">迷你尺寸按钮</vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="primary" size="large" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="success" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="warning" size="small" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button plain type="danger" size="mini" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="primary" size="large" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="success" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="warning" size="small" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button type="danger" size="mini" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round plain type="primary" size="large" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round plain type="success" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round plain type="warning" size="small" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round plain type="danger" size="mini" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round type="primary" size="large" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round type="success" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round type="warning" size="small" icon="bookmark"></vma-formula-grid-comp-button>
+        <vma-formula-grid-comp-button round type="danger" size="mini" icon="bookmark"></vma-formula-grid-comp-button>
+</p>
 
 ::: code-group
 ```vue
-    <vma-formula-grid 
+    <vma-formula-grid-comp-formula-grid 
         :data="data" 
         :size="size" 
         :type="themeType"
@@ -38,136 +147,21 @@ description: 基础表格-基础
 
 
 <script lang="ts">
-import {defineComponent, onMounted, reactive, ref, watch} from "vue";
+import { defineComponent, ref } from 'vue';
 
-export default defineComponent({
-  name: "HelloWorld",
-  setup() {
-    const datasource = ref('map');
-    const size = ref('normal');
-    const themeType = ref('primary');
+  export default defineComponent({
+    name: 'Button',
+    setup() {
+      const isLoading = ref<boolean>(false);
 
-    onMounted(() => {
-      console.log(data)
-    });
+      const clickEvent = () => {
+        isLoading.value = !isLoading.value
+      };
 
-    const mapData = reactive({
-      data: [{
-        p: 'A1',
-        v: 1
-      }, {
-        p: 'A2',
-        v: 2
-      }, {
-        p: 'A3',
-        v: 3
-      }, {
-        p: 'A4',
-        v: 4
-      }, {
-        p: 'A20',
-        v: '= T20 - 2'
-      }, {
-        p: 'B1',
-        v: '= SUM(A3, 6)'
-      }, {
-        p: 'B2',
-        v: '= A2 + 2 + SQRT(2)'
-      }, {
-        p: 'B3',
-        v: '= A3 + 2'
-      }, {
-        p: 'B4',
-        v: '= A4 + 2'
-      }, {
-        p: 'B5',
-        v: '= SUM(A1:A4)'
-      }, {
-        p: 'T20',
-        v: '= A20 + 2'
-      },]
-    });
-
-    const arrayData = reactive([
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [
-        '= A1 + 2', '= B1 + 2', '= C1 + 2', '= D1 + 2', '= E1 + 2',
-        '= F1 + 2', '= G1 + 2', '= H1 + 2', '= I1 + 2', '= J1 + 2',
-        '= K1 + 2', '= L1 + 2', '= M1 + 2', '= N1 + 2', '= O1 + 2',
-        '= P1 + 2', '= Q1 + 2', '= R1 + 2', '= S1 + 2', '= T1 + 2'
-      ],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-    ]);
-
-    const confs = reactive({
-      rowHeight: [{
-        row: 2,
-        height: 48,
-      }, {
-        row: 4,
-        height: 96,
-      }],
-      colWidth: [{
-        col: 'B',
-        width: 200,
-      }, {
-        col: 'H',
-        width: 200,
-      }],
-      rowHide: [9, 15, 16, 17, 18, 19],
-      colHide: ['D', 'F', 'G'],
-      merges: ['A2:G3', 'A5:A12']
-    });
-
-    const data = reactive({
-      conf: confs,
-      type: 'map',
-      arrayData: arrayData,
-      mapData: mapData
-    });
-
-    watch(() => datasource.value, () => {
-      data.type = datasource.value
-    });
-
-    watch(() => size.value, () => {
-      console.log(size.value)
-    });
-
-    watch(() => data.type, () => {
-      console.log(data)
-    },{
-      deep: true
-    });
-
-    return {
-      datasource,
-      data,
-      size,
-      themeType
-    }
-  }
-})
+      return {
+        isLoading,
+        clickEvent,
+      }
+    },
+  })
 </script>
