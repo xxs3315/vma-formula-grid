@@ -23,6 +23,7 @@
     "lib": "pnpm run build && pnpm run gulp"
   },
   "peerDependencies": {
+    "@codemirror/autocomplete": "^6.11.0",
     "@codemirror/commands": "^6.3.0",
     "@codemirror/language": "^6.9.2",
     "@codemirror/state": "^6.3.1",
@@ -41,10 +42,14 @@
   "devDependencies": {
     "@babel/preset-env": "^7.22.15",
     "@babel/preset-typescript": "^7.22.15",
+    "@codemirror/autocomplete": "^6.11.0",
     "@codemirror/commands": "^6.3.0",
     "@codemirror/language": "^6.9.2",
     "@codemirror/state": "^6.3.1",
     "@codemirror/view": "^6.22.0",
+    "@lezer/generator": "^1.5.1",
+    "@lezer/highlight": "^1.0.0",
+    "@lezer/lr": "^1.0.0",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-node-resolve": "15.0.1",
@@ -63,9 +68,6 @@
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "@vue/compiler-sfc": "^3.3.4",
-    "@lezer/generator": "^1.5.1",
-    "@lezer/highlight": "^1.0.0",
-    "@lezer/lr": "^1.0.0",
     "bahttext": "^2.3.0",
     "bessel": "^1.0.2",
     "chevrotain": "^10.5.0",

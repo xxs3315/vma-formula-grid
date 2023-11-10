@@ -12,7 +12,7 @@ description: 基础表格-基础
 
 <vma-formula-grid-comp-code-mirror
     class="codemirror"
-    ref="cm"
+    ref="view"
     :autofocus="config.autofocus"
     :placeholder="config.placeholder"
     :indentWithTab="config.indentWithTab"
@@ -45,7 +45,12 @@ description: 基础表格-基础
 
 <script setup lang="ts">
   import { reactive, shallowRef, computed, onMounted } from 'vue';
-  import {spreadsheet} from "../../src/index.common";
+  import {spreadsheet, setAutocompletionIdiom, indentAndCompletionWithTab, tabObservable} from "../../src/index.common";
+  import { basicSetup } from 'codemirror';
+  import { EditorView, keymap } from '@codemirror/view';
+  import { syntaxHighlighting, HighlightStyle } from '@codemirror/language';
+  import { tags } from '@lezer/highlight';
+  import { Compartment } from '@codemirror/state';
 
   const consoleLog = console.log;
   const code = shallowRef(`= A1 * 6`);
@@ -56,27 +61,47 @@ description: 基础表格-基础
     tabSize: 4,
     autofocus: true,
     placeholder: 'input...',
-    backgroundColor: 'lightgrey',
+    backgroundColor: 'white',
     language: '',
     phrases: {}
   });
 
+  const myHighlightStyle = HighlightStyle.define([
+    { tag: tags.name, color: 'green' },
+    { tag: tags.bool, color: '#A020F0' },
+    { tag: tags.color, color: '#0000FF' },
+    { tag: tags.invalid, color: '#FA6F66' }
+  ]);
+
+  const languageCompart = new Compartment(),
+    autocompleteCompart = new Compartment();
+
+  const basicExtensions = [
+    basicSetup,
+    keymap.of([indentAndCompletionWithTab]),
+    syntaxHighlighting(myHighlightStyle),
+    tabObservable(),
+    EditorView.lineWrapping
+  ];
+
   const handleReady = (payload) => {
-    console.log('handleReady payload:', payload)
+    console.log('handleReady payload:', payload);
+    setAutocompletionIdiom(payload.view, autocompleteCompart);
   };
 
   const extensions = computed(() => {
     const result = [
-        spreadsheet({
-            idiom: "en-US",
-            decimalSeparator: "."
-        })
+      ...basicExtensions,
+      languageCompart.of(spreadsheet()),
+      autocompleteCompart.of([]),
     ];
     return result
   });
 
+  
+
   onMounted(() => {
-    console.log('mounted view:', view);
+    console.log('mounted view:', view.value);
   });
 
   
