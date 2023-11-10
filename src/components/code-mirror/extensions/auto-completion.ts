@@ -2,7 +2,6 @@ import { autocompletion, CompletionContext, Completion, CompletionResult } from 
 import { syntaxTree } from '@codemirror/language';
 import { EditorView } from '@codemirror/view';
 import { Compartment } from '@codemirror/state';
-import { Toptions } from '../lang';
 import candidates from './auto-completion-candidates.ts';
 
 /**
