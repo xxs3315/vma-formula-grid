@@ -20,7 +20,7 @@ import VmaFormulaGridCompSelectOptionGroup from '../select/option-group.ts';
 import VmaFormulaGridCompSelectOption from '../select/option.ts';
 import { App } from 'vue';
 import { injectGlobalConfig } from '../code-mirror/config.ts';
-import { Props } from '../code-mirror';
+import { Props } from '../code-mirror/props.ts';
 
 export const VmaFormulaGrid = Object.assign(VmaFormulaGridComp, {
     install: function (app: App, defaultConfig?: Props) {

@@ -45,7 +45,7 @@ description: 基础表格-基础
 
 <script setup lang="ts">
   import { reactive, shallowRef, computed, onMounted } from 'vue';
-  import {spreadsheet} from "codemirror-lang-spreadsheet";
+  import {spreadsheet} from "../../src/index.common";
 
   const consoleLog = console.log;
   const code = shallowRef(`= A1 * 6`);
