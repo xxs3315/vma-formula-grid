@@ -13,6 +13,7 @@ description: 基础表格-基础
 <vma-formula-grid-comp-code-mirror
     class="codemirror"
     ref="view"
+    :options="viewOptions"
     :autofocus="config.autofocus"
     :placeholder="config.placeholder"
     :indentWithTab="config.indentWithTab"
@@ -55,6 +56,10 @@ description: 基础表格-基础
   const consoleLog = console.log;
   const code = shallowRef(`= A1 * 6`);
   const view = shallowRef();
+  const viewOptions = reactive({
+    lineNumbers: false,
+    foldGutter: true,
+  });
   const config = reactive({
     disabled: false,
     indentWithTab: true,
@@ -73,27 +78,27 @@ description: 基础表格-基础
     { tag: tags.invalid, color: '#FA6F66' }
   ]);
 
-  const languageCompart = new Compartment(),
-    autocompleteCompart = new Compartment();
+  const languageCompartment = new Compartment(),
+    autocompleteCompartment = new Compartment();
 
   const basicExtensions = [
     basicSetup,
     keymap.of([indentAndCompletionWithTab]),
     syntaxHighlighting(myHighlightStyle),
     tabObservable(),
-    EditorView.lineWrapping
+    EditorView.lineWrapping,
   ];
 
   const handleReady = (payload) => {
     console.log('handleReady payload:', payload);
-    setAutocompletionIdiom(payload.view, autocompleteCompart);
+    setAutocompletionIdiom(payload.view, autocompleteCompartment);
   };
 
   const extensions = computed(() => {
     const result = [
       ...basicExtensions,
-      languageCompart.of(spreadsheet()),
-      autocompleteCompart.of([]),
+      languageCompartment.of(spreadsheet()),
+      autocompleteCompartment.of([]),
     ];
     return result
   });
