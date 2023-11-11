@@ -27,6 +27,7 @@ description: 基础表格-基础
     @change="consoleLog('change', $event)"
     @focus="consoleLog('focus', $event)"
     @blur="consoleLog('blur', $event)"
+    style="height: 400px;"
     />
 </p>
 
