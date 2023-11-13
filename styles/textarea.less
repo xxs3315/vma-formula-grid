@@ -24,13 +24,15 @@
 
 .vma-formula-grid-textarea {
     position: relative;
-    display: block;
+    //display: block;
     text-align: left;
     border-radius: 0;
     box-sizing: border-box;
     cursor: pointer;
     user-select: none;
     line-height: normal;
+    resize: both;
+    overflow: hidden;
 
     .count-helper {
         position: absolute;
@@ -54,109 +56,78 @@
 
         &.is--active {
             &.default {
-                .inner-textarea {
-                    border-top: 1px solid @textarea-default-color;
-                    border-bottom: 1px solid @textarea-default-color;
-                    border-right: 1px solid @textarea-default-color;
-                    border-left: 1px solid @textarea-default-color;
-                }
+                border-top: 1px solid @textarea-default-color;
+                border-bottom: 1px solid @textarea-default-color;
+                border-right: 1px solid @textarea-default-color;
+                border-left: 1px solid @textarea-default-color;
             }
 
             &.primary {
-                .inner-textarea {
-                    border-top: 1px solid @textarea-primary-color;
-                    border-bottom: 1px solid @textarea-primary-color;
-                    border-right: 1px solid @textarea-primary-color;
-                    border-left: 1px solid @textarea-primary-color;
-                }
+                border-top: 1px solid @textarea-primary-color;
+                border-bottom: 1px solid @textarea-primary-color;
+                border-right: 1px solid @textarea-primary-color;
+                border-left: 1px solid @textarea-primary-color;
             }
 
             &.success {
-                .inner-textarea {
-                    border-top: 1px solid @textarea-success-color;
-                    border-bottom: 1px solid @textarea-success-color;
-                    border-right: 1px solid @textarea-success-color;
-                    border-left: 1px solid @textarea-success-color;
-                }
+                border-top: 1px solid @textarea-success-color;
+                border-bottom: 1px solid @textarea-success-color;
+                border-right: 1px solid @textarea-success-color;
+                border-left: 1px solid @textarea-success-color;
             }
 
             &.warning {
-                .inner-textarea {
-                    border-top: 1px solid @textarea-warning-color;
-                    border-bottom: 1px solid @textarea-warning-color;
-                    border-right: 1px solid @textarea-warning-color;
-                    border-left: 1px solid @textarea-warning-color;
-                }
+                border-top: 1px solid @textarea-warning-color;
+                border-bottom: 1px solid @textarea-warning-color;
+                border-right: 1px solid @textarea-warning-color;
+                border-left: 1px solid @textarea-warning-color;
             }
 
             &.danger {
-                .inner-textarea {
-                    border-top: 1px solid @textarea-danger-color;
-                    border-bottom: 1px solid @textarea-danger-color;
-                    border-right: 1px solid @textarea-danger-color;
-                    border-left: 1px solid @textarea-danger-color;
-                }
+                border-top: 1px solid @textarea-danger-color;
+                border-bottom: 1px solid @textarea-danger-color;
+                border-right: 1px solid @textarea-danger-color;
+                border-left: 1px solid @textarea-danger-color;
             }
         }
     }
 
     &.xxx-large {
         font-size: @textarea-xxx-large-font-size;
-
-        .inner-textarea {
-            min-height: @textarea-xxx-large-size;
-        }
+        min-height: @textarea-xxx-large-size;
     }
 
     &.xx-large {
         font-size: @textarea-xx-large-font-size;
-
-        .inner-textarea {
-            min-height: @textarea-xx-large-size;
-        }
+        min-height: @textarea-xx-large-size;
     }
 
     &.x-large {
         font-size: @textarea-x-large-font-size;
-
-        .inner-textarea {
-            min-height: @textarea-x-large-size;
-        }
+        min-height: @textarea-x-large-size;
     }
 
     &.large {
         font-size: @textarea-large-font-size;
-
-        .inner-textarea {
-            min-height: @textarea-large-size;
-        }
+        min-height: @textarea-large-size;
     }
 
     &.normal {
         font-size: @textarea-normal-font-size;
-
-        .inner-textarea {
-            min-height: @textarea-normal-size;
-        }
+        min-height: @textarea-normal-size;
     }
 
     &.small {
         font-size: @textarea-small-font-size;
-
-        .inner-textarea {
-            min-height: @textarea-small-size;
-        }
+        min-height: @textarea-small-size;
     }
 
     &.mini {
         font-size: @textarea-mini-font-size;
-
-        .inner-textarea {
-            min-height: @textarea-mini-size;
-        }
+        min-height: @textarea-mini-size;
     }
 
-    .inner-textarea {
+    .v-codemirror {
         overflow: auto;
         padding: 1px;
         margin: 0;
