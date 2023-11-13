@@ -7,8 +7,8 @@ import { indentUnit } from '@codemirror/language';
 export interface CreateStateOptions extends EditorStateConfig {
     onChange(doc: string, viewUpdate: ViewUpdate): void;
     onUpdate(viewUpdate: ViewUpdate): void;
-    onFocus(viewUpdate: ViewUpdate): void;
-    onBlur(viewUpdate: ViewUpdate): void;
+    onFocus(doc: string, viewUpdate: ViewUpdate): void;
+    onBlur(doc: string, viewUpdate: ViewUpdate): void;
 }
 
 export const createEditorState = ({ onUpdate, onChange, onFocus, onBlur, ...config }: CreateStateOptions) => {
@@ -26,7 +26,7 @@ export const createEditorState = ({ onUpdate, onChange, onFocus, onBlur, ...conf
                 }
                 // focus state change
                 if (viewUpdate.focusChanged) {
-                    viewUpdate.view.hasFocus ? onFocus(viewUpdate) : onBlur(viewUpdate);
+                    viewUpdate.view.hasFocus ? onFocus(viewUpdate.state.doc.toString(), viewUpdate) : onBlur(viewUpdate.state.doc.toString(), viewUpdate);
                 }
             }),
         ],

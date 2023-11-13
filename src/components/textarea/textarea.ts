@@ -1,4 +1,4 @@
-import { computed, defineComponent, h, nextTick, PropType, reactive, Ref, ref, watch } from 'vue';
+import { ComponentOptions, computed, defineComponent, h, nextTick, PropType, reactive, Ref, ref, resolveComponent, watch } from 'vue';
 import { Guid } from '../../utils/guid';
 import {
     VmaFormulaGridCompTextareaConstructor,
@@ -8,6 +8,12 @@ import {
     VmaFormulaGridCompTextareaReactiveData,
     VmaFormulaGridCompTextareaRefs,
 } from '../../../types';
+import { syntaxHighlighting, HighlightStyle } from '@codemirror/language';
+import { tags } from '@lezer/highlight';
+import { Compartment } from '@codemirror/state';
+import { spreadsheet, setAutocompletionIdiom, indentAndCompletionWithTab, tabObservable } from '../../index.common.ts';
+import { basicSetup } from 'codemirror';
+import { EditorView, keymap } from '@codemirror/view';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompTextarea',
@@ -19,7 +25,7 @@ export default defineComponent({
         modelValue: [String, Number] as PropType<VmaFormulaGridCompTextareaPropTypes.ModelValue>,
         immediate: {
             type: Boolean as PropType<VmaFormulaGridCompTextareaPropTypes.Immediate>,
-            default: true,
+            default: false,
         },
         name: String as PropType<VmaFormulaGridCompTextareaPropTypes.Name>,
         readonly: Boolean as PropType<VmaFormulaGridCompTextareaPropTypes.Readonly>,
@@ -40,7 +46,7 @@ export default defineComponent({
         },
         autofocus: {
             type: Boolean as PropType<VmaFormulaGridCompTextareaPropTypes.Autofocus>,
-            default: false,
+            default: true,
         },
     },
     emits: ['update:modelValue', 'input', 'change', 'focus', 'blur', 'keydown', 'keyup'] as VmaFormulaGridCompTextareaEmits,
@@ -52,6 +58,10 @@ export default defineComponent({
         const refCountHelper = ref() as Ref<HTMLDivElement>;
         const refCountTargetHelper = ref() as Ref<HTMLDivElement>;
         const refTextareaTarget = ref() as Ref<HTMLTextAreaElement>;
+
+        const CodeMirrorComponent = resolveComponent('VmaFormulaGridCompCodeMirror') as ComponentOptions;
+
+        let cmInstance: any = null;
 
         const gridTextareaRefs: VmaFormulaGridCompTextareaRefs = {
             refElem,
@@ -103,19 +113,22 @@ export default defineComponent({
         let textareaMethods = {} as VmaFormulaGridCompTextareaMethods;
 
         textareaMethods = {
-            dispatchEvent(type: any, params: any, evnt: any) {
-                emit(type, { $input: $vmaTextarea, $event: evnt, ...params });
+            dispatchEvent(type: any, params: any, payload?: any) {
+                emit(type, { $input: $vmaTextarea, ...params, payload: payload });
             },
 
             focus() {
-                const textareaElem = refTextareaTarget.value;
                 reactiveData.isActivated = true;
-                textareaElem.focus();
+                if (cmInstance) {
+                    cmInstance.view.focus();
+                    // cmInstance.view.setCursor(cmInstance.view.lineCount(), 0);
+                }
                 return nextTick();
             },
             blur() {
-                const textareaElem = refTextareaTarget.value;
-                textareaElem.blur();
+                if (cmInstance) {
+                    cmInstance.view.blur();
+                }
                 reactiveData.isActivated = false;
                 return nextTick();
             },
@@ -123,74 +136,81 @@ export default defineComponent({
 
         Object.assign($vmaTextarea, textareaMethods);
 
-        const emitModelValue = (value: VmaFormulaGridCompTextareaPropTypes.ModelValue, evnt: Event | { type: string }) => {
+        const emitModelValue = (value: VmaFormulaGridCompTextareaPropTypes.ModelValue) => {
             reactiveData.inputValue = value;
-            textareaMethods.dispatchEvent('input', { value }, evnt);
+            textareaMethods.dispatchEvent('input', { value });
             emit('update:modelValue', value);
-            textareaMethods.dispatchEvent('change', { value }, evnt);
+            textareaMethods.dispatchEvent('change', { value });
         };
 
-        const triggerEvent = (
-            evnt: Event & {
-                type: 'input' | 'change' | 'focus' | 'blur' | 'keydown' | 'keyup';
-            },
-        ) => {
+        const triggerEvent = (type: 'input' | 'change' | 'focus' | 'blur' | 'keydown' | 'keyup', value: any) => {
             const { inputValue } = reactiveData;
-            textareaMethods.dispatchEvent(evnt.type, { value: inputValue }, evnt);
+            textareaMethods.dispatchEvent(type, { value: inputValue });
         };
 
-        const changeEvent = (evnt: Event & { type: 'change' }) => {
+        const changeEvent = (value: any) => {
+            emitInputEvent(value);
             const inputImmediate = computeInputImmediate.value;
             if (inputImmediate) {
-                triggerEvent(evnt);
+                triggerEvent('change', value);
             } else {
-                emitModelValue(reactiveData.inputValue, evnt);
+                emitModelValue(reactiveData.inputValue);
             }
         };
 
-        const focusEvent = (evnt: Event & { type: 'focus' }) => {
+        const focusEvent = (value: any) => {
             reactiveData.isActivated = true;
-            triggerEvent(evnt);
+            triggerEvent('focus', value);
         };
 
-        const scrollEvent = (evnt: Event & { type: 'scroll' }) => {
-            if (evnt && evnt.target) {
-            }
-        };
-
-        const blurEvent = (evnt: Event & { type: 'blur' }) => {
+        const blurEvent = (value: any, payload: any) => {
             const { inputValue } = reactiveData;
             const inputImmediate = computeInputImmediate.value;
             if (!inputImmediate) {
-                emitModelValue(inputValue, evnt);
+                emitModelValue(inputValue);
             }
             reactiveData.isActivated = false;
-            textareaMethods.dispatchEvent('blur', { value: inputValue }, evnt);
+            textareaMethods.dispatchEvent('blur', { value: inputValue }, payload);
         };
 
-        const emitInputEvent = (value: any, evnt: Event) => {
+        const emitInputEvent = (value: any) => {
             const inputImmediate = computeInputImmediate.value;
             reactiveData.inputValue = value;
             if (inputImmediate) {
-                emitModelValue(value, evnt);
+                emitModelValue(value);
             } else {
-                textareaMethods.dispatchEvent('input', { value }, evnt);
+                textareaMethods.dispatchEvent('input', { value });
             }
         };
 
-        const inputEvent = (evnt: Event & { type: 'input' }) => {
-            const textareaElem = evnt.target as HTMLInputElement;
-            const { value } = textareaElem;
-            emitInputEvent(value, evnt);
-            // recalculate()
-        };
+        const config = reactive({
+            indentWithTab: true,
+            tabSize: 4,
+            backgroundColor: 'white',
+            language: '',
+            phrases: {},
+        });
 
-        const keydownEvent = (evnt: KeyboardEvent & { type: 'keydown' }) => {
-            triggerEvent(evnt);
-        };
+        const myHighlightStyle = HighlightStyle.define([
+            { tag: tags.name, color: 'green' },
+            { tag: tags.bool, color: '#A020F0' },
+            { tag: tags.color, color: '#0000FF' },
+            { tag: tags.invalid, color: '#FA6F66' },
+        ]);
 
-        const keyupEvent = (evnt: KeyboardEvent & { type: 'keyup' }) => {
-            triggerEvent(evnt);
+        const languageCompartment = new Compartment(),
+            autocompleteCompartment = new Compartment();
+
+        const basicExtensions = [basicSetup, keymap.of([indentAndCompletionWithTab]), syntaxHighlighting(myHighlightStyle), tabObservable(), EditorView.lineWrapping];
+
+        const extensions = computed(() => {
+            const result = [...basicExtensions, languageCompartment.of(spreadsheet()), autocompleteCompartment.of([])];
+            return result;
+        });
+
+        const handleReady = (value: any) => {
+            cmInstance = value;
+            setAutocompletionIdiom(value.view, autocompleteCompartment);
         };
 
         const renderVN = () => {
@@ -214,32 +234,27 @@ export default defineComponent({
                     ],
                 },
                 [
-                    h('textarea', {
+                    h(CodeMirrorComponent, {
                         ref: refTextareaTarget,
-                        class: [
-                            'inner-textarea',
-                            {
-                                'inner-textarea--wrap': wrap,
-                                'inner-textarea--nowrap': !wrap,
-                            },
-                        ],
-                        value: inputValue,
+                        class: 'codemirror',
+                        autofocus: props.autofocus,
                         placeholder: inputPlaceholder,
-                        disabled,
-                        readonly,
-                        rows,
-                        autofocus,
-                        onKeydown: keydownEvent,
-                        onKeyup: keyupEvent,
-                        onInput: inputEvent,
+                        indentWithTab: config.indentWithTab,
+                        tabSize: config.tabSize,
+                        disabled: props.disabled,
+                        style: {
+                            backgroundColor: config.backgroundColor,
+                            resize: 'both',
+                            width: '100%',
+                            height: '100%',
+                        },
+                        extensions: extensions.value,
+                        modelValue: `${inputValue}`,
+                        phrases: config.phrases,
+                        onReady: handleReady,
                         onChange: changeEvent,
                         onFocus: focusEvent,
                         onBlur: blurEvent,
-                        onScroll: scrollEvent,
-                        // onMousedown: detectResize,
-                        style: {
-                            resize: 'both',
-                        },
                     }),
                 ],
             );

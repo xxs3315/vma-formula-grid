@@ -764,9 +764,7 @@ export default defineComponent({
                                                 if (cf.index >= 0) {
                                                     $vmaFormulaGrid.reactiveData.currentCellEditorActive = true;
                                                     nextTick(() => {
-                                                        refCurrentCellEditor.value.$el.querySelectorAll(`textarea`).forEach((elem: HTMLTextAreaElement) => {
-                                                            elem.focus();
-                                                        });
+                                                        (refCurrentCellEditor.value as any).focus();
                                                     });
                                                 }
                                             },

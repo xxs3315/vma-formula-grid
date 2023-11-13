@@ -1,16 +1,24 @@
-import { defineComponent, shallowRef, computed, watch, toRaw, onMounted, onBeforeUnmount, h } from 'vue';
+import { defineComponent, shallowRef, computed, watch, toRaw, onMounted, onBeforeUnmount, h, provide } from 'vue';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { createEditorState, createEditorView, destroyEditorView, getEditorTools } from './utils/code-mirror.ts';
 import { useGlobalConfig, DEFAULT_CONFIG } from './config';
 import { props, ConfigProps } from './props';
 import { events, EventKey } from './events';
+import { Guid } from '../../utils/guid.ts';
+import { VmaFormulaGridCompCodeMirrorConstructor } from '../../../types';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompCodeMirror',
     props: { ...props },
     emits: { ...events },
     setup(props, context) {
+        const $vmaFormulaGridCompCodeMirror = {
+            uId: Guid.create().toString(),
+            props,
+            context,
+        } as unknown as VmaFormulaGridCompCodeMirrorConstructor;
+
         const container = shallowRef<HTMLDivElement>();
         const state = shallowRef<EditorState>();
         const view = shallowRef<EditorView>();
@@ -40,8 +48,8 @@ export default defineComponent({
                 // Only the global part is initialized here.
                 // The prop part is dynamically reconfigured after the component is mounted.
                 extensions: defaultConfig.extensions ?? [],
-                onFocus: (viewUpdate) => context.emit(EventKey.Focus, viewUpdate),
-                onBlur: (viewUpdate) => context.emit(EventKey.Blur, viewUpdate),
+                onFocus: (doc, viewUpdate) => context.emit(EventKey.Focus, doc, viewUpdate),
+                onBlur: (doc, viewUpdate) => context.emit(EventKey.Blur, doc, viewUpdate),
                 onUpdate: (viewUpdate) => context.emit(EventKey.Update, viewUpdate),
                 onChange: (newDoc, viewUpdate) => {
                     if (newDoc !== props.modelValue) {
@@ -136,12 +144,20 @@ export default defineComponent({
             }
         });
 
-        return () => {
-            return h('div', {
+        const renderVN = () =>
+            h('div', {
                 class: 'v-codemirror',
                 style: { display: 'contents' },
                 ref: container,
             });
-        };
+
+        $vmaFormulaGridCompCodeMirror.renderVN = renderVN;
+
+        provide('$vmaFormulaGridCompCodeMirror', $vmaFormulaGridCompCodeMirror);
+
+        return $vmaFormulaGridCompCodeMirror;
+    },
+    render() {
+        return this.renderVN();
     },
 });

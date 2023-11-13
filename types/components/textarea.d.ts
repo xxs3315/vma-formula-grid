@@ -17,7 +17,7 @@ export namespace VmaFormulaGridCompTextareaPropTypes {
 }
 
 export interface VmaFormulaGridCompTextareaMethods {
-    dispatchEvent: (type: ValueOf<VmaFormulaGridCompTextareaEmits>, params: any, evnt?: Event | { type: string }) => void;
+    dispatchEvent: (type: ValueOf<VmaFormulaGridCompTextareaEmits>, params: any, payload?: any) => void;
 
     /**
      * 获取焦点

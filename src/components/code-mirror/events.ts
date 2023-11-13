@@ -15,8 +15,8 @@ export const editorEvents = {
     [EventKey.Change]: (value: string, viewUpdate: ViewUpdate) => true,
     // when codemirror state change
     [EventKey.Update]: (viewUpdate: ViewUpdate) => true,
-    [EventKey.Focus]: (viewUpdate: ViewUpdate) => true,
-    [EventKey.Blur]: (viewUpdate: ViewUpdate) => true,
+    [EventKey.Focus]: (value: string, viewUpdate: ViewUpdate) => true,
+    [EventKey.Blur]: (value: string, viewUpdate: ViewUpdate) => true,
     // when component mounted
     [EventKey.Ready]: (payload: { view: EditorView; state: EditorState; container: HTMLDivElement }) => true,
 };
