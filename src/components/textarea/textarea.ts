@@ -13,7 +13,7 @@ import { tags } from '@lezer/highlight';
 import { Compartment } from '@codemirror/state';
 import { spreadsheet, setAutocompletionIdiom, indentAndCompletionWithTab, tabObservable } from '../../index.common.ts';
 import { basicSetup } from 'codemirror';
-import { EditorView, keymap } from '@codemirror/view';
+import { EditorView, keymap, tooltips } from '@codemirror/view';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompTextarea',
@@ -201,7 +201,16 @@ export default defineComponent({
         const languageCompartment = new Compartment(),
             autocompleteCompartment = new Compartment();
 
-        const basicExtensions = [basicSetup, keymap.of([indentAndCompletionWithTab]), syntaxHighlighting(myHighlightStyle), tabObservable(), EditorView.lineWrapping];
+        const basicExtensions = [
+            basicSetup,
+            keymap.of([indentAndCompletionWithTab]),
+            syntaxHighlighting(myHighlightStyle),
+            tabObservable(),
+            EditorView.lineWrapping,
+            tooltips({
+                parent: document.body,
+            }),
+        ];
 
         const extensions = computed(() => {
             const result = [...basicExtensions, languageCompartment.of(spreadsheet()), autocompleteCompartment.of([])];
@@ -244,7 +253,6 @@ export default defineComponent({
                         disabled: props.disabled,
                         style: {
                             backgroundColor: config.backgroundColor,
-                            resize: 'both',
                             width: '100%',
                             height: '100%',
                         },
