@@ -378,6 +378,8 @@ export default defineComponent({
                 top: 0,
                 width: 0,
                 height: 0,
+                minWidth: 0,
+                minHeight: 0,
             },
             currentCellEditorActive: false,
             currentCellEditorContent: null,
@@ -872,7 +874,9 @@ export default defineComponent({
                                 const borderMarginTop = `${topSpaceHeight + cellElem.offsetTop - 1}px`;
                                 gridReactiveData.currentCellEditorStyle.transform = `translateX(${marginLeft}) translateY(${marginTop})`;
                                 gridReactiveData.currentCellEditorStyle.height = `${cellElem.offsetHeight - 1}px`;
+                                gridReactiveData.currentCellEditorStyle.minHeight = `${cellElem.offsetHeight - 1}px`;
                                 gridReactiveData.currentCellEditorStyle.width = `${cellElem.offsetWidth - 1}px`;
+                                gridReactiveData.currentCellEditorStyle.minWidth = `${cellElem.offsetWidth - 1}px`;
                                 gridReactiveData.currentCellBorderStyle.transform = `translateX(${borderMarginLeft}) translateY(${borderMarginTop})`;
                                 gridReactiveData.currentCellBorderStyle.height = `${cellElem.offsetHeight}px`;
                                 gridReactiveData.currentCellBorderStyle.width = `${cellElem.offsetWidth}px`;
