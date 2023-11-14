@@ -483,6 +483,162 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     param,
                 });
                 list.push(options);
+                options = [];
+                subOptions = [];
+                options.push({
+                    name: '常规文本',
+                    prefixIcon: 'info',
+                    code: 'formatGeneral',
+                    disabled: false,
+                    visible: true,
+                    children: subOptions,
+                    param,
+                });
+                list.push(options);
+                options = [];
+                subOptions = [];
+                options.push({
+                    name: '增加小数位',
+                    prefixIcon: 'info',
+                    code: 'formatNumberDecimalPlacesIncrease',
+                    disabled: false,
+                    visible: true,
+                    children: subOptions,
+                    param,
+                });
+                list.push(options);
+                options = [];
+                subOptions = [];
+                options.push({
+                    name: '减少小数位',
+                    prefixIcon: 'info',
+                    code: 'formatNumberDecimalPlacesDecrease',
+                    disabled: false,
+                    visible: true,
+                    children: subOptions,
+                    param,
+                });
+                list.push(options);
+                options = [];
+                subOptions = [];
+                subOptions.push({
+                    name: '常规',
+                    code: 'formatNumberGeneral',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: '百分比',
+                    code: 'formatNumberPercent',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: '科学计数',
+                    code: 'formatNumberScience',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: '分数',
+                    code: 'formatNumberFraction',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: '千分计数',
+                    code: 'formatNumberFraction',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                options.push({
+                    name: '数字',
+                    prefixIcon: 'info',
+                    code: 'formatNumber',
+                    disabled: false,
+                    visible: true,
+                    children: subOptions,
+                    param,
+                });
+                list.push(options);
+                options = [];
+                subOptions = [];
+                subOptions.push({
+                    name: '时间',
+                    code: 'formatNumberTime',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: '短日期',
+                    code: 'formatNumberShortDate',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: '长日期',
+                    code: 'formatNumberLongDate',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                options.push({
+                    name: '日期时间',
+                    prefixIcon: 'info',
+                    code: 'formatNumberDateTime',
+                    disabled: false,
+                    visible: true,
+                    children: subOptions,
+                    param,
+                });
+                list.push(options);
+                options = [];
+                subOptions = [];
+                subOptions.push({
+                    name: '人民币',
+                    code: 'formatNumberCurrencyCNY',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: '美元',
+                    code: 'formatNumberShortCurrencyUSDollar',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: '英镑',
+                    code: 'formatNumberCurrencyUKPound',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: '其他',
+                    code: 'formatNumberCurrencyOthers',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                options.push({
+                    name: '货币',
+                    prefixIcon: 'info',
+                    code: 'formatNumberCurrency',
+                    disabled: false,
+                    visible: true,
+                    children: subOptions,
+                    param,
+                });
+                list.push(options);
             }
 
             event.preventDefault();
