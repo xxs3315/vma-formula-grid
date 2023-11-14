@@ -380,6 +380,7 @@ export default defineComponent({
                 height: 0,
                 minWidth: 0,
                 minHeight: 0,
+                resized: false,
             },
             currentCellEditorActive: false,
             currentCellEditorContent: null,
@@ -873,9 +874,11 @@ export default defineComponent({
                                 const borderMarginLeft = `${leftSpaceWidth + cellElem.offsetLeft - 1}px`;
                                 const borderMarginTop = `${topSpaceHeight + cellElem.offsetTop - 1}px`;
                                 gridReactiveData.currentCellEditorStyle.transform = `translateX(${marginLeft}) translateY(${marginTop})`;
-                                gridReactiveData.currentCellEditorStyle.height = `${cellElem.offsetHeight - 1}px`;
+                                if (!gridReactiveData.currentCellEditorStyle.resized) {
+                                    gridReactiveData.currentCellEditorStyle.height = `${cellElem.offsetHeight - 1}px`;
+                                    gridReactiveData.currentCellEditorStyle.width = `${cellElem.offsetWidth - 1}px`;
+                                }
                                 gridReactiveData.currentCellEditorStyle.minHeight = `${cellElem.offsetHeight - 1}px`;
-                                gridReactiveData.currentCellEditorStyle.width = `${cellElem.offsetWidth - 1}px`;
                                 gridReactiveData.currentCellEditorStyle.minWidth = `${cellElem.offsetWidth - 1}px`;
                                 gridReactiveData.currentCellBorderStyle.transform = `translateX(${borderMarginLeft}) translateY(${borderMarginTop})`;
                                 gridReactiveData.currentCellBorderStyle.height = `${cellElem.offsetHeight}px`;

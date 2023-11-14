@@ -699,6 +699,7 @@ export default defineComponent({
                                                 $vmaFormulaGrid.updateCurrentAreaStyle();
                                             },
                                             onMousedown: (event: MouseEvent) => {
+                                                $vmaFormulaGrid.reactiveData.currentCellEditorStyle.resized = false;
                                                 if (event) {
                                                     if (event.button === 0) {
                                                         if (cf.index >= 0) {
@@ -766,6 +767,7 @@ export default defineComponent({
                                                 if (cf.index >= 0) {
                                                     $vmaFormulaGrid.reactiveData.currentCellEditorActive = true;
                                                     nextTick(() => {
+                                                        $vmaFormulaGrid.reactiveData.currentCellEditorStyle.resized = false;
                                                         (refCurrentCellEditor.value as any).focus();
                                                     });
                                                 }

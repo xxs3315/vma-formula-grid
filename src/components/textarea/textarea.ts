@@ -1,4 +1,4 @@
-import { ComponentOptions, computed, defineComponent, h, nextTick, PropType, reactive, Ref, ref, resolveComponent, watch } from 'vue';
+import { ComponentOptions, computed, defineComponent, h, inject, nextTick, onBeforeUnmount, onMounted, PropType, reactive, Ref, ref, resolveComponent, watch } from 'vue';
 import { Guid } from '../../utils/guid';
 import {
     VmaFormulaGridCompTextareaConstructor,
@@ -7,6 +7,9 @@ import {
     VmaFormulaGridCompTextareaPropTypes,
     VmaFormulaGridCompTextareaReactiveData,
     VmaFormulaGridCompTextareaRefs,
+    VmaFormulaGridConstructor,
+    VmaFormulaGridMethods,
+    VmaFormulaGridPrivateMethods,
 } from '../../../types';
 import { syntaxHighlighting, HighlightStyle } from '@codemirror/language';
 import { tags } from '@lezer/highlight';
@@ -14,6 +17,7 @@ import { Compartment } from '@codemirror/state';
 import { spreadsheet, setAutocompletionIdiom, indentAndCompletionWithTab, tabObservable } from '../../index.common.ts';
 import { basicSetup } from 'codemirror';
 import { EditorView, keymap, tooltips } from '@codemirror/view';
+import { createResizeEvent } from '../../utils/resize.ts';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompTextarea',
@@ -52,6 +56,28 @@ export default defineComponent({
     emits: ['update:modelValue', 'input', 'change', 'focus', 'blur', 'keydown', 'keyup'] as VmaFormulaGridCompTextareaEmits,
     setup(props, context) {
         const { emit } = context;
+
+        const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
+
+        const { currentCellEditorStyle } = $vmaFormulaGrid.reactiveData;
+
+        let resizeObserver: ResizeObserver;
+
+        onMounted(() => {
+            const el = refElem.value;
+            resizeObserver = createResizeEvent(() => {
+                handleResize();
+            });
+            if (el) {
+                resizeObserver.observe(el);
+            }
+        });
+
+        onBeforeUnmount(() => {
+            if (resizeObserver) {
+                resizeObserver.disconnect();
+            }
+        });
 
         const refElem = ref() as Ref<HTMLDivElement>;
         const refLines = ref() as Ref<HTMLDivElement>;
@@ -222,6 +248,12 @@ export default defineComponent({
             setAutocompletionIdiom(value.view, autocompleteCompartment);
         };
 
+        const handleResize = () => {
+            currentCellEditorStyle.resized = true;
+            currentCellEditorStyle.height = `${refElem.value.offsetHeight}px`;
+            currentCellEditorStyle.width = `${refElem.value.offsetWidth}px`;
+        };
+
         const renderVN = () => {
             const { inputValue, isActivated } = reactiveData;
             const { disabled, readonly, rows, /* showLines, */ wrap, autofocus } = props;
@@ -241,6 +273,7 @@ export default defineComponent({
                             'is--disabled': disabled,
                         },
                     ],
+                    onResize: handleResize,
                 },
                 [
                     h(CodeMirrorComponent, {
