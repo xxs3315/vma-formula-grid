@@ -935,7 +935,32 @@ export default defineComponent({
                     row.splice(
                         colNumber + 1,
                         0,
-                        new Cell(index, colNumber, 1, 1, null, null, null, null, false, -1, '17', '', '', null, null, null, null, false, false, false, null, null) as Cell & {
+                        new Cell(
+                            index,
+                            colNumber,
+                            1,
+                            1,
+                            null,
+                            null,
+                            null,
+                            null,
+                            false,
+                            -1,
+                            '17',
+                            '',
+                            '',
+                            null,
+                            null,
+                            null,
+                            null,
+                            false,
+                            false,
+                            false,
+                            null,
+                            null,
+                            '',
+                            '',
+                        ) as Cell & {
                             [key: string]: string;
                         },
                     );
@@ -983,7 +1008,32 @@ export default defineComponent({
                 const aNewRow: Cell[] = [];
                 for (let i = -1; i < gridReactiveData.colConfs.length - 1; i++) {
                     aNewRow.push(
-                        new Cell(Number(rowNumber), i, 1, 1, null, null, null, null, false, -1, '17', '', '', null, null, null, null, false, false, false, null, null) as Cell & {
+                        new Cell(
+                            Number(rowNumber),
+                            i,
+                            1,
+                            1,
+                            null,
+                            null,
+                            null,
+                            null,
+                            false,
+                            -1,
+                            '17',
+                            '',
+                            '',
+                            null,
+                            null,
+                            null,
+                            null,
+                            false,
+                            false,
+                            false,
+                            null,
+                            null,
+                            '',
+                            '',
+                        ) as Cell & {
                             [key: string]: string;
                         },
                     );
@@ -3464,6 +3514,8 @@ export default defineComponent({
                                 u,
                                 ff,
                                 fs,
+                                '',
+                                '',
                             );
                         });
                     });

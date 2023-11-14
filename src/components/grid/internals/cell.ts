@@ -19,8 +19,10 @@ export class Cell {
     b?: boolean; // 粗体
     i?: boolean; // 斜体
     u?: boolean; // 下划线
-    ff?: any;
-    fs?: any;
+    ff?: any; // font-family
+    fs?: any; // font-size
+    g?: string; // 格式类型
+    gf?: string; // 格式字符串
 
     constructor(
         row: number,
@@ -45,6 +47,8 @@ export class Cell {
         u: boolean,
         ff: any,
         fs: any,
+        g: string,
+        gf: string,
     ) {
         this.row = row;
         this.col = col;
@@ -68,5 +72,7 @@ export class Cell {
         this.u = u;
         this.ff = ff;
         this.fs = fs;
+        this.g = g;
+        this.gf = gf;
     }
 }
