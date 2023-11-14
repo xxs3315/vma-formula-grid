@@ -29,6 +29,26 @@ function isSupportFontFamily(f: any) {
     return g(h).join('') !== g(f).join('');
 }
 
+const engFonts = [
+    { ch: 'Andale Mono', en: 'andale mono,monospace' },
+    { ch: 'Arial', en: 'arial,helvetica,sans-serif' },
+    { ch: 'Arial Black', en: 'arial black,sans-serif' },
+    { ch: 'Book Antiqua', en: 'book antiqua,palatino,serif' },
+    { ch: 'Comic Sans MS', en: 'comic sans ms,sans-serif' },
+    { ch: 'Courier New', en: 'courier new,courier,monospace' },
+    { ch: 'Georgia', en: 'georgia,palatino,serif' },
+    { ch: 'Helvetica', en: 'helvetica,arial,sans-serif' },
+    { ch: 'Impact', en: 'impact,sans-serif' },
+    { ch: 'Symbol', en: 'symbol' },
+    { ch: 'Tahoma', en: 'tahoma,arial,helvetica,sans-serif' },
+    { ch: 'Terminal', en: 'terminal,monaco,monospace' },
+    { ch: 'Times New Roman', en: 'times new roman,times,serif' },
+    { ch: 'Trebuchet MS', en: 'trebuchet ms,geneva,sans-serif' },
+    { ch: 'Verdana', en: 'verdana,geneva,sans-serif' },
+    { ch: 'Webdings', en: 'webdings' },
+    { ch: 'Wingdings', en: 'wingdings,zapf dingbats' },
+];
+
 const fonts = {
     windows: [
         {
@@ -218,6 +238,9 @@ const fonts = {
 
 export const supportedFonts = () => {
     const sfs: any[] = [];
+    engFonts.map((font: any) => {
+        sfs.push(font);
+    });
     Object.values(fonts).forEach((fontGroup: any) => {
         fontGroup.forEach((font: any) => {
             if (isSupportFontFamily(font.en)) {
@@ -230,6 +253,11 @@ export const supportedFonts = () => {
 
 export const getFontFamilyEnFromCh = (ch: string) => {
     let en = '';
+    engFonts.forEach((font: any) => {
+        if (font.ch === ch) {
+            en = font.en;
+        }
+    });
     Object.values(fonts).forEach((fontGroup: any) => {
         fontGroup.forEach((font: any) => {
             if (font.ch === ch) {
@@ -242,6 +270,11 @@ export const getFontFamilyEnFromCh = (ch: string) => {
 
 export const getFontFamilyChFromEn = (en: string) => {
     let ch = '';
+    engFonts.forEach((font: any) => {
+        if (font.en === en) {
+            ch = font.ch;
+        }
+    });
     Object.values(fonts).forEach((fontGroup: any) => {
         fontGroup.forEach((font: any) => {
             if (font.en === en) {
