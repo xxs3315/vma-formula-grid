@@ -30,6 +30,7 @@ import { Guid } from '../../utils/guid.ts';
 import {
     calcCellBgType,
     calcCellBorders,
+    calcCellFormats,
     calcCellStyles,
     calcVertexes,
     calcXOverlapMerges,
@@ -414,6 +415,7 @@ export default defineComponent({
                 fs: [],
             },
             borders: [],
+            formats: [],
             supportedFonts: [],
             supportedFontSizes: [],
         }) as VmaFormulaGridReactiveData;
@@ -3400,6 +3402,12 @@ export default defineComponent({
                         }
                     }
 
+                    if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('formats')) {
+                        if (props.data.conf.formats.length > 0) {
+                            gridReactiveData.formats = props.data.conf.formats.concat([]);
+                        }
+                    }
+
                     const columns = [...Array<Record<string, unknown>>(gridReactiveData.xDim.valueOf() + 1)];
                     columns.forEach((_, index) => {
                         let colWidth = null;
@@ -3476,6 +3484,7 @@ export default defineComponent({
 
                             const { rowSpan, colSpan } = getRowColSpanFromMerges(colIndex, rowIndex + 1, gridReactiveData.merges);
                             const { fg, bg, b, i, u, ff, fs } = calcCellStyles(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.styles);
+                            const { g, gf } = calcCellFormats(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.formats);
                             const {
                                 bdl: bdlCurrent,
                                 bdt: bdtCurrent,
@@ -3514,8 +3523,8 @@ export default defineComponent({
                                 u,
                                 ff,
                                 fs,
-                                '',
-                                '',
+                                g,
+                                gf,
                             );
                         });
                     });

@@ -190,6 +190,7 @@ export interface VmaFormulaGridReactiveData {
     };
 
     borders: any[];
+    formats: any[];
 
     supportedFonts: any[];
     supportedFontSizes: any[];

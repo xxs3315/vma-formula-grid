@@ -429,6 +429,17 @@ export default defineComponent({
           {p: 'J23', type: 'cells', v: '仿宋'},
         ],
       },
+      formats: [
+        {p: ['A', 'C', 'D', 'o:q'],type: 'columns', details: {type: 'g'}},
+        {p: 'B4:E8', type: 'cells',details: {type: 'n', v: '##.00'}},
+        {p: 'C15:D17', type: 'cells',details: {type: 'n', v: '###,###'}},
+        {p: 'J28', type: 'cells',details: {type: 'n', v: '##0/##0'}},
+        {p: 'G7:K26', type: 'cells',details: {type: 'n', v: '0.0%'}},
+        {p: [1, 5, 6, 7, 8], type: 'rows',details: {type: 'c', v: '$#,##0.00'}},
+        {p: 'L61', type: 'cells',details: {type: 'c', v: '#,##0.00" ￥"'}},
+        {p: 'C6:D7', type: 'cells',details: {type: 'd', v: 'yyyy-mm-dd dddd'}},
+        {p: 'E10:F17', type: 'cells',details: {type: 'd', v: 'yyyy-mm-dd hh:mm AM/PM'}},
+      ],
       borders: [
         {p: ['A', 'C', 'D', 'o:q'], type: 'columns', details: {full: true}},
         {p: ['A'], type: 'columns', details: {none: true}},

@@ -1401,6 +1401,79 @@ export function calcYOverlapMerges(offsetStartIndex: number, merges: Record<stri
     return offsetStartIndex;
 }
 
+export function calcCellFormats(col: number, row: number, formats: any) {
+    let result = { g: '', gf: '' };
+    if (formats && formats.length > 0) {
+        let g = '';
+        let gf = '';
+        formats.forEach((item: { p: any; type: 'columns' | 'rows' | 'cells'; details: { type: 'g' | 'n' | 'c' | 'd'; v?: string } }) => {
+            if (item.type === 'columns') {
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string) => {
+                        if (pos.indexOf(':') >= 0) {
+                            const columnPosArr = pos.split(':');
+                            if (col + 1 >= getColumnCount(columnPosArr[0]) && col + 1 <= getColumnCount(columnPosArr[1])) {
+                                gf = item.details.hasOwnProperty('v') ? item.details.v! : '';
+                                g = gf === '' ? '' : item.details.type;
+                            }
+                        } else {
+                            if (getColumnSymbol(col + 1) === pos.toUpperCase()) {
+                                gf = item.details.hasOwnProperty('v') ? item.details.v! : '';
+                                g = gf === '' ? '' : item.details.type;
+                            }
+                        }
+                    });
+                }
+            } else if (item.type === 'rows') {
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string | number) => {
+                        if (typeof pos === 'string' && pos.indexOf(':') >= 0) {
+                            let rowPosArr: any[] = pos.split(':');
+                            rowPosArr = rowPosArr.map(Number);
+                            if (row + 1 >= rowPosArr[0] && row + 1 <= rowPosArr[1]) {
+                                gf = item.details.hasOwnProperty('v') ? item.details.v! : '';
+                                g = gf === '' ? '' : item.details.type;
+                            }
+                        }
+                        if (typeof pos === 'number' && row + 1 === pos) {
+                            gf = item.details.hasOwnProperty('v') ? item.details.v! : '';
+                            g = gf === '' ? '' : item.details.type;
+                        }
+                    });
+                }
+            } else if (item.type === 'cells') {
+                if (item.p.indexOf(':') >= 0) {
+                    const mArr = item.p.split(':');
+
+                    let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''));
+                    let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''));
+                    let rowStart = parseInt(mArr[0].replace(/[^0-9]/gi, ''));
+                    let rowEnd = parseInt(mArr[1].replace(/[^0-9]/gi, ''));
+                    if (
+                        (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd) ||
+                        (col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowStart && row + 1 <= rowEnd) ||
+                        (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowEnd && row + 1 <= rowStart) ||
+                        (col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowEnd && row + 1 <= rowStart)
+                    ) {
+                        gf = item.details.hasOwnProperty('v') ? item.details.v! : '';
+                        g = gf === '' ? '' : item.details.type;
+                    }
+                } else {
+                    let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''));
+                    let rowTarget = parseInt(item.p.replace(/[^0-9]/gi, ''));
+                    if (col + 1 === colTarget && row + 1 === rowTarget) {
+                        gf = item.details.hasOwnProperty('v') ? item.details.v! : '';
+                        g = gf === '' ? '' : item.details.type;
+                    }
+                }
+            }
+        });
+        result.g = g;
+        result.gf = gf;
+    }
+    return result;
+}
+
 export function calcCellStyles(
     col: number,
     row: number,
