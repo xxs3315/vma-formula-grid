@@ -116,6 +116,42 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                         }
                         grid.setFontStyle('cells', 'fontUnderline', initValue);
                     }
+                    if (menu.code === 'formatGeneral') {
+                        grid.setFontFormat('cells', 'formatGeneral', null);
+                    }
+                    if (menu.code === 'formatNumberGeneral') {
+                        grid.setFontFormat('cells', 'formatNumberGeneral', null);
+                    }
+                    if (menu.code === 'formatNumberPercent') {
+                        grid.setFontFormat('cells', 'formatNumberPercent', null);
+                    }
+                    if (menu.code === 'formatNumberScience') {
+                        grid.setFontFormat('cells', 'formatNumberScience', null);
+                    }
+                    if (menu.code === 'formatNumberFraction') {
+                        grid.setFontFormat('cells', 'formatNumberFraction', null);
+                    }
+                    if (menu.code === 'formatNumberThousands') {
+                        grid.setFontFormat('cells', 'formatNumberThousands', null);
+                    }
+                    if (menu.code === 'formatTime') {
+                        grid.setFontFormat('cells', 'formatTime', null);
+                    }
+                    if (menu.code === 'formatShortDate') {
+                        grid.setFontFormat('cells', 'formatShortDate', null);
+                    }
+                    if (menu.code === 'formatLongDate') {
+                        grid.setFontFormat('cells', 'formatLongDate', null);
+                    }
+                    if (menu.code === 'formatCurrencyCNY') {
+                        grid.setFontFormat('cells', 'formatCurrencyCNY', null);
+                    }
+                    if (menu.code === 'formatCurrencyUSD') {
+                        grid.setFontFormat('cells', 'formatCurrencyUSD', null);
+                    }
+                    if (menu.code === 'formatCurrencyEuro') {
+                        grid.setFontFormat('cells', 'formatCurrencyEuro', null);
+                    }
                 }
                 if (ctxMenuMethods.closeMenu) {
                     ctxMenuMethods.closeMenu();
@@ -495,30 +531,30 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     param,
                 });
                 list.push(options);
-                options = [];
-                subOptions = [];
-                options.push({
-                    name: '增加小数位',
-                    prefixIcon: 'info',
-                    code: 'formatNumberDecimalPlacesIncrease',
-                    disabled: false,
-                    visible: true,
-                    children: subOptions,
-                    param,
-                });
-                list.push(options);
-                options = [];
-                subOptions = [];
-                options.push({
-                    name: '减少小数位',
-                    prefixIcon: 'info',
-                    code: 'formatNumberDecimalPlacesDecrease',
-                    disabled: false,
-                    visible: true,
-                    children: subOptions,
-                    param,
-                });
-                list.push(options);
+                // options = [];
+                // subOptions = [];
+                // options.push({
+                //     name: '增加小数位',
+                //     prefixIcon: 'info',
+                //     code: 'formatNumberDecimalPlacesIncrease',
+                //     disabled: false,
+                //     visible: true,
+                //     children: subOptions,
+                //     param,
+                // });
+                // list.push(options);
+                // options = [];
+                // subOptions = [];
+                // options.push({
+                //     name: '减少小数位',
+                //     prefixIcon: 'info',
+                //     code: 'formatNumberDecimalPlacesDecrease',
+                //     disabled: false,
+                //     visible: true,
+                //     children: subOptions,
+                //     param,
+                // });
+                // list.push(options);
                 options = [];
                 subOptions = [];
                 subOptions.push({
@@ -551,7 +587,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 });
                 subOptions.push({
                     name: '千分计数',
-                    code: 'formatNumberFraction',
+                    code: 'formatNumberThousands',
                     disabled: false,
                     visible: true,
                     param,
@@ -570,21 +606,21 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 subOptions = [];
                 subOptions.push({
                     name: '时间',
-                    code: 'formatNumberTime',
+                    code: 'formatTime',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
                     name: '短日期',
-                    code: 'formatNumberShortDate',
+                    code: 'formatShortDate',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
                     name: '长日期',
-                    code: 'formatNumberLongDate',
+                    code: 'formatLongDate',
                     disabled: false,
                     visible: true,
                     param,
@@ -603,32 +639,32 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 subOptions = [];
                 subOptions.push({
                     name: '人民币',
-                    code: 'formatNumberCurrencyCNY',
+                    code: 'formatCurrencyCNY',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
                     name: '美元',
-                    code: 'formatNumberShortCurrencyUSDollar',
+                    code: 'formatCurrencyUSD',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '英镑',
-                    code: 'formatNumberCurrencyUKPound',
+                    name: '欧元',
+                    code: 'formatCurrencyEuro',
                     disabled: false,
                     visible: true,
                     param,
                 });
-                subOptions.push({
-                    name: '其他',
-                    code: 'formatNumberCurrencyOthers',
-                    disabled: false,
-                    visible: true,
-                    param,
-                });
+                // subOptions.push({
+                //     name: '其他',
+                //     code: 'formatNumberCurrencyOthers',
+                //     disabled: false,
+                //     visible: true,
+                //     param,
+                // });
                 options.push({
                     name: '货币',
                     prefixIcon: 'info',

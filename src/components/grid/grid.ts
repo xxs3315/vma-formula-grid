@@ -306,6 +306,8 @@ export default defineComponent({
         );
 
         const gridReactiveData = reactive({
+            global: {},
+
             xDim: 0,
             yDim: 0,
             xStart: -1,
@@ -1375,6 +1377,112 @@ export default defineComponent({
                         for (let col = $vmaFormulaGrid.reactiveData.currentAreaSci; col <= $vmaFormulaGrid.reactiveData.currentAreaEci; col++) {
                             for (let row = $vmaFormulaGrid.reactiveData.currentAreaSri; row <= $vmaFormulaGrid.reactiveData.currentAreaEri; row++) {
                                 $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].fs = targetValue;
+                            }
+                        }
+                    }
+                }
+            },
+            setFontFormat: (
+                type: 'cells' | 'rows' | 'columns',
+                mode:
+                    | 'formatGeneral'
+                    | 'formatNumberGeneral'
+                    | 'formatNumberPercent'
+                    | 'formatNumberScience'
+                    | 'formatNumberFraction'
+                    | 'formatNumberThousands'
+                    | 'formatTime'
+                    | 'formatShortDate'
+                    | 'formatLongDate'
+                    | 'formatCurrencyCNY'
+                    | 'formatCurrencyUSD'
+                    | 'formatCurrencyEuro',
+                v: any,
+            ) => {
+                if (type === 'cells') {
+                    if (mode === 'formatGeneral') {
+                        const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1);
+                        const pEnd = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1);
+                        const p = pStart === pEnd ? pStart : pStart + ':' + pEnd;
+                        gridReactiveData.formats.push({
+                            p: p,
+                            details: {
+                                type: 'g',
+                            },
+                            type: 'cells',
+                        });
+                        for (let col = $vmaFormulaGrid.reactiveData.currentAreaSci; col <= $vmaFormulaGrid.reactiveData.currentAreaEci; col++) {
+                            for (let row = $vmaFormulaGrid.reactiveData.currentAreaSri; row <= $vmaFormulaGrid.reactiveData.currentAreaEri; row++) {
+                                const { g, gf } = calcCellFormats(col, row, $vmaFormulaGrid.reactiveData.formats);
+                                $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].gf = gf;
+                                $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].g = g;
+                            }
+                        }
+                    } else {
+                        const details = {
+                            type: 'unknown',
+                            v: '',
+                        };
+                        if (mode === 'formatNumberGeneral') {
+                            details.type = 'n';
+                            details.v = gridReactiveData.global.formats.n['general'];
+                        }
+                        if (mode === 'formatNumberPercent') {
+                            details.type = 'n';
+                            details.v = gridReactiveData.global.formats.n['percent'];
+                        }
+                        if (mode === 'formatNumberScience') {
+                            details.type = 'n';
+                            details.v = gridReactiveData.global.formats.n['science'];
+                        }
+                        if (mode === 'formatNumberFraction') {
+                            details.type = 'n';
+                            details.v = gridReactiveData.global.formats.n['fraction'];
+                        }
+                        if (mode === 'formatNumberThousands') {
+                            details.type = 'n';
+                            details.v = gridReactiveData.global.formats.n['thousands'];
+                        }
+                        if (mode === 'formatTime') {
+                            details.type = 'd';
+                            details.v = gridReactiveData.global.formats.d['time'];
+                        }
+                        if (mode === 'formatShortDate') {
+                            details.type = 'd';
+                            details.v = gridReactiveData.global.formats.d['shortDate'];
+                        }
+                        if (mode === 'formatLongDate') {
+                            details.type = 'd';
+                            details.v = gridReactiveData.global.formats.d['longDate'];
+                        }
+                        if (mode === 'formatCurrencyCNY') {
+                            details.type = 'c';
+                            details.v = gridReactiveData.global.formats.c['cny'];
+                        }
+                        if (mode === 'formatCurrencyUSD') {
+                            details.type = 'c';
+                            details.v = gridReactiveData.global.formats.c['usd'];
+                        }
+                        if (mode === 'formatCurrencyEuro') {
+                            details.type = 'c';
+                            details.v = gridReactiveData.global.formats.c['euro'];
+                        }
+                        console.log(details);
+                        if (details.type !== 'unknown') {
+                            const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1);
+                            const pEnd = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1);
+                            const p = pStart === pEnd ? pStart : pStart + ':' + pEnd;
+                            gridReactiveData.formats.push({
+                                p: p,
+                                details: details,
+                                type: 'cells',
+                            });
+                            for (let col = $vmaFormulaGrid.reactiveData.currentAreaSci; col <= $vmaFormulaGrid.reactiveData.currentAreaEci; col++) {
+                                for (let row = $vmaFormulaGrid.reactiveData.currentAreaSri; row <= $vmaFormulaGrid.reactiveData.currentAreaEri; row++) {
+                                    const { g, gf } = calcCellFormats(col, row, $vmaFormulaGrid.reactiveData.formats);
+                                    $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].gf = gf;
+                                    $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].g = g;
+                                }
                             }
                         }
                     }
@@ -3370,6 +3478,12 @@ export default defineComponent({
                                 }
                             }
                         });
+                    }
+
+                    if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('global')) {
+                        if (Object.keys(props.data.conf.global).length > 0) {
+                            gridReactiveData.global = Object.assign({}, props.data.conf.global);
+                        }
                     }
 
                     if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('styles')) {

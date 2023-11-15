@@ -78,6 +78,8 @@ export interface VmaFormulaGridRefs {
 }
 
 export interface VmaFormulaGridReactiveData {
+    global: Record<string, any>;
+
     xDim: number;
     yDim: number;
 
@@ -235,6 +237,23 @@ export interface VmaFormulaGridPrivateMethods {
     setFontStyle(
         type: 'cells' | 'rows' | 'columns',
         mode: 'fontBold' | 'fontItalic' | 'fontUnderline' | 'fontSelect' | 'fontSizeSelect' | 'fontSizeUp' | 'fontSizeDown',
+        v: any,
+    ): void;
+    setFontFormat(
+        type: 'cells' | 'rows' | 'columns',
+        mode:
+            | 'formatGeneral'
+            | 'formatNumberGeneral'
+            | 'formatNumberPercent'
+            | 'formatNumberScience'
+            | 'formatNumberFraction'
+            | 'formatNumberThousands'
+            | 'formatTime'
+            | 'formatShortDate'
+            | 'formatLongDate'
+            | 'formatCurrencyCNY'
+            | 'formatCurrencyUSD'
+            | 'formatCurrencyEuro',
         v: any,
     ): void;
     calcCurrentCellEditorStyle(): void;

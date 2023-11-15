@@ -358,6 +358,27 @@ export default defineComponent({
     ])
 
     const confs = reactive({
+      global: {
+        formats: {
+          n: {
+            general: '0.00',
+            percent: '0.00%',
+            science: '0.00E+0',
+            fraction: '0/0',
+            thousands: '###,###',
+          },
+          d: {
+            time: 'hh:mm:ss AM/PM',
+            shortDate: 'yyyy-mm-dd dddd',
+            longDate: 'yyyy-mm-dd hh:mm:ss AM/PM',
+          },
+          c: {
+            cny: '#,##0.00" ¥"',
+            usd: '$#,##0.00',
+            euro: '#,##0" €"',
+          }
+        }
+      },
       rowHeight: [{row: 2, height: 48,}, {row: 4, height: 96,}],
       colWidth: [{col: 'B', width: 200,}, {col: 'H', width: 200,}],
       rowHide: [9, 15, 16, 17, 18, 19],
@@ -432,7 +453,7 @@ export default defineComponent({
       formats: [
         {p: ['A', 'C', 'D', 'o:q'],type: 'columns', details: {type: 'g'}},
         {p: 'B4:E8', type: 'cells',details: {type: 'n', v: '##.00'}},
-        {p: 'C15:D17', type: 'cells',details: {type: 'n', v: '###,###'}},
+        {p: 'C15:D17', type: 'cells',details: {type: 'n', v: '###,###.00'}},
         {p: 'J28', type: 'cells',details: {type: 'n', v: '##0/##0'}},
         {p: 'G7:K26', type: 'cells',details: {type: 'n', v: '0.0%'}},
         {p: [1, 5, 6, 7, 8], type: 'rows',details: {type: 'c', v: '$#,##0.00'}},
