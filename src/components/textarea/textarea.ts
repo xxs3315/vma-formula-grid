@@ -290,7 +290,7 @@ export default defineComponent({
                             height: '100%',
                         },
                         extensions: extensions.value,
-                        modelValue: `${inputValue}`,
+                        modelValue: inputValue === null || inputValue === undefined ? '' : `${inputValue}`,
                         phrases: config.phrases,
                         onReady: handleReady,
                         onChange: changeEvent,
