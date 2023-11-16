@@ -239,7 +239,7 @@ export interface VmaFormulaGridPrivateMethods {
         mode: 'fontBold' | 'fontItalic' | 'fontUnderline' | 'fontSelect' | 'fontSizeSelect' | 'fontSizeUp' | 'fontSizeDown',
         v: any,
     ): void;
-    setFontFormat(
+    setCellFormat(
         type: 'cells' | 'rows' | 'columns',
         mode:
             | 'formatGeneral'
@@ -253,7 +253,8 @@ export interface VmaFormulaGridPrivateMethods {
             | 'formatLongDate'
             | 'formatCurrencyCNY'
             | 'formatCurrencyUSD'
-            | 'formatCurrencyEuro',
+            | 'formatCurrencyEuro'
+            | 'formatCurrencyOthers',
         v: any,
     ): void;
     calcCurrentCellEditorStyle(): void;

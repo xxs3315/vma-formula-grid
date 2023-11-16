@@ -1382,7 +1382,7 @@ export default defineComponent({
                     }
                 }
             },
-            setFontFormat: (
+            setCellFormat: (
                 type: 'cells' | 'rows' | 'columns',
                 mode:
                     | 'formatGeneral'
@@ -1396,7 +1396,8 @@ export default defineComponent({
                     | 'formatLongDate'
                     | 'formatCurrencyCNY'
                     | 'formatCurrencyUSD'
-                    | 'formatCurrencyEuro',
+                    | 'formatCurrencyEuro'
+                    | 'formatCurrencyOthers',
                 v: any,
             ) => {
                 if (type === 'cells') {
@@ -1466,6 +1467,10 @@ export default defineComponent({
                         if (mode === 'formatCurrencyEuro') {
                             details.type = 'c';
                             details.v = gridReactiveData.global.formats.c['euro'];
+                        }
+                        if (mode === 'formatCurrencyOthers') {
+                            details.type = 'c';
+                            details.v = v;
                         }
                         console.log(details);
                         if (details.type !== 'unknown') {

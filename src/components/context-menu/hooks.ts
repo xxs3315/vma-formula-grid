@@ -117,40 +117,40 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                         grid.setFontStyle('cells', 'fontUnderline', initValue);
                     }
                     if (menu.code === 'formatGeneral') {
-                        grid.setFontFormat('cells', 'formatGeneral', null);
+                        grid.setCellFormat('cells', 'formatGeneral', null);
                     }
                     if (menu.code === 'formatNumberGeneral') {
-                        grid.setFontFormat('cells', 'formatNumberGeneral', null);
+                        grid.setCellFormat('cells', 'formatNumberGeneral', null);
                     }
                     if (menu.code === 'formatNumberPercent') {
-                        grid.setFontFormat('cells', 'formatNumberPercent', null);
+                        grid.setCellFormat('cells', 'formatNumberPercent', null);
                     }
                     if (menu.code === 'formatNumberScience') {
-                        grid.setFontFormat('cells', 'formatNumberScience', null);
+                        grid.setCellFormat('cells', 'formatNumberScience', null);
                     }
                     if (menu.code === 'formatNumberFraction') {
-                        grid.setFontFormat('cells', 'formatNumberFraction', null);
+                        grid.setCellFormat('cells', 'formatNumberFraction', null);
                     }
                     if (menu.code === 'formatNumberThousands') {
-                        grid.setFontFormat('cells', 'formatNumberThousands', null);
+                        grid.setCellFormat('cells', 'formatNumberThousands', null);
                     }
                     if (menu.code === 'formatTime') {
-                        grid.setFontFormat('cells', 'formatTime', null);
+                        grid.setCellFormat('cells', 'formatTime', null);
                     }
                     if (menu.code === 'formatShortDate') {
-                        grid.setFontFormat('cells', 'formatShortDate', null);
+                        grid.setCellFormat('cells', 'formatShortDate', null);
                     }
                     if (menu.code === 'formatLongDate') {
-                        grid.setFontFormat('cells', 'formatLongDate', null);
+                        grid.setCellFormat('cells', 'formatLongDate', null);
                     }
                     if (menu.code === 'formatCurrencyCNY') {
-                        grid.setFontFormat('cells', 'formatCurrencyCNY', null);
+                        grid.setCellFormat('cells', 'formatCurrencyCNY', null);
                     }
                     if (menu.code === 'formatCurrencyUSD') {
-                        grid.setFontFormat('cells', 'formatCurrencyUSD', null);
+                        grid.setCellFormat('cells', 'formatCurrencyUSD', null);
                     }
                     if (menu.code === 'formatCurrencyEuro') {
-                        grid.setFontFormat('cells', 'formatCurrencyEuro', null);
+                        grid.setCellFormat('cells', 'formatCurrencyEuro', null);
                     }
                 }
                 if (ctxMenuMethods.closeMenu) {
@@ -533,6 +533,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 list.push(options);
                 // options = [];
                 // subOptions = [];
+                // TODO
                 // options.push({
                 //     name: '增加小数位',
                 //     prefixIcon: 'info',
@@ -545,6 +546,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 // list.push(options);
                 // options = [];
                 // subOptions = [];
+                // TODO
                 // options.push({
                 //     name: '减少小数位',
                 //     prefixIcon: 'info',
@@ -658,13 +660,14 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     visible: true,
                     param,
                 });
-                // subOptions.push({
-                //     name: '其他',
-                //     code: 'formatNumberCurrencyOthers',
-                //     disabled: false,
-                //     visible: true,
-                //     param,
-                // });
+                subOptions.push({
+                    name: '其他',
+                    code: 'formatNumberCurrencyOthers',
+                    disabled: false,
+                    visible: true,
+                    param,
+                    type: 'formatNumberCurrencyOthersSelect',
+                });
                 options.push({
                     name: '货币',
                     prefixIcon: 'info',

@@ -6,7 +6,7 @@ import {
     VmaFormulaGridMethods,
     VmaFormulaGridPrivateMethods,
 } from '../../../types';
-import { ComponentOptions, createCommentVNode, defineComponent, h, inject, PropType, provide, ref, resolveComponent, Teleport } from 'vue';
+import { ComponentOptions, computed, createCommentVNode, defineComponent, h, inject, PropType, provide, ref, resolveComponent, Teleport } from 'vue';
 import { getDefaultFontSize } from '../../utils';
 
 export default defineComponent({
@@ -45,6 +45,19 @@ export default defineComponent({
 
         let fontValue = ref('');
         let fontSizeValue = ref<number>();
+        let currencyOther = ref('');
+        const currencyOthers = computed(() => {
+            if (
+                $vmaFormulaGrid.reactiveData.global &&
+                $vmaFormulaGrid.reactiveData.global.formats &&
+                $vmaFormulaGrid.reactiveData.global.formats.c &&
+                $vmaFormulaGrid.reactiveData.global.formats.c['others'] &&
+                $vmaFormulaGrid.reactiveData.global.formats.c['others'].length > 0
+            ) {
+                return $vmaFormulaGrid.reactiveData.global.formats.c['others'];
+            }
+            return [];
+        });
 
         const renderVN = () =>
             h(
@@ -326,6 +339,66 @@ export default defineComponent({
                                                                                               }),
                                                                                           ],
                                                                                       ),
+                                                                                      h('i', {
+                                                                                          class: ['link-suffix', option.suffixIcon],
+                                                                                      }),
+                                                                                  ],
+                                                                              ),
+                                                                          )
+                                                                        : null;
+                                                                } else if (child.type === 'formatNumberCurrencyOthersSelect') {
+                                                                    return child.visible
+                                                                        ? h(
+                                                                              'li',
+                                                                              {
+                                                                                  class: [
+                                                                                      {
+                                                                                          'link--disabled': child.disabled,
+                                                                                          'link--active': child === ctxMenuStore.selectChild,
+                                                                                      },
+                                                                                  ],
+                                                                                  key: `${optionsIndex}_${optionIndex}_${cIndex}`,
+                                                                              },
+                                                                              h(
+                                                                                  'a',
+                                                                                  {
+                                                                                      class: 'link',
+                                                                                  },
+                                                                                  [
+                                                                                      h(
+                                                                                          'i',
+                                                                                          {
+                                                                                              class: ['link-prefix', child.prefixIcon],
+                                                                                          },
+                                                                                          child.prefixIcon
+                                                                                              ? h(GridCompIconComponent, {
+                                                                                                    name: child.prefixIcon,
+                                                                                                    size: 'mini',
+                                                                                                    translateY: 1,
+                                                                                                })
+                                                                                              : createCommentVNode(),
+                                                                                      ),
+                                                                                      h(GridCompSelectComponent, {
+                                                                                          modelValue: currencyOther.value,
+                                                                                          placeholder: '选择其他货币',
+                                                                                          'onUpdate:modelValue': (value: any) => {
+                                                                                              currencyOther.value = value;
+                                                                                          },
+                                                                                          size: 'mini',
+                                                                                          style: {
+                                                                                              minWidth: '120px',
+                                                                                          },
+                                                                                          options: currencyOthers.value.map((item: any) => {
+                                                                                              return {
+                                                                                                  value: item.value,
+                                                                                                  label: item.key,
+                                                                                                  disabled: false,
+                                                                                              };
+                                                                                          }),
+                                                                                          onChange: (event: any) => {
+                                                                                              $vmaFormulaGrid.setCellFormat('cells', 'formatCurrencyOthers', event.value);
+                                                                                          },
+                                                                                      }),
                                                                                       h('i', {
                                                                                           class: ['link-suffix', option.suffixIcon],
                                                                                       }),

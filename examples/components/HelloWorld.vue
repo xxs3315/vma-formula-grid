@@ -376,6 +376,10 @@ export default defineComponent({
             cny: '#,##0.00" ¥"',
             usd: '$#,##0.00',
             euro: '#,##0" €"',
+            others: [
+              {key: '英镑', value: '"£ "#,##0.00'},
+              {key: '韩元', value: '"₩ "#,##0.00'}
+            ]
           }
         }
       },
