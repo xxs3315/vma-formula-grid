@@ -102,11 +102,11 @@ export default defineComponent({
         },
         virtualScrollX: {
             type: Boolean as PropType<VmaFormulaGridPropTypes.VirtualScrollX>,
-            default: false,
+            default: true,
         },
         virtualScrollY: {
             type: Boolean as PropType<VmaFormulaGridPropTypes.VirtualScrollY>,
-            default: false,
+            default: true,
         },
     },
     emits: ['update:data', 'change'] as VmaFormulaGridEmits,
