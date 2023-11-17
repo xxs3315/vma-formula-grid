@@ -48,7 +48,17 @@ export default defineConfig([
       'bahttext',
       'bessel',
       'chevrotain',
-      'jstat'
+      'jstat',
+      'tinycolor2',
+      'vue-types',
+      'codemirror',
+      '@codemirror/autocomplete',
+      '@codemirror/commands',
+      '@codemirror/language',
+      '@codemirror/state',
+      '@codemirror/view',
+      '@lezer/highlight',
+      '@lezer/lr',
     ]
   }
 ])
