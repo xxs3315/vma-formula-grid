@@ -82,6 +82,7 @@
       <splitpanes class="default-theme" style="height: 100%;">
         <pane min-size="50" size="60">
           <vma-formula-grid
+              ref="vfg"
               style="width: calc(100% - 16px); height: calc(100% - 16px); margin: 8px;"
               :data="data"
               :size="size"
@@ -105,6 +106,7 @@ import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
 import {FormulaError, FormulaHelpers, Types} from "../../src/all";
+import {VmaFormulaGridInstance} from "../../types";
 
 export default defineComponent({
   name: "HelloWorld",
@@ -119,6 +121,8 @@ export default defineComponent({
     const editorRef = ref<HTMLElement | null>(null);
     let editorInstance:monaco.editor.IStandaloneCodeEditor|null = null
 
+    const vfg = ref<VmaFormulaGridInstance>();
+
     onMounted(() => {
       if (editorRef.value && !editorInstance) {
         editorInstance = monaco.editor.create(editorRef.value, {
@@ -127,6 +131,7 @@ export default defineComponent({
           automaticLayout: true,
         });
       }
+      vfg.value.getCurrentGridData();
     })
 
     onUnmounted(() => editorInstance?.dispose());
@@ -513,7 +518,8 @@ export default defineComponent({
       themeType,
       virtualScrollX,
       virtualScrollY,
-      customFunctions
+      customFunctions,
+      vfg
     }
   }
 })

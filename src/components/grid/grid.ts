@@ -499,6 +499,12 @@ export default defineComponent({
         };
 
         const gridMethods = {
+            getCurrentGridData: () => {
+                console.log('getCurrentGridData');
+            },
+        } as VmaFormulaGridMethods;
+
+        const gridPrivateMethods = {
             calc: () => {
                 const calcCells: Cell[] = [];
                 gridReactiveData.cells = {
@@ -693,10 +699,6 @@ export default defineComponent({
                 }
                 return computeScrollLoad();
             },
-            getCurrentGridData: () => {},
-        } as VmaFormulaGridMethods;
-
-        const gridPrivateMethods = {
             getParentElem() {
                 const el = refGridDiv.value;
                 if ($vmaFormulaGrid) {

@@ -11,6 +11,8 @@ export type ComponentType = 'default' | 'primary' | 'success' | 'warning' | 'dan
 
 export type ValueOf<T> = T extends any[] ? T[number] : T[keyof T];
 
+export type VmaFormulaGridInstance = ComponentPublicInstance<VmaFormulaGridProps, VmaFormulaGridConstructor>;
+
 export namespace VmaFormulaGridPropTypes {
     export type Data = Record<string, any>;
     export type Type = ComponentType;
@@ -214,12 +216,12 @@ export interface VmaFormulaGridProps {
 export type VmaFormulaGridOptions = VmaFormulaGridProps;
 
 export interface VmaFormulaGridMethods {
-    calc(): void;
-    recalculate(refresh: boolean): Promise<any>;
     getCurrentGridData(): void;
 }
 
 export interface VmaFormulaGridPrivateMethods {
+    calc(): void;
+    recalculate(refresh: boolean): Promise<any>;
     getParentElem(): Element | null;
     triggerScrollXEvent(event: Event): void;
     triggerScrollYEvent(event: Event): void;
