@@ -355,63 +355,63 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 let options = [];
                 let subOptions: any = [];
                 subOptions.push({
-                    name: '无框线',
+                    name: grid.lang().borderNone,
                     code: 'borderNone',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '所有框线',
+                    name: grid.lang().borderFull,
                     code: 'borderFull',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '外侧框线',
+                    name: grid.lang().borderOuter,
                     code: 'borderOuter',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '内部框线',
+                    name: grid.lang().borderInner,
                     code: 'borderInner',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '下框线',
+                    name: grid.lang().borderBottom,
                     code: 'borderBottom',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '上框线',
+                    name: grid.lang().borderTop,
                     code: 'borderTop',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '左框线',
+                    name: grid.lang().borderLeft,
                     code: 'borderLeft',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '右框线',
+                    name: grid.lang().borderRight,
                     code: 'borderRight',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 options.push({
-                    name: '边框',
+                    name: grid.lang().cellBorder,
                     prefixIcon: 'info',
                     code: 'cellBorder',
                     disabled: false,
@@ -423,7 +423,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options = [];
                 subOptions = [];
                 options.push({
-                    name: '字体颜色',
+                    name: grid.lang().fontColor,
                     prefixIcon: 'info',
                     code: 'fontColor',
                     disabled: false,
@@ -436,7 +436,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options = [];
                 subOptions = [];
                 options.push({
-                    name: '填充颜色',
+                    name: grid.lang().backgroundColor,
                     prefixIcon: 'info',
                     code: 'backgroundColor',
                     disabled: false,
@@ -449,7 +449,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options = [];
                 subOptions = [];
                 options.push({
-                    name: '合并',
+                    name: grid.lang().mergeCells,
                     prefixIcon: 'info',
                     code: 'mergeCells',
                     disabled: false,
@@ -461,7 +461,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options = [];
                 subOptions = [];
                 options.push({
-                    name: '取消合并',
+                    name: grid.lang().unmergeCells,
                     prefixIcon: 'info',
                     code: 'unmergeCells',
                     disabled: false,
@@ -473,28 +473,28 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options = [];
                 subOptions = [];
                 subOptions.push({
-                    name: '粗体',
+                    name: grid.lang().fontBold,
                     code: 'fontBold',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '斜体',
+                    name: grid.lang().fontItalic,
                     code: 'fontItalic',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '下划线',
+                    name: grid.lang().fontUnderline,
                     code: 'fontUnderline',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '选择字体',
+                    name: grid.lang().fontSelect,
                     code: 'fontSelect',
                     disabled: false,
                     visible: true,
@@ -502,7 +502,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     type: 'fontSelect',
                 });
                 subOptions.push({
-                    name: '选择字体尺寸',
+                    name: grid.lang().fontSizeSelect,
                     code: 'fontSizeSelect',
                     disabled: false,
                     visible: true,
@@ -510,7 +510,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     type: 'fontSizeSelect',
                 });
                 options.push({
-                    name: '字体',
+                    name: grid.lang().fontStyle,
                     prefixIcon: 'info',
                     code: 'fontStyle',
                     disabled: false,
@@ -522,7 +522,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options = [];
                 subOptions = [];
                 options.push({
-                    name: '常规文本',
+                    name: grid.lang().formatGeneral,
                     prefixIcon: 'info',
                     code: 'formatGeneral',
                     disabled: false,
@@ -560,42 +560,42 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options = [];
                 subOptions = [];
                 subOptions.push({
-                    name: '常规',
+                    name: grid.lang().formatNumberGeneral,
                     code: 'formatNumberGeneral',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '百分比',
+                    name: grid.lang().formatNumberPercent,
                     code: 'formatNumberPercent',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '科学计数',
+                    name: grid.lang().formatNumberScience,
                     code: 'formatNumberScience',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '分数',
+                    name: grid.lang().formatNumberFraction,
                     code: 'formatNumberFraction',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '千分计数',
+                    name: grid.lang().formatNumberThousands,
                     code: 'formatNumberThousands',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 options.push({
-                    name: '数字',
+                    name: grid.lang().formatNumber,
                     prefixIcon: 'info',
                     code: 'formatNumber',
                     disabled: false,
@@ -607,28 +607,28 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options = [];
                 subOptions = [];
                 subOptions.push({
-                    name: '时间',
+                    name: grid.lang().formatTime,
                     code: 'formatTime',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '短日期',
+                    name: grid.lang().formatShortDate,
                     code: 'formatShortDate',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '长日期',
+                    name: grid.lang().formatLongDate,
                     code: 'formatLongDate',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 options.push({
-                    name: '日期时间',
+                    name: grid.lang().formatNumberDateTime,
                     prefixIcon: 'info',
                     code: 'formatNumberDateTime',
                     disabled: false,
@@ -640,28 +640,28 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 options = [];
                 subOptions = [];
                 subOptions.push({
-                    name: '人民币',
+                    name: grid.lang().formatCurrencyCNY,
                     code: 'formatCurrencyCNY',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '美元',
+                    name: grid.lang().formatCurrencyUSD,
                     code: 'formatCurrencyUSD',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '欧元',
+                    name: grid.lang().formatCurrencyEuro,
                     code: 'formatCurrencyEuro',
                     disabled: false,
                     visible: true,
                     param,
                 });
                 subOptions.push({
-                    name: '其他',
+                    name: grid.lang().formatNumberCurrencyOthers,
                     code: 'formatNumberCurrencyOthers',
                     disabled: false,
                     visible: true,
@@ -669,7 +669,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     type: 'formatNumberCurrencyOthersSelect',
                 });
                 options.push({
-                    name: '货币',
+                    name: grid.lang().formatNumberCurrency,
                     prefixIcon: 'info',
                     code: 'formatNumberCurrency',
                     disabled: false,

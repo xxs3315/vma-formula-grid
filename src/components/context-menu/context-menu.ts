@@ -1,5 +1,6 @@
 import { Guid } from '../../utils/guid.ts';
 import {
+    LangProvider,
     VmaFormulaGridCompContextMenuConstructor,
     VmaFormulaGridCompContextMenuPropTypes,
     VmaFormulaGridConstructor,
@@ -23,6 +24,7 @@ export default defineComponent({
     },
     setup(props, context) {
         const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
+        const $vmaFormulaGridLang = inject<LangProvider>('$vmaFormulaGridLang');
 
         const GridCompIconComponent = resolveComponent('VmaFormulaGridCompIcon') as ComponentOptions;
         const GridCompButtonComponent = resolveComponent('VmaFormulaGridCompButton') as ComponentOptions;
@@ -213,7 +215,7 @@ export default defineComponent({
                                                                                       ),
                                                                                       h(GridCompSelectComponent, {
                                                                                           size: 'mini',
-                                                                                          placeholder: '选择字体',
+                                                                                          placeholder: $vmaFormulaGridLang?.lang.fontSelect,
                                                                                           modelValue: fontValue.value,
                                                                                           'onUpdate:modelValue': (value: any) => {
                                                                                               fontValue.value = value;
@@ -281,7 +283,7 @@ export default defineComponent({
                                                                                           [
                                                                                               h(GridCompSelectComponent, {
                                                                                                   modelValue: fontSizeValue.value,
-                                                                                                  placeholder: '选择字体大小',
+                                                                                                  placeholder: $vmaFormulaGridLang?.lang.fontSizeSelect,
                                                                                                   'onUpdate:modelValue': (value: any) => {
                                                                                                       fontSizeValue.value = Number(value);
                                                                                                   },
@@ -380,7 +382,7 @@ export default defineComponent({
                                                                                       ),
                                                                                       h(GridCompSelectComponent, {
                                                                                           modelValue: currencyOther.value,
-                                                                                          placeholder: '选择其他货币',
+                                                                                          placeholder: $vmaFormulaGridLang?.lang.formatNumberCurrencyOthers,
                                                                                           'onUpdate:modelValue': (value: any) => {
                                                                                               currencyOther.value = value;
                                                                                           },

@@ -112,7 +112,8 @@ export default defineComponent({
         },
         lang: {
             type: String as PropType<Lang>,
-            default: 'ZH-cn',
+            // default: 'ZH-cn',
+            default: 'En',
         },
     },
     emits: ['update:data', 'change'] as VmaFormulaGridEmits,

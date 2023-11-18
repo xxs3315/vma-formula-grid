@@ -360,5 +360,5 @@ export namespace VmaFormulaGridCompGlobalRendererHandles {
 }
 
 export interface LangProvider {
-    lang: ComputedRef<{ [key: string]: string }>;
+    lang: { [key: string]: string };
 }
