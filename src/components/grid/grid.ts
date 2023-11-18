@@ -66,7 +66,7 @@ import GlobalEvent from '../../utils/events.ts';
 import VmaFormulaGrid from '../../v-m-a-formula-grid';
 import { DomTools } from '../../utils/doms.ts';
 import { getFontFamilyChFromEn, supportedFonts, supportedFontSizes } from '../../utils/font.ts';
-import { Local, type Lang } from '../../lang';
+import { Locale, type Lang } from '../../lang';
 
 export default defineComponent({
     name: 'VmaFormulaGrid',
@@ -112,8 +112,8 @@ export default defineComponent({
         },
         lang: {
             type: String as PropType<Lang>,
-            // default: 'ZH-cn',
-            default: 'En',
+            default: 'ZH-cn',
+            // default: 'En',
         },
     },
     emits: ['update:data', 'change'] as VmaFormulaGridEmits,
@@ -455,7 +455,7 @@ export default defineComponent({
             { deep: true },
         );
 
-        const lang = computed(() => Local[props.lang || 'ZH-cn']);
+        const lang = computed(() => Locale[props.lang || 'ZH-cn']);
 
         const gridRefs: VmaFormulaGridRefs = {
             refGridDiv,

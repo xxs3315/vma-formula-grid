@@ -1,9 +1,9 @@
 import enUS from './en-US';
-import zhCn from './zh-CN';
+import zhCN from './zh-CN';
 
 export type Lang = 'ZH-cn' | 'En';
 
-export const Local: { [K in Lang]: { [key: string]: string } } = {
+export const Locale: { [K in Lang]: { [key: string]: string } } = {
     En: enUS,
-    'ZH-cn': zhCn,
+    'ZH-cn': zhCN,
 };
