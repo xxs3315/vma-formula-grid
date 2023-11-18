@@ -290,7 +290,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
             if (type === 'column-indicator') {
                 let options = [];
                 options.push({
-                    name: '插入',
+                    name: grid.lang().insertColumn,
                     code: 'insertColumn',
                     disabled: false,
                     visible: true,
@@ -302,7 +302,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 // list.push(options)
                 options = [];
                 options.push({
-                    name: '隐藏',
+                    name: grid.lang().hideColumn,
                     code: 'hideColumn',
                     disabled: false,
                     visible: true,
@@ -311,7 +311,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 list.push(options);
                 options = [];
                 options.push({
-                    name: '删除',
+                    name: grid.lang().deleteColumn,
                     code: 'deleteColumn',
                     disabled: false,
                     visible: true,
@@ -322,7 +322,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
             if (type === 'row-indicator') {
                 let options = [];
                 options.push({
-                    name: '插入',
+                    name: grid.lang().insertRow,
                     code: 'insertRow',
                     disabled: false,
                     visible: true,
@@ -334,7 +334,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 // list.push(options)
                 options = [];
                 options.push({
-                    name: '隐藏',
+                    name: grid.lang().hideRow,
                     code: 'hideRow',
                     disabled: false,
                     visible: true,
@@ -343,7 +343,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 list.push(options);
                 options = [];
                 options.push({
-                    name: '删除',
+                    name: grid.lang().deleteRow,
                     code: 'deleteRow',
                     disabled: false,
                     visible: true,

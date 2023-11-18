@@ -18,6 +18,7 @@ import {
     watch,
 } from 'vue';
 import {
+    LangProvider,
     VmaFormulaGridConstructor,
     VmaFormulaGridEmits,
     VmaFormulaGridMethods,
@@ -65,6 +66,7 @@ import GlobalEvent from '../../utils/events.ts';
 import VmaFormulaGrid from '../../v-m-a-formula-grid';
 import { DomTools } from '../../utils/doms.ts';
 import { getFontFamilyChFromEn, supportedFonts, supportedFontSizes } from '../../utils/font.ts';
+import { Local, type Lang } from '../../lang';
 
 export default defineComponent({
     name: 'VmaFormulaGrid',
@@ -107,6 +109,10 @@ export default defineComponent({
         virtualScrollY: {
             type: Boolean as PropType<VmaFormulaGridPropTypes.VirtualScrollY>,
             default: true,
+        },
+        lang: {
+            type: String as PropType<Lang>,
+            default: 'ZH-cn',
         },
     },
     emits: ['update:data', 'change'] as VmaFormulaGridEmits,
@@ -448,6 +454,8 @@ export default defineComponent({
             { deep: true },
         );
 
+        const lang = computed(() => Local[props.lang || 'ZH-cn']);
+
         const gridRefs: VmaFormulaGridRefs = {
             refGridDiv,
 
@@ -505,6 +513,7 @@ export default defineComponent({
         } as VmaFormulaGridMethods;
 
         const gridPrivateMethods = {
+            lang: () => lang.value,
             calc: () => {
                 const calcCells: Cell[] = [];
                 gridReactiveData.cells = {
@@ -3677,6 +3686,9 @@ export default defineComponent({
         });
 
         provide('$vmaFormulaGrid', $vmaFormulaGrid);
+        provide<LangProvider>('$vmaFormulaGridLang', {
+            lang: lang.value,
+        });
 
         return $vmaFormulaGrid;
     },

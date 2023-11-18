@@ -220,6 +220,7 @@ export interface VmaFormulaGridMethods {
 }
 
 export interface VmaFormulaGridPrivateMethods {
+    lang(): any;
     calc(): void;
     recalculate(refresh: boolean): Promise<any>;
     getParentElem(): Element | null;
@@ -356,4 +357,8 @@ export namespace VmaFormulaGridCompGlobalRendererHandles {
         options?: string;
         label?: string;
     }
+}
+
+export interface LangProvider {
+    lang: ComputedRef<{ [key: string]: string }>;
 }
