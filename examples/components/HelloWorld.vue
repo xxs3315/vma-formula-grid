@@ -76,6 +76,18 @@
           <label for="virtualScrollYFalse">False</label>
         </span>
       </fieldset>
+
+      <fieldset class="fieldset">
+        <legend>Select a locale type:</legend>
+        <span>
+          <input type="radio" id="localeCn" v-model="locale" value="ZH-cn" checked/>
+          <label for="localeCn">ZH-cn</label>
+        </span>
+        <span>
+          <input type="radio" id="localeEn" v-model="locale" value="En"/>
+          <label for="localeEn">En</label>
+        </span>
+      </fieldset>
     </div>
 
     <div style="margin-top: 10px; height: calc(100% - 80px)">
@@ -87,6 +99,7 @@
               :data="data"
               :size="size"
               :type="themeType"
+              :lang="locale"
               :virtual-scroll-x="virtualScrollX"
               :virtual-scroll-y="virtualScrollY"
               :functions="customFunctions"
@@ -117,6 +130,7 @@ export default defineComponent({
     const themeType = ref('primary');
     const virtualScrollX = ref(true);
     const virtualScrollY = ref(true);
+    const locale = ref('ZH-cn');
 
     const editorRef = ref<HTMLElement | null>(null);
     let editorInstance:monaco.editor.IStandaloneCodeEditor|null = null
@@ -519,7 +533,8 @@ export default defineComponent({
       virtualScrollX,
       virtualScrollY,
       customFunctions,
-      vfg
+      vfg,
+      locale
     }
   }
 })
