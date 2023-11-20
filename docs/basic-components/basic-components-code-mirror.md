@@ -13,7 +13,6 @@ description: 基础表格-基础
 <vma-formula-grid-comp-code-mirror
     class="codemirror"
     ref="view"
-    :options="viewOptions"
     :autofocus="config.autofocus"
     :placeholder="config.placeholder"
     :indentWithTab="config.indentWithTab"
@@ -57,10 +56,6 @@ description: 基础表格-基础
   const consoleLog = console.log;
   const code = shallowRef(`= A1 * 6`);
   const view = shallowRef();
-  const viewOptions = reactive({
-    lineNumbers: false,
-    foldGutter: true,
-  });
   const config = reactive({
     disabled: false,
     indentWithTab: true,

@@ -106,7 +106,33 @@
           />
         </pane>
         <pane size="20" min-size="10">
-          <div class="editor" ref="editorRef" style="width: calc(100% - 16px); height: calc(100% - 16px); margin: 8px; border: 1px solid darkgray;" />
+          <vue-json-pretty
+              :data="state.data"
+              :deep="state.deep"
+              :path-collapsible="state.setPathCollapsible ? pathCollapsible : undefined"
+              :show-double-quotes="state.showDoubleQuotes"
+              :show-length="state.showLength"
+              :show-line="state.showLine"
+              :show-line-number="state.showLineNumber"
+              :collapsed-on-click-brackets="state.collapsedOnClickBrackets"
+              :show-icon="state.showIcon"
+              :show-key-value-space="state.showKeyValueSpace"
+              style="width: calc(100% - 16px); height: calc(100% - 16px); margin: 8px; border: 1px solid darkgray;overflow: auto;"
+          >
+            <template v-if="state.useRenderNodeKeySlot" #renderNodeKey="{ node, defaultKey }">
+              <template v-if="node.key === 'title'">
+                <a>"{{ node.key }}"</a>
+              </template>
+              <template v-else>{{ defaultKey }}</template>
+            </template>
+
+            <template v-if="state.useRenderNodeValueSlot" #renderNodeValue="{ node, defaultValue }">
+              <template v-if="typeof node.content === 'string' && node.content.startsWith('http://')">
+                <a :href="node.content" target="_blank">{{ node.content }}</a>
+              </template>
+              <template v-else>{{ defaultValue }}</template>
+            </template>
+          </vue-json-pretty>
         </pane>
       </splitpanes>
     </div>
@@ -114,16 +140,17 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, onUnmounted, reactive, ref, toRaw, watch} from "vue";
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import {defineComponent, onMounted, onUnmounted, reactive, ref, shallowRef, watch} from "vue";
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
 import {FormulaError, FormulaHelpers, Types} from "../../src/all";
 import {VmaFormulaGridInstance} from "../../types";
+import VueJsonPretty from 'vue-json-pretty';
+import 'vue-json-pretty/lib/styles.css';
 
 export default defineComponent({
   name: "HelloWorld",
-  components: { Splitpanes, Pane },
+  components: { Splitpanes, Pane, VueJsonPretty },
   setup() {
     const datasource = ref('array');
     const size = ref('normal');
@@ -132,23 +159,13 @@ export default defineComponent({
     const virtualScrollY = ref(true);
     const locale = ref('ZH-cn');
 
-    const editorRef = ref<HTMLElement | null>(null);
-    let editorInstance:monaco.editor.IStandaloneCodeEditor|null = null
-
     const vfg = ref<VmaFormulaGridInstance>();
 
     onMounted(() => {
-      if (editorRef.value && !editorInstance) {
-        editorInstance = monaco.editor.create(editorRef.value, {
-          value: JSON.stringify(data, null, 2),
-          language: 'json',
-          automaticLayout: true,
-        });
-      }
       vfg.value.getCurrentGridData();
     })
 
-    onUnmounted(() => editorInstance?.dispose());
+    onUnmounted(() => {});
 
     const customFunctions = reactive({
       CUSTOM_FUN_1: (number: any) => {
@@ -507,6 +524,26 @@ export default defineComponent({
       mapData: mapData
     })
 
+    const state = reactive({
+      val: JSON.stringify(data),
+      data: data,
+      showLength: true,
+      showLine: true,
+      showLineNumber: false,
+      showDoubleQuotes: true,
+      collapsedOnClickBrackets: true,
+      useRenderNodeKeySlot: false,
+      useRenderNodeValueSlot: false,
+      deep: 2,
+      setPathCollapsible: false,
+      showIcon: true,
+      showKeyValueSpace: true,
+    });
+
+    const pathCollapsible = node => {
+      return node.key === 'members';
+    };
+
     watch(() => datasource.value, () => {
       data.type = datasource.value
     })
@@ -517,15 +554,22 @@ export default defineComponent({
 
     watch(() => data.type, () => {
       console.log(data)
-      const d = JSON.stringify(data, null, 2)
-      editorInstance.setValue(d)
     },{
       deep: true
     })
 
+    watch(
+        () => state.val,
+        newVal => {
+          try {
+            state.data = JSON.parse(newVal);
+          } catch (err) {
+            // console.log('JSON ERROR');
+          }
+        },
+    );
+
     return {
-      editorRef,
-      editorInstance,
       datasource,
       data,
       size,
@@ -534,7 +578,9 @@ export default defineComponent({
       virtualScrollY,
       customFunctions,
       vfg,
-      locale
+      locale,
+      state,
+      pathCollapsible
     }
   }
 })
@@ -549,5 +595,4 @@ export default defineComponent({
     margin-right: 10px;
   }
 }
-
 </style>

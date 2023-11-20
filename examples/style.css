@@ -53,3 +53,9 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.v-codemirror {
+  .cm-gutters {
+    display: flex !important;
+  }
+}
