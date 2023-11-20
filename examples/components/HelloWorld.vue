@@ -88,6 +88,13 @@
           <label for="localeEn">En</label>
         </span>
       </fieldset>
+
+      <fieldset class="fieldset">
+        <legend>Get current grid conf & data:</legend>
+        <span>
+          <input type="button" @click="getCurrentGridConfData" value="Get!"/>
+        </span>
+      </fieldset>
     </div>
 
     <div style="margin-top: 10px; height: calc(100% - 80px)">
@@ -162,7 +169,6 @@ export default defineComponent({
     const vfg = ref<VmaFormulaGridInstance>();
 
     onMounted(() => {
-      vfg.value.getCurrentGridData();
     })
 
     onUnmounted(() => {});
@@ -241,7 +247,7 @@ export default defineComponent({
       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, null, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
@@ -540,6 +546,10 @@ export default defineComponent({
       showKeyValueSpace: true,
     });
 
+    const getCurrentGridConfData = () => {
+      vfg.value.getCurrentGridData();
+    }
+
     const pathCollapsible = node => {
       return node.key === 'members';
     };
@@ -580,7 +590,8 @@ export default defineComponent({
       vfg,
       locale,
       state,
-      pathCollapsible
+      pathCollapsible,
+      getCurrentGridConfData
     }
   }
 })

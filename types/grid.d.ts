@@ -216,7 +216,7 @@ export interface VmaFormulaGridProps {
 export type VmaFormulaGridOptions = VmaFormulaGridProps;
 
 export interface VmaFormulaGridMethods {
-    getCurrentGridData(): void;
+    getCurrentGridData(): any;
 }
 
 export interface VmaFormulaGridPrivateMethods {

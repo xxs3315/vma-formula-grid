@@ -15,6 +15,7 @@ import {
     ref,
     Ref,
     resolveComponent,
+    toRaw,
     watch,
 } from 'vue';
 import {
@@ -67,6 +68,7 @@ import VmaFormulaGrid from '../../v-m-a-formula-grid';
 import { DomTools } from '../../utils/doms.ts';
 import { getFontFamilyChFromEn, supportedFonts, supportedFontSizes } from '../../utils/font.ts';
 import { Locale, type Lang } from '../../lang';
+import grid from './index.ts';
 
 export default defineComponent({
     name: 'VmaFormulaGrid',
@@ -509,7 +511,97 @@ export default defineComponent({
 
         const gridMethods = {
             getCurrentGridData: () => {
-                console.log('getCurrentGridData');
+                const result: Record<string, any> = {
+                    conf: {},
+                    type: props.data && props.data.type ? props.data.type : 'Array',
+                    arrayData: [],
+                    mapData: {
+                        data: [],
+                    },
+                };
+                // // conf
+                // global
+                result.conf.global = Object.assign({}, gridReactiveData.global);
+                // rowHeight
+                const rowHeightsChangedArr: any[] = [];
+                Object.keys(gridReactiveData.rowHeightsChanged).map((key) => {
+                    rowHeightsChangedArr.push({
+                        row: Number(key),
+                        height: Number(gridReactiveData.rowHeightsChanged[key]),
+                    });
+                });
+                result.conf.rowHeight = rowHeightsChangedArr;
+                // colWidth
+                const columnWidthsChangedArr: any[] = [];
+                Object.keys(gridReactiveData.columnWidthsChanged).map((key) => {
+                    columnWidthsChangedArr.push({
+                        col: getColumnSymbol(Number(key)),
+                        width: Number(gridReactiveData.columnWidthsChanged[key]),
+                    });
+                });
+                result.conf.colWidth = columnWidthsChangedArr;
+                // rowHide
+                const rowHidesChangedArr: any[] = [];
+                Object.keys(gridReactiveData.rowHidesChanged).map((key) => {
+                    if (gridReactiveData.rowHidesChanged[key] === 0) {
+                        rowHidesChangedArr.push(Number(key));
+                    }
+                });
+                result.conf.rowHide = rowHidesChangedArr;
+                // colHide
+                const columnHidesChangedArr: any[] = [];
+                Object.keys(gridReactiveData.columnHidesChanged).map((key) => {
+                    if (gridReactiveData.columnHidesChanged[key] === 0) {
+                        columnHidesChangedArr.push(getColumnSymbol(Number(key)));
+                    }
+                });
+                result.conf.colHide = columnHidesChangedArr;
+                // merges
+                const mergesArr: any[] = [];
+                Object.keys(gridReactiveData.merges).map((key) => {
+                    const crArr = key.split(':');
+                    const crStartArr = crArr[0].split('_');
+                    const crEndArr = crArr[1].split('_');
+                    const colStart = getColumnSymbol(Number(crStartArr[0]));
+                    const rowStart = crStartArr[1];
+                    const colEnd = getColumnSymbol(Number(crEndArr[0]));
+                    const rowEnd = crEndArr[1];
+                    mergesArr.push(colStart + rowStart + ':' + colEnd + rowEnd);
+                });
+                result.conf.merges = mergesArr;
+                // styles
+                result.conf.styles = Object.assign({}, gridReactiveData.styles);
+                // formats
+                result.conf.formats = Object.assign({}, gridReactiveData.formats);
+                // borders
+                result.conf.borders = Object.assign({}, gridReactiveData.borders);
+                // // type
+                // // arrayData
+                // // mapData
+                const arrDs: any[] = [];
+                const mapDs: any[] = [];
+                gridReactiveData.currentSheetData.forEach((row: any[], rowIndex: number) => {
+                    const aRow: any = [];
+                    row.forEach((item: Cell, colIndex: number) => {
+                        if (colIndex > 0) {
+                            if (item.v !== null && item.v !== undefined) {
+                                aRow.push(item.v);
+                                mapDs.push({
+                                    p: getColumnSymbol(colIndex) + (rowIndex + 1),
+                                    v: item.v,
+                                });
+                            } else {
+                                aRow.push(null);
+                            }
+                        }
+                    });
+                    arrDs.push(aRow);
+                });
+                result.arrayData = arrDs;
+                result.mapData.data = mapDs;
+
+                // console.log(JSON.parse(JSON.stringify(result)));
+                return JSON.parse(JSON.stringify(result));
             },
         } as VmaFormulaGridMethods;
 
