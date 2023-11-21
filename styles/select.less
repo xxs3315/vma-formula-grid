@@ -4,7 +4,7 @@
     position: relative;
     display: inline-block;
     min-width: 60px;
-    color: @gray-6;
+    color: var(--vfg-gray-6);
     text-align: left;
     &:not(.is--disabled) {
         & > .vma-formula-grid-input--inner-input {
@@ -33,9 +33,9 @@
         position: absolute;
         left: 0;
         padding: 4px 0;
-        color: @gray-7;
+        color: var(--vfg-gray-7);
         text-align: left;
-        background-color: @white;
+        background-color: var(--vfg-white);
         &:not(.is--transfer) {
             min-width: 100%;
         }
@@ -68,7 +68,7 @@
         padding: 4px 0;
         max-height: 200px;
         border-radius: 0;
-        border: 1px solid @gray-5;
+        border: 1px solid var(--vfg-gray-5);
         box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.1);
     }
 
@@ -85,11 +85,11 @@
         &:not(.is--disabled) {
             cursor: pointer;
             &.is--hover {
-                background-color: @gray-3;
+                background-color: var(--vfg-gray-3);
             }
         }
         &.is--disabled {
-            color: @gray-5;
+            color: var(--vfg-gray-5);
             cursor: no-drop;
         }
     }

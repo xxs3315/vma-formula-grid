@@ -124,7 +124,7 @@
               :collapsed-on-click-brackets="state.collapsedOnClickBrackets"
               :show-icon="state.showIcon"
               :show-key-value-space="state.showKeyValueSpace"
-              style="width: calc(100% - 16px); height: calc(100% - 16px); margin: 8px; border: 1px solid darkgray;overflow: auto;"
+              style="width: calc(100% - 16px); height: calc(100% - 16px); margin: 8px; border: 1px solid darkgray;overflow: auto;background-color: darkgray;"
           >
             <template v-if="state.useRenderNodeKeySlot" #renderNodeKey="{ node, defaultKey }">
               <template v-if="node.key === 'title'">

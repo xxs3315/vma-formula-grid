@@ -39,7 +39,7 @@
         &:hover {
             .vma-formula-grid-input--suffix {
                 &.is--clear {
-                    color: @gray-7;
+                    color: var(--vfg-gray-7);
                     .vma-formula-grid-input--suffix-icon {
                         display: none;
                     }
@@ -81,14 +81,14 @@
         border-radius: 0;
         outline: 0;
         padding: 0 0.6em;
-        color: @gray-7;
-        border: 1px solid @gray-4;
-        background-color: #fff;
+        color: var(--vfg-gray-7);
+        border: 1px solid var(--vfg-gray-4);
+        background-color: var(--vfg-white);
         box-shadow: none;
         font-size: inherit;
         box-sizing: border-box;
         &::placeholder {
-            color: @gray-5;
+            color: var(--vfg-gray-5);
         }
         &[disabled] {
             cursor: not-allowed;
@@ -107,7 +107,7 @@
         user-select: none;
         align-items: flex-start;
         justify-content: center;
-        color: @gray-5;
+        color: var(--vfg-gray-5);
     }
 
     &--suffix {

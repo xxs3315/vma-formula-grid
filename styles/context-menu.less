@@ -12,8 +12,8 @@
         position: absolute;
         white-space: nowrap;
         display: inline-block;
-        background-color: #fff;
-        border: 1px solid @gray-4;
+        background-color: var(--vfg-white);
+        border: 1px solid var(--vfg-gray-4);
         box-shadow: 3px 3px 4px -2px rgba(0, 0, 0, 0.6);
         z-index: 15;
         min-width: 150px;
@@ -27,8 +27,8 @@
         &.is--show {
             white-space: nowrap;
             display: inline-block;
-            background-color: #fff;
-            border: 1px solid @gray-4;
+            background-color: var(--vfg-white);
+            border: 1px solid var(--vfg-gray-4);
             box-shadow: 3px 3px 4px -2px rgba(0, 0, 0, 0.6);
             z-index: 7;
             min-width: 120px;
@@ -48,7 +48,7 @@
         margin: 0;
         padding: 0;
         list-style-type: none;
-        border-bottom: 1px solid @gray-3;
+        border-bottom: 1px solid var(--vfg-gray-3);
         > li {
             cursor: pointer;
             position: relative;
@@ -60,7 +60,7 @@
 
             a {
                 display: flex;
-                color: @gray-8;
+                color: var(--vfg-gray-8);
                 &.link {
                     width: 100%;
                 }
@@ -77,20 +77,20 @@
             }
 
             &.link--active {
-                background-color: @gray-4;
-                border-color: @gray-4;
+                background-color: var(--vfg-gray-4);
+                border-color: var(--vfg-gray-4);
                 & > .link {
-                    color: @gray-7;
+                    color: var(--vfg-gray-7);
                 }
             }
             &.link--disabled {
                 & > .link {
-                    color: @gray-5;
+                    color: var(--vfg-gray-5);
                     cursor: no-drop;
                 }
                 &.link--active {
                     //border-color:#C0C1C2;
-                    background-color: @gray-2;
+                    background-color: var(--vfg-gray-2);
                     &:hover {
                         background-color: inherit;
                     }

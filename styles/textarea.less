@@ -14,13 +14,13 @@
 @textarea-xx-large-font-size: 22px;
 @textarea-xxx-large-size: 24px;
 @textarea-xxx-large-font-size: 24px;
-@textarea-default-color: @gray-7;
+@textarea-default-color: var(--vfg-gray-7);
 @textarea-primary-color: @blue;
 @textarea-success-color: @green;
 @textarea-danger-color: @red;
 @textarea-warning-color: @orange;
-@textarea-disabled-color: @gray-5;
-@textarea-disabled-background-color: @gray-4;
+@textarea-disabled-color: var(--vfg-gray-5);
+@textarea-disabled-background-color: var(--vfg-gray-4);
 
 .vma-formula-grid-textarea {
     position: relative;
@@ -133,16 +133,16 @@
         margin: 0;
         width: 100%;
         font-size: inherit;
-        color: @gray-8;
-        background-color: #fff;
-        border: 1px solid @gray-4;
+        color: var(--vfg-gray-8);
+        background-color: var(--vfg-white);
+        border: 1px solid var(--vfg-gray-4);
         border-radius: 0;
         outline: 0;
         box-shadow: none;
         line-height: inherit;
 
         &::placeholder {
-            color: @gray-5;
+            color: var(--vfg-gray-5);
         }
 
         &[disabled] {

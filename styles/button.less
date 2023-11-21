@@ -36,30 +36,35 @@
 @button-xxx-large-line-height: @line-height-xxx-large;
 @button-xxx-large-padding: 11px;
 
-@button-default-color: @white;
-@button-default-background-color: @gray-7;
-@button-default-border-color: @gray-7;
+@button-default-color: var(--vfg-white);
+@button-default-background-color: var(--vfg-gray-7);
+@button-default-background-lighten-color: var(--vfg-gray-6);
+@button-default-border-color: var(--vfg-gray-7);
 
-@button-primary-color: @white;
+@button-primary-color: var(--vfg-white);
 @button-primary-background-color: @blue;
+@button-primary-background-lighten-color: @blue-lighten;
 @button-primary-border-color: @blue;
 
-@button-success-color: @white;
+@button-success-color: var(--vfg-white);
 @button-success-background-color: @green;
+@button-success-background-lighten-color: @green-lighten;
 @button-success-border-color: @green;
 
-@button-danger-color: @white;
+@button-danger-color: var(--vfg-white);
 @button-danger-background-color: @red;
+@button-danger-background-lighten-color: @red-lighten;
 @button-danger-border-color: @red;
 
-@button-warning-color: @white;
+@button-warning-color: var(--vfg-white);
 @button-warning-background-color: @orange;
+@button-warning-background-lighten-color: @orange-lighten;
 @button-warning-border-color: @orange;
 
 @button-border-width: @border-width-base;
 @button-border-radius: @border-radius-small;
 @button-round-border-radius: @border-radius-max;
-@button-plain-background-color: @white;
+@button-plain-background-color: var(--vfg-white);
 @button-disabled-opacity: @disabled-opacity;
 
 .vma-formula-grid-button {
@@ -90,9 +95,7 @@
         left: 50%;
         width: 100%;
         height: 100%;
-        //background-color: @black;
         border: inherit;
-        //border-color: @black;
         border-radius: inherit; /* inherit parent's border radius */
         transform: translate(-50%, -50%);
         opacity: 0;
@@ -119,7 +122,7 @@
                 box-shadow: 0 0 0.25em 0 @button-default-color;
             }
             &:hover {
-                color: lighten(@button-default-background-color, 9%);
+                color: @button-default-background-lighten-color;
             }
         }
     }
@@ -133,7 +136,7 @@
                 box-shadow: 0 0 0.25em 0 @button-primary-color;
             }
             &:hover {
-                background-color: lighten(@button-primary-background-color, 9%);
+                background-color: @button-primary-background-lighten-color;
             }
         }
     }
@@ -147,7 +150,7 @@
                 box-shadow: 0 0 0.25em 0 @button-success-color;
             }
             &:hover {
-                background-color: lighten(@button-success-background-color, 5%);
+                background-color: @button-success-background-lighten-color;
             }
         }
     }
@@ -161,7 +164,7 @@
                 box-shadow: 0 0 0.25em 0 @button-danger-color;
             }
             &:hover {
-                background-color: lighten(@button-danger-background-color, 12%);
+                background-color: @button-danger-background-lighten-color;
             }
         }
     }
@@ -175,7 +178,7 @@
                 box-shadow: 0 0 0.25em 0 @button-warning-color;
             }
             &:hover {
-                background-color: lighten(@button-warning-background-color, 9%);
+                background-color: @button-warning-background-lighten-color;
             }
         }
     }
@@ -190,7 +193,7 @@
                     box-shadow: 0 0 0.25em 0 @button-warning-color;
                 }
                 &:hover {
-                    color: lighten(@button-primary-background-color, 9%);
+                    color: @button-primary-background-lighten-color;
                 }
             }
         }
@@ -202,7 +205,7 @@
                     box-shadow: 0 0 0.25em 0 @button-warning-color;
                 }
                 &:hover {
-                    color: lighten(@button-success-background-color, 5%);
+                    color: @button-success-background-lighten-color;
                 }
             }
         }
@@ -214,7 +217,7 @@
                     box-shadow: 0 0 0.25em 0 @button-warning-color;
                 }
                 &:hover {
-                    color: lighten(@button-danger-background-color, 12%);
+                    color: @button-danger-background-lighten-color;
                 }
             }
         }
@@ -226,7 +229,7 @@
                     box-shadow: 0 0 0.25em 0 @button-warning-color;
                 }
                 &:hover {
-                    color: lighten(@button-warning-background-color, 9%);
+                    color: @button-warning-background-lighten-color;
                 }
             }
         }

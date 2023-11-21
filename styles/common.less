@@ -1,18 +1,51 @@
 // Color Palette
-@black: #000;
-@white: #fff;
-@gray-1: #f7f8fa;
-@gray-2: #f2f3f5;
-@gray-3: #ebedf0;
-@gray-4: #dcdee0;
-@gray-5: #c8c9cc;
-@gray-6: #969799;
-@gray-7: #646566;
-@gray-8: #323233;
+.light-variable {
+    --vfg-white: #f7f8fa;
+    --vfg-gray-1: #f7f8fa;
+    --vfg-gray-2: #f2f3f5;
+    --vfg-gray-3: #ebedf0;
+    --vfg-gray-4: #dcdee0;
+    --vfg-gray-5: #c8c9cc;
+    --vfg-gray-6: #969799;
+    --vfg-gray-7: #646566;
+    --vfg-gray-8: #323233;
+}
+
+.dark-variable {
+    --vfg-white: #323233;
+    --vfg-gray-8: #f7f8fa;
+    --vfg-gray-7: #f2f3f5;
+    --vfg-gray-6: #ebedf0;
+    --vfg-gray-5: #dcdee0;
+    --vfg-gray-4: #c8c9cc;
+    --vfg-gray-3: #969799;
+    --vfg-gray-2: #646566;
+    --vfg-gray-1: #323233;
+}
+
+:root {
+    .light-variable;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        .dark-variable;
+    }
+}
+@media (prefers-color-scheme: light) {
+    :root {
+        .light-variable;
+    }
+}
+
 @red: #ee0a24;
+@red-lighten: #ff3f45;
 @blue: #1989fa;
+@blue-lighten: #2aabfb;
 @orange: #ff976a;
+@orange-lighten: #ffa68e;
 @green: #07c160;
+@green-lighten: #18d871;
 
 // Padding
 @padding-base: 4px;
@@ -25,7 +58,7 @@
 @padding-xxx-large: @padding-base * 5;
 
 // Border
-@border-color: @gray-7;
+@border-color: var(--vfg-gray-7);
 @border-width-base: 1px;
 @border-radius-mini: 1px;
 @border-radius-small: 2px;
@@ -80,8 +113,8 @@
 @input-normal-font-size: 16px;
 @input-large-size: 32px;
 @input-large-font-size: 18px;
-@input-disabled-color: @gray-4;
-@input-disabled-background-color: @gray-3;
+@input-disabled-color: var(--vfg-gray-4);
+@input-disabled-background-color: var(--vfg-gray-3);
 
 @select-mini-font-size: 12px;
 @select-small-font-size: 14px;
