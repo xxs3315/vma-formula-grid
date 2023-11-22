@@ -154,6 +154,7 @@ import {FormulaError, FormulaHelpers, Types} from "../../src/all";
 import {VmaFormulaGridInstance} from "../../types";
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
+import axios from "axios";
 
 export default defineComponent({
   name: "HelloWorld",
@@ -181,8 +182,14 @@ export default defineComponent({
         return String.fromCharCode(number + 24);
       },
       CUSTOM_FUN_2: (number: any) => {
-        // TODO remote request
-        return 'CUSTOM_FUN_2';
+        // async remote request support
+        number = FormulaHelpers.accept(number, Types.NUMBER);
+        return new Promise((resolve,reject)=>{
+          axios.get("/mock/api/getStatusList").then((res) => {
+            console.log('mock response: ' + res.data.data[1].value);
+            resolve(number + Number(res.data.data[1].value) + 76)
+          });
+        })
       }
     })
 
@@ -232,7 +239,7 @@ export default defineComponent({
         '= A1 + 2', '= B1 + 2', '= C1 + 2', '= D1 + 2', '= E1 + 2',
         '= F1 + 2', '= G1 + 2', '= H1 + 2', '= I1 + 2', '= J1 + 2',
         '= K1 + 2', '= L1 + 2', '= M1 + 2', '= N1 + 2', '= O1 + 2',
-        '= P1 + 2', '= Q1 + 2', '= CUSTOM_FUN_1(R1)', '= S1 + 2', '= T1 + 2'
+        '= P1 + 2', '= Q1 + 2', '= CUSTOM_FUN_1(R1)', '= CUSTOM_FUN_2(S1) + 2', '= T1 + 2'
       ],
       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],

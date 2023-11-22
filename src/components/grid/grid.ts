@@ -782,7 +782,21 @@ export default defineComponent({
                             }
                             isParseError = false;
                         } catch (e) {
-                            console.error(topological[i], e);
+                            try {
+                                // try async request
+                                let result = parser.parseAsync(noCycleVertexes[topological[i]].ref.v.trim().substring(1), { row: 1, col: 1 });
+                                result.then((resolve: any) => {
+                                    if (typeof resolve === 'number' || typeof resolve === 'string') {
+                                        noCycleVertexes[topological[i]].ref.mv = resolve;
+                                    } else {
+                                        noCycleVertexes[topological[i]].ref.mv = `${resolve}`;
+                                    }
+                                    isParseError = false;
+                                });
+                            } catch (ea) {
+                                console.error(topological[i], e);
+                                console.error(topological[i], ea);
+                            }
                         }
                         if (isParseError) {
                             noCycleVertexes[topological[i]].ref.mv = '#ERROR!';
