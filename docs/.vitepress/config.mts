@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
     lang: 'zh-CN',
-    title: 'vma-grid',
+    title: 'vma-formula-grid',
     description: 'Vite & Vue powered grid table.',
     themeConfig: {
         logo: '/logo.svg',
@@ -10,8 +10,7 @@ export default defineConfig({
             {
                 text: '开发指南',
                 items: [
-                    { text: '全局安装', link: '/develop-help/install-global' },
-                    { text: '按需加载', link: '/develop-help/install-require' },
+                    { text: '安装', link: '/develop-help/develop-help-install' },
                     { text: '快速入门', link: '/develop-help/start-guide' },
                 ],
             },
