@@ -13,10 +13,13 @@ export default defineConfig([
     input: 'src/index.common.ts',
     output: [
       {
-        dir: 'dist',
-        format: 'es',
-        entryFileNames: chunk => `index.es.js`
-      },
+        // dir: 'dist',
+        format: 'iife',
+        file: "./dist/index.iife.js",
+        globals: {
+          vue: 'Vue'
+        }
+      }
     ],
     plugins: [
       nodeResolve(),
@@ -39,19 +42,6 @@ export default defineConfig([
     ],
     external: [
       'vue',
-      'bahttext',
-      'bessel',
-      'chevrotain',
-      'jstat',
-      'tinycolor2',
-      'codemirror',
-      '@codemirror/autocomplete',
-      '@codemirror/commands',
-      '@codemirror/language',
-      '@codemirror/state',
-      '@codemirror/view',
-      '@lezer/highlight',
-      '@lezer/lr',
     ]
   }
 ])

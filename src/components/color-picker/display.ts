@@ -1,7 +1,6 @@
 import { computed, createCommentVNode, defineComponent, h, provide, reactive, ref, watch } from 'vue';
 import { Guid } from '../../utils/guid.ts';
 import { VmaFormulaGridCompColorPickerDisplayConstructor } from '../../../types';
-import propTypes from 'vue-types';
 import { Color } from './utils/color.ts';
 import tinycolor from 'tinycolor2';
 import { debounce } from '../../utils/debounce.ts';
@@ -9,7 +8,7 @@ import { debounce } from '../../utils/debounce.ts';
 export default defineComponent({
     name: 'VmaFormulaGridCompColorPickerDisplay',
     props: {
-        color: propTypes.instanceOf(Color),
+        color: Color,
     },
     emits: ['update:color', 'change'],
     setup(props, context) {

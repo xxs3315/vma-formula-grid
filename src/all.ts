@@ -16,7 +16,7 @@ export function install(app: App) {
     components.forEach((component) => component.install(app));
 }
 
-// To auto-install when vue is found
+/*// To auto-install when vue is found
 // 如果浏览器环境且拥有全局Vue，则自动安装组件
 declare global {
     interface Window {
@@ -26,7 +26,7 @@ declare global {
 
 if (typeof window !== 'undefined' && window.Vue) {
     window.Vue.use(VmaFormulaGrid);
-}
+}*/
 
 export * from './v-m-a-formula-grid';
 

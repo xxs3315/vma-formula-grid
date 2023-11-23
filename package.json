@@ -1,8 +1,8 @@
 {
   "name": "vma-formula-grid",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "",
-  "main": "./dist/index.cjs.js",
+  "main": "./dist/index.iife.js",
   "module": "./dist/index.es.js",
   "types": "./dist/types/index.d.ts",
   "style": "dist/index.css",
@@ -12,7 +12,7 @@
   "scripts": {
     "lz": "lezer-generator syntax.grammar -o src/components/code-mirror/lang/parser",
     "dev": "vite --host",
-    "build": "shx rm -rf dist && rollup --config rollup.config.ts --configPlugin typescript",
+    "build": "shx rm -rf dist && rollup --config rollup.config.ts --configPlugin typescript && rollup --config rollup.full.config.ts --configPlugin typescript",
     "test": "jest",
     "prettier:check": "prettier src/**/*.ts mock/**/*.ts styles/**/*.less types/**/*.d.ts examples/**/*.ts examples/**/*.vue examples/**/*.css --check",
     "prettier:fix": "prettier src/**/*.ts mock/**/*.ts styles/**/*.less types/**/*.d.ts examples/**/*.ts examples/**/*.vue examples/**/*.css --write",
@@ -36,8 +36,7 @@
     "codemirror": "^6.0.1",
     "jstat": "^1.9.6",
     "tinycolor2": "^1.6.0",
-    "vue": "^3.2.28",
-    "vue-types": "^4.1.0"
+    "vue": "^3.2.28"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.15",
@@ -101,8 +100,7 @@
     "vitepress": "1.0.0-rc.29",
     "vue": "^3.2.45",
     "vue-json-pretty": "^2.2.4",
-    "vue-tsc": "^1.8.5",
-    "vue-types": "^4.1.0"
+    "vue-tsc": "^1.8.5"
   },
   "repository": {
     "type": "git",

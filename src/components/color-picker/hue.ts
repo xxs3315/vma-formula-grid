@@ -1,15 +1,17 @@
-import { computed, defineComponent, h, onMounted, provide, reactive, ref, watch } from 'vue';
+import { computed, defineComponent, h, onMounted, PropType, provide, reactive, ref, watch } from 'vue';
 import { Guid } from '../../utils/guid.ts';
 import { DragEventOptions, VmaFormulaGridCompColorPickerHueConstructor } from '../../../types';
-import propTypes from 'vue-types';
 import { Color } from './utils/color.ts';
 import { triggerDragEvent } from '../../utils/doms.ts';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompColorPickerHue',
     props: {
-        color: propTypes.instanceOf(Color),
-        size: propTypes.oneOf(['small', 'default']).def('default'),
+        color: Color,
+        size: {
+            type: String as PropType<'small' | 'default'>,
+            default: 'default',
+        },
     },
     setup(props, context) {
         const { emit } = context;

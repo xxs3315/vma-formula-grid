@@ -2,12 +2,11 @@ import { ComponentOptions, createCommentVNode, defineComponent, h, inject, onMou
 import { Guid } from '../../utils/guid.ts';
 import { VmaFormulaGridCompColorPickerConstructor, VmaFormulaGridConstructor, VmaFormulaGridMethods, VmaFormulaGridPrivateMethods } from '../../../types';
 import { Color } from './utils/color.ts';
-import propTypes from 'vue-types';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompColorPicker',
     props: {
-        color: propTypes.instanceOf(Color),
+        color: Color,
     },
     emits: ['update:color', 'change', 'advanceChange'],
     setup(props, context) {

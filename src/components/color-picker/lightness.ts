@@ -3,13 +3,12 @@ import { Guid } from '../../utils/guid.ts';
 import { DragEventOptions, VmaFormulaGridCompColorPickerLightnessConstructor } from '../../../types';
 import tinycolor from 'tinycolor2';
 import { Color } from './utils/color.ts';
-import propTypes from 'vue-types';
 import { triggerDragEvent } from '../../utils/doms.ts';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompColorPickerLightness',
     props: {
-        color: propTypes.instanceOf(Color),
+        color: Color,
     },
     emits: ['change'],
     setup(props, context) {
