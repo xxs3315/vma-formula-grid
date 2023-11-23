@@ -13,8 +13,9 @@ export default defineConfig([
     input: 'src/index.common.ts',
     output: [
       {
-        // dir: 'dist',
+        extend: true,
         format: 'iife',
+        name: 'VMAFormulaGrid',
         file: "./dist/index.iife.js",
         globals: {
           vue: 'Vue'

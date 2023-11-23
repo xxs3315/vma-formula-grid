@@ -32,8 +32,6 @@ createApp(App).use(VMAFormulaGrid).mount('#app')
 
 - 可以通过 [unpkg](https://unpkg.com/vma-formula-grid/) 或 [cdnjs](https://cdn.jsdelivr.net/npm/vma-formula-grid/) 获取到最新版本的资源，并在页面上引入即可
 
-
-
 ::: code-group
 ```html
 <!-- 引入样式 -->
