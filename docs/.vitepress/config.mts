@@ -11,7 +11,7 @@ export default defineConfig({
                 text: '开发指南',
                 items: [
                     { text: '安装', link: '/develop-help/develop-help-install' },
-                    { text: '快速入门', link: '/develop-help/start-guide' },
+                    { text: '快速入门', link: '/develop-help/develop-help-start-guide' },
                 ],
             },
             {
