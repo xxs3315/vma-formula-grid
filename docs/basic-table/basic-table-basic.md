@@ -33,7 +33,7 @@ description: 基础表格-基础
 ### Array格式
 
 ::: code-group
-```数据格式
+```ts
 const arrayData = reactive([
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
     [
@@ -43,16 +43,19 @@ const arrayData = reactive([
         '= P1 + 2', '= Q1 + 2', '= R1 + 2', '= S1 + 2', '= T1 + 2'
     ],
 ])
-
-type: 'array',
-arrayData: arrayData
+```
+```json
+{
+    "type": "array",
+    "arrayData": arrayData
+}
 ```
 :::
 
 ### Map格式
 
 ::: code-group
-```数据格式
+```ts
 const mapData = reactive({
     data: [
         { p: 'A1', v: 1 }, 
@@ -67,9 +70,13 @@ const mapData = reactive({
         { p: 'B5', v: '= SUM(A1:A4)' },
     ]
 });
+```
+```json
+{
+    "type": "map",
+    "mapData": mapData
+}
 
-type: 'map',
-mapData: mapData
 ```
 :::
 
