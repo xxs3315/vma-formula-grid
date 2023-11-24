@@ -15,47 +15,6 @@ export default defineConfig({
                 ],
             },
             {
-                text: '基础组件',
-                items: [
-                    { text: 'foobar', link: '/basic-components/basic-components-foo' },
-                    { text: '图标', link: '/basic-components/basic-components-icon' },
-                    { text: '按钮', link: '/basic-components/basic-components-button' },
-                    { text: '输入框', link: '/basic-components/basic-components-input' },
-                    { text: '加载器', link: '/basic-components/basic-components-loading' },
-                    { text: '单选框', link: '/basic-components/basic-components-radio' },
-                    {
-                        text: '复选框',
-                        link: '/basic-components/basic-components-checkbox',
-                    },
-                    {
-                        text: '编辑器',
-                        link: '/basic-components/basic-components-code-mirror',
-                    },
-                    {
-                        text: '文本域',
-                        link: '/basic-components/basic-components-textarea',
-                    },
-                    {
-                        text: '下拉框',
-                        link: '/basic-components/basic-components-select',
-                    },
-                    {
-                        text: '下拉容器',
-                        link: '/basic-components/basic-components-textarea',
-                    },
-                    { text: '分页', link: '/basic-components/basic-components-textarea' },
-                    {
-                        text: '工具栏',
-                        link: '/basic-components/basic-components-textarea',
-                    },
-                    {
-                        text: '虚拟列表',
-                        link: '/basic-components/basic-components-textarea',
-                    },
-                    { text: '弹窗', link: '/basic-components/basic-components-textarea' },
-                ],
-            },
-            {
                 text: '基础表格',
                 items: [
                     { text: '基础', link: '/basic-table/basic-table-basic' },
@@ -154,6 +113,47 @@ export default defineConfig({
                     { text: '还原数据', link: '/item-3' },
                     { text: '单元格数据校验', link: '/item-3' },
                     { text: '行数据校验', link: '/item-3' },
+                ],
+            },
+            {
+                text: '基础组件',
+                items: [
+                    { text: 'foobar', link: '/basic-components/basic-components-foo' },
+                    { text: '图标', link: '/basic-components/basic-components-icon' },
+                    { text: '按钮', link: '/basic-components/basic-components-button' },
+                    { text: '输入框', link: '/basic-components/basic-components-input' },
+                    { text: '加载器', link: '/basic-components/basic-components-loading' },
+                    { text: '单选框', link: '/basic-components/basic-components-radio' },
+                    {
+                        text: '复选框',
+                        link: '/basic-components/basic-components-checkbox',
+                    },
+                    {
+                        text: '编辑器',
+                        link: '/basic-components/basic-components-code-mirror',
+                    },
+                    {
+                        text: '文本域',
+                        link: '/basic-components/basic-components-textarea',
+                    },
+                    {
+                        text: '下拉框',
+                        link: '/basic-components/basic-components-select',
+                    },
+                    {
+                        text: '下拉容器',
+                        link: '/basic-components/basic-components-textarea',
+                    },
+                    { text: '分页', link: '/basic-components/basic-components-textarea' },
+                    {
+                        text: '工具栏',
+                        link: '/basic-components/basic-components-textarea',
+                    },
+                    {
+                        text: '虚拟列表',
+                        link: '/basic-components/basic-components-textarea',
+                    },
+                    { text: '弹窗', link: '/basic-components/basic-components-textarea' },
                 ],
             },
             {

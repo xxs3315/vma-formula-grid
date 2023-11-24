@@ -8,183 +8,146 @@ description: 基础表格-尺寸
 
 ## 基本用法
 
-<vma-formula-table
-    :data="gridData"
-    :size="selectedSizeValue"
-    :functions="customFunctions"
-    :type="selectedThemeValue"
-    resizeColumn
-    resizeRow
-    style="width: 100%; height: 800px;"
+<fieldset class="fieldset">
+    <legend>选择尺寸:</legend>
+    <span>
+        <input type="radio" id="sizeLarge" v-model="size" value="large" />
+        <label for="sizeLarge">Large</label>
+    </span>
+    <span>
+        <input type="radio" id="sizeNormal" v-model="size" value="normal" checked />
+        <label for="sizeNormal">Normal</label>
+    </span>
+    <span>
+        <input type="radio" id="sizeSmall" v-model="size" value="small" />
+        <label for="sizeSmall">Small</label>
+    </span>
+    <span>
+        <input type="radio" id="sizeMini" v-model="size" value="mini" />
+        <label for="sizeMini">Mini</label>
+    </span>
+</fieldset>
+
+<vma-formula-grid
+    :data="data"
+    :size="size"
+    style="width: 100%; height: 500px;"
 />
 
-<script lang="ts">
-  import {defineComponent, reactive, ref} from 'vue';
-  import { ComponentType, SizeType } from '../../types';
-  export default defineComponent({
-    name: 'Button',
-    setup() {
-      const selectedSizeValue = ref<SizeType>('large');
-        const selectedThemeValue = ref<ComponentType>('primary');
-        
-        const customFunctions = reactive({
-          CHAR21: () => {}, /* (number) => {          number = FormulaHelpers.accept(number, Types.NUMBER);
-                  if (number > 255 || number < 1)
-                    throw FormulaError.VALUE;
-                  return String.fromCharCode(number + 21);
-                }*/
-          CHAR22: () => {} /* (number) => {
-                  number = FormulaHelpers.accept(number, Types.NUMBER);
-                  if (number > 255 || number < 1)
-                    throw FormulaError.VALUE;
-                  return String.fromCharCode(number + 22);
-                }*/
-        });
-        
-        const gridData = reactive([{
-          name: 'sheet 1ABC',
-          r: 10,
-          c: 20,
-          status: 0,
-          index: 0,
-          order: 0,
-          hide: 0,
-          config: {
-            freeze: {
-              l: 2,
-              t: 3,
-              r: 9,
-              b: 12
-            },
-            merge: [{
-              r: 2,
-              c: 3,
-              rs: 3,
-              cs: 4
-            }],
-            rh: [{
-              r: 2,
-              h: 48
-            }, {
-              r: 4,
-              h: 48
-            }],
-            cw: [{
-              c: 3,
-              w: 120
-            }, {
-              c: 7,
-              w: 148
-            }],
-            rv: [{
-              r: 7,
-              v: 0
-            }, {
-              r: 8,
-              v: 0
-            }],
-            cv: [{
-              c: 7,
-              v: 0
-            }],
-            border: [{
-              type: 'cell',
-              r: 7,
-              c: 7,
-              v: {
-                l: {
-                  s: 1,
-                  cl: 'red'
-                },
-                r: {
-                  s: 1,
-                  cl: 'rgba(99,99,99,0.7)'
-                },
-                t: {
-                  s: 1,
-                  cl: 'rgb(200,200,200)'
-                },
-                b: {
-                  s: 1,
-                  cl: '#56789A'
-                }
-              }
-            }, {
-              type: 'range',
-              r: [8, 9],
-              c: [4, 6],
-              bt: 'border-all',
-              s: 1,
-              cl: 'cyan'
-            }]
-          },
-          data: [
-            {
-              r: 1,
-              c: 2,
-              name: 'B1',
-              v: '35'
-            },
-            {
-              r: 1,
-              c: 3,
-              name: 'C1',
-              v: '=3 / 10'
-            },
-            {
-              r: 1,
-              c: 4,
-              name: 'D1',
-              v: '= 1 - EXP(C1 ^ 3)'
-            },
-            {
-              r: 10,
-              c: 20,
-              name: 'T10',
-              v: '=D1 + 3'
-            },
-            {
-              r: 2,
-              c: 4,
-              name: 'D2',
-              v: '=SUM(B1, T10) + AD50'
-            },
-            {
-              r: 7,
-              c: 4,
-              name: 'D7',
-              v: '值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1值1'
-            },
-            {
-              r: 50,
-              c: 30,
-              name: 'AD50',
-              v: '=2  *D2 + C1* 1.7'
-            },
-            {
-              r: 36,
-              c: 30,
-              name: 'AD36',
-              v: '=CHAR22(B1)'
-            }
-          ]
-        }, {
-          name: 'sheet 2',
-          r: 15,
-          c: 25,
-          status: 0,
-          index: 1,
-          order: 1,
-          hide: 0,
-          data: []
-        }]);
+::: code-group
+```size值
+size: 'large' | 'normal' | 'small' | 'mini'
+```
+:::
 
-      return {
-        selectedSizeValue,
-        selectedThemeValue,
-        customFunctions,
-        gridData,
-      }
-    },
-  })
+<script lang="ts">
+import {defineComponent, onMounted, reactive, ref, watch} from "vue";
+
+export default defineComponent({
+  name: "HelloWorld",
+  setup() {
+    const size = ref('normal');
+
+    onMounted(() => {
+      console.log(data)
+    });
+
+    const mapData = reactive({
+      data: [{
+        p: 'A1',
+        v: 1
+      }, {
+        p: 'A2',
+        v: 2
+      }, {
+        p: 'A3',
+        v: 3
+      }, {
+        p: 'A4',
+        v: 4
+      }, {
+        p: 'A20',
+        v: '= T20 - 2'
+      }, {
+        p: 'B1',
+        v: '= SUM(A3, 6)'
+      }, {
+        p: 'B2',
+        v: '= A2 + 2 + SQRT(2)'
+      }, {
+        p: 'B3',
+        v: '= A3 + 2'
+      }, {
+        p: 'B4',
+        v: '= A4 + 2'
+      }, {
+        p: 'B5',
+        v: '= SUM(A1:A4)'
+      }, {
+        p: 'T20',
+        v: '= A20 + 2'
+      },]
+    });
+
+    const arrayData = reactive([
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [
+        '= A1 + 2', '= B1 + 2', '= C1 + 2', '= D1 + 2', '= E1 + 2',
+        '= F1 + 2', '= G1 + 2', '= H1 + 2', '= I1 + 2', '= J1 + 2',
+        '= K1 + 2', '= L1 + 2', '= M1 + 2', '= N1 + 2', '= O1 + 2',
+        '= P1 + 2', '= Q1 + 2', '= R1 + 2', '= S1 + 2', '= T1 + 2'
+      ],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    ]);
+
+    const confs = reactive({
+    });
+
+    const data = reactive({
+      conf: confs,
+      type: 'map',
+      arrayData: arrayData,
+      mapData: mapData
+    });
+
+    return {
+      data,
+      size
+    }
+  }
+})
 </script>
+
+<style scoped>
+.fieldset {
+    border: none;
+    display: inline-block;
+    vertical-align: top; /* enter your desired option */
+
+    > span {
+        margin-right: 10px;
+    }
+}
+</style>
