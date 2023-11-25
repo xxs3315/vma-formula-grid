@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-    base: '/vma-formula-grid',
+    base: '/vma-formula-grid/',
     lang: 'zh-CN',
     title: 'vma-formula-grid',
     description: 'Vite & Vue powered grid table.',
