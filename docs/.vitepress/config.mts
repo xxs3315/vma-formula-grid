@@ -4,7 +4,6 @@ export default defineConfig({
     lang: 'zh-CN',
     title: 'vma-formula-grid',
     description: 'Vite & Vue powered grid table.',
-    outDir: '../docs-dist',
     themeConfig: {
         logo: '/logo.svg',
         sidebar: [
