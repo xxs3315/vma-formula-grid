@@ -3660,7 +3660,16 @@ export default defineComponent({
                         }
                         if (props.data && props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('colHide') && props.data.conf.colHide.length) {
                             for (let i = 0; i < props.data.conf.colHide.length; i++) {
-                                if (getColumnCount(props.data.conf.colHide[i]) === index) {
+                                if (props.data.conf.colHide[i].indexOf(':') >= 0) {
+                                    const colsRange = props.data.conf.colHide[i].split(':');
+                                    const colStart = Math.min(getColumnCount(colsRange[0]), getColumnCount(colsRange[1]));
+                                    const colEnd = Math.max(getColumnCount(colsRange[0]), getColumnCount(colsRange[1]));
+                                    if (index >= colStart && index <= colEnd) {
+                                        colVisible = false;
+                                        gridReactiveData.columnHidesChanged[`${index}`] = 0;
+                                        break;
+                                    }
+                                } else if (getColumnCount(props.data.conf.colHide[i]) === index) {
                                     colVisible = false;
                                     gridReactiveData.columnHidesChanged[`${index}`] = 0;
                                     break;
@@ -3685,7 +3694,16 @@ export default defineComponent({
                         }
                         if (props.data && props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('rowHide') && props.data.conf.rowHide.length) {
                             for (let i = 0; i < props.data.conf.rowHide.length; i++) {
-                                if (props.data.conf.rowHide[i] === index + 1) {
+                                if (typeof props.data.conf.rowHide[i] === 'string' && props.data.conf.rowHide[i].indexOf(':') >= 0) {
+                                    const rowsRange = props.data.conf.rowHide[i].split(':');
+                                    const rowStart = Math.min(Number(rowsRange[0]), Number(rowsRange[1]));
+                                    const rowEnd = Math.max(Number(rowsRange[0]), Number(rowsRange[1]));
+                                    if (index + 1 >= rowStart && index + 1 <= rowEnd) {
+                                        rowVisible = false;
+                                        gridReactiveData.rowHidesChanged[`${index + 1}`] = 0;
+                                        break;
+                                    }
+                                } else if (props.data.conf.rowHide[i] === index + 1) {
                                     rowVisible = false;
                                     gridReactiveData.rowHidesChanged[`${index + 1}`] = 0;
                                     break;

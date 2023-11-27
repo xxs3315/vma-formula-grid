@@ -467,8 +467,8 @@ export default defineComponent({
                 { col: 'B', width: 200 },
                 { col: 'H', width: 200 },
             ],
-            rowHide: [9, 15, 16, 17, 18, 19],
-            colHide: ['D', 'F', 'G'],
+            rowHide: [9, '15:19'],
+            colHide: ['D:F', 'H'],
             merges: ['A1:I3', 'A4:A12', 'A120:A165'],
             styles: {
                 bgc: [
