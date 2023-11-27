@@ -1,76 +1,60 @@
 ---
 lang: zh-CN
-title: 基础表格-列宽行高
-description: 基础表格-列宽行高
+title: 基础表格-隐藏/显示行列
+description: 基础表格-隐藏/显示行列
 ---
 
-# 列宽行高
+# 隐藏/显示行列
 
-## 列宽
+## 隐藏/显示列
 
 <vma-formula-grid
+ref="vfg"
 :data="data"
 :size="size"
 style="width: 100%; height: 500px;"
 />
 
-- 可以在数据配置中预设列的width: 取值为非负整数, 单位为px
+- 可以在数据配置中预设需要隐藏的列: 取值为单个列名称(如"A")或列范围(如"B:D")
 
 ::: code-group
 ```json
 {
   "conf": {
-    "colWidth": [
-      {
-        "col": "B",
-        "width": 200
-      },
-      {
-        "col": "H",
-        "width": 200
-      }
-    ]
+    "colHide": ["B:D", "F", "G"]
   }
 }
 ```
 :::
 
-- 可以在运行时动态调整列宽
+- 可以在运行时动态设置列的隐藏/显示
 
-![本地路径](./basic-table-column-width-row-height/column-width-change.gif "可以在运行时动态调整列宽")
+![本地路径](./basic-table-column-row-hide-show/column-hide-show-change.gif "可以在运行时动态设置列隐藏/显示")
 
-## 行高
+## 隐藏/显示行
 
 <vma-formula-grid
+ref="vfg1"
 :data="data1"
 :size="size"
 style="width: 100%; height: 500px;"
 />
 
-- 可以在数据配置中预设行的height: 取值为整数, 单位为px
+- 可以在数据配置中预设需要隐藏的行: 取值为单个行序号(如2)或行范围(如"4:12")
 
 ::: code-group
 ```json
 {
   "conf": {
-    "rowHeight": [
-      {
-        "row": 2,
-        "height": 48
-      },
-      {
-        "row": 4,
-        "height": 96
-      }
-    ]
+    "rowHide": [2, "15:7"]
   }
 }
 ```
 :::
 
-- 可以在运行时动态调整行高
+- 可以在运行时动态设置行的隐藏/显示
 
-![本地路径](./basic-table-column-width-row-height/row-height-change.gif "可以在运行时动态调整行高")
+![本地路径](./basic-table-column-row-hide-show/row-hide-show-change.gif "可以在运行时动态设置列隐藏/显示")
 
 <script lang="ts">
 import {defineComponent, onMounted, reactive, ref, watch} from "vue";
@@ -79,6 +63,10 @@ export default defineComponent({
   name: "HelloWorld",
   setup() {
     const size = ref('normal');
+
+    const vfg = ref<VmaFormulaGridInstance>(null);
+
+    const vfg1 = ref<VmaFormulaGridInstance>(null);
 
     onMounted(() => {
       console.log(data)
@@ -155,17 +143,11 @@ export default defineComponent({
     ]);
 
     const confs = reactive({
-        colWidth: [
-            { col: 'B', width: 200 },
-            { col: 'H', width: 200 },
-        ],
+        colHide: ["B:D", "F", "G"]
     });
 
     const confs1 = reactive({
-        rowHeight: [
-            { row: 2, height: 48 },
-            { row: 4, height: 96 },
-        ],
+        rowHide: [2, "15:7"]
     });
 
     const data = reactive({
@@ -185,7 +167,9 @@ export default defineComponent({
     return {
       data,
       data1,
-      size
+      size,
+      vfg,
+      vfg1,
     }
   }
 })

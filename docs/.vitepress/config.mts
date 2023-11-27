@@ -21,7 +21,7 @@ export default defineConfig({
                     { text: '基础', link: '/basic-table/basic-table-basic' },
                     { text: '尺寸', link: '/basic-table/basic-table-size' },
                     { text: '列宽行高', link: '/basic-table/basic-table-column-width-row-height' },
-                    { text: '自动换行', link: '/item-3' },
+                    { text: '隐藏/显示行列', link: '/basic-table/basic-table-column-row-hide-show' },
                     { text: '单元格工具提示', link: '/item-3' },
                     { text: '单元格溢出省略号', link: '/item-3' },
                     { text: '斑马线条纹', link: '/item-3' },
