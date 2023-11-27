@@ -108,6 +108,7 @@ export default defineComponent({
                                                       'a',
                                                       {
                                                           class: 'link',
+                                                          href: 'javascript:void(0)',
                                                           onClick(event: Event) {
                                                               if ($vmaFormulaGrid.ctxMenuLinkEvent) {
                                                                   $vmaFormulaGrid.ctxMenuLinkEvent(event, option);
@@ -198,6 +199,7 @@ export default defineComponent({
                                                                                   'a',
                                                                                   {
                                                                                       class: 'link',
+                                                                                      href: 'javascript:void(0)',
                                                                                   },
                                                                                   [
                                                                                       h(
@@ -255,6 +257,7 @@ export default defineComponent({
                                                                                   'a',
                                                                                   {
                                                                                       class: 'link',
+                                                                                      href: 'javascript:void(0)',
                                                                                   },
                                                                                   [
                                                                                       h(
@@ -365,6 +368,7 @@ export default defineComponent({
                                                                                   'a',
                                                                                   {
                                                                                       class: 'link',
+                                                                                      href: 'javascript:void(0)',
                                                                                   },
                                                                                   [
                                                                                       h(
@@ -425,6 +429,7 @@ export default defineComponent({
                                                                                   'a',
                                                                                   {
                                                                                       class: 'link',
+                                                                                      href: 'javascript:void(0)',
                                                                                       onClick(event: Event) {
                                                                                           if ($vmaFormulaGrid.ctxMenuLinkEvent) {
                                                                                               $vmaFormulaGrid.ctxMenuLinkEvent(event, child);
