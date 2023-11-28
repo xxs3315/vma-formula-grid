@@ -286,3 +286,29 @@ export const getFontFamilyChFromEn = (en: string) => {
 };
 
 export const supportedFontSizes = () => [6, 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 64, 72, 144, 288];
+
+export const predefinedFontFormatter = () => {
+    return {
+        n: {
+            general: '0.00',
+            percent: '0.00%',
+            science: '0.00E+0',
+            fraction: '0/0',
+            thousands: '###,###',
+        },
+        d: {
+            time: 'hh:mm:ss AM/PM',
+            shortDate: 'yyyy-mm-dd dddd',
+            longDate: 'yyyy-mm-dd hh:mm:ss AM/PM',
+        },
+        c: {
+            cny: '#,##0.00" ¥"',
+            usd: '$#,##0.00',
+            euro: '#,##0" €"',
+            others: [
+                { key: '英镑', value: '"£ "#,##0.00' },
+                { key: '韩元', value: '"₩ "#,##0.00' },
+            ],
+        },
+    };
+};

@@ -38,6 +38,7 @@ import {
     calcXOverlapMerges,
     calcYOverlapMerges,
     checkCellInMerges,
+    deepAssign,
     filterVertexes,
     getColumnCount,
     getColumnSymbol,
@@ -66,7 +67,7 @@ import { DepParser, FormulaParser } from '../../formula';
 import GlobalEvent from '../../utils/events.ts';
 import VmaFormulaGrid from '../../v-m-a-formula-grid';
 import { DomTools } from '../../utils/doms.ts';
-import { getFontFamilyChFromEn, supportedFonts, supportedFontSizes } from '../../utils/font.ts';
+import { getFontFamilyChFromEn, predefinedFontFormatter, supportedFonts, supportedFontSizes } from '../../utils/font.ts';
 import { Locale, type Lang } from '../../lang';
 import grid from './index.ts';
 
@@ -3605,7 +3606,9 @@ export default defineComponent({
 
                     if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('global')) {
                         if (Object.keys(props.data.conf.global).length > 0) {
-                            gridReactiveData.global = Object.assign({}, props.data.conf.global);
+                            gridReactiveData.global = deepAssign({ formats: predefinedFontFormatter() }, props.data.conf.global);
+                        } else {
+                            gridReactiveData.global = deepAssign({ formats: predefinedFontFormatter() });
                         }
                     }
 

@@ -2543,3 +2543,15 @@ export function nextZIndex() {
 export function getLastZIndex() {
     return lastZIndex;
 }
+
+export function deepAssign(...param: any) {
+    let result = Object.assign({}, ...param);
+    for (let item of param) {
+        for (let [idx, val] of Object.entries(item)) {
+            if (typeof val === 'object') {
+                result[idx] = deepAssign(result[idx], val);
+            }
+        }
+    }
+    return result;
+}
