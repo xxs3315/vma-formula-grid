@@ -6,7 +6,7 @@ description: 基础表格-基础
 
 # 基础表格
 
-## 基本用法
+## 基础用法
 
 <p><vma-formula-grid-comp-input size="mini" placeholder="迷你尺寸"/></p>
 <p><vma-formula-grid-comp-input size="small" placeholder="小尺寸" /></p>

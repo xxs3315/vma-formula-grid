@@ -6,7 +6,7 @@ description: 基础表格-基础
 
 # 基础表格
 
-## 基本用法
+## 基础用法
 
 <p><vma-formula-grid-comp-select size="mini" :options="list42" v-model="val42" @change="changeEvent" /></p>
 

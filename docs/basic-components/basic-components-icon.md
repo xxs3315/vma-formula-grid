@@ -6,7 +6,7 @@ description: 基础表格-基础
 
 # 基础表格
 
-## 基本用法
+## 基础用法
 
 <p style="border-bottom: 1px solid black"><vma-formula-grid-comp-icon name="bookmark" size="mini" type="default" />ABC</p>
 <p style="border-bottom: 1px solid black"><vma-formula-grid-comp-icon name="bookmark" size="small" type="default" />ABC</p>

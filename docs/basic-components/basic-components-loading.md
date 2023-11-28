@@ -6,7 +6,7 @@ description: 基础表格-基础
 
 # 基础表格
 
-## 基本用法
+## 基础用法
 
 <p>
 <vma-formula-grid-comp-loading size="mini">测试</vma-formula-grid-comp-loading>

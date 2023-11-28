@@ -6,7 +6,7 @@ description: 基础表格-尺寸
 
 # 尺寸
 
-## 基本用法
+## 基础用法
 
 <fieldset class="fieldset">
     <legend>选择尺寸:</legend>
@@ -35,7 +35,7 @@ description: 基础表格-尺寸
 />
 
 ::: code-group
-```size值
+```ts
 size: 'large' | 'normal' | 'small' | 'mini'
 ```
 :::
