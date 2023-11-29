@@ -29,6 +29,7 @@ export default defineConfig({
                     { text: '单元格字体样式', link: '/basic-table/basic-table-cell-font-style' },
                     { text: '单元格格式', link: '/basic-table/basic-table-cell-format' },
                     { text: '合并单元格', link: '/basic-table/basic-table-cell-merge' },
+                    { text: '多语言支持', link: '/basic-table/basic-table-i18n-support' },
                 ],
             },
             {
