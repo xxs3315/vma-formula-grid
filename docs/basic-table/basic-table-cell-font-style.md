@@ -15,7 +15,7 @@ description: 基础表格-单元格字体样式
 style="width: 100%; height: 500px;"
 />
 
-- 可以在数据配置中预设单元格的字体样式:
+### 在数据配置中预设单元格的字体样式:
 - type: columns | rows | cells
 - p: 列或列范围数组 | 行或行范围数组 | 单元格或单元格范围
 ---
@@ -157,7 +157,7 @@ style="width: 100%; height: 500px;"
 ```
 :::
 
-- 可以在运行时动态设置单元格字体样式
+### 在运行时动态设置单元格字体样式
 
 ![本地路径](./basic-table-cell-font-style/cell-font-style-change.gif "可以在运行时动态设置单元格字体样式")
 

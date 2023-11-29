@@ -15,7 +15,7 @@ ref="vfg"
 style="width: 100%; height: 500px;"
 />
 
-- 可以在数据配置中预设需要隐藏的列: 取值为单个列名称(如"A")或列范围(如"B:D")
+### 在数据配置中预设需要隐藏的列: 取值为单个列名称(如"A")或列范围(如"B:D")
 
 ::: code-group
 ```json
@@ -27,7 +27,7 @@ style="width: 100%; height: 500px;"
 ```
 :::
 
-- 可以在运行时动态设置列的隐藏/显示
+### 在运行时动态设置列的隐藏/显示
 
 ![本地路径](./basic-table-column-row-hide-show/column-hide-show-change.gif "可以在运行时动态设置列隐藏/显示")
 
@@ -40,7 +40,7 @@ ref="vfg1"
 style="width: 100%; height: 500px;"
 />
 
-- 可以在数据配置中预设需要隐藏的行: 取值为单个行序号(如2)或行范围(如"4:12")
+### 在数据配置中预设需要隐藏的行: 取值为单个行序号(如2)或行范围(如"4:12")
 
 ::: code-group
 ```json
@@ -52,7 +52,7 @@ style="width: 100%; height: 500px;"
 ```
 :::
 
-- 可以在运行时动态设置行的隐藏/显示
+### 在运行时动态设置行的隐藏/显示
 
 ![本地路径](./basic-table-column-row-hide-show/row-hide-show-change.gif "可以在运行时动态设置列隐藏/显示")
 

@@ -8,13 +8,13 @@ description: 基础表格-插入/删除行列
 
 ## 插入/删除列
 
-- 可以在运行时动态插入/删除列
+### 在运行时动态插入/删除列
 
 ![本地路径](./basic-table-insert-delete-column-row/column-insert-delete-change.gif "可以在运行时动态插入/删除列")
 
 ## 插入/删除行
 
-- 可以在运行时动态插入/删除行
+### 在运行时动态插入/删除行
 
 ![本地路径](./basic-table-insert-delete-column-row/row-insert-delete-change.gif "可以在运行时动态插入/删除行")
 

@@ -14,7 +14,7 @@ description: 基础表格-列宽行高
 style="width: 100%; height: 500px;"
 />
 
-- 可以在数据配置中预设列的width: 取值为非负整数, 单位为px
+### 在数据配置中预设列的width: 取值为非负整数, 单位为px
 
 ::: code-group
 ```json
@@ -35,7 +35,7 @@ style="width: 100%; height: 500px;"
 ```
 :::
 
-- 可以在运行时动态调整列宽
+### 在运行时动态调整列宽
 
 ![本地路径](./basic-table-column-width-row-height/column-width-change.gif "可以在运行时动态调整列宽")
 
@@ -47,7 +47,7 @@ style="width: 100%; height: 500px;"
 style="width: 100%; height: 500px;"
 />
 
-- 可以在数据配置中预设行的height: 取值为整数, 单位为px
+### 在数据配置中预设行的height: 取值为整数, 单位为px
 
 ::: code-group
 ```json
@@ -68,7 +68,7 @@ style="width: 100%; height: 500px;"
 ```
 :::
 
-- 可以在运行时动态调整行高
+### 在运行时动态调整行高
 
 ![本地路径](./basic-table-column-width-row-height/row-height-change.gif "可以在运行时动态调整行高")
 

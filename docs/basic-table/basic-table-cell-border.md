@@ -15,7 +15,7 @@ description: 基础表格-单元格边框
 style="width: 100%; height: 500px;"
 />
 
-- 可以在数据配置中预设行/列、单元格的边框: 
+### 在数据配置中预设行/列、单元格的边框: 
 - type: columns | rows | cells
 - p: 列或列范围数组 | 行或行范围数组 | 单元格或单元格范围
 - details: none | full | outer | inner | top | right | bottom | left
@@ -45,7 +45,7 @@ style="width: 100%; height: 500px;"
 ```
 :::
 
-- 可以在运行时动态设置单元格边框
+### 在运行时动态设置单元格边框
 
 ![本地路径](./basic-table-cell-border/cell-border-change.gif "可以在运行时动态设置单元格边框")
 

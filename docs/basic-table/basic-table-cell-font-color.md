@@ -15,7 +15,7 @@ description: 基础表格-单元格字体颜色
 style="width: 100%; height: 500px;"
 />
 
-- 可以在数据配置中预设单元格的颜色:
+### 在数据配置中预设单元格的颜色:
 - type: columns | rows | cells
 - p: 列或列范围数组 | 行或行范围数组 | 单元格或单元格范围
 - color: 支持预设的web color(如red/black/blue等)/rgba函数/rgb函数/十六进制Hex-Color/none(表示不指定任何字体颜色，使用系统默认渲染)
@@ -42,7 +42,7 @@ style="width: 100%; height: 500px;"
 ```
 :::
 
-- 可以在运行时动态设置单元格字体颜色
+### 在运行时动态设置单元格字体颜色
 
 ![本地路径](./basic-table-cell-font-color/cell-font-color-change.gif "可以在运行时动态设置单元格字体颜色")
 
