@@ -543,7 +543,7 @@ export default defineComponent({
                 { p: 'J28', type: 'cells', details: { type: 'n', v: '##0/##0' } },
                 { p: 'G7:K26', type: 'cells', details: { type: 'n', v: '0.0%' } },
                 { p: [1, 5, 6, 7, 8], type: 'rows', details: { type: 'c', v: '$#,##0.00' } },
-                { p: 'L61', type: 'cells', details: { type: 'c', v: '#,##0.00" ￥"' } },
+                { p: 'L61', type: 'cells', details: { type: 'c', v: '#,##0.00" ¥"' } },
                 { p: 'C6:D7', type: 'cells', details: { type: 'd', v: 'yyyy-mm-dd dddd' } },
                 { p: 'E10:F17', type: 'cells', details: { type: 'd', v: 'yyyy-mm-dd hh:mm AM/PM' } },
             ],
