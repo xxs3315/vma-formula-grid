@@ -1,10 +1,10 @@
 ---
 lang: zh-CN
-title: 基础表格-单元格合并
-description: 基础表格-单元格合并
+title: 基础表格-合并单元格
+description: 基础表格-合并单元格
 ---
 
-# 单元格合并
+# 合并单元格
 
 ## 基础用法
 
@@ -15,7 +15,7 @@ description: 基础表格-单元格合并
 style="width: 100%; height: 500px;"
 />
 
-### 在数据配置中预设单元格合并:
+### 在数据配置中预设合并单元格:
 - 接受一个单元格范围格式的字符串数组, 需要注意的是, 如果配置的范围有交错, 则配置在后的范围会被忽略
 
 ::: code-group
@@ -28,9 +28,9 @@ style="width: 100%; height: 500px;"
 ```
 :::
 
-### 在运行时动态设置单元格合并/取消合并
+### 在运行时动态设置合并单元格/取消合并
 
-![本地路径](./basic-table-cell-merge/cell-merge-change.gif "可以在运行时动态设置单元格合并/取消合并")
+![本地路径](./basic-table-cell-merge/cell-merge-change.gif "可以在运行时动态设置合并单元格/取消合并")
 
 <script lang="ts">
 import {defineComponent, onMounted, reactive, ref, watch} from "vue";
