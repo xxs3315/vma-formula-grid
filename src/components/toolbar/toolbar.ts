@@ -1,23 +1,14 @@
-import {defineComponent, reactive} from "vue";
-import {Guid} from "../../utils/guid.ts";
-import {
-    VmaFormulaGridCompToolbarReactiveData, VmaFormulaGridCompToolbarRefs,
-    VmaFormulaGridCompToolbarConstructor,
-    VmaFormulaGridCompToolbarMethods
-} from "../../../types";
+import { defineComponent, reactive } from 'vue';
+import { Guid } from '../../utils/guid.ts';
+import { VmaFormulaGridCompToolbarReactiveData, VmaFormulaGridCompToolbarRefs, VmaFormulaGridCompToolbarConstructor, VmaFormulaGridCompToolbarMethods } from '../../../types';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompToolbar',
-    props: {
-
-    },
+    props: {},
     setup(props, context) {
+        const reactiveData = reactive({} as VmaFormulaGridCompToolbarReactiveData);
 
-        const reactiveData = reactive({
-        } as VmaFormulaGridCompToolbarReactiveData);
-
-        const gridToolbarRefs: VmaFormulaGridCompToolbarRefs = {
-        };
+        const gridToolbarRefs: VmaFormulaGridCompToolbarRefs = {};
 
         const $vmaToolbar = {
             uId: Guid.create().toString(),
@@ -31,4 +22,4 @@ export default defineComponent({
     render() {
         return this.renderVN();
     },
-})
+});
