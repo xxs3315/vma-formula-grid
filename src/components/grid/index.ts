@@ -18,6 +18,7 @@ import VmaFormulaGridCompCodeMirror from '../code-mirror/code-mirror.ts';
 import VmaFormulaGridCompSelect from '../select/select.ts';
 import VmaFormulaGridCompSelectOptionGroup from '../select/option-group.ts';
 import VmaFormulaGridCompSelectOption from '../select/option.ts';
+import VmaFormulaGridCompToolbar from '../toolbar/toolbar.ts';
 import { App } from 'vue';
 import { injectGlobalConfig } from '../code-mirror/config.ts';
 import { Props } from '../code-mirror/props.ts';
@@ -43,6 +44,7 @@ export const VmaFormulaGrid = Object.assign(VmaFormulaGridComp, {
         app.component('VmaFormulaGridCompSelect', VmaFormulaGridCompSelect);
         app.component('VmaFormulaGridCompSelectOptionGroup', VmaFormulaGridCompSelectOptionGroup);
         app.component('VmaFormulaGridCompSelectOption', VmaFormulaGridCompSelectOption);
+        app.component('VmaFormulaGridCompToolbar', VmaFormulaGridCompToolbar);
         injectGlobalConfig(app, defaultConfig);
     },
 });
