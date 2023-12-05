@@ -54,6 +54,13 @@
             </fieldset>
 
             <fieldset class="fieldset">
+                <legend>Toolbar:</legend>
+                <span>
+                    <vma-formula-grid-comp-toolbar ref="vfgt" />
+                </span>
+            </fieldset>
+
+            <fieldset class="fieldset">
                 <legend>Select horizontal virtual scroll:</legend>
                 <span>
                     <input type="radio" id="virtualScrollXTrue" v-model="virtualScrollX" :value="true" checked />
@@ -93,13 +100,6 @@
                 <legend>Get current grid conf & data:</legend>
                 <span>
                     <input type="button" @click="getCurrentGridConfData" value="Get!" />
-                </span>
-            </fieldset>
-
-            <fieldset class="fieldset">
-                <legend>Toolbar:</legend>
-                <span>
-                    <vma-formula-grid-comp-toolbar ref="vfgt" />
                 </span>
             </fieldset>
         </div>

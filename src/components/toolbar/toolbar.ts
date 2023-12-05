@@ -9,8 +9,9 @@ import {
     VmaFormulaGridMethods,
     VmaFormulaGridPrivateMethods,
     VmaFormulaGridCompTextareaPropTypes,
+    VmaFormulaGridInstance,
 } from '../../../types';
-import { toolbarButtons } from '../../utils';
+import { checkCellInMerges, toolbarButtons } from '../../utils';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompToolbar',
@@ -26,22 +27,30 @@ export default defineComponent({
         content: [] as PropType<any[]>,
     },
     setup(props, context) {
-        const reactiveData = reactive({} as VmaFormulaGridCompToolbarReactiveData);
+        const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
+
+        const toolbarReactiveData = reactive({} as VmaFormulaGridCompToolbarReactiveData);
+
+        const { uId, reactiveData } = $vmaFormulaGrid;
 
         const FormulaGridCompToolbarGenericComponent = resolveComponent('VmaFormulaGridCompToolbarGeneric') as ComponentOptions;
         const FormulaGridCompToolbarSeperatorComponent = resolveComponent('VmaFormulaGridCompToolbarSeparator') as ComponentOptions;
-
-        const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
 
         const gridToolbarRefs: VmaFormulaGridCompToolbarRefs = {};
 
         let $vmaFormulaGridConnected: VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods;
 
+        const toolbarMethods = {
+            sync: (grid: VmaFormulaGridConstructor | VmaFormulaGridInstance) => {
+                $vmaFormulaGridConnected = grid;
+            },
+        } as VmaFormulaGridCompToolbarMethods;
+
         const $vmaToolbar = {
-            uId: Guid.create().toString(),
+            uId: uId,
             props,
             context,
-            reactiveData,
+            toolbarReactiveData,
             getRefs: () => gridToolbarRefs,
         } as unknown as VmaFormulaGridCompToolbarConstructor & VmaFormulaGridCompToolbarMethods;
 
@@ -54,6 +63,89 @@ export default defineComponent({
                     bottons.push(
                         h(FormulaGridCompToolbarGenericComponent, {
                             item: item,
+                            onClick: (_: Event) => {
+                                if (item.code === 'bold') {
+                                    if (
+                                        $vmaFormulaGridConnected &&
+                                        $vmaFormulaGridConnected.reactiveData.currentAreaSci >= 0 &&
+                                        $vmaFormulaGridConnected.reactiveData.currentAreaEci >= 0 &&
+                                        $vmaFormulaGridConnected.reactiveData.currentAreaSri >= 0 &&
+                                        $vmaFormulaGridConnected.reactiveData.currentAreaEri >= 0
+                                    ) {
+                                        let initValue = false;
+                                        for (let col = $vmaFormulaGridConnected.reactiveData.currentAreaSci; col <= $vmaFormulaGridConnected.reactiveData.currentAreaEci; col++) {
+                                            for (
+                                                let row = $vmaFormulaGridConnected.reactiveData.currentAreaSri;
+                                                row <= $vmaFormulaGridConnected.reactiveData.currentAreaEri;
+                                                row++
+                                            ) {
+                                                if (
+                                                    $vmaFormulaGridConnected.reactiveData.currentSheetData[row][col + 1].b &&
+                                                    !checkCellInMerges(col + 1, row + 1, $vmaFormulaGridConnected.reactiveData.merges)
+                                                ) {
+                                                    initValue = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        $vmaFormulaGridConnected.setFontStyle('cells', 'fontBold', initValue);
+                                    }
+                                }
+                                if (item.code === 'italic') {
+                                    if (
+                                        $vmaFormulaGridConnected &&
+                                        $vmaFormulaGridConnected.reactiveData.currentAreaSci >= 0 &&
+                                        $vmaFormulaGridConnected.reactiveData.currentAreaEci >= 0 &&
+                                        $vmaFormulaGridConnected.reactiveData.currentAreaSri >= 0 &&
+                                        $vmaFormulaGridConnected.reactiveData.currentAreaEri >= 0
+                                    ) {
+                                        let initValue = false;
+                                        for (let col = $vmaFormulaGridConnected.reactiveData.currentAreaSci; col <= $vmaFormulaGridConnected.reactiveData.currentAreaEci; col++) {
+                                            for (
+                                                let row = $vmaFormulaGridConnected.reactiveData.currentAreaSri;
+                                                row <= $vmaFormulaGridConnected.reactiveData.currentAreaEri;
+                                                row++
+                                            ) {
+                                                if (
+                                                    $vmaFormulaGridConnected.reactiveData.currentSheetData[row][col + 1].i &&
+                                                    !checkCellInMerges(col + 1, row + 1, $vmaFormulaGridConnected.reactiveData.merges)
+                                                ) {
+                                                    initValue = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        $vmaFormulaGridConnected.setFontStyle('cells', 'fontItalic', initValue);
+                                    }
+                                }
+                                if (item.code === 'underline') {
+                                    if (
+                                        $vmaFormulaGridConnected &&
+                                        $vmaFormulaGridConnected.reactiveData.currentAreaSci >= 0 &&
+                                        $vmaFormulaGridConnected.reactiveData.currentAreaEci >= 0 &&
+                                        $vmaFormulaGridConnected.reactiveData.currentAreaSri >= 0 &&
+                                        $vmaFormulaGridConnected.reactiveData.currentAreaEri >= 0
+                                    ) {
+                                        let initValue = false;
+                                        for (let col = $vmaFormulaGridConnected.reactiveData.currentAreaSci; col <= $vmaFormulaGridConnected.reactiveData.currentAreaEci; col++) {
+                                            for (
+                                                let row = $vmaFormulaGridConnected.reactiveData.currentAreaSri;
+                                                row <= $vmaFormulaGridConnected.reactiveData.currentAreaEri;
+                                                row++
+                                            ) {
+                                                if (
+                                                    $vmaFormulaGridConnected.reactiveData.currentSheetData[row][col + 1].u &&
+                                                    !checkCellInMerges(col + 1, row + 1, $vmaFormulaGridConnected.reactiveData.merges)
+                                                ) {
+                                                    initValue = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        $vmaFormulaGridConnected.setFontStyle('cells', 'fontUnderline', initValue);
+                                    }
+                                }
+                            },
                         }),
                     );
                 }
@@ -71,6 +163,7 @@ export default defineComponent({
             );
 
         $vmaToolbar.renderVN = renderVN;
+        Object.assign($vmaToolbar, toolbarMethods);
 
         return $vmaToolbar;
     },

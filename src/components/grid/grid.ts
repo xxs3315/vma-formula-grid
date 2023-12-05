@@ -611,6 +611,9 @@ export default defineComponent({
             connectToolbar: (toolbar: VmaFormulaGridCompToolbarConstructor | VmaFormulaGridCompToolbarInstance) => {
                 if (toolbar) {
                     $vmaFormulaGridCompToolbarConnected = toolbar;
+                    if ($vmaFormulaGrid) {
+                        $vmaFormulaGridCompToolbarConnected.sync($vmaFormulaGrid);
+                    }
                 }
                 return nextTick();
             },
