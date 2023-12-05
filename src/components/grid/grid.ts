@@ -20,6 +20,8 @@ import {
 } from 'vue';
 import {
     LangProvider,
+    VmaFormulaGridCompToolbarConstructor,
+    VmaFormulaGridCompToolbarInstance,
     VmaFormulaGridConstructor,
     VmaFormulaGridEmits,
     VmaFormulaGridMethods,
@@ -306,6 +308,8 @@ export default defineComponent({
         const refCurrentAreaBorderBottom = ref() as Ref<HTMLDivElement>;
         const refCurrentAreaBorderLeft = ref() as Ref<HTMLDivElement>;
         const refCurrentAreaBorderCorner = ref() as Ref<HTMLDivElement>;
+
+        let $vmaFormulaGridCompToolbarConnected: VmaFormulaGridCompToolbarConstructor;
 
         const renderDefaultColWidth = computed(() => getRenderDefaultColWidth(props.defaultColumnWidth, props.size));
 
@@ -603,6 +607,12 @@ export default defineComponent({
 
                 // console.log(JSON.parse(JSON.stringify(result)));
                 return JSON.parse(JSON.stringify(result));
+            },
+            connectToolbar: (toolbar: VmaFormulaGridCompToolbarConstructor | VmaFormulaGridCompToolbarInstance) => {
+                if (toolbar) {
+                    $vmaFormulaGridCompToolbarConnected = toolbar;
+                }
+                return nextTick();
             },
         } as VmaFormulaGridMethods;
 

@@ -2555,3 +2555,18 @@ export function deepAssign(...param: any) {
     }
     return result;
 }
+
+export const isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+
+export const toolbarButtons = () => {
+    return [
+        { icon: 'alignleft', title: 'Align left', hotkey: isMacLike ? 'shift+command+l' : 'ctrl+shift+l' },
+        { icon: 'aligncenter', title: 'Align center', hotkey: isMacLike ? 'shift+command+e' : 'ctrl+shift+e' },
+        { icon: 'alignright', title: 'Align right', hotkey: isMacLike ? 'shift+command+r' : 'ctrl+shift+r' },
+        { icon: 'justify', title: 'Justify content', hotkey: isMacLike ? 'shift+command+j' : 'ctrl+shift+j' },
+        { is: 'Separator' },
+        { icon: 'format_bold', title: 'Bold', hotkey: isMacLike ? 'command+b' : 'ctrl+b' },
+        { icon: 'format_italic', title: 'Italic', hotkey: isMacLike ? 'command+i' : 'ctrl+i' },
+        { icon: 'format_underlined', title: 'Underline', hotkey: isMacLike ? 'command+u' : 'ctrl+u' },
+    ];
+};

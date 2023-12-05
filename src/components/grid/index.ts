@@ -19,6 +19,10 @@ import VmaFormulaGridCompSelect from '../select/select.ts';
 import VmaFormulaGridCompSelectOptionGroup from '../select/option-group.ts';
 import VmaFormulaGridCompSelectOption from '../select/option.ts';
 import VmaFormulaGridCompToolbar from '../toolbar/toolbar.ts';
+import VmaFormulaGridCompToolbarGeneric from '../toolbar/toolbar-generic.ts';
+import VmaFormulaGridCompToolbarSpacer from '../toolbar/toolbar-spacer.ts';
+import VmaFormulaGridCompToolbarSeparator from '../toolbar/toolbar-separator.ts';
+import VmaFormulaGridCompToolbarMenuSeparator from '../toolbar/toolbar-menu-separator.ts';
 import { App } from 'vue';
 import { injectGlobalConfig } from '../code-mirror/config.ts';
 import { Props } from '../code-mirror/props.ts';
@@ -45,6 +49,10 @@ export const VmaFormulaGrid = Object.assign(VmaFormulaGridComp, {
         app.component('VmaFormulaGridCompSelectOptionGroup', VmaFormulaGridCompSelectOptionGroup);
         app.component('VmaFormulaGridCompSelectOption', VmaFormulaGridCompSelectOption);
         app.component('VmaFormulaGridCompToolbar', VmaFormulaGridCompToolbar);
+        app.component('VmaFormulaGridCompToolbarGeneric', VmaFormulaGridCompToolbarGeneric);
+        app.component('VmaFormulaGridCompToolbarSpacer', VmaFormulaGridCompToolbarSpacer);
+        app.component('VmaFormulaGridCompToolbarSeparator', VmaFormulaGridCompToolbarSeparator);
+        app.component('VmaFormulaGridCompToolbarMenuSeparator', VmaFormulaGridCompToolbarMenuSeparator);
         injectGlobalConfig(app, defaultConfig);
     },
 });

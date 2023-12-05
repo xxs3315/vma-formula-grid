@@ -1,5 +1,5 @@
-import { RenderFunction, SetupContext } from 'vue';
-import { ComponentType, SizeType, VmaComponentInstance } from '../grid';
+import { ComponentPublicInstance, RenderFunction, SetupContext } from 'vue';
+import { ComponentType, SizeType, VmaComponentInstance, VmaFormulaGridConstructor, VmaFormulaGridInstance } from '../grid';
 
 export namespace VmaFormulaGridCompToolbarPropTypes {
     export type Size = SizeType;
@@ -11,7 +11,9 @@ export interface VmaFormulaGridCompToolbarProps {
     type?: VmaFormulaGridCompToolbarPropTypes.Type;
 }
 
-export interface VmaFormulaGridCompToolbarMethods {}
+export interface VmaFormulaGridCompToolbarMethods {
+    sync(grid: VmaFormulaGridConstructor | VmaFormulaGridInstance): void;
+}
 
 interface VmaFormulaGridCompToolbarPrivateMethods {}
 
@@ -30,4 +32,86 @@ export interface VmaFormulaGridCompToolbarConstructor extends VmaComponentInstan
     renderVN: RenderFunction;
 
     getRefs(): VmaFormulaGridCompToolbarRefs;
+}
+
+export type VmaFormulaGridCompToolbarInstance = ComponentPublicInstance<VmaFormulaGridCompToolbarProps, VmaFormulaGridCompToolbarConstructor>;
+
+export interface VmaFormulaGridCompToolbarSpacerProps {}
+
+export interface VmaFormulaGridCompToolbarSpacerMethods {}
+
+export type VmaFormulaGridCompToolbarSpacerOptions = VmaFormulaGridCompToolbarSpacerProps;
+
+export interface VmaFormulaGridCompToolbarSpacerRefs {}
+
+export interface VmaFormulaGridCompToolbarSpacerReactiveData {}
+
+export type VmaFormulaGridCompToolbarSpacerEmits = [];
+
+export interface VmaFormulaGridCompToolbarSpacerConstructor extends VmaComponentInstance, VmaFormulaGridCompToolbarSpacerMethods {
+    props: VmaFormulaGridCompToolbarSpacerOptions;
+    context: SetupContext<VmaFormulaGridCompToolbarSpacerEmits>;
+    reactiveData: VmaFormulaGridCompToolbarSpacerReactiveData;
+    renderVN: RenderFunction;
+    getRefs(): VmaFormulaGridCompToolbarSpacerRefs;
+}
+
+export interface VmaFormulaGridCompToolbarSeparatorProps {}
+
+export interface VmaFormulaGridCompToolbarSeparatorMethods {}
+
+export type VmaFormulaGridCompToolbarSeparatorOptions = VmaFormulaGridCompToolbarSeparatorProps;
+
+export interface VmaFormulaGridCompToolbarSeparatorRefs {}
+
+export interface VmaFormulaGridCompToolbarSeparatorReactiveData {}
+
+export type VmaFormulaGridCompToolbarSeparatorEmits = [];
+
+export interface VmaFormulaGridCompToolbarSeparatorConstructor extends VmaComponentInstance, VmaFormulaGridCompToolbarSeparatorMethods {
+    props: VmaFormulaGridCompToolbarSeparatorOptions;
+    context: SetupContext<VmaFormulaGridCompToolbarSeparatorEmits>;
+    reactiveData: VmaFormulaGridCompToolbarSeparatorReactiveData;
+    renderVN: RenderFunction;
+    getRefs(): VmaFormulaGridCompToolbarSeparatorRefs;
+}
+
+export interface VmaFormulaGridCompToolbarMenuSeparatorProps {}
+
+export interface VmaFormulaGridCompToolbarMenuSeparatorMethods {}
+
+export type VmaFormulaGridCompToolbarMenuSeparatorOptions = VmaFormulaGridCompToolbarMenuSeparatorProps;
+
+export interface VmaFormulaGridCompToolbarMenuSeparatorRefs {}
+
+export interface VmaFormulaGridCompToolbarMenuSeparatorReactiveData {}
+
+export type VmaFormulaGridCompToolbarMenuSeparatorEmits = [];
+
+export interface VmaFormulaGridCompToolbarMenuSeparatorConstructor extends VmaComponentInstance, VmaFormulaGridCompToolbarMenuSeparatorMethods {
+    props: VmaFormulaGridCompToolbarMenuSeparatorOptions;
+    context: SetupContext<VmaFormulaGridCompToolbarMenuSeparatorEmits>;
+    reactiveData: VmaFormulaGridCompToolbarMenuSeparatorReactiveData;
+    renderVN: RenderFunction;
+    getRefs(): VmaFormulaGridCompToolbarMenuSeparatorRefs;
+}
+
+export interface VmaFormulaGridCompToolbarMenuSeparatorProps {}
+
+export interface VmaFormulaGridCompToolbarGenericMethods {}
+
+export type VmaFormulaGridCompToolbarGenericOptions = VmaFormulaGridCompToolbarGenericProps;
+
+export interface VmaFormulaGridCompToolbarGenericRefs {}
+
+export interface VmaFormulaGridCompToolbarGenericReactiveData {}
+
+export type VmaFormulaGridCompToolbarGenericEmits = [];
+
+export interface VmaFormulaGridCompToolbarGenericConstructor extends VmaComponentInstance, VmaFormulaGridCompToolbarGenericMethods {
+    props: VmaFormulaGridCompToolbarGenericOptions;
+    context: SetupContext<VmaFormulaGridCompToolbarGenericEmits>;
+    reactiveData: VmaFormulaGridCompToolbarGenericReactiveData;
+    renderVN: RenderFunction;
+    getRefs(): VmaFormulaGridCompToolbarGenericRefs;
 }

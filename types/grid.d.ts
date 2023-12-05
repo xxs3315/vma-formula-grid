@@ -1,5 +1,6 @@
 import { ComponentPublicInstance, ComputedRef, Ref, RenderFunction, SetupContext } from 'vue';
 import { VmaFormulaGridCompContextMenuMethods, VmaFormulaGridCompContextMenuPrivateMethods } from './components/context-menu';
+import { VmaFormulaGridCompToolbarConstructor, VmaFormulaGridCompToolbarInstance } from './components/toolbar';
 
 export interface VmaComponentInstance {
     uId: string;
@@ -217,6 +218,7 @@ export type VmaFormulaGridOptions = VmaFormulaGridProps;
 
 export interface VmaFormulaGridMethods {
     getCurrentGridData(): any;
+    connectToolbar(toolbar: VmaFormulaGridCompToolbarConstructor | VmaFormulaGridCompToolbarInstance): Promise<any>;
 }
 
 export interface VmaFormulaGridPrivateMethods {

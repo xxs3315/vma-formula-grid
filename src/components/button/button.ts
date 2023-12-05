@@ -8,6 +8,7 @@ export default defineComponent({
     props: {
         text: String,
         icon: String,
+        title: String,
         color: String,
         block: Boolean,
         plain: Boolean,
@@ -165,6 +166,7 @@ export default defineComponent({
                         'div',
                         {
                             class: ['content'],
+                            title: props.title,
                         },
                         [props.iconPosition === 'left' && renderIcon(), renderText(), props.iconPosition === 'right' && renderIcon()],
                     ),

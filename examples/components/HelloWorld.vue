@@ -95,6 +95,13 @@
                     <input type="button" @click="getCurrentGridConfData" value="Get!" />
                 </span>
             </fieldset>
+
+            <fieldset class="fieldset">
+                <legend>Toolbar:</legend>
+                <span>
+                    <vma-formula-grid-comp-toolbar ref="vfgt" />
+                </span>
+            </fieldset>
         </div>
 
         <div style="margin-top: 10px; height: calc(100% - 80px)">
@@ -151,14 +158,15 @@ import { defineComponent, onMounted, onUnmounted, reactive, ref, shallowRef, wat
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
 import { FormulaError, FormulaHelpers, Types } from '../../src/all';
-import { VmaFormulaGridInstance } from '../../types';
+import { VmaFormulaGridCompToolbarInstance, VmaFormulaGridInstance } from '../../types';
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
 import axios from 'axios';
+import VmaFormulaGridCompToolbar from '../../src/components/toolbar/toolbar';
 
 export default defineComponent({
     name: 'HelloWorld',
-    components: { Splitpanes, Pane, VueJsonPretty },
+    components: { VmaFormulaGridCompToolbar, Splitpanes, Pane, VueJsonPretty },
     setup() {
         const datasource = ref('array');
         const size = ref('normal');
@@ -168,8 +176,11 @@ export default defineComponent({
         const locale = ref('ZH-cn');
 
         const vfg = ref<VmaFormulaGridInstance>();
+        const vfgt = ref<VmaFormulaGridCompToolbarInstance>();
 
-        onMounted(() => {});
+        onMounted(() => {
+            vfg.value.connectToolbar(vfgt.value);
+        });
 
         onUnmounted(() => {});
 
@@ -638,6 +649,7 @@ export default defineComponent({
             virtualScrollY,
             customFunctions,
             vfg,
+            vfgt,
             locale,
             state,
             pathCollapsible,
