@@ -111,6 +111,11 @@ export default defineComponent({
             return propsOpts ? propsOpts.label || 'label' : 'label';
         });
 
+        const computeFontFamilyField = computed(() => {
+            const propsOpts = computePropsOpts.value;
+            return propsOpts ? propsOpts.ff || 'ff' : 'ff';
+        });
+
         const setCurrentOption = (option: any) => {
             const valueField = computeValueField.value;
             if (option) {
@@ -477,11 +482,13 @@ export default defineComponent({
             const { currentValue } = reactiveData;
             const labelField = computeLabelField.value;
             const valueField = computeValueField.value;
+            const ffField = computeFontFamilyField.value;
             const isGroup = computeIsGroup.value;
             return list.map((option: any, cIndex: any) => {
                 const isVisible = !isGroup || isOptionVisible(option);
                 const isDisabled = (group && group.disabled) || option.disabled;
                 const optionValue = option[valueField];
+                const optionFfValue = option[ffField];
                 const optid = getOptid(option);
                 return isVisible
                     ? h(
@@ -496,6 +503,9 @@ export default defineComponent({
                                       'is--hover': currentValue === optionValue,
                                   },
                               ],
+                              style: {
+                                  fontFamily: optionFfValue,
+                              },
                               // attrs
                               optid: optid,
                               // event

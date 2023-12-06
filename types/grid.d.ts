@@ -350,6 +350,7 @@ export namespace VmaFormulaGridCompGlobalRendererHandles {
     export interface RenderOptionProps {
         value?: string;
         label?: string;
+        ff?: string;
     }
 
     /**

@@ -226,6 +226,7 @@ export default defineComponent({
                                                                                               return {
                                                                                                   value: font.en,
                                                                                                   label: font.ch,
+                                                                                                  ff: font.en,
                                                                                                   disabled: false,
                                                                                               };
                                                                                           }),
