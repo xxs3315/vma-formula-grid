@@ -797,6 +797,8 @@ export default defineComponent({
                                                     style: {
                                                         overflowWrap: cell.tw ? 'break-word' : null,
                                                         maxWidth: cell.tw ? '-webkit-fill-available' : null,
+                                                        whiteSpace: cell.tw ? 'pre-line' : null,
+                                                        wordBreak: cell.tw ? 'break-all' : null,
                                                     },
                                                 },
                                                 getCellContent(cell),

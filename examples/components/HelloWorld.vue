@@ -473,6 +473,7 @@ export default defineComponent({
             rowHeight: [
                 { row: 2, height: 48 },
                 { row: 4, height: 96 },
+                { row: 17, height: 196 },
             ],
             colWidth: [
                 { col: 'B', width: 200 },
