@@ -547,6 +547,26 @@ export default defineComponent({
                     { p: 'J23', type: 'cells', v: '仿宋' },
                 ],
             },
+            aligns: {
+                h: [
+                    { p: ['A', 'C', 'D', 'o:r'], type: 'columns', v: 'left' },
+                    { p: ['B', 'D', 'F'], type: 'columns', v: 'right' },
+                    { p: [1, 3, 5], type: 'rows', v: 'left' },
+                    { p: [10, 11, 12, '23:27'], type: 'rows', v: 'center' },
+                    { p: 'L26:G7', type: 'cells', v: 'left' },
+                    { p: 'J20', type: 'cells', v: 'none' },
+                    { p: 'J23', type: 'cells', v: 'center' },
+                ],
+                v: [
+                    { p: ['A', 'C', 'D', 'o:r'], type: 'columns', v: 'bottom' },
+                    { p: ['B', 'D', 'F'], type: 'columns', v: 'middle' },
+                    { p: [1, 4, 3, 5], type: 'rows', v: 'bottom' },
+                    { p: [10, 11, 12, '23:27'], type: 'rows', v: 'bottom' },
+                    { p: 'L26:G7', type: 'cells', v: 'top' },
+                    { p: 'J20', type: 'cells', v: 'none' },
+                    { p: 'J23', type: 'cells', v: 'bottom' },
+                ],
+            },
             formats: [
                 { p: ['A', 'C', 'D', 'o:q'], type: 'columns', details: { type: 'g' } },
                 { p: 'B4:E8', type: 'cells', details: { type: 'n', v: '##.00' } },

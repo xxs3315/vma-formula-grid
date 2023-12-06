@@ -40,4 +40,12 @@ export default {
     formatCurrencyEuro: 'Euro',
     formatNumberCurrencyOthers: 'Others',
     formatNumberCurrency: 'Currency',
+    align: 'Align',
+    alignLeft: 'Align left',
+    alignCenter: 'Align center',
+    alignRight: 'Align right',
+    alignTop: 'Align top',
+    alignMiddle: 'Align middle',
+    alignBottom: 'Align bottom',
+    wrap: 'Wrap',
 };

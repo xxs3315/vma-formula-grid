@@ -32,6 +32,7 @@ import {
 } from '../../../types';
 import { Guid } from '../../utils/guid.ts';
 import {
+    calcCellAligns,
     calcCellBgType,
     calcCellBorders,
     calcCellFormats,
@@ -59,6 +60,7 @@ import {
     getYSpaceFromRowHeights,
     isNumeric,
     isObject,
+    translateAlignValue,
 } from '../../utils';
 import { Column } from './internals/column.ts';
 import { Row } from './internals/row.ts';
@@ -429,6 +431,10 @@ export default defineComponent({
                 u: [],
                 ff: [],
                 fs: [],
+            },
+            aligns: {
+                h: [],
+                v: [],
             },
             borders: [],
             formats: [],
@@ -1308,6 +1314,60 @@ export default defineComponent({
                     });
 
                 updateCurrentCell();
+            },
+            setCellAlign: (type: 'cells' | 'rows' | 'columns', target: 'l' | 'c' | 'r' | 't' | 'm' | 'b') => {
+                if (type === 'cells') {
+                    if (target === 'l' || target === 'c' || target === 'r') {
+                        let ah = '';
+                        if (target === 'l') {
+                            ah = 'start';
+                        }
+                        if (target === 'c') {
+                            ah = 'center';
+                        }
+                        if (target === 'r') {
+                            ah = 'end';
+                        }
+                        const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1);
+                        const pEnd = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1);
+                        const p = pStart === pEnd ? pStart : pStart + ':' + pEnd;
+                        gridReactiveData.aligns.h.push({
+                            p: p,
+                            v: translateAlignValue(ah, true, 'h'),
+                            type: 'cells',
+                        });
+                        for (let col = $vmaFormulaGrid.reactiveData.currentAreaSci; col <= $vmaFormulaGrid.reactiveData.currentAreaEci; col++) {
+                            for (let row = $vmaFormulaGrid.reactiveData.currentAreaSri; row <= $vmaFormulaGrid.reactiveData.currentAreaEri; row++) {
+                                $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].ah = ah;
+                            }
+                        }
+                    }
+                    if (target === 't' || target === 'm' || target === 'b') {
+                        let av = '';
+                        if (target === 't') {
+                            av = 'start';
+                        }
+                        if (target === 'm') {
+                            av = 'center';
+                        }
+                        if (target === 'b') {
+                            av = 'end';
+                        }
+                        const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1);
+                        const pEnd = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1);
+                        const p = pStart === pEnd ? pStart : pStart + ':' + pEnd;
+                        gridReactiveData.aligns.h.push({
+                            p: p,
+                            v: translateAlignValue(av, true, 'v'),
+                            type: 'cells',
+                        });
+                        for (let col = $vmaFormulaGrid.reactiveData.currentAreaSci; col <= $vmaFormulaGrid.reactiveData.currentAreaEci; col++) {
+                            for (let row = $vmaFormulaGrid.reactiveData.currentAreaSri; row <= $vmaFormulaGrid.reactiveData.currentAreaEri; row++) {
+                                $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].av = av;
+                            }
+                        }
+                    }
+                }
             },
             setCellBorder: (type: 'cells' | 'rows' | 'columns', target: 'l' | 't' | 'r' | 'b' | 'none' | 'full' | 'outer' | 'inner') => {
                 if (type === 'cells') {
@@ -3655,6 +3715,15 @@ export default defineComponent({
                         }
                     }
 
+                    if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('aligns')) {
+                        if (props.data.conf.aligns.hasOwnProperty('h')) {
+                            gridReactiveData.aligns.h = props.data.conf.aligns.h.concat([]);
+                        }
+                        if (props.data.conf.aligns.hasOwnProperty('v')) {
+                            gridReactiveData.aligns.v = props.data.conf.aligns.v.concat([]);
+                        }
+                    }
+
                     if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('borders')) {
                         if (props.data.conf.borders.length > 0) {
                             gridReactiveData.borders = props.data.conf.borders.concat([]);
@@ -3761,6 +3830,7 @@ export default defineComponent({
 
                             const { rowSpan, colSpan } = getRowColSpanFromMerges(colIndex, rowIndex + 1, gridReactiveData.merges);
                             const { fg, bg, b, i, u, ff, fs } = calcCellStyles(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.styles);
+                            const { ah, av } = calcCellAligns(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.aligns);
                             const { g, gf } = calcCellFormats(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.formats);
                             const {
                                 bdl: bdlCurrent,
@@ -3802,8 +3872,8 @@ export default defineComponent({
                                 fs,
                                 g,
                                 gf,
-                                '',
-                                '',
+                                ah,
+                                av,
                                 false,
                             );
                         });

@@ -50,6 +50,24 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     if (menu.code === 'deleteRow') {
                         grid.deleteRow(Number(menu.param.row));
                     }
+                    if (menu.code === 'alignLeft') {
+                        grid.setCellAlign('cells', 'l');
+                    }
+                    if (menu.code === 'alignCenter') {
+                        grid.setCellAlign('cells', 'c');
+                    }
+                    if (menu.code === 'alignRight') {
+                        grid.setCellAlign('cells', 'r');
+                    }
+                    if (menu.code === 'alignTop') {
+                        grid.setCellAlign('cells', 't');
+                    }
+                    if (menu.code === 'alignMiddle') {
+                        grid.setCellAlign('cells', 'm');
+                    }
+                    if (menu.code === 'alignBottom') {
+                        grid.setCellAlign('cells', 'b');
+                    }
                     if (menu.code === 'borderLeft') {
                         grid.setCellBorder('cells', 'l');
                     }
@@ -414,6 +432,60 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     name: grid.lang().cellBorder,
                     prefixIcon: 'info',
                     code: 'cellBorder',
+                    disabled: false,
+                    visible: true,
+                    children: subOptions,
+                    param,
+                });
+                list.push(options);
+                options = [];
+                subOptions = [];
+                subOptions.push({
+                    name: grid.lang().alignLeft,
+                    code: 'alignLeft',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: grid.lang().alignCenter,
+                    code: 'alignCenter',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: grid.lang().alignRight,
+                    code: 'alignRight',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: grid.lang().alignTop,
+                    code: 'alignTop',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: grid.lang().alignMiddle,
+                    code: 'alignMiddle',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                subOptions.push({
+                    name: grid.lang().alignBottom,
+                    code: 'alignBottom',
+                    disabled: false,
+                    visible: true,
+                    param,
+                });
+                options.push({
+                    name: grid.lang().align,
+                    prefixIcon: 'info',
+                    code: 'align',
                     disabled: false,
                     visible: true,
                     children: subOptions,

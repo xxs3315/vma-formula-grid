@@ -1934,6 +1934,185 @@ export function calcCellStyles(
     return result;
 }
 
+export function calcCellAligns(
+    col: number,
+    row: number,
+    aligns: {
+        h: any[];
+        v: any[];
+    },
+) {
+    let result: {
+        ah: string;
+        av: string;
+    } = {
+        ah: '',
+        av: '',
+    };
+    if (aligns.hasOwnProperty('h') && aligns.h.length > 0) {
+        let ah = '';
+        aligns.h.forEach((item) => {
+            if (item.type === 'columns') {
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string) => {
+                        if (pos.indexOf(':') >= 0) {
+                            const columnPosArr = pos.split(':');
+                            if (col + 1 >= getColumnCount(columnPosArr[0]) && col + 1 <= getColumnCount(columnPosArr[1])) {
+                                ah = !item.hasOwnProperty('v') || item.v === 'none' ? '' : translateAlignValue(item.v, false);
+                            }
+                        } else {
+                            if (getColumnSymbol(col + 1) === pos.toUpperCase()) {
+                                ah = !item.hasOwnProperty('v') || item.v === 'none' ? '' : translateAlignValue(item.v, false);
+                            }
+                        }
+                    });
+                }
+            } else if (item.type === 'rows') {
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string | number) => {
+                        if (typeof pos === 'string' && pos.indexOf(':') >= 0) {
+                            let rowPosArr: any[] = pos.split(':');
+                            rowPosArr = rowPosArr.map(Number);
+                            if (row + 1 >= rowPosArr[0] && row + 1 <= rowPosArr[1]) {
+                                ah = !item.hasOwnProperty('v') || item.v === 'none' ? '' : translateAlignValue(item.v, false);
+                            }
+                        }
+                        if (typeof pos === 'number' && row + 1 === pos) {
+                            ah = !item.hasOwnProperty('v') || item.v === 'none' ? '' : translateAlignValue(item.v, false);
+                        }
+                    });
+                }
+            } else if (item.type === 'cells') {
+                if (item.p.indexOf(':') >= 0) {
+                    const mArr = item.p.split(':');
+
+                    let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''));
+                    let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''));
+                    let rowStart = parseInt(mArr[0].replace(/[^0-9]/gi, ''));
+                    let rowEnd = parseInt(mArr[1].replace(/[^0-9]/gi, ''));
+                    if (
+                        (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd) ||
+                        (col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowStart && row + 1 <= rowEnd) ||
+                        (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowEnd && row + 1 <= rowStart) ||
+                        (col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowEnd && row + 1 <= rowStart)
+                    ) {
+                        ah = item.v === 'none' ? '' : translateAlignValue(item.v, false);
+                    }
+                } else {
+                    let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''));
+                    let rowTarget = parseInt(item.p.replace(/[^0-9]/gi, ''));
+                    if (col + 1 === colTarget && row + 1 === rowTarget) {
+                        ah = item.v === 'none' ? '' : translateAlignValue(item.v, false);
+                    }
+                }
+            }
+        });
+        result.ah = ah;
+    }
+
+    if (aligns.hasOwnProperty('v') && aligns.v.length > 0) {
+        let av = '';
+        aligns.v.forEach((item) => {
+            if (item.type === 'columns') {
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string) => {
+                        if (pos.indexOf(':') >= 0) {
+                            const columnPosArr = pos.split(':');
+                            if (col + 1 >= getColumnCount(columnPosArr[0]) && col + 1 <= getColumnCount(columnPosArr[1])) {
+                                av = !item.hasOwnProperty('v') || item.v === 'none' ? '' : translateAlignValue(item.v, false);
+                            }
+                        } else {
+                            if (getColumnSymbol(col + 1) === pos.toUpperCase()) {
+                                av = !item.hasOwnProperty('v') || item.v === 'none' ? '' : translateAlignValue(item.v, false);
+                            }
+                        }
+                    });
+                }
+            } else if (item.type === 'rows') {
+                if (item.p && item.p.length > 0) {
+                    item.p.forEach((pos: string | number) => {
+                        if (typeof pos === 'string' && pos.indexOf(':') >= 0) {
+                            let rowPosArr: any[] = pos.split(':');
+                            rowPosArr = rowPosArr.map(Number);
+                            if (row + 1 >= rowPosArr[0] && row + 1 <= rowPosArr[1]) {
+                                av = !item.hasOwnProperty('v') || item.v === 'none' ? '' : translateAlignValue(item.v, false);
+                            }
+                        }
+                        if (typeof pos === 'number' && row + 1 === pos) {
+                            av = !item.hasOwnProperty('v') || item.v === 'none' ? '' : translateAlignValue(item.v, false);
+                        }
+                    });
+                }
+            } else if (item.type === 'cells') {
+                if (item.p.indexOf(':') >= 0) {
+                    const mArr = item.p.split(':');
+
+                    let colStart = getColumnCount(mArr[0].replace(/[0-9]/g, ''));
+                    let colEnd = getColumnCount(mArr[1].replace(/[0-9]/g, ''));
+                    let rowStart = parseInt(mArr[0].replace(/[^0-9]/gi, ''));
+                    let rowEnd = parseInt(mArr[1].replace(/[^0-9]/gi, ''));
+                    if (
+                        (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowStart && row + 1 <= rowEnd) ||
+                        (col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowStart && row + 1 <= rowEnd) ||
+                        (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowEnd && row + 1 <= rowStart) ||
+                        (col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowEnd && row + 1 <= rowStart)
+                    ) {
+                        av = item.v === 'none' ? '' : translateAlignValue(item.v, false);
+                    }
+                } else {
+                    let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''));
+                    let rowTarget = parseInt(item.p.replace(/[^0-9]/gi, ''));
+                    if (col + 1 === colTarget && row + 1 === rowTarget) {
+                        av = item.v === 'none' ? '' : translateAlignValue(item.v, false);
+                    }
+                }
+            }
+        });
+        result.av = av;
+    }
+
+    return result;
+}
+
+export function translateAlignValue(source: string, reverse: boolean, direction?: string): string {
+    let result = '';
+    if (!reverse) {
+        if (source === 'left' || source === 'top') {
+            result = 'start';
+        }
+        if (source === 'center' || source === 'middle') {
+            result = 'center';
+        }
+        if (source === 'right' || source === 'bottom') {
+            result = 'end';
+        }
+    } else {
+        if (direction === 'h') {
+            if (source === 'start') {
+                result = 'left';
+            }
+            if (source === 'center') {
+                result = 'center';
+            }
+            if (source === 'end') {
+                result = 'right';
+            }
+        }
+        if (direction === 'v') {
+            if (source === 'start') {
+                result = 'top';
+            }
+            if (source === 'center') {
+                result = 'middle';
+            }
+            if (source === 'end') {
+                result = 'bottom';
+            }
+        }
+    }
+    return result;
+}
+
 export function calcCellBorders(colIndex: number, rowIndex: number, borders: any[], colLength: number, rowLength: number) {
     let result = {
         bdl: false,

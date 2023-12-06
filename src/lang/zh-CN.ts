@@ -40,4 +40,12 @@ export default {
     formatCurrencyEuro: '欧元',
     formatNumberCurrencyOthers: '其他货币',
     formatNumberCurrency: '货币',
+    align: '对齐',
+    alignLeft: '左对齐',
+    alignCenter: '居中',
+    alignRight: '右对齐',
+    alignTop: '顶端对齐',
+    alignMiddle: '垂直居中',
+    alignBottom: '底端对齐',
+    wrap: '自动换行',
 };

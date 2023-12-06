@@ -781,8 +781,8 @@ export default defineComponent({
                                                 class: ['cell', `${$vmaFormulaGrid.props.type}`],
                                                 style: {
                                                     display: 'flex',
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center',
+                                                    justifyContent: cell.ah,
+                                                    alignItems: cell.av,
                                                 },
                                             },
                                             h(
