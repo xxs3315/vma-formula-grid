@@ -686,13 +686,12 @@ export default defineComponent({
                                             colspan: cell.colSpan,
                                             class: ['normal', `${$vmaFormulaGrid.props.type}`, `cell-bg-${cell.bgt}`, { 'cell-active': isCellActive(cf.index, rf.index) }],
                                             style: {
-                                                // overflow: 'hidden',
                                                 height: cell.rowSpan! > 1 ? '100%' : 'inherit',
                                                 width: cell.colSpan! > 1 ? '100%' : 'inherit',
                                                 '--cellBgCustom': cell.bg,
                                                 color: cell.fg,
                                                 fontWeight: cell.b ? 'bold' : 'normal',
-                                                textDecoration: cell.u ? 'underline' : 'none',
+                                                textDecoration: cell.u ? 'underline' : null,
                                                 fontFamily: cell.ff,
                                                 fontSize: cell.fs ? cell.fs + 'px' : null,
                                             },
@@ -796,9 +795,9 @@ export default defineComponent({
                                                         },
                                                     ],
                                                     style: {
-                                                        overflowWrap: cell.tw ? 'break-word' : 'none',
-                                                        maxWidth: cell.tw ? '-webkit-fill-available' : 'none',
-                                                    }
+                                                        overflowWrap: cell.tw ? 'break-word' : null,
+                                                        maxWidth: cell.tw ? '-webkit-fill-available' : null,
+                                                    },
                                                 },
                                                 getCellContent(cell),
                                             ),
