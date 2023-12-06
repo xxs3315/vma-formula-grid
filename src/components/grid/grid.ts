@@ -37,6 +37,7 @@ import {
     calcCellBorders,
     calcCellFormats,
     calcCellStyles,
+    calcCellWraps,
     calcVertexes,
     calcXOverlapMerges,
     calcYOverlapMerges,
@@ -436,6 +437,7 @@ export default defineComponent({
                 h: [],
                 v: [],
             },
+            wraps: [],
             borders: [],
             formats: [],
             supportedFonts: [],
@@ -3724,6 +3726,12 @@ export default defineComponent({
                         }
                     }
 
+                    if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('wraps')) {
+                        if (props.data.conf.wraps.length > 0) {
+                            gridReactiveData.wraps = props.data.conf.wraps.concat([]);
+                        }
+                    }
+
                     if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('borders')) {
                         if (props.data.conf.borders.length > 0) {
                             gridReactiveData.borders = props.data.conf.borders.concat([]);
@@ -3831,6 +3839,7 @@ export default defineComponent({
                             const { rowSpan, colSpan } = getRowColSpanFromMerges(colIndex, rowIndex + 1, gridReactiveData.merges);
                             const { fg, bg, b, i, u, ff, fs } = calcCellStyles(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.styles);
                             const { ah, av } = calcCellAligns(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.aligns);
+                            const { tw } = calcCellWraps(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.wraps);
                             const { g, gf } = calcCellFormats(colIndex - 1, rowIndex, $vmaFormulaGrid.reactiveData.formats);
                             const {
                                 bdl: bdlCurrent,
@@ -3874,7 +3883,7 @@ export default defineComponent({
                                 gf,
                                 ah,
                                 av,
-                                false,
+                                tw,
                             );
                         });
                     });
