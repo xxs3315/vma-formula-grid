@@ -23,6 +23,9 @@ export class Cell {
     fs?: any; // font-size
     g?: string; // 格式类型
     gf?: string; // 格式字符串
+    ah?: string; // horizontal align: start/center/end
+    av?: string; // vertical align: start/center/end
+    tw?: boolean; // wrap text?
 
     constructor(
         row: number,
@@ -49,6 +52,9 @@ export class Cell {
         fs: any,
         g: string,
         gf: string,
+        ah: string,
+        av: string,
+        tw: boolean,
     ) {
         this.row = row;
         this.col = col;
@@ -74,5 +80,8 @@ export class Cell {
         this.fs = fs;
         this.g = g;
         this.gf = gf;
+        this.ah = ah;
+        this.av = av;
+        this.tw = tw;
     }
 }

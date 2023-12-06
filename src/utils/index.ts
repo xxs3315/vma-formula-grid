@@ -2560,13 +2560,19 @@ export const isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
 
 export const toolbarButtons = () => {
     return [
-        { icon: 'alignleft', title: 'Align left', hotkey: isMacLike ? 'shift+command+l' : 'ctrl+shift+l', code: 'alignLeft' },
-        { icon: 'aligncenter', title: 'Align center', hotkey: isMacLike ? 'shift+command+e' : 'ctrl+shift+e', code: 'alignLeft' },
-        { icon: 'alignright', title: 'Align right', hotkey: isMacLike ? 'shift+command+r' : 'ctrl+shift+r', code: 'alignLeft' },
-        { icon: 'justify', title: 'Justify content', hotkey: isMacLike ? 'shift+command+j' : 'ctrl+shift+j', code: 'justify' },
+        { icon: 'align-left', title: 'Align left', hotkey: isMacLike ? 'shift+command+l' : 'ctrl+shift+l', code: 'alignLeft' },
+        { icon: 'align-center', title: 'Align center', hotkey: isMacLike ? 'shift+command+c' : 'ctrl+shift+c', code: 'alignCenter' },
+        { icon: 'align-right', title: 'Align right', hotkey: isMacLike ? 'shift+command+r' : 'ctrl+shift+r', code: 'alignRight' },
+        { icon: 'align-top', title: 'Align top', hotkey: isMacLike ? 'shift+command+t' : 'ctrl+shift+t', code: 'alignTop' },
+        { icon: 'align-mid', title: 'Align middle', hotkey: isMacLike ? 'shift+command+m' : 'ctrl+shift+m', code: 'alignMiddle' },
+        { icon: 'align-under', title: 'Align bottom', hotkey: isMacLike ? 'shift+command+b' : 'ctrl+shift+b', code: 'alignBottom' },
         { is: 'Separator' },
         { icon: 'format_bold', title: 'Bold', hotkey: isMacLike ? 'command+b' : 'ctrl+b', code: 'bold' },
         { icon: 'format_italic', title: 'Italic', hotkey: isMacLike ? 'command+i' : 'ctrl+i', code: 'italic' },
         { icon: 'format_underlined', title: 'Underline', hotkey: isMacLike ? 'command+u' : 'ctrl+u', code: 'underline' },
+        { is: 'Separator' },
+        { icon: 'zoom_in', title: 'Zoom in', code: 'zoomIn' },
+        { icon: 'zoom_out', title: 'Zoom out', code: 'zoomOut' },
+        { icon: 'zoom_reset', title: 'Reset zoom', code: 'zoomReset' },
     ];
 };

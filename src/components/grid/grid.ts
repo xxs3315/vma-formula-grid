@@ -1096,6 +1096,9 @@ export default defineComponent({
                             null,
                             '',
                             '',
+                            '',
+                            '',
+                            false,
                         ) as Cell & {
                             [key: string]: string;
                         },
@@ -1169,6 +1172,9 @@ export default defineComponent({
                             null,
                             '',
                             '',
+                            '',
+                            '',
+                            false,
                         ) as Cell & {
                             [key: string]: string;
                         },
@@ -3796,6 +3802,9 @@ export default defineComponent({
                                 fs,
                                 g,
                                 gf,
+                                '',
+                                '',
+                                false,
                             );
                         });
                     });

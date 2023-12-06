@@ -47,9 +47,10 @@ export default defineComponent({
 
         const renderVN = () =>
             h(GridCompButtonComponent, {
+                plain: true,
                 icon: props.item.icon,
                 type: 'primary',
-                size: 'small',
+                size: 'normal',
                 title: title.value,
                 class: 'vma-formula-grid-comp-toolbar-button',
             });
