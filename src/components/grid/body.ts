@@ -795,6 +795,10 @@ export default defineComponent({
                                                             italic: cell.i,
                                                         },
                                                     ],
+                                                    style: {
+                                                        overflowWrap: cell.tw ? 'break-word' : 'none',
+                                                        maxWidth: cell.tw ? '-webkit-fill-available' : 'none',
+                                                    }
                                                 },
                                                 getCellContent(cell),
                                             ),
