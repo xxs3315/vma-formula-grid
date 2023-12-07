@@ -74,8 +74,24 @@ export default defineComponent({
                 : [];
         });
 
+        const fontSizeSelectOptions = computed(() => {
+            return $vmaFormulaGridConnected.value
+                ? $vmaFormulaGridConnected.value.reactiveData.supportedFontSizes.map((fontSize: any) => {
+                      return {
+                          value: fontSize,
+                          label: fontSize,
+                          disabled: false,
+                      };
+                  })
+                : [];
+        });
+
         const fontSelectPlaceholder = computed(() => {
             return $vmaFormulaGridLangConnected.value ? $vmaFormulaGridLangConnected.value.lang.fontSelect : '';
+        });
+
+        const fontSizeSelectPlaceholder = computed(() => {
+            return $vmaFormulaGridLangConnected.value ? $vmaFormulaGridLangConnected.value.lang.fontSizeSelect : '';
         });
 
         const generateToolbar = () => {
@@ -99,6 +115,24 @@ export default defineComponent({
                                 options: fontSelectOptions.value,
                                 onChange: (event: any) => {
                                     if ($vmaFormulaGridConnected.value) $vmaFormulaGridConnected.value.setFontStyle('cells', 'fontSelect', event.value);
+                                },
+                            }),
+                        );
+                    } else if (item.is === 'fontSizeSelect') {
+                        buttons.push(
+                            h(GridCompSelectComponent, {
+                                modelValue: fontSizeValue.value,
+                                placeholder: fontSizeSelectPlaceholder.value,
+                                'onUpdate:modelValue': (value: any) => {
+                                    fontSizeValue.value = value;
+                                },
+                                style: {
+                                    width: '120px',
+                                    flex: '0 1 auto',
+                                },
+                                options: fontSizeSelectOptions.value,
+                                onChange: (event: any) => {
+                                    if ($vmaFormulaGridConnected.value) $vmaFormulaGridConnected.value.setFontStyle('cells', 'fontSizeSelect', event.value);
                                 },
                             }),
                         );
