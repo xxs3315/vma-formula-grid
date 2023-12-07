@@ -2821,9 +2821,9 @@ export const toolbarButtons = () => {
         { icon: 'format_bold', title: 'Bold', hotkey: isMacLike ? 'command+b' : 'ctrl+b', code: 'bold' },
         { icon: 'format_italic', title: 'Italic', hotkey: isMacLike ? 'command+i' : 'ctrl+i', code: 'italic' },
         { icon: 'format_underlined', title: 'Underline', hotkey: isMacLike ? 'command+u' : 'ctrl+u', code: 'underline' },
-        { is: 'Separator' },
-        { icon: 'zoom_in', title: 'Zoom in', code: 'zoomIn' },
-        { icon: 'zoom_out', title: 'Zoom out', code: 'zoomOut' },
-        { icon: 'zoom_reset', title: 'Reset zoom', code: 'zoomReset' },
+        // { is: 'Separator' },
+        // { icon: 'zoom_in', title: 'Zoom in', code: 'zoomIn' },
+        // { icon: 'zoom_out', title: 'Zoom out', code: 'zoomOut' },
+        // { icon: 'zoom_reset', title: 'Reset zoom', code: 'zoomReset' },
     ];
 };
