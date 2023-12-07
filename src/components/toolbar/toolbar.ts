@@ -108,10 +108,10 @@ export default defineComponent({
                                 'onUpdate:modelValue': (value: any) => {
                                     fontValue.value = value;
                                 },
-                                // style: {
-                                //     width: '200px',
-                                //     flex: '0 1 auto',
-                                // },
+                                style: {
+                                    width: '180px',
+                                    flex: '0 1 auto',
+                                },
                                 options: fontSelectOptions.value,
                                 onChange: (event: any) => {
                                     if ($vmaFormulaGridConnected.value) $vmaFormulaGridConnected.value.setFontStyle('cells', 'fontSelect', event.value);
@@ -127,7 +127,7 @@ export default defineComponent({
                                     fontSizeValue.value = value;
                                 },
                                 style: {
-                                    width: '120px',
+                                    width: '150px',
                                     flex: '0 1 auto',
                                 },
                                 options: fontSizeSelectOptions.value,
