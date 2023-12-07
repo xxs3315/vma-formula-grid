@@ -243,8 +243,10 @@ export interface VmaFormulaGridPrivateMethods {
     hideRow(row: number): void;
     deleteColumn(col: number): void;
     deleteRow(row: number): void;
+    setGridSize(size: SizeType): void;
     setCellBorder(type: 'cells' | 'rows' | 'columns', target: 'l' | 't' | 'r' | 'b' | 'none' | 'full' | 'outer' | 'inner'): void;
     setCellAlign(type: 'cells' | 'rows' | 'columns', target: 'l' | 'c' | 'r' | 't' | 'm' | 'b'): void;
+    setCellWrap(type: 'cells' | 'rows' | 'columns', v: any): void;
     setBackgroundColor(type: 'cells' | 'rows' | 'columns', mode: 'none' | 'normal', color: any): void;
     setFontColor(type: 'cells' | 'rows' | 'columns', mode: 'none' | 'normal', color: any): void;
     setFontStyle(

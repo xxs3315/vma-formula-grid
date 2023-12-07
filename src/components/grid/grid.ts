@@ -20,6 +20,7 @@ import {
 } from 'vue';
 import {
     LangProvider,
+    SizeType,
     VmaFormulaGridCompToolbarConstructor,
     VmaFormulaGridCompToolbarInstance,
     VmaFormulaGridConstructor,
@@ -74,7 +75,6 @@ import VmaFormulaGrid from '../../v-m-a-formula-grid';
 import { DomTools } from '../../utils/doms.ts';
 import { getFontFamilyChFromEn, predefinedFontFormatter, supportedFonts, supportedFontSizes } from '../../utils/font.ts';
 import { Locale, type Lang } from '../../lang';
-import grid from './index.ts';
 
 export default defineComponent({
     name: 'VmaFormulaGrid',
@@ -232,6 +232,7 @@ export default defineComponent({
         watch(
             () => props.size,
             () => {
+                console.log(props.size); // todo
                 $vmaFormulaGrid.recalculate(false).then(() => {
                     $vmaFormulaGrid.calcCurrentCellEditorStyle();
                     $vmaFormulaGrid.calcCurrentCellEditorDisplay();
@@ -1316,6 +1317,26 @@ export default defineComponent({
                     });
 
                 updateCurrentCell();
+            },
+            setGridSize: (size: SizeType) => {
+                // todo
+            },
+            setCellWrap: (type: 'cells' | 'rows' | 'columns', v: any) => {
+                if (type === 'cells') {
+                    const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1);
+                    const pEnd = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1);
+                    const p = pStart === pEnd ? pStart : pStart + ':' + pEnd;
+                    gridReactiveData.wraps.push({
+                        p: p,
+                        v: !v,
+                        type: 'cells',
+                    });
+                    for (let col = $vmaFormulaGrid.reactiveData.currentAreaSci; col <= $vmaFormulaGrid.reactiveData.currentAreaEci; col++) {
+                        for (let row = $vmaFormulaGrid.reactiveData.currentAreaSri; row <= $vmaFormulaGrid.reactiveData.currentAreaEri; row++) {
+                            $vmaFormulaGrid.reactiveData.currentSheetData[row][col + 1].tw = !v;
+                        }
+                    }
+                }
             },
             setCellAlign: (type: 'cells' | 'rows' | 'columns', target: 'l' | 'c' | 'r' | 't' | 'm' | 'b') => {
                 if (type === 'cells') {

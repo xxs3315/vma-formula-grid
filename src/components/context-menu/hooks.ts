@@ -50,6 +50,18 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     if (menu.code === 'deleteRow') {
                         grid.deleteRow(Number(menu.param.row));
                     }
+                    if (menu.code === 'wrapText') {
+                        let initValue = false;
+                        for (let col = reactiveData.currentAreaSci; col <= reactiveData.currentAreaEci; col++) {
+                            for (let row = reactiveData.currentAreaSri; row <= reactiveData.currentAreaEri; row++) {
+                                if (reactiveData.currentSheetData[row][col + 1].tw && !checkCellInMerges(col + 1, row + 1, reactiveData.merges)) {
+                                    initValue = true;
+                                    break;
+                                }
+                            }
+                        }
+                        grid.setCellWrap('cells', initValue);
+                    }
                     if (menu.code === 'alignLeft') {
                         grid.setCellAlign('cells', 'l');
                     }
@@ -432,6 +444,18 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     name: grid.lang().cellBorder,
                     prefixIcon: 'info',
                     code: 'cellBorder',
+                    disabled: false,
+                    visible: true,
+                    children: subOptions,
+                    param,
+                });
+                list.push(options);
+                options = [];
+                subOptions = [];
+                options.push({
+                    name: grid.lang().wrap,
+                    prefixIcon: 'info',
+                    code: 'wrapText',
                     disabled: false,
                     visible: true,
                     children: subOptions,

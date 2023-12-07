@@ -145,6 +145,48 @@ export default defineComponent({
                                         $vmaFormulaGridConnected.setFontStyle('cells', 'fontUnderline', initValue);
                                     }
                                 }
+                                if (item.code === 'alignLeft') {
+                                    $vmaFormulaGridConnected.setCellAlign('cells', 'l');
+                                }
+                                if (item.code === 'alignCenter') {
+                                    $vmaFormulaGridConnected.setCellAlign('cells', 'c');
+                                }
+                                if (item.code === 'alignRight') {
+                                    $vmaFormulaGridConnected.setCellAlign('cells', 'r');
+                                }
+                                if (item.code === 'alignTop') {
+                                    $vmaFormulaGridConnected.setCellAlign('cells', 't');
+                                }
+                                if (item.code === 'alignMiddle') {
+                                    $vmaFormulaGridConnected.setCellAlign('cells', 'm');
+                                }
+                                if (item.code === 'alignBottom') {
+                                    $vmaFormulaGridConnected.setCellAlign('cells', 'b');
+                                }
+                                if (item.code === 'zoomIn') {
+                                    // todo
+                                }
+                                if (item.code === 'zoomOut') {
+                                    // todo
+                                }
+                                if (item.code === 'zoomReset') {
+                                    $vmaFormulaGridConnected.setGridSize('normal');
+                                }
+                                if (item.code === 'wrapText') {
+                                    let initValue = false;
+                                    for (let col = $vmaFormulaGridConnected.reactiveData.currentAreaSci; col <= $vmaFormulaGridConnected.reactiveData.currentAreaEci; col++) {
+                                        for (let row = $vmaFormulaGridConnected.reactiveData.currentAreaSri; row <= $vmaFormulaGridConnected.reactiveData.currentAreaEri; row++) {
+                                            if (
+                                                $vmaFormulaGridConnected.reactiveData.currentSheetData[row][col + 1].tw &&
+                                                !checkCellInMerges(col + 1, row + 1, $vmaFormulaGridConnected.reactiveData.merges)
+                                            ) {
+                                                initValue = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    $vmaFormulaGridConnected.setCellWrap('cells', initValue);
+                                }
                             },
                         }),
                     );

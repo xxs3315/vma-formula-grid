@@ -2816,6 +2816,8 @@ export const toolbarButtons = () => {
         { icon: 'align-mid', title: 'Align middle', hotkey: isMacLike ? 'shift+command+m' : 'ctrl+shift+m', code: 'alignMiddle' },
         { icon: 'align-under', title: 'Align bottom', hotkey: isMacLike ? 'shift+command+b' : 'ctrl+shift+b', code: 'alignBottom' },
         { is: 'Separator' },
+        { icon: 'wrap', title: 'Wrap text', hotkey: isMacLike ? 'shift+command+w' : 'ctrl+shift+w', code: 'wrapText' },
+        { is: 'Separator' },
         { icon: 'format_bold', title: 'Bold', hotkey: isMacLike ? 'command+b' : 'ctrl+b', code: 'bold' },
         { icon: 'format_italic', title: 'Italic', hotkey: isMacLike ? 'command+i' : 'ctrl+i', code: 'italic' },
         { icon: 'format_underlined', title: 'Underline', hotkey: isMacLike ? 'command+u' : 'ctrl+u', code: 'underline' },
