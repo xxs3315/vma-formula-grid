@@ -15,7 +15,6 @@ import {
     ref,
     Ref,
     resolveComponent,
-    toRaw,
     watch,
 } from 'vue';
 import {
@@ -620,7 +619,9 @@ export default defineComponent({
                 if (toolbar) {
                     $vmaFormulaGridCompToolbarConnected = toolbar;
                     if ($vmaFormulaGrid) {
-                        $vmaFormulaGridCompToolbarConnected.sync($vmaFormulaGrid);
+                        $vmaFormulaGridCompToolbarConnected.sync($vmaFormulaGrid, {
+                            lang: lang.value,
+                        });
                     }
                 }
                 return nextTick();

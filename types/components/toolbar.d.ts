@@ -12,7 +12,7 @@ export interface VmaFormulaGridCompToolbarProps {
 }
 
 export interface VmaFormulaGridCompToolbarMethods {
-    sync(grid: VmaFormulaGridConstructor | VmaFormulaGridInstance): void;
+    sync(grid: VmaFormulaGridConstructor | VmaFormulaGridInstance, lang: any): void;
 }
 
 interface VmaFormulaGridCompToolbarPrivateMethods {}

@@ -1,4 +1,4 @@
-import { defineComponent, h, reactive, inject, createCommentVNode, ComponentOptions, PropType, resolveComponent } from 'vue';
+import { defineComponent, h, reactive, inject, createCommentVNode, ComponentOptions, PropType, resolveComponent, ref, computed, watch, watchEffect, Ref } from 'vue';
 import { Guid } from '../../utils/guid.ts';
 import {
     VmaFormulaGridCompToolbarReactiveData,
@@ -10,8 +10,9 @@ import {
     VmaFormulaGridPrivateMethods,
     VmaFormulaGridCompTextareaPropTypes,
     VmaFormulaGridInstance,
+    LangProvider,
 } from '../../../types';
-import { checkCellInMerges, toolbarButtons } from '../../utils';
+import { checkCellInMerges, getDefaultFontSize, toolbarButtons } from '../../utils';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompToolbar',
@@ -27,141 +28,203 @@ export default defineComponent({
         content: [] as PropType<any[]>,
     },
     setup(props, context) {
-        const $vmaFormulaGrid = inject('$vmaFormulaGrid', {} as VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods);
-
         const toolbarReactiveData = reactive({} as VmaFormulaGridCompToolbarReactiveData);
 
-        const { uId, reactiveData } = $vmaFormulaGrid;
-
         const FormulaGridCompToolbarGenericComponent = resolveComponent('VmaFormulaGridCompToolbarGeneric') as ComponentOptions;
-        const FormulaGridCompToolbarSeperatorComponent = resolveComponent('VmaFormulaGridCompToolbarSeparator') as ComponentOptions;
+        const FormulaGridCompToolbarSeparatorComponent = resolveComponent('VmaFormulaGridCompToolbarSeparator') as ComponentOptions;
+
+        const GridCompSelectComponent = resolveComponent('VmaFormulaGridCompSelect') as ComponentOptions;
 
         const gridToolbarRefs: VmaFormulaGridCompToolbarRefs = {};
 
-        let $vmaFormulaGridConnected: VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods;
+        let $vmaFormulaGridConnected: Ref<(VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods) | undefined> = ref<
+            VmaFormulaGridConstructor & VmaFormulaGridMethods & VmaFormulaGridPrivateMethods
+        >();
+
+        let $vmaFormulaGridLangConnected = ref();
 
         const toolbarMethods = {
-            sync: (grid: VmaFormulaGridConstructor | VmaFormulaGridInstance) => {
-                $vmaFormulaGridConnected = grid;
+            sync: (grid: VmaFormulaGridConstructor | VmaFormulaGridInstance, lang: any) => {
+                $vmaFormulaGridConnected.value = grid;
+                $vmaFormulaGridLangConnected.value = lang;
             },
         } as VmaFormulaGridCompToolbarMethods;
 
         const $vmaToolbar = {
-            uId: uId,
+            uId: Guid.create().toString(),
             props,
             context,
             toolbarReactiveData,
             getRefs: () => gridToolbarRefs,
         } as unknown as VmaFormulaGridCompToolbarConstructor & VmaFormulaGridCompToolbarMethods;
 
+        let fontValue = ref('');
+        let fontSizeValue = ref<number>();
+
+        const fontSelectOptions = computed(() => {
+            return $vmaFormulaGridConnected.value
+                ? $vmaFormulaGridConnected.value.reactiveData.supportedFonts.map((font: any) => {
+                      return {
+                          value: font.en,
+                          label: font.ch,
+                          ff: font.en,
+                          disabled: false,
+                      };
+                  })
+                : [];
+        });
+
+        const fontSelectPlaceholder = computed(() => {
+            return $vmaFormulaGridLangConnected.value ? $vmaFormulaGridLangConnected.value.lang.fontSelect : '';
+        });
+
         const generateToolbar = () => {
-            const bottons: any[] = [];
+            const buttons: any[] = [];
             toolbarButtons().map((item: any) => {
                 if (item && item.is && typeof item.is === 'string') {
-                    bottons.push(item.is === 'Separator' ? h(FormulaGridCompToolbarSeperatorComponent) : createCommentVNode());
+                    if (item.is === 'Separator') {
+                        buttons.push(h(FormulaGridCompToolbarSeparatorComponent));
+                    } else if (item.is === 'fontSelect') {
+                        buttons.push(
+                            h(GridCompSelectComponent, {
+                                modelValue: fontValue.value,
+                                placeholder: fontSelectPlaceholder.value,
+                                'onUpdate:modelValue': (value: any) => {
+                                    fontValue.value = value;
+                                },
+                                // style: {
+                                //     width: '200px',
+                                //     flex: '0 1 auto',
+                                // },
+                                options: fontSelectOptions.value,
+                                onChange: (event: any) => {
+                                    if ($vmaFormulaGridConnected.value) $vmaFormulaGridConnected.value.setFontStyle('cells', 'fontSelect', event.value);
+                                },
+                            }),
+                        );
+                    }
                 } else {
-                    bottons.push(
+                    buttons.push(
                         h(FormulaGridCompToolbarGenericComponent, {
                             item: item,
                             onClick: (_: Event) => {
+                                if (
+                                    !(
+                                        $vmaFormulaGridConnected.value &&
+                                        $vmaFormulaGridConnected.value.reactiveData.currentAreaSci >= 0 &&
+                                        $vmaFormulaGridConnected.value.reactiveData.currentAreaEci >= 0 &&
+                                        $vmaFormulaGridConnected.value.reactiveData.currentAreaSri >= 0 &&
+                                        $vmaFormulaGridConnected.value.reactiveData.currentAreaEri >= 0
+                                    )
+                                ) {
+                                    return;
+                                }
                                 if (item.code === 'bold') {
-                                    if (
-                                        $vmaFormulaGridConnected &&
-                                        $vmaFormulaGridConnected.reactiveData.currentAreaSci >= 0 &&
-                                        $vmaFormulaGridConnected.reactiveData.currentAreaEci >= 0 &&
-                                        $vmaFormulaGridConnected.reactiveData.currentAreaSri >= 0 &&
-                                        $vmaFormulaGridConnected.reactiveData.currentAreaEri >= 0
+                                    let initValue = false;
+                                    for (
+                                        let col = $vmaFormulaGridConnected.value.reactiveData.currentAreaSci;
+                                        col <= $vmaFormulaGridConnected.value.reactiveData.currentAreaEci;
+                                        col++
                                     ) {
-                                        let initValue = false;
-                                        for (let col = $vmaFormulaGridConnected.reactiveData.currentAreaSci; col <= $vmaFormulaGridConnected.reactiveData.currentAreaEci; col++) {
-                                            for (
-                                                let row = $vmaFormulaGridConnected.reactiveData.currentAreaSri;
-                                                row <= $vmaFormulaGridConnected.reactiveData.currentAreaEri;
-                                                row++
+                                        for (
+                                            let row = $vmaFormulaGridConnected.value.reactiveData.currentAreaSri;
+                                            row <= $vmaFormulaGridConnected.value.reactiveData.currentAreaEri;
+                                            row++
+                                        ) {
+                                            if (
+                                                $vmaFormulaGridConnected.value.reactiveData.currentSheetData[row][col + 1].b &&
+                                                !checkCellInMerges(col + 1, row + 1, $vmaFormulaGridConnected.value.reactiveData.merges)
                                             ) {
-                                                if (
-                                                    $vmaFormulaGridConnected.reactiveData.currentSheetData[row][col + 1].b &&
-                                                    !checkCellInMerges(col + 1, row + 1, $vmaFormulaGridConnected.reactiveData.merges)
-                                                ) {
-                                                    initValue = true;
-                                                    break;
-                                                }
+                                                initValue = true;
+                                                break;
                                             }
                                         }
-                                        $vmaFormulaGridConnected.setFontStyle('cells', 'fontBold', initValue);
                                     }
+                                    $vmaFormulaGridConnected.value.setFontStyle('cells', 'fontBold', initValue);
                                 }
                                 if (item.code === 'italic') {
-                                    if (
-                                        $vmaFormulaGridConnected &&
-                                        $vmaFormulaGridConnected.reactiveData.currentAreaSci >= 0 &&
-                                        $vmaFormulaGridConnected.reactiveData.currentAreaEci >= 0 &&
-                                        $vmaFormulaGridConnected.reactiveData.currentAreaSri >= 0 &&
-                                        $vmaFormulaGridConnected.reactiveData.currentAreaEri >= 0
+                                    let initValue = false;
+                                    for (
+                                        let col = $vmaFormulaGridConnected.value.reactiveData.currentAreaSci;
+                                        col <= $vmaFormulaGridConnected.value.reactiveData.currentAreaEci;
+                                        col++
                                     ) {
-                                        let initValue = false;
-                                        for (let col = $vmaFormulaGridConnected.reactiveData.currentAreaSci; col <= $vmaFormulaGridConnected.reactiveData.currentAreaEci; col++) {
-                                            for (
-                                                let row = $vmaFormulaGridConnected.reactiveData.currentAreaSri;
-                                                row <= $vmaFormulaGridConnected.reactiveData.currentAreaEri;
-                                                row++
+                                        for (
+                                            let row = $vmaFormulaGridConnected.value.reactiveData.currentAreaSri;
+                                            row <= $vmaFormulaGridConnected.value.reactiveData.currentAreaEri;
+                                            row++
+                                        ) {
+                                            if (
+                                                $vmaFormulaGridConnected.value.reactiveData.currentSheetData[row][col + 1].i &&
+                                                !checkCellInMerges(col + 1, row + 1, $vmaFormulaGridConnected.value.reactiveData.merges)
                                             ) {
-                                                if (
-                                                    $vmaFormulaGridConnected.reactiveData.currentSheetData[row][col + 1].i &&
-                                                    !checkCellInMerges(col + 1, row + 1, $vmaFormulaGridConnected.reactiveData.merges)
-                                                ) {
-                                                    initValue = true;
-                                                    break;
-                                                }
+                                                initValue = true;
+                                                break;
                                             }
                                         }
-                                        $vmaFormulaGridConnected.setFontStyle('cells', 'fontItalic', initValue);
                                     }
+                                    $vmaFormulaGridConnected.value.setFontStyle('cells', 'fontItalic', initValue);
                                 }
                                 if (item.code === 'underline') {
-                                    if (
-                                        $vmaFormulaGridConnected &&
-                                        $vmaFormulaGridConnected.reactiveData.currentAreaSci >= 0 &&
-                                        $vmaFormulaGridConnected.reactiveData.currentAreaEci >= 0 &&
-                                        $vmaFormulaGridConnected.reactiveData.currentAreaSri >= 0 &&
-                                        $vmaFormulaGridConnected.reactiveData.currentAreaEri >= 0
+                                    let initValue = false;
+                                    for (
+                                        let col = $vmaFormulaGridConnected.value.reactiveData.currentAreaSci;
+                                        col <= $vmaFormulaGridConnected.value.reactiveData.currentAreaEci;
+                                        col++
                                     ) {
-                                        let initValue = false;
-                                        for (let col = $vmaFormulaGridConnected.reactiveData.currentAreaSci; col <= $vmaFormulaGridConnected.reactiveData.currentAreaEci; col++) {
-                                            for (
-                                                let row = $vmaFormulaGridConnected.reactiveData.currentAreaSri;
-                                                row <= $vmaFormulaGridConnected.reactiveData.currentAreaEri;
-                                                row++
+                                        for (
+                                            let row = $vmaFormulaGridConnected.value.reactiveData.currentAreaSri;
+                                            row <= $vmaFormulaGridConnected.value.reactiveData.currentAreaEri;
+                                            row++
+                                        ) {
+                                            if (
+                                                $vmaFormulaGridConnected.value.reactiveData.currentSheetData[row][col + 1].u &&
+                                                !checkCellInMerges(col + 1, row + 1, $vmaFormulaGridConnected.value.reactiveData.merges)
                                             ) {
-                                                if (
-                                                    $vmaFormulaGridConnected.reactiveData.currentSheetData[row][col + 1].u &&
-                                                    !checkCellInMerges(col + 1, row + 1, $vmaFormulaGridConnected.reactiveData.merges)
-                                                ) {
-                                                    initValue = true;
-                                                    break;
-                                                }
+                                                initValue = true;
+                                                break;
                                             }
                                         }
-                                        $vmaFormulaGridConnected.setFontStyle('cells', 'fontUnderline', initValue);
                                     }
+                                    $vmaFormulaGridConnected.value.setFontStyle('cells', 'fontUnderline', initValue);
                                 }
                                 if (item.code === 'alignLeft') {
-                                    $vmaFormulaGridConnected.setCellAlign('cells', 'l');
+                                    $vmaFormulaGridConnected.value.setCellAlign('cells', 'l');
                                 }
                                 if (item.code === 'alignCenter') {
-                                    $vmaFormulaGridConnected.setCellAlign('cells', 'c');
+                                    $vmaFormulaGridConnected.value.setCellAlign('cells', 'c');
                                 }
                                 if (item.code === 'alignRight') {
-                                    $vmaFormulaGridConnected.setCellAlign('cells', 'r');
+                                    $vmaFormulaGridConnected.value.setCellAlign('cells', 'r');
                                 }
                                 if (item.code === 'alignTop') {
-                                    $vmaFormulaGridConnected.setCellAlign('cells', 't');
+                                    $vmaFormulaGridConnected.value.setCellAlign('cells', 't');
                                 }
                                 if (item.code === 'alignMiddle') {
-                                    $vmaFormulaGridConnected.setCellAlign('cells', 'm');
+                                    $vmaFormulaGridConnected.value.setCellAlign('cells', 'm');
                                 }
                                 if (item.code === 'alignBottom') {
-                                    $vmaFormulaGridConnected.setCellAlign('cells', 'b');
+                                    $vmaFormulaGridConnected.value.setCellAlign('cells', 'b');
+                                }
+                                if (item.code === 'fontSizeUp') {
+                                    let initValue =
+                                        $vmaFormulaGridConnected.value.reactiveData.currentSheetData[$vmaFormulaGridConnected.value.reactiveData.currentAreaSri][
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaSci + 1
+                                        ].fs;
+                                    if (initValue === null || initValue === '') {
+                                        initValue = getDefaultFontSize($vmaFormulaGridConnected.value.props.size!);
+                                    }
+                                    $vmaFormulaGridConnected.value.setFontStyle('cells', 'fontSizeUp', initValue);
+                                }
+                                if (item.code === 'fontSizeDown') {
+                                    let initValue =
+                                        $vmaFormulaGridConnected.value.reactiveData.currentSheetData[$vmaFormulaGridConnected.value.reactiveData.currentAreaSri][
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaSci + 1
+                                        ].fs;
+                                    if (initValue === null || initValue === '') {
+                                        initValue = getDefaultFontSize($vmaFormulaGridConnected.value.props.size!);
+                                    }
+                                    $vmaFormulaGridConnected.value.setFontStyle('cells', 'fontSizeDown', initValue);
                                 }
                                 if (item.code === 'zoomIn') {
                                     // todo
@@ -170,29 +233,37 @@ export default defineComponent({
                                     // todo
                                 }
                                 if (item.code === 'zoomReset') {
-                                    $vmaFormulaGridConnected.setGridSize('normal');
+                                    $vmaFormulaGridConnected.value.setGridSize('normal');
                                 }
                                 if (item.code === 'wrapText') {
                                     let initValue = false;
-                                    for (let col = $vmaFormulaGridConnected.reactiveData.currentAreaSci; col <= $vmaFormulaGridConnected.reactiveData.currentAreaEci; col++) {
-                                        for (let row = $vmaFormulaGridConnected.reactiveData.currentAreaSri; row <= $vmaFormulaGridConnected.reactiveData.currentAreaEri; row++) {
+                                    for (
+                                        let col = $vmaFormulaGridConnected.value.reactiveData.currentAreaSci;
+                                        col <= $vmaFormulaGridConnected.value.reactiveData.currentAreaEci;
+                                        col++
+                                    ) {
+                                        for (
+                                            let row = $vmaFormulaGridConnected.value.reactiveData.currentAreaSri;
+                                            row <= $vmaFormulaGridConnected.value.reactiveData.currentAreaEri;
+                                            row++
+                                        ) {
                                             if (
-                                                $vmaFormulaGridConnected.reactiveData.currentSheetData[row][col + 1].tw &&
-                                                !checkCellInMerges(col + 1, row + 1, $vmaFormulaGridConnected.reactiveData.merges)
+                                                $vmaFormulaGridConnected.value.reactiveData.currentSheetData[row][col + 1].tw &&
+                                                !checkCellInMerges(col + 1, row + 1, $vmaFormulaGridConnected.value.reactiveData.merges)
                                             ) {
                                                 initValue = true;
                                                 break;
                                             }
                                         }
                                     }
-                                    $vmaFormulaGridConnected.setCellWrap('cells', initValue);
+                                    $vmaFormulaGridConnected.value.setCellWrap('cells', initValue);
                                 }
                             },
                         }),
                     );
                 }
             });
-            return bottons;
+            return buttons;
         };
 
         const renderVN = () =>

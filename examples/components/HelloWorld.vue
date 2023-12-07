@@ -154,7 +154,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, reactive, ref, shallowRef, watch } from 'vue';
+import { defineComponent, nextTick, onMounted, onUnmounted, reactive, ref, shallowRef, watch } from 'vue';
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
 import { FormulaError, FormulaHelpers, Types } from '../../src/all';
@@ -178,9 +178,7 @@ export default defineComponent({
         const vfg = ref<VmaFormulaGridInstance>();
         const vfgt = ref<VmaFormulaGridCompToolbarInstance>();
 
-        onMounted(() => {
-            vfg.value.connectToolbar(vfgt.value);
-        });
+        onMounted(() => {});
 
         onUnmounted(() => {});
 
@@ -669,6 +667,10 @@ export default defineComponent({
                 }
             },
         );
+
+        nextTick(() => {
+            vfg.value.connectToolbar(vfgt.value);
+        });
 
         return {
             datasource,
