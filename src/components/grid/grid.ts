@@ -232,7 +232,6 @@ export default defineComponent({
         watch(
             () => props.size,
             () => {
-                console.log(props.size); // todo
                 $vmaFormulaGrid.recalculate(false).then(() => {
                     $vmaFormulaGrid.calcCurrentCellEditorStyle();
                     $vmaFormulaGrid.calcCurrentCellEditorDisplay();
@@ -1693,7 +1692,6 @@ export default defineComponent({
                             details.type = 'c';
                             details.v = v;
                         }
-                        console.log(details);
                         if (details.type !== 'unknown') {
                             const pStart = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaSci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaSri + 1);
                             const pEnd = getColumnSymbol($vmaFormulaGrid.reactiveData.currentAreaEci + 1) + ($vmaFormulaGrid.reactiveData.currentAreaEri + 1);

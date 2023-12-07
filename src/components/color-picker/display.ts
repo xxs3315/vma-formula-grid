@@ -71,7 +71,6 @@ export default defineComponent({
 
         const onInputTypeChange = () => {
             inputType.value = inputType.value === 'rgba' ? 'hex' : 'rgba';
-            console.log(inputType.value);
         };
 
         const renderVN = () =>
