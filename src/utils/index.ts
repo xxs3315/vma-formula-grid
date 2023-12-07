@@ -1856,7 +1856,7 @@ export function calcCellStyles(
                         (col + 1 >= colStart && col + 1 <= colEnd && row + 1 >= rowEnd && row + 1 <= rowStart) ||
                         (col + 1 >= colEnd && col + 1 <= colStart && row + 1 >= rowEnd && row + 1 <= rowStart)
                     ) {
-                        ff = item.hasOwnProperty('v') && item.v;
+                        ff = item.hasOwnProperty('v') && item.v !== 'none' ? getFontFamilyEnFromCh(item.v) : null;
                     }
                 } else {
                     let colTarget = getColumnCount(item.p.replace(/[0-9]/g, ''));
