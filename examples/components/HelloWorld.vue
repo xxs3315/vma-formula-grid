@@ -1,6 +1,6 @@
 <template>
     <div style="height: 100%">
-        <div style="height: 70px">
+        <div style="height: 200px">
             <fieldset class="fieldset">
                 <legend>Select a datasource type:</legend>
                 <span>
@@ -104,7 +104,7 @@
             </fieldset>
         </div>
 
-        <div style="margin-top: 10px; height: calc(100% - 80px)">
+        <div style="margin-top: 10px; height: calc(100% - 210px)">
             <splitpanes class="default-theme" style="height: 100%">
                 <pane min-size="50" size="60">
                     <vma-formula-grid

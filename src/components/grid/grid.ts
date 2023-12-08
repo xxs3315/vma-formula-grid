@@ -607,6 +607,10 @@ export default defineComponent({
                 result.conf.formats = Object.assign({}, gridReactiveData.formats);
                 // borders
                 result.conf.borders = Object.assign({}, gridReactiveData.borders);
+                // aligns
+                result.conf.aligns = Object.assign({}, gridReactiveData.aligns);
+                // wraps
+                result.conf.wraps = Object.assign({}, gridReactiveData.wraps);
                 // // type
                 // // arrayData
                 // // mapData
@@ -632,7 +636,6 @@ export default defineComponent({
                 result.arrayData = arrDs;
                 result.mapData.data = mapDs;
 
-                // console.log(JSON.parse(JSON.stringify(result)));
                 return JSON.parse(JSON.stringify(result));
             },
             connectToolbar: (toolbar: VmaFormulaGridCompToolbarConstructor | VmaFormulaGridCompToolbarInstance) => {
