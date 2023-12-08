@@ -147,16 +147,14 @@ export default defineComponent({
                                 if (item.code === 'zoomIn') {
                                     if ($vmaFormulaGridConnected.value) {
                                         let currentSize = sizes.indexOf($vmaFormulaGridConnected.value.reactiveData.size);
-                                        currentSize -= 1;
-                                        const targetSize = Math.min(0, Math.max(0, currentSize));
+                                        const targetSize = Math.max(0, currentSize - 1);
                                         $vmaFormulaGridConnected.value.setGridSize(sizes[targetSize] as SizeType);
                                     }
                                 }
                                 if (item.code === 'zoomOut') {
                                     if ($vmaFormulaGridConnected.value) {
                                         let currentSize = sizes.indexOf($vmaFormulaGridConnected.value.reactiveData.size);
-                                        currentSize += 1;
-                                        const targetSize = Math.min(sizes.length - 1, currentSize);
+                                        const targetSize = Math.min(sizes.length - 1, currentSize + 1);
                                         $vmaFormulaGridConnected.value.setGridSize(sizes[targetSize] as SizeType);
                                     }
                                 }
