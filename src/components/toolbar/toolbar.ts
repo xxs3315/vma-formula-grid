@@ -10,7 +10,7 @@ import {
     VmaFormulaGridPrivateMethods,
     VmaFormulaGridCompTextareaPropTypes,
     VmaFormulaGridInstance,
-    LangProvider,
+    SizeType,
 } from '../../../types';
 import { checkCellInMerges, getDefaultFontSize, toolbarButtons } from '../../utils';
 
@@ -94,6 +94,8 @@ export default defineComponent({
             return $vmaFormulaGridLangConnected.value ? $vmaFormulaGridLangConnected.value.lang.fontSizeSelect : '';
         });
 
+        const sizes = ['large', 'normal', 'small', 'mini'];
+
         const generateToolbar = () => {
             const buttons: any[] = [];
             toolbarButtons().map((item: any) => {
@@ -142,6 +144,25 @@ export default defineComponent({
                         h(FormulaGridCompToolbarGenericComponent, {
                             item: item,
                             onClick: (_: Event) => {
+                                if (item.code === 'zoomIn') {
+                                    if ($vmaFormulaGridConnected.value) {
+                                        let currentSize = sizes.indexOf($vmaFormulaGridConnected.value.reactiveData.size);
+                                        currentSize -= 1;
+                                        const targetSize = Math.min(0, Math.max(0, currentSize));
+                                        $vmaFormulaGridConnected.value.setGridSize(sizes[targetSize] as SizeType);
+                                    }
+                                }
+                                if (item.code === 'zoomOut') {
+                                    if ($vmaFormulaGridConnected.value) {
+                                        let currentSize = sizes.indexOf($vmaFormulaGridConnected.value.reactiveData.size);
+                                        currentSize += 1;
+                                        const targetSize = Math.min(sizes.length - 1, currentSize);
+                                        $vmaFormulaGridConnected.value.setGridSize(sizes[targetSize] as SizeType);
+                                    }
+                                }
+                                if (item.code === 'zoomReset') {
+                                    if ($vmaFormulaGridConnected.value) $vmaFormulaGridConnected.value.setGridSize('normal');
+                                }
                                 if (
                                     !(
                                         $vmaFormulaGridConnected.value &&
@@ -246,7 +267,7 @@ export default defineComponent({
                                             $vmaFormulaGridConnected.value.reactiveData.currentAreaSci + 1
                                         ].fs;
                                     if (initValue === null || initValue === '') {
-                                        initValue = getDefaultFontSize($vmaFormulaGridConnected.value.props.size!);
+                                        initValue = getDefaultFontSize($vmaFormulaGridConnected.value.reactiveData.size);
                                     }
                                     $vmaFormulaGridConnected.value.setFontStyle('cells', 'fontSizeUp', initValue);
                                 }
@@ -256,18 +277,9 @@ export default defineComponent({
                                             $vmaFormulaGridConnected.value.reactiveData.currentAreaSci + 1
                                         ].fs;
                                     if (initValue === null || initValue === '') {
-                                        initValue = getDefaultFontSize($vmaFormulaGridConnected.value.props.size!);
+                                        initValue = getDefaultFontSize($vmaFormulaGridConnected.value.reactiveData.size);
                                     }
                                     $vmaFormulaGridConnected.value.setFontStyle('cells', 'fontSizeDown', initValue);
-                                }
-                                if (item.code === 'zoomIn') {
-                                    // todo
-                                }
-                                if (item.code === 'zoomOut') {
-                                    // todo
-                                }
-                                if (item.code === 'zoomReset') {
-                                    $vmaFormulaGridConnected.value.setGridSize('normal');
                                 }
                                 if (item.code === 'wrapText') {
                                     let initValue = false;

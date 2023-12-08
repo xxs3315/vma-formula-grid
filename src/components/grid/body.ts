@@ -130,7 +130,7 @@ export default defineComponent({
                           h(TextareaComponent, {
                               ref: refCurrentCellEditor,
                               class: ['cell-editor'],
-                              size: $vmaFormulaGrid.props.size,
+                              size: $vmaFormulaGrid.reactiveData.size,
                               type: $vmaFormulaGrid.props.type,
                               modelValue: $vmaFormulaGrid.reactiveData.currentCellEditorContent,
                               'onUpdate:modelValue': (value: any) => {
@@ -363,7 +363,7 @@ export default defineComponent({
             const wrapperElem = refGridBodyLeftFixedTableWrapperDiv.value;
             const pos = DomTools.getOffsetPos(dragBtnElem, wrapperElem);
             const dragBtnHeight = dragBtnElem.clientHeight;
-            const rowHeight = getRenderDefaultRowHeight($vmaFormulaGrid.props.defaultRowHeight, $vmaFormulaGrid.props.size!);
+            const rowHeight = getRenderDefaultRowHeight($vmaFormulaGrid.props.defaultRowHeight, $vmaFormulaGrid.reactiveData.size);
             const topSpaceHeight = getYSpaceFromRowHeights(
                 $vmaFormulaGrid.reactiveData.yStart,
                 renderDefaultRowHeight.value,
@@ -579,7 +579,7 @@ export default defineComponent({
                                           },
                                           h(GridCompIconComponent, {
                                               name: 'ellipsis-v',
-                                              size: $vmaFormulaGrid.props.size,
+                                              size: $vmaFormulaGrid.reactiveData.size,
                                               scaleX: 0.7,
                                               scaleY: 0.7,
                                           }),
@@ -617,7 +617,7 @@ export default defineComponent({
                                           },
                                           h(GridCompIconComponent, {
                                               name: 'ellipsis-v',
-                                              size: $vmaFormulaGrid.props.size,
+                                              size: $vmaFormulaGrid.reactiveData.size,
                                               scaleX: 0.7,
                                               scaleY: 0.7,
                                           }),

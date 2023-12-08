@@ -187,7 +187,7 @@ export default defineComponent({
                                               },
                                               h(GridCompIconComponent, {
                                                   name: 'ellipsis-h',
-                                                  size: $vmaFormulaGrid.props.size,
+                                                  size: $vmaFormulaGrid.reactiveData.size,
                                                   scaleX: 0.7,
                                                   scaleY: 0.7,
                                               }),
@@ -225,7 +225,7 @@ export default defineComponent({
                                               },
                                               h(GridCompIconComponent, {
                                                   name: 'ellipsis-h',
-                                                  size: $vmaFormulaGrid.props.size,
+                                                  size: $vmaFormulaGrid.reactiveData.size,
                                                   scaleX: 0.7,
                                                   scaleY: 0.7,
                                               }),
@@ -275,7 +275,7 @@ export default defineComponent({
             const wrapperElem = refGridHeaderTableWrapperDiv.value;
             const pos = DomTools.getOffsetPos(dragBtnElem, wrapperElem);
             const dragBtnWidth = dragBtnElem.clientWidth;
-            const columnWidth = getRenderDefaultColWidth($vmaFormulaGrid.props.defaultColumnWidth, $vmaFormulaGrid.props.size!);
+            const columnWidth = getRenderDefaultColWidth($vmaFormulaGrid.props.defaultColumnWidth, $vmaFormulaGrid.reactiveData.size);
             const leftSpaceWidth = getXSpaceFromColumnWidths(
                 $vmaFormulaGrid.reactiveData.xStart,
                 renderDefaultColWidth.value,

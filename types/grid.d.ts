@@ -83,6 +83,8 @@ export interface VmaFormulaGridRefs {
 export interface VmaFormulaGridReactiveData {
     global: Record<string, any>;
 
+    size: SizeType;
+
     xDim: number;
     yDim: number;
 

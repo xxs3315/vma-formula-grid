@@ -320,7 +320,7 @@ export default defineComponent({
                                                                                                               $vmaFormulaGrid.reactiveData.currentAreaSri
                                                                                                           ][$vmaFormulaGrid.reactiveData.currentAreaSci + 1].fs;
                                                                                                       if (initValue === null || initValue === '') {
-                                                                                                          initValue = getDefaultFontSize($vmaFormulaGrid.props.size!);
+                                                                                                          initValue = getDefaultFontSize($vmaFormulaGrid.reactiveData.size);
                                                                                                       }
                                                                                                       $vmaFormulaGrid.setFontStyle('cells', 'fontSizeUp', initValue);
                                                                                                   },
@@ -338,7 +338,7 @@ export default defineComponent({
                                                                                                               $vmaFormulaGrid.reactiveData.currentAreaSri
                                                                                                           ][$vmaFormulaGrid.reactiveData.currentAreaSci + 1].fs;
                                                                                                       if (initValue === null || initValue === '') {
-                                                                                                          initValue = getDefaultFontSize($vmaFormulaGrid.props.size!);
+                                                                                                          initValue = getDefaultFontSize($vmaFormulaGrid.reactiveData.size);
                                                                                                       }
                                                                                                       $vmaFormulaGrid.setFontStyle('cells', 'fontSizeDown', initValue);
                                                                                                   },

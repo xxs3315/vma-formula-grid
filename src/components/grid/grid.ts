@@ -231,6 +231,7 @@ export default defineComponent({
         watch(
             () => props.size,
             () => {
+                $vmaFormulaGrid.reactiveData.size = props.size;
                 $vmaFormulaGrid.recalculate(false).then(() => {
                     $vmaFormulaGrid.calcCurrentCellEditorStyle();
                     $vmaFormulaGrid.calcCurrentCellEditorDisplay();
@@ -313,17 +314,21 @@ export default defineComponent({
 
         let $vmaFormulaGridCompToolbarConnected: VmaFormulaGridCompToolbarConstructor;
 
-        const renderDefaultColWidth = computed(() => getRenderDefaultColWidth(props.defaultColumnWidth, props.size));
+        const renderDefaultColWidth = computed(() => getRenderDefaultColWidth(props.defaultColumnWidth, $vmaFormulaGrid.reactiveData.size));
 
-        const renderDefaultRowHeight = computed(() => getRenderDefaultRowHeight(props.defaultRowHeight, props.size));
+        const renderDefaultRowHeight = computed(() => getRenderDefaultRowHeight(props.defaultRowHeight, $vmaFormulaGrid.reactiveData.size));
 
         const rowIndicatorElWidth = computed(() =>
-            Math.max(getRenderRowIndicatorWidth(props.size) + gridReactiveData.yEnd.toString().length * getRenderRowIndicatorWidth(props.size), 54),
+            Math.max(
+                getRenderRowIndicatorWidth($vmaFormulaGrid.reactiveData.size) +
+                    gridReactiveData.yEnd.toString().length * getRenderRowIndicatorWidth($vmaFormulaGrid.reactiveData.size),
+                54,
+            ),
         );
 
         const gridReactiveData = reactive({
             global: {},
-
+            size: 'normal',
             xDim: 0,
             yDim: 0,
             xStart: -1,
@@ -442,6 +447,21 @@ export default defineComponent({
             supportedFonts: [],
             supportedFontSizes: [],
         }) as VmaFormulaGridReactiveData;
+
+        watch(
+            () => gridReactiveData.size,
+            () => {
+                $vmaFormulaGrid.recalculate(false).then(() => {
+                    $vmaFormulaGrid.calcCurrentCellEditorStyle();
+                    $vmaFormulaGrid.calcCurrentCellEditorDisplay();
+                    $vmaFormulaGrid.reCalcCurrentAreaPos();
+                    $vmaFormulaGrid.updateCurrentAreaStyle();
+                });
+            },
+            {
+                deep: true,
+            },
+        );
 
         watch(
             () => gridReactiveData.currentCell,
@@ -1319,7 +1339,7 @@ export default defineComponent({
                 updateCurrentCell();
             },
             setGridSize: (size: SizeType) => {
-                // todo
+                gridReactiveData.size = size;
             },
             setCellWrap: (type: 'cells' | 'rows' | 'columns', v: any) => {
                 if (type === 'cells') {
@@ -3083,7 +3103,7 @@ export default defineComponent({
                     ref: refGridDiv,
                     class: [
                         'vma-formula-grid',
-                        `${props.size}`,
+                        `${$vmaFormulaGrid.reactiveData.size}`,
                         `${props.type}`,
                         {
                             'overflow-x': gridReactiveData.isOverflowX,
