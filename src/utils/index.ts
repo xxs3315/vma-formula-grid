@@ -2827,6 +2827,7 @@ export const toolbarButtons = () => {
         { is: 'fontSizeSelect' },
         { icon: 'font_size_up', title: 'Increase font size', code: 'fontSizeUp' },
         { icon: 'font_size_down', title: 'Decrease font size', code: 'fontSizeDown' },
+        { is: 'Separator' },
         { icon: 'zoom_in', title: 'Zoom in', code: 'zoomIn' },
         { icon: 'zoom_out', title: 'Zoom out', code: 'zoomOut' },
         { icon: 'zoom_reset', title: 'Reset zoom', code: 'zoomReset' },
