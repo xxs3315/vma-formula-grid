@@ -94,7 +94,7 @@ export default defineComponent({
             return $vmaFormulaGridLangConnected.value ? $vmaFormulaGridLangConnected.value.lang.fontSizeSelect : '';
         });
 
-        const sizes = ['large', 'normal', 'small', 'mini'];
+        const sizes = ['xxx-large', 'xx-large', 'x-large', 'large', 'normal', 'small', 'mini'];
 
         const generateToolbar = () => {
             const buttons: any[] = [];

@@ -36,7 +36,7 @@ description: 基础表格-尺寸
 
 ::: code-group
 ```ts
-size: 'large' | 'normal' | 'small' | 'mini'
+size: 'xxx-large' | 'xx-large' | 'x-large' | 'large' | 'normal' | 'small' | 'mini'
 ```
 :::
 

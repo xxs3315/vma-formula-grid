@@ -6,7 +6,7 @@ export interface VmaComponentInstance {
     uId: string;
 }
 
-export type SizeType = 'large' | 'normal' | 'small' | 'mini';
+export type SizeType = 'xxx-large' | 'xx-large' | 'x-large' | 'large' | 'normal' | 'small' | 'mini';
 
 export type ComponentType = 'default' | 'primary' | 'success' | 'warning' | 'danger';
 
