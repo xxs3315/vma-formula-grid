@@ -216,7 +216,7 @@ export default defineComponent({
                                                                                               : createCommentVNode(),
                                                                                       ),
                                                                                       h(GridCompSelectComponent, {
-                                                                                          size: 'mini',
+                                                                                          size: 'small',
                                                                                           placeholder: $vmaFormulaGridLang?.lang.fontSelect,
                                                                                           modelValue: fontValue.value,
                                                                                           'onUpdate:modelValue': (value: any) => {
@@ -291,7 +291,7 @@ export default defineComponent({
                                                                                                   'onUpdate:modelValue': (value: any) => {
                                                                                                       fontSizeValue.value = Number(value);
                                                                                                   },
-                                                                                                  size: 'mini',
+                                                                                                  size: 'small',
                                                                                                   style: {
                                                                                                       width: '100px',
                                                                                                       flex: '0 1 auto',
@@ -310,7 +310,7 @@ export default defineComponent({
                                                                                               h(GridCompButtonComponent, {
                                                                                                   icon: 'font_size_up',
                                                                                                   type: 'primary',
-                                                                                                  size: 'mini',
+                                                                                                  size: 'small',
                                                                                                   style: {
                                                                                                       marginLeft: '4px',
                                                                                                   },
@@ -328,7 +328,7 @@ export default defineComponent({
                                                                                               h(GridCompButtonComponent, {
                                                                                                   icon: 'font_size_down',
                                                                                                   type: 'primary',
-                                                                                                  size: 'mini',
+                                                                                                  size: 'small',
                                                                                                   style: {
                                                                                                       marginLeft: '4px',
                                                                                                   },
@@ -391,7 +391,7 @@ export default defineComponent({
                                                                                           'onUpdate:modelValue': (value: any) => {
                                                                                               currencyOther.value = value;
                                                                                           },
-                                                                                          size: 'mini',
+                                                                                          size: 'small',
                                                                                           style: {
                                                                                               minWidth: '120px',
                                                                                           },
