@@ -20,15 +20,15 @@ export function isObject(obj: any) {
 
 export function getRenderDefaultColWidth(defaultColumnWidth: number | undefined, gridSize: VmaFormulaGridPropTypes.Size): number {
     if (defaultColumnWidth) {
-        // if (gridSize === 'xxx-large') {
-        //     return Math.max(180, defaultColumnWidth)
-        // }
-        // if (gridSize === 'xx-large') {
-        //     return Math.max(168, defaultColumnWidth)
-        // }
-        // if (gridSize === 'x-large') {
-        //     return Math.max(156, defaultColumnWidth)
-        // }
+        if (gridSize === 'xxx-large') {
+            return Math.max(180, defaultColumnWidth);
+        }
+        if (gridSize === 'xx-large') {
+            return Math.max(168, defaultColumnWidth);
+        }
+        if (gridSize === 'x-large') {
+            return Math.max(156, defaultColumnWidth);
+        }
         if (gridSize === 'large') {
             return Math.max(144, defaultColumnWidth);
         }
@@ -42,15 +42,15 @@ export function getRenderDefaultColWidth(defaultColumnWidth: number | undefined,
             return Math.max(108, defaultColumnWidth);
         }
     } else {
-        // if (gridSize === 'xxx-large') {
-        //     return 180
-        // }
-        // if (gridSize === 'xx-large') {
-        //     return 168
-        // }
-        // if (gridSize === 'x-large') {
-        //     return 156
-        // }
+        if (gridSize === 'xxx-large') {
+            return 180;
+        }
+        if (gridSize === 'xx-large') {
+            return 168;
+        }
+        if (gridSize === 'x-large') {
+            return 156;
+        }
         if (gridSize === 'large') {
             return 144;
         }
@@ -69,15 +69,15 @@ export function getRenderDefaultColWidth(defaultColumnWidth: number | undefined,
 
 export function getRenderDefaultRowHeight(defaultRowHeight: number | undefined, gridSize: VmaFormulaGridPropTypes.Size): number {
     if (defaultRowHeight) {
-        // if (gridSize === 'xxx-large') {
-        //     return Math.max(44, defaultRowHeight)
-        // }
-        // if (gridSize === 'xx-large') {
-        //     return Math.max(40, defaultRowHeight)
-        // }
-        // if (gridSize === 'x-large') {
-        //     return Math.max(36, defaultRowHeight)
-        // }
+        if (gridSize === 'xxx-large') {
+            return Math.max(44, defaultRowHeight);
+        }
+        if (gridSize === 'xx-large') {
+            return Math.max(40, defaultRowHeight);
+        }
+        if (gridSize === 'x-large') {
+            return Math.max(36, defaultRowHeight);
+        }
         if (gridSize === 'large') {
             return Math.max(32, defaultRowHeight);
         }
@@ -91,15 +91,15 @@ export function getRenderDefaultRowHeight(defaultRowHeight: number | undefined, 
             return Math.max(20, defaultRowHeight);
         }
     } else {
-        // if (gridSize === 'xxx-large') {
-        //     return 44
-        // }
-        // if (gridSize === 'xx-large') {
-        //     return 40
-        // }
-        // if (gridSize === 'x-large') {
-        //     return 36
-        // }
+        if (gridSize === 'xxx-large') {
+            return 44;
+        }
+        if (gridSize === 'xx-large') {
+            return 40;
+        }
+        if (gridSize === 'x-large') {
+            return 36;
+        }
         if (gridSize === 'large') {
             return 32;
         }
@@ -117,15 +117,15 @@ export function getRenderDefaultRowHeight(defaultRowHeight: number | undefined, 
 }
 
 export function getRenderRowIndicatorWidth(gridSize: VmaFormulaGridPropTypes.Size): number {
-    // if (gridSize === 'xxx-large') {
-    //     return 20
-    // }
-    // if (gridSize === 'xx-large') {
-    //     return 18
-    // }
-    // if (gridSize === 'x-large') {
-    //     return 16
-    // }
+    if (gridSize === 'xxx-large') {
+        return 20;
+    }
+    if (gridSize === 'xx-large') {
+        return 18;
+    }
+    if (gridSize === 'x-large') {
+        return 16;
+    }
     if (gridSize === 'large') {
         return 14;
     }
@@ -2712,8 +2712,14 @@ export function calcCellBgType(hasBg: boolean, hasBdl: boolean, hasBdt: boolean,
     return '17';
 }
 
-export function getDefaultFontSize(size: 'large' | 'normal' | 'small' | 'mini') {
-    if (size === 'large') {
+export function getDefaultFontSize(size: 'xxx-large' | 'xx-large' | 'x-large' | 'large' | 'normal' | 'small' | 'mini') {
+    if (size === 'xxx-large') {
+        return 22;
+    } else if (size === 'xx-large') {
+        return 20;
+    } else if (size === 'x-large') {
+        return 18;
+    } else if (size === 'large') {
         return 16;
     } else if (size === 'normal') {
         return 14;

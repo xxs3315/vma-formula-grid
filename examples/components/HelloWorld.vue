@@ -20,6 +20,18 @@
             <fieldset class="fieldset">
                 <legend>Select a size type:</legend>
                 <span>
+                    <input type="radio" id="sizeXXXLarge" v-model="size" value="xxx-large" />
+                    <label for="sizeXXXLarge">XXX-Large</label>
+                </span>
+                <span>
+                    <input type="radio" id="sizeXXLarge" v-model="size" value="xx-large" />
+                    <label for="sizeXXLarge">XX-Large</label>
+                </span>
+                <span>
+                    <input type="radio" id="sizeXLarge" v-model="size" value="x-large" />
+                    <label for="sizeXLarge">X-Large</label>
+                </span>
+                <span>
                     <input type="radio" id="sizeLarge" v-model="size" value="large" />
                     <label for="sizeLarge">Large</label>
                 </span>
