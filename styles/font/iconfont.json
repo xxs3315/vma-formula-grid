@@ -6,6 +6,97 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "8586006",
+      "name": "comma",
+      "font_class": "comma",
+      "unicode": "e6b8",
+      "unicode_decimal": 59064
+    },
+    {
+      "icon_id": "11968776",
+      "name": "percent",
+      "font_class": "percent",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "5243429",
+      "name": "remove_digital",
+      "font_class": "remove_digital",
+      "unicode": "e66b",
+      "unicode_decimal": 58987
+    },
+    {
+      "icon_id": "5243438",
+      "name": "add_digital",
+      "font_class": "add_digital",
+      "unicode": "e66f",
+      "unicode_decimal": 58991
+    },
+    {
+      "icon_id": "4766265",
+      "name": "border",
+      "font_class": "border",
+      "unicode": "e7a9",
+      "unicode_decimal": 59305
+    },
+    {
+      "icon_id": "4766266",
+      "name": "border-outer",
+      "font_class": "border-outer",
+      "unicode": "e7aa",
+      "unicode_decimal": 59306
+    },
+    {
+      "icon_id": "4766268",
+      "name": "border-top",
+      "font_class": "border-top",
+      "unicode": "e7ab",
+      "unicode_decimal": 59307
+    },
+    {
+      "icon_id": "4766269",
+      "name": "border-bottom",
+      "font_class": "border-bottom",
+      "unicode": "e7ac",
+      "unicode_decimal": 59308
+    },
+    {
+      "icon_id": "4766270",
+      "name": "border-left",
+      "font_class": "border-left",
+      "unicode": "e7ad",
+      "unicode_decimal": 59309
+    },
+    {
+      "icon_id": "4766271",
+      "name": "border-right",
+      "font_class": "border-right",
+      "unicode": "e7ae",
+      "unicode_decimal": 59310
+    },
+    {
+      "icon_id": "4766276",
+      "name": "border-inner",
+      "font_class": "border-inner",
+      "unicode": "e7af",
+      "unicode_decimal": 59311
+    },
+    {
+      "icon_id": "14772777",
+      "name": "font-colors",
+      "font_class": "font-colors",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "21096778",
+      "name": "paint-bucket",
+      "font_class": "paint-bucket",
+      "unicode": "ecd3",
+      "unicode_decimal": 60627
+    },
+    {
       "icon_id": "705112",
       "name": "wrap",
       "font_class": "wrap",

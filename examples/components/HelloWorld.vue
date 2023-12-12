@@ -2,6 +2,13 @@
     <div style="height: 100%">
         <div style="height: 200px">
             <fieldset class="fieldset">
+                <legend>Toolbar:</legend>
+                <span>
+                    <vma-formula-grid-comp-toolbar ref="vfgt" />
+                </span>
+            </fieldset>
+
+            <fieldset class="fieldset">
                 <legend>Select a datasource type:</legend>
                 <span>
                     <input type="radio" id="datasourceArray" v-model="datasource" value="array" checked />
@@ -50,13 +57,6 @@
                 <span>
                     <input type="radio" id="themeTypeDanger" v-model="themeType" value="danger" />
                     <label for="themeTypeDanger">Danger</label>
-                </span>
-            </fieldset>
-
-            <fieldset class="fieldset">
-                <legend>Toolbar:</legend>
-                <span>
-                    <vma-formula-grid-comp-toolbar ref="vfgt" />
                 </span>
             </fieldset>
 
