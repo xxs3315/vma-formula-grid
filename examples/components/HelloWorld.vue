@@ -178,7 +178,9 @@ export default defineComponent({
         const vfg = ref<VmaFormulaGridInstance>();
         const vfgt = ref<VmaFormulaGridCompToolbarInstance>();
 
-        onMounted(() => {});
+        onMounted(() => {
+          vfg.value.connectToolbar(vfgt.value);
+        });
 
         onUnmounted(() => {});
 
@@ -667,10 +669,6 @@ export default defineComponent({
                 }
             },
         );
-
-        nextTick(() => {
-            vfg.value.connectToolbar(vfgt.value);
-        });
 
         return {
             datasource,
