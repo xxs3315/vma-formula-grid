@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "7432376",
+      "name": "fraction",
+      "font_class": "fraction",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
       "icon_id": "14772835",
       "name": "merge-cells",
       "font_class": "merge-cells",

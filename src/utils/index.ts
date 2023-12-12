@@ -2857,6 +2857,7 @@ export const toolbarButtons = () => {
         { is: 'currencySelect' },
         { icon: 'percent', title: 'Percent', code: 'formatNumberPercent' },
         { icon: 'comma', title: 'Thousands', code: 'formatNumberThousands' },
+        { icon: 'fraction', title: 'Fraction', code: 'formatNumberFraction' },
         { icon: 'add_digital', title: 'Add digital', code: 'digitalAdd' },
         { icon: 'remove_digital', title: 'Remove digital', code: 'digitalRemove' },
     ];
