@@ -1,9 +1,9 @@
 <template>
     <div style="height: 100%">
         <div style="height: 30px">
-                <div style="margin: 6px;">
-                    <vma-formula-grid-comp-toolbar ref="vfgt" />
-                </div>
+            <div style="margin: 6px">
+                <vma-formula-grid-comp-toolbar ref="vfgt" />
+            </div>
 
             <fieldset class="fieldset">
                 <legend>Select a datasource type:</legend>
