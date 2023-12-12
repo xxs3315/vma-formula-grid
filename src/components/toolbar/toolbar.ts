@@ -223,6 +223,47 @@ export default defineComponent({
                                         });
                                     }
                                 }
+                                if (item.code === 'fontColor') {
+                                    const menuElem = event.currentTarget;
+                                    if (menuElem !== null && $vmaFormulaGridConnected.value && $vmaFormulaGridCompColorPicker.value) {
+                                        event.preventDefault();
+                                        event.stopPropagation();
+
+                                        const { scrollTop, scrollLeft } = DomTools.getDomNode();
+                                        const { boundingTop, boundingLeft } = getAbsolutePos(menuElem);
+                                        const posTop = boundingTop + menuElem.offsetHeight;
+                                        const posLeft = boundingLeft;
+                                        const top = posTop + scrollTop;
+                                        const left = posLeft + scrollLeft;
+                                        Object.assign($vmaFormulaGridConnected.value.reactiveData.colorPickerStore, {
+                                            visible: true,
+                                            selected: { code: 'fontColor' },
+                                            selectValue: null,
+                                            style: {
+                                                top: `${top}px`,
+                                                left: `${left}px`,
+                                            },
+                                        });
+                                        nextTick(() => {
+                                            const { scrollTop, scrollLeft, visibleHeight, visibleWidth } = DomTools.getDomNode();
+                                            const { boundingTop: menuBoundingTop, boundingLeft: menuBoundingLeft } = getAbsolutePos(menuElem);
+                                            const top = menuBoundingTop + scrollTop;
+                                            const left = menuBoundingLeft + scrollLeft;
+                                            const colorPickerElem = $vmaFormulaGridCompColorPicker.value;
+                                            const clientHeight = colorPickerElem.clientHeight;
+                                            const clientWidth = colorPickerElem.clientWidth;
+                                            const { boundingTop, boundingLeft } = getAbsolutePos(colorPickerElem);
+                                            const offsetTop = boundingTop + clientHeight - visibleHeight;
+                                            const offsetLeft = boundingLeft + clientWidth - visibleWidth;
+                                            if (offsetTop > -10 && $vmaFormulaGridConnected.value) {
+                                                $vmaFormulaGridConnected.value.reactiveData.colorPickerStore.style.top = `${Math.max(scrollTop + 2, top - clientHeight - 2)}px`;
+                                            }
+                                            if (offsetLeft > -10 && $vmaFormulaGridConnected.value) {
+                                                $vmaFormulaGridConnected.value.reactiveData.colorPickerStore.style.left = `${Math.max(scrollLeft + 2, left - clientWidth - 2)}px`;
+                                            }
+                                        });
+                                    }
+                                }
                                 if (
                                     !(
                                         $vmaFormulaGridConnected.value &&
