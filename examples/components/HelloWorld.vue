@@ -1,12 +1,9 @@
 <template>
     <div style="height: 100%">
-        <div style="height: 200px">
-            <fieldset class="fieldset">
-                <legend>Toolbar:</legend>
-                <span>
+        <div style="height: 30px">
+                <div style="margin: 6px;">
                     <vma-formula-grid-comp-toolbar ref="vfgt" />
-                </span>
-            </fieldset>
+                </div>
 
             <fieldset class="fieldset">
                 <legend>Select a datasource type:</legend>
@@ -104,7 +101,7 @@
             </fieldset>
         </div>
 
-        <div style="margin-top: 10px; height: calc(100% - 210px)">
+        <div style="margin-top: 10px; height: calc(100% - 20px)">
             <splitpanes class="default-theme" style="height: 100%">
                 <pane min-size="50" size="60">
                     <vma-formula-grid

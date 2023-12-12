@@ -326,6 +326,12 @@ export default defineComponent({
                                 if (item.code === 'borderBottom') {
                                     $vmaFormulaGridConnected.value.setCellBorder('cells', 'b');
                                 }
+                                if (item.code === 'formatNumberPercent') {
+                                    $vmaFormulaGridConnected.value.setCellFormat('cells', 'formatNumberPercent', null);
+                                }
+                                if (item.code === 'formatNumberThousands') {
+                                    $vmaFormulaGridConnected.value.setCellFormat('cells', 'formatNumberThousands', null);
+                                }
                             },
                         }),
                     );

@@ -2846,8 +2846,8 @@ export const toolbarButtons = () => {
         { is: 'Separator' },
         { is: 'formatterSelect' },
         { is: 'currencySelect' },
-        { icon: 'percent', title: 'Percent', code: 'percent' },
-        { icon: 'comma', title: 'Thousands', code: 'thousands' },
+        { icon: 'percent', title: 'Percent', code: 'formatNumberPercent' },
+        { icon: 'comma', title: 'Thousands', code: 'formatNumberThousands' },
         { icon: 'add_digital', title: 'Add digital', code: 'digitalAdd' },
         { icon: 'remove_digital', title: 'Remove digital', code: 'digitalRemove' },
     ];
