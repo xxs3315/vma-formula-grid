@@ -362,6 +362,12 @@ export default defineComponent({
                                 if (item.code === 'alignBottom') {
                                     $vmaFormulaGridConnected.value.setCellAlign('cells', 'b');
                                 }
+                                if (item.code === 'cellMerge') {
+                                    $vmaFormulaGridConnected.value.mergeCells();
+                                }
+                                if (item.code === 'cellUnmerge') {
+                                    $vmaFormulaGridConnected.value.unmergeCells();
+                                }
                                 if (item.code === 'fontSizeUp') {
                                     let initValue =
                                         $vmaFormulaGridConnected.value.reactiveData.currentSheetData[$vmaFormulaGridConnected.value.reactiveData.currentAreaSri][
