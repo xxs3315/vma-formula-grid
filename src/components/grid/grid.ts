@@ -642,9 +642,13 @@ export default defineComponent({
                 if (toolbar) {
                     $vmaFormulaGridCompToolbarConnected = toolbar;
                     if ($vmaFormulaGrid) {
-                        $vmaFormulaGridCompToolbarConnected.sync($vmaFormulaGrid, {
-                            lang: lang.value,
-                        });
+                        $vmaFormulaGridCompToolbarConnected.sync(
+                            $vmaFormulaGrid,
+                            {
+                                lang: lang.value,
+                            },
+                            refGridColorPicker,
+                        );
                     }
                 }
                 return nextTick();
@@ -3143,18 +3147,25 @@ export default defineComponent({
                     h(resolveComponent('VmaFormulaGridCompColorPicker') as ComponentOptions, {
                         ref: refGridColorPicker,
                         onChange: (color: any) => {
-                            if (gridReactiveData.colorPickerStore.selected && gridReactiveData.colorPickerStore.selected.code === 'backgroundColor') {
-                                if (color.mode && color.mode === 'transparent') {
-                                    $vmaFormulaGrid.setBackgroundColor('cells', 'none', null);
-                                } else {
-                                    $vmaFormulaGrid.setBackgroundColor('cells', 'normal', color.color.toHexString());
+                            if (
+                                gridReactiveData.currentAreaSci >= 0 &&
+                                gridReactiveData.currentAreaEci >= 0 &&
+                                gridReactiveData.currentAreaSri >= 0 &&
+                                gridReactiveData.currentAreaEri >= 0
+                            ) {
+                                if (gridReactiveData.colorPickerStore.selected && gridReactiveData.colorPickerStore.selected.code === 'backgroundColor') {
+                                    if (color.mode && color.mode === 'transparent') {
+                                        $vmaFormulaGrid.setBackgroundColor('cells', 'none', null);
+                                    } else {
+                                        $vmaFormulaGrid.setBackgroundColor('cells', 'normal', color.color.toHexString());
+                                    }
                                 }
-                            }
-                            if (gridReactiveData.colorPickerStore.selected && gridReactiveData.colorPickerStore.selected.code === 'fontColor') {
-                                if (color.mode && color.mode === 'transparent') {
-                                    $vmaFormulaGrid.setFontColor('cells', 'none', null);
-                                } else {
-                                    $vmaFormulaGrid.setFontColor('cells', 'normal', color.color.toHexString());
+                                if (gridReactiveData.colorPickerStore.selected && gridReactiveData.colorPickerStore.selected.code === 'fontColor') {
+                                    if (color.mode && color.mode === 'transparent') {
+                                        $vmaFormulaGrid.setFontColor('cells', 'none', null);
+                                    } else {
+                                        $vmaFormulaGrid.setFontColor('cells', 'normal', color.color.toHexString());
+                                    }
                                 }
                             }
                         },
@@ -3210,7 +3221,7 @@ export default defineComponent({
                 const { ctxMenuStore } = gridReactiveData;
                 const ctxMenu = refGridContextMenu.value;
                 const colorPicker = refGridColorPicker.value;
-                if (ctxMenuStore.visible && ctxMenu && !(DomTools.getEventTargetNode(event, ctxMenu).flag || DomTools.getEventTargetNode(event, colorPicker).flag)) {
+                if (!(DomTools.getEventTargetNode(event, ctxMenu).flag || DomTools.getEventTargetNode(event, colorPicker).flag)) {
                     $vmaFormulaGrid.closeMenu();
                 }
             }
@@ -3221,7 +3232,7 @@ export default defineComponent({
                 const { ctxMenuStore } = gridReactiveData;
                 const ctxMenu = refGridContextMenu.value;
                 const colorPicker = refGridColorPicker.value;
-                if (ctxMenuStore.visible && ctxMenu && !(DomTools.getEventTargetNode(event, ctxMenu).flag || DomTools.getEventTargetNode(event, colorPicker).flag)) {
+                if (!(DomTools.getEventTargetNode(event, ctxMenu).flag || DomTools.getEventTargetNode(event, colorPicker).flag)) {
                     $vmaFormulaGrid.closeMenu();
                 }
             }
@@ -3232,7 +3243,7 @@ export default defineComponent({
                 const { ctxMenuStore } = gridReactiveData;
                 const ctxMenu = refGridContextMenu.value;
                 const colorPicker = refGridColorPicker.value;
-                if (ctxMenuStore.visible && ctxMenu && !(DomTools.getEventTargetNode(event, ctxMenu).flag || DomTools.getEventTargetNode(event, colorPicker).flag)) {
+                if (!(DomTools.getEventTargetNode(event, ctxMenu).flag || DomTools.getEventTargetNode(event, colorPicker).flag)) {
                     $vmaFormulaGrid.closeMenu();
                 }
             }

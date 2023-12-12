@@ -1,5 +1,5 @@
-import { RenderFunction, SetupContext } from 'vue';
-import { ComponentType, SizeType, VmaComponentInstance } from '../grid';
+import { ComponentPublicInstance, RenderFunction, SetupContext } from 'vue';
+import { ComponentType, SizeType, VmaComponentInstance, VmaFormulaGridConstructor, VmaFormulaGridProps } from '../grid';
 import { VmaFormulaGridCompColorPickerPropTypes, VmaFormulaGridCompColorPickerProps } from './context-menu';
 
 export namespace VmaFormulaGridCompColorPickerPropTypes {
@@ -23,6 +23,8 @@ export type VmaFormulaGridCompColorPickerEmits = ['update:color', 'change', 'adv
 export interface VmaFormulaGridCompColorPickerReactiveData {}
 
 export interface VmaFormulaGridCompColorPickerRefs {}
+
+export type VmaFormulaGridCompColorPickerInstance = ComponentPublicInstance<VmaFormulaGridCompColorPickerProps, VmaFormulaGridCompColorPickerConstructor>;
 
 export interface VmaFormulaGridCompColorPickerConstructor extends VmaComponentInstance, VmaFormulaGridCompColorPickerMethods, VmaFormulaGridCompColorPickerPrivateMethods {
     props: VmaFormulaGridCompColorPickerOptions;

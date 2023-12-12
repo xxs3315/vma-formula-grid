@@ -1,5 +1,6 @@
 import { ComponentPublicInstance, RenderFunction, SetupContext } from 'vue';
 import { ComponentType, SizeType, VmaComponentInstance, VmaFormulaGridConstructor, VmaFormulaGridInstance } from '../grid';
+import { VmaFormulaGridCompColorPickerConstructor, VmaFormulaGridCompColorPickerInstance } from './color-picker';
 
 export namespace VmaFormulaGridCompToolbarPropTypes {
     export type Size = SizeType;
@@ -12,7 +13,7 @@ export interface VmaFormulaGridCompToolbarProps {
 }
 
 export interface VmaFormulaGridCompToolbarMethods {
-    sync(grid: VmaFormulaGridConstructor | VmaFormulaGridInstance, lang: any): void;
+    sync(grid: VmaFormulaGridConstructor | VmaFormulaGridInstance, lang: any, colorPicker: any): void;
 }
 
 interface VmaFormulaGridCompToolbarPrivateMethods {}

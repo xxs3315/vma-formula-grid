@@ -1,4 +1,20 @@
-import { defineComponent, h, reactive, inject, createCommentVNode, ComponentOptions, PropType, resolveComponent, ref, computed, watch, watchEffect, Ref } from 'vue';
+import {
+    defineComponent,
+    h,
+    reactive,
+    inject,
+    createCommentVNode,
+    ComponentOptions,
+    PropType,
+    resolveComponent,
+    ref,
+    computed,
+    watch,
+    watchEffect,
+    Ref,
+    nextTick,
+    ComponentPublicInstance,
+} from 'vue';
 import { Guid } from '../../utils/guid.ts';
 import {
     VmaFormulaGridCompToolbarReactiveData,
@@ -11,8 +27,11 @@ import {
     VmaFormulaGridCompTextareaPropTypes,
     VmaFormulaGridInstance,
     SizeType,
+    VmaFormulaGridCompColorPickerConstructor,
+    VmaFormulaGridCompColorPickerInstance,
 } from '../../../types';
 import { checkCellInMerges, getDefaultFontSize, toolbarButtons } from '../../utils';
+import { DomTools, getAbsolutePos } from '../../utils/doms.ts';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompToolbar',
@@ -42,11 +61,13 @@ export default defineComponent({
         >();
 
         let $vmaFormulaGridLangConnected = ref();
+        let $vmaFormulaGridCompColorPicker = ref();
 
         const toolbarMethods = {
-            sync: (grid: VmaFormulaGridConstructor | VmaFormulaGridInstance, lang: any) => {
+            sync: (grid: VmaFormulaGridConstructor | VmaFormulaGridInstance, lang: any, colorPicker: any) => {
                 $vmaFormulaGridConnected.value = grid;
                 $vmaFormulaGridLangConnected.value = lang;
+                $vmaFormulaGridCompColorPicker = colorPicker;
             },
         } as VmaFormulaGridCompToolbarMethods;
 
@@ -143,7 +164,7 @@ export default defineComponent({
                     buttons.push(
                         h(FormulaGridCompToolbarGenericComponent, {
                             item: item,
-                            onClick: (_: Event) => {
+                            onClick: (event: any) => {
                                 if (item.code === 'zoomIn') {
                                     if ($vmaFormulaGridConnected.value) {
                                         let currentSize = sizes.indexOf($vmaFormulaGridConnected.value.reactiveData.size);
@@ -160,6 +181,47 @@ export default defineComponent({
                                 }
                                 if (item.code === 'zoomReset') {
                                     if ($vmaFormulaGridConnected.value) $vmaFormulaGridConnected.value.setGridSize('normal');
+                                }
+                                if (item.code === 'fillColor') {
+                                    const menuElem = event.currentTarget;
+                                    if (menuElem !== null && $vmaFormulaGridConnected.value && $vmaFormulaGridCompColorPicker.value) {
+                                        event.preventDefault();
+                                        event.stopPropagation();
+
+                                        const { scrollTop, scrollLeft } = DomTools.getDomNode();
+                                        const { boundingTop, boundingLeft } = getAbsolutePos(menuElem);
+                                        const posTop = boundingTop + menuElem.offsetHeight;
+                                        const posLeft = boundingLeft;
+                                        const top = posTop + scrollTop;
+                                        const left = posLeft + scrollLeft;
+                                        Object.assign($vmaFormulaGridConnected.value.reactiveData.colorPickerStore, {
+                                            visible: true,
+                                            selected: { code: 'backgroundColor' },
+                                            selectValue: null,
+                                            style: {
+                                                top: `${top}px`,
+                                                left: `${left}px`,
+                                            },
+                                        });
+                                        nextTick(() => {
+                                            const { scrollTop, scrollLeft, visibleHeight, visibleWidth } = DomTools.getDomNode();
+                                            const { boundingTop: menuBoundingTop, boundingLeft: menuBoundingLeft } = getAbsolutePos(menuElem);
+                                            const top = menuBoundingTop + scrollTop;
+                                            const left = menuBoundingLeft + scrollLeft;
+                                            const colorPickerElem = $vmaFormulaGridCompColorPicker.value;
+                                            const clientHeight = colorPickerElem.clientHeight;
+                                            const clientWidth = colorPickerElem.clientWidth;
+                                            const { boundingTop, boundingLeft } = getAbsolutePos(colorPickerElem);
+                                            const offsetTop = boundingTop + clientHeight - visibleHeight;
+                                            const offsetLeft = boundingLeft + clientWidth - visibleWidth;
+                                            if (offsetTop > -10 && $vmaFormulaGridConnected.value) {
+                                                $vmaFormulaGridConnected.value.reactiveData.colorPickerStore.style.top = `${Math.max(scrollTop + 2, top - clientHeight - 2)}px`;
+                                            }
+                                            if (offsetLeft > -10 && $vmaFormulaGridConnected.value) {
+                                                $vmaFormulaGridConnected.value.reactiveData.colorPickerStore.style.left = `${Math.max(scrollLeft + 2, left - clientWidth - 2)}px`;
+                                            }
+                                        });
+                                    }
                                 }
                                 if (
                                     !(
