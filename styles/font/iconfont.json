@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "25683268",
+      "name": "border-full",
+      "font_class": "border-full",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "30982701",
+      "name": "border-none",
+      "font_class": "border-none",
+      "unicode": "eac7",
+      "unicode_decimal": 60103
+    },
+    {
       "icon_id": "8586006",
       "name": "comma",
       "font_class": "comma",
@@ -32,13 +46,6 @@
       "font_class": "add_digital",
       "unicode": "e66f",
       "unicode_decimal": 58991
-    },
-    {
-      "icon_id": "4766265",
-      "name": "border",
-      "font_class": "border",
-      "unicode": "e7a9",
-      "unicode_decimal": 59305
     },
     {
       "icon_id": "4766266",

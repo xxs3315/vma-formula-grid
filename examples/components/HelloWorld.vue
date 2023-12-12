@@ -179,7 +179,7 @@ export default defineComponent({
         const vfgt = ref<VmaFormulaGridCompToolbarInstance>();
 
         onMounted(() => {
-          vfg.value.connectToolbar(vfgt.value);
+            vfg.value.connectToolbar(vfgt.value);
         });
 
         onUnmounted(() => {});

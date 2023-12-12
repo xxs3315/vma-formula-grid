@@ -302,6 +302,30 @@ export default defineComponent({
                                     }
                                     $vmaFormulaGridConnected.value.setCellWrap('cells', initValue);
                                 }
+                                if (item.code === 'borderFull') {
+                                    $vmaFormulaGridConnected.value.setCellBorder('cells', 'full');
+                                }
+                                if (item.code === 'borderNone') {
+                                    $vmaFormulaGridConnected.value.setCellBorder('cells', 'none');
+                                }
+                                if (item.code === 'borderOuter') {
+                                    $vmaFormulaGridConnected.value.setCellBorder('cells', 'outer');
+                                }
+                                if (item.code === 'borderInner') {
+                                    $vmaFormulaGridConnected.value.setCellBorder('cells', 'inner');
+                                }
+                                if (item.code === 'borderLeft') {
+                                    $vmaFormulaGridConnected.value.setCellBorder('cells', 'l');
+                                }
+                                if (item.code === 'borderRight') {
+                                    $vmaFormulaGridConnected.value.setCellBorder('cells', 'r');
+                                }
+                                if (item.code === 'borderTop') {
+                                    $vmaFormulaGridConnected.value.setCellBorder('cells', 't');
+                                }
+                                if (item.code === 'borderBottom') {
+                                    $vmaFormulaGridConnected.value.setCellBorder('cells', 'b');
+                                }
                             },
                         }),
                     );
