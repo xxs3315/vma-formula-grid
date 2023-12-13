@@ -13,6 +13,13 @@
       "unicode_decimal": 58942
     },
     {
+      "icon_id": "26271480",
+      "name": "border-full",
+      "font_class": "border-full",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
       "icon_id": "14772835",
       "name": "merge-cells",
       "font_class": "merge-cells",
@@ -32,13 +39,6 @@
       "font_class": "border-none",
       "unicode": "eac7",
       "unicode_decimal": 60103
-    },
-    {
-      "icon_id": "32795401",
-      "name": "border-full",
-      "font_class": "border-full",
-      "unicode": "e600",
-      "unicode_decimal": 58880
     },
     {
       "icon_id": "8586006",
