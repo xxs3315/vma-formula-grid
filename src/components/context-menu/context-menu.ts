@@ -53,10 +53,10 @@ export default defineComponent({
                 $vmaFormulaGrid.reactiveData.global &&
                 $vmaFormulaGrid.reactiveData.global.formats &&
                 $vmaFormulaGrid.reactiveData.global.formats.c &&
-                $vmaFormulaGrid.reactiveData.global.formats.c['others'] &&
-                $vmaFormulaGrid.reactiveData.global.formats.c['others'].length > 0
+                $vmaFormulaGrid.reactiveData.global.formats.c.others &&
+                $vmaFormulaGrid.reactiveData.global.formats.c.others.length > 0
             ) {
-                return $vmaFormulaGrid.reactiveData.global.formats.c['others'];
+                return $vmaFormulaGrid.reactiveData.global.formats.c.others;
             }
             return [];
         });

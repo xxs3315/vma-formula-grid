@@ -32,6 +32,7 @@ import {
 } from '../../../types';
 import { Guid } from '../../utils/guid.ts';
 import {
+    assignDeep,
     calcCellAligns,
     calcCellBgType,
     calcCellBorders,
@@ -42,7 +43,6 @@ import {
     calcXOverlapMerges,
     calcYOverlapMerges,
     checkCellInMerges,
-    deepAssign,
     filterVertexes,
     getColumnCount,
     getColumnSymbol,
@@ -3741,9 +3741,9 @@ export default defineComponent({
 
                     if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('global')) {
                         if (Object.keys(props.data.conf.global).length > 0) {
-                            gridReactiveData.global = deepAssign({ formats: predefinedFontFormatter() }, props.data.conf.global);
+                            gridReactiveData.global = assignDeep({ formats: predefinedFontFormatter() }, props.data.conf.global);
                         } else {
-                            gridReactiveData.global = deepAssign({ formats: predefinedFontFormatter() });
+                            gridReactiveData.global = assignDeep({ formats: predefinedFontFormatter() });
                         }
                     }
 

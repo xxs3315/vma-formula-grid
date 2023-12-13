@@ -2799,16 +2799,83 @@ export function getLastZIndex() {
     return lastZIndex;
 }
 
-export function deepAssign(...param: any) {
-    let result = Object.assign({}, ...param);
-    for (let item of param) {
-        for (let [idx, val] of Object.entries(item)) {
-            if (typeof val === 'object') {
-                result[idx] = deepAssign(result[idx], val);
-            }
-        }
+export function assignDeep(target: any, ...sources: any) {
+    // 1. 参数校验
+    if (target == null) {
+        throw new TypeError('Cannot convert undefined or null to object');
     }
+
+    // 2. 如果是基本类型数据转为包装对象
+    let result = Object(target);
+
+    // 3. 缓存已拷贝过的对象，解决引用关系丢失问题
+    if (!result['__hash__']) {
+        result['__hash__'] = new WeakMap();
+    }
+    let hash = result['__hash__'];
+
+    sources.forEach((v: any) => {
+        // 4. 如果是基本类型数据转为对象类型
+        let source = Object(v);
+        // 5. 遍历原对象属性，基本类型则值拷贝，对象类型则递归遍历
+        Reflect.ownKeys(source).forEach((key) => {
+            // 6. 跳过自有的不可枚举的属性
+            if (!Object.getOwnPropertyDescriptor(source, key)!.enumerable) {
+                return;
+            }
+            if (typeof source[key] === 'object' && source[key] !== null) {
+                // 7. 属性的冲突处理和拷贝处理
+                let isPropertyDone = false;
+                if (!result[key] || !(typeof result[key] === 'object') || Array.isArray(result[key]) !== Array.isArray(source[key])) {
+                    // 当 target 没有该属性，或者属性类型和 source 不一致时，直接整个覆盖
+                    if (hash.get(source[key])) {
+                        result[key] = hash.get(source[key]);
+                        isPropertyDone = true;
+                    } else {
+                        result[key] = Array.isArray(source[key]) ? [] : {};
+                        hash.set(source[key], result[key]);
+                    }
+                }
+                if (!isPropertyDone) {
+                    result[key]['__hash__'] = hash;
+                    assignDeep(result[key], source[key]);
+                }
+            } else {
+                Object.assign(result, { [key]: source[key] });
+            }
+        });
+    });
+
+    delete result['__hash__'];
     return result;
+}
+
+/**
+ * Performs a deep merge of objects and returns new object. Does not modify
+ * objects (immutable) and merges arrays via concatenation.
+ *
+ * @param {...object} objects - Objects to merge
+ * @returns {object} New object with merged key/values
+ */
+export function mergeDeep(...objects: any): any {
+    const isObject = (obj: any) => obj && typeof obj === 'object';
+
+    return objects.reduce((prev: any, obj: any) => {
+        Object.keys(obj).forEach((key) => {
+            const pVal = prev[key];
+            const oVal = obj[key];
+
+            if (Array.isArray(pVal) && Array.isArray(oVal)) {
+                prev[key] = pVal.concat(...oVal);
+            } else if (isObject(pVal) && isObject(oVal)) {
+                prev[key] = mergeDeep(pVal, oVal);
+            } else {
+                prev[key] = oVal;
+            }
+        });
+
+        return prev;
+    }, {});
 }
 
 export const isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
