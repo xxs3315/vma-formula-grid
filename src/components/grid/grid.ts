@@ -1096,7 +1096,7 @@ export default defineComponent({
                 gridReactiveData.colConfs.splice(colNumber + 1, 0, new Column(Number(colNumber), 'default', colVisible));
                 gridReactiveData.currentSheetData.map((row: Cell[], index: number) => {
                     row.map((cell: Cell) => {
-                        if (cell.colSpan && cell.colSpan > 1 && cell.col < colNumber && cell.col + cell.colSpan >= colNumber) {
+                        if (cell.colSpan && cell.colSpan > 1 && cell.col < colNumber && cell.col + cell.colSpan > colNumber) {
                             cell.colSpan += 1;
                         }
                         if (cell.col >= colNumber) {
@@ -1169,7 +1169,7 @@ export default defineComponent({
                 gridReactiveData.rowConfs.splice(rowNumber, 0, new Row(Number(rowNumber), 'default', rowVisible));
                 gridReactiveData.currentSheetData.map((row: Cell[], _: number) => {
                     row.map((cell: Cell) => {
-                        if (cell.rowSpan && cell.rowSpan > 1 && cell.row < rowNumber && cell.row + cell.rowSpan >= rowNumber) {
+                        if (cell.rowSpan && cell.rowSpan > 1 && cell.row < rowNumber && cell.row + cell.rowSpan > rowNumber) {
                             cell.rowSpan += 1;
                         }
                         if (cell.row >= rowNumber) {
@@ -2172,6 +2172,370 @@ export default defineComponent({
                     $vmaFormulaGrid.reactiveData.borders = bordersNew;
                 }
 
+                // aligns
+                if ($vmaFormulaGrid.reactiveData.aligns && Object.values($vmaFormulaGrid.reactiveData.aligns).length > 0) {
+                    const alignsNew: {
+                        h: any[];
+                        v: any[];
+                    } = {
+                        h: [],
+                        v: [],
+                    };
+                    if ($vmaFormulaGrid.reactiveData.aligns.h && $vmaFormulaGrid.reactiveData.aligns.h.length > 0) {
+                        const hsNew: Record<string, any>[] = [];
+                        $vmaFormulaGrid.reactiveData.aligns.h.forEach((hItem: any) => {
+                            if (hItem.hasOwnProperty('type') && (hItem.type === 'columns' || hItem.type === 'cells')) {
+                                if (hItem.type === 'columns' && hItem.hasOwnProperty('p') && hItem.p.length > 0) {
+                                    const posTemp: any[] = [];
+                                    hItem.p.forEach((hItemPos: string) => {
+                                        if (hItemPos.indexOf(':') >= 0) {
+                                            let columnRangeArr: any[] = hItemPos.split(':');
+                                            columnRangeArr = columnRangeArr.map((col: string) => {
+                                                return getColumnCount(col);
+                                            });
+                                            let columnStart = Math.min(...columnRangeArr);
+                                            let columnEnd = Math.max(...columnRangeArr);
+                                            if (col! + 1 < columnStart) {
+                                                columnStart -= 1;
+                                                columnEnd -= 1;
+                                            } else if (col! + 1 >= columnStart && col! + 1 <= columnEnd) {
+                                                columnEnd -= 1;
+                                            }
+                                            if (columnEnd >= columnStart) {
+                                                posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd));
+                                            }
+                                        } else {
+                                            if (col! + 1 < getColumnCount(hItemPos)) {
+                                                posTemp.push(getColumnSymbol(getColumnCount(hItemPos) - 1));
+                                            } else if (col! + 1 > getColumnCount(hItemPos)) {
+                                                posTemp.push(hItemPos);
+                                            }
+                                        }
+                                    });
+                                    if (posTemp.length > 0) {
+                                        hsNew.push(Object.assign({}, hItem, { p: posTemp }));
+                                    }
+                                }
+                                if (hItem.type === 'cells' && hItem.hasOwnProperty('p') && hItem.p.length > 0) {
+                                    if (hItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = hItem.p.split(':');
+                                        let cellPrev = cellRangeArr[0];
+                                        let cellNext = cellRangeArr[1];
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                        if (col! + 1 < Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                            cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) - 1);
+                                            cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1);
+                                        } else if (
+                                            (col! + 1 >= getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) ||
+                                            (col! + 1 >= getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr))
+                                        ) {
+                                            if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
+                                                cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1);
+                                            } else {
+                                                cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) - 1);
+                                            }
+                                        }
+                                        hsNew.push(
+                                            Object.assign({}, hItem, {
+                                                p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                            }),
+                                        );
+                                    } else {
+                                        let cellColStr = hItem.p.replace(/[0-9]/g, '');
+                                        let cellRow = parseInt(hItem.p.replace(/[^0-9]/gi, ''));
+                                        if (col! + 1 < getColumnCount(cellColStr)) {
+                                            cellColStr = getColumnSymbol(getColumnCount(cellColStr) - 1);
+                                            hsNew.push(
+                                                Object.assign({}, hItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        } else if (col! + 1 > getColumnCount(cellColStr)) {
+                                            hsNew.push(
+                                                Object.assign({}, hItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        }
+                                    }
+                                }
+                            } else if (hItem.hasOwnProperty('type') && hItem.type === 'rows') {
+                                hsNew.push(Object.assign({}, hItem));
+                            }
+                        });
+                        alignsNew.h = hsNew;
+                    }
+                    if ($vmaFormulaGrid.reactiveData.aligns.v && $vmaFormulaGrid.reactiveData.aligns.v.length > 0) {
+                        const vsNew: Record<string, any>[] = [];
+                        $vmaFormulaGrid.reactiveData.aligns.v.forEach((vItem: any) => {
+                            if (vItem.hasOwnProperty('type') && (vItem.type === 'columns' || vItem.type === 'cells')) {
+                                if (vItem.type === 'columns' && vItem.hasOwnProperty('p') && vItem.p.length > 0) {
+                                    const posTemp: any[] = [];
+                                    vItem.p.forEach((vItemPos: string) => {
+                                        if (vItemPos.indexOf(':') >= 0) {
+                                            let columnRangeArr: any[] = vItemPos.split(':');
+                                            columnRangeArr = columnRangeArr.map((col: string) => {
+                                                return getColumnCount(col);
+                                            });
+                                            let columnStart = Math.min(...columnRangeArr);
+                                            let columnEnd = Math.max(...columnRangeArr);
+                                            if (col! + 1 < columnStart) {
+                                                columnStart -= 1;
+                                                columnEnd -= 1;
+                                            } else if (col! + 1 >= columnStart && col! + 1 <= columnEnd) {
+                                                columnEnd -= 1;
+                                            }
+                                            if (columnEnd >= columnStart) {
+                                                posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd));
+                                            }
+                                        } else {
+                                            if (col! + 1 < getColumnCount(vItemPos)) {
+                                                posTemp.push(getColumnSymbol(getColumnCount(vItemPos) - 1));
+                                            } else if (col! + 1 > getColumnCount(vItemPos)) {
+                                                posTemp.push(vItemPos);
+                                            }
+                                        }
+                                    });
+                                    if (posTemp.length > 0) {
+                                        vsNew.push(Object.assign({}, vItem, { p: posTemp }));
+                                    }
+                                }
+                                if (vItem.type === 'cells' && vItem.hasOwnProperty('p') && vItem.p.length > 0) {
+                                    if (vItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = vItem.p.split(':');
+                                        let cellPrev = cellRangeArr[0];
+                                        let cellNext = cellRangeArr[1];
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                        if (col! + 1 < Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                            cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) - 1);
+                                            cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1);
+                                        } else if (
+                                            (col! + 1 >= getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) ||
+                                            (col! + 1 >= getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr))
+                                        ) {
+                                            if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
+                                                cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1);
+                                            } else {
+                                                cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) - 1);
+                                            }
+                                        }
+                                        vsNew.push(
+                                            Object.assign({}, vItem, {
+                                                p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                            }),
+                                        );
+                                    } else {
+                                        let cellColStr = vItem.p.replace(/[0-9]/g, '');
+                                        let cellRow = parseInt(vItem.p.replace(/[^0-9]/gi, ''));
+                                        if (col! + 1 < getColumnCount(cellColStr)) {
+                                            cellColStr = getColumnSymbol(getColumnCount(cellColStr) - 1);
+                                            vsNew.push(
+                                                Object.assign({}, vItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        } else if (col! + 1 > getColumnCount(cellColStr)) {
+                                            vsNew.push(
+                                                Object.assign({}, vItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        }
+                                    }
+                                }
+                            } else if (vItem.hasOwnProperty('type') && vItem.type === 'rows') {
+                                vsNew.push(Object.assign({}, vItem));
+                            }
+                        });
+                        alignsNew.v = vsNew;
+                    }
+                    $vmaFormulaGrid.reactiveData.aligns = alignsNew;
+                }
+
+                // wraps
+                if ($vmaFormulaGrid.reactiveData.wraps && $vmaFormulaGrid.reactiveData.wraps.length > 0) {
+                    const wrapsNew: Record<string, any>[] = [];
+                    $vmaFormulaGrid.reactiveData.wraps.forEach((wrapItem: any) => {
+                        if (wrapItem.hasOwnProperty('type') && (wrapItem.type === 'columns' || wrapItem.type === 'cells')) {
+                            if (wrapItem.type === 'columns' && wrapItem.hasOwnProperty('p') && wrapItem.p.length > 0) {
+                                const posTemp: any[] = [];
+                                wrapItem.p.forEach((wrapItemPos: string) => {
+                                    if (wrapItemPos.indexOf(':') >= 0) {
+                                        let columnRangeArr: any[] = wrapItemPos.split(':');
+                                        columnRangeArr = columnRangeArr.map((col: string) => {
+                                            return getColumnCount(col);
+                                        });
+                                        let columnStart = Math.min(...columnRangeArr);
+                                        let columnEnd = Math.max(...columnRangeArr);
+                                        if (col! + 1 < columnStart) {
+                                            columnStart -= 1;
+                                            columnEnd -= 1;
+                                        } else if (col! + 1 >= columnStart && col! + 1 <= columnEnd) {
+                                            columnEnd -= 1;
+                                        }
+                                        if (columnEnd >= columnStart) {
+                                            posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd));
+                                        }
+                                    } else {
+                                        if (col! + 1 < getColumnCount(wrapItemPos)) {
+                                            posTemp.push(getColumnSymbol(getColumnCount(wrapItemPos) - 1));
+                                        } else if (col! + 1 > getColumnCount(wrapItemPos)) {
+                                            posTemp.push(wrapItemPos);
+                                        }
+                                    }
+                                });
+                                if (posTemp.length > 0) {
+                                    wrapsNew.push(Object.assign({}, wrapItem, { p: posTemp }));
+                                }
+                            }
+                            if (wrapItem.type === 'cells' && wrapItem.hasOwnProperty('p') && wrapItem.p.length > 0) {
+                                if (wrapItem.p.indexOf(':') >= 0) {
+                                    let cellRangeArr = wrapItem.p.split(':');
+                                    let cellPrev = cellRangeArr[0];
+                                    let cellNext = cellRangeArr[1];
+                                    let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                    let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                    let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                    let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                    if (col! + 1 < Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                        cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) - 1);
+                                        cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1);
+                                    } else if (
+                                        (col! + 1 >= getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) ||
+                                        (col! + 1 >= getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr))
+                                    ) {
+                                        if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
+                                            cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1);
+                                        } else {
+                                            cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) - 1);
+                                        }
+                                    }
+                                    wrapsNew.push(
+                                        Object.assign({}, wrapItem, {
+                                            p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                        }),
+                                    );
+                                } else {
+                                    let cellColStr = wrapItem.p.replace(/[0-9]/g, '');
+                                    let cellRow = parseInt(wrapItem.p.replace(/[^0-9]/gi, ''));
+                                    if (col! + 1 < getColumnCount(cellColStr)) {
+                                        cellColStr = getColumnSymbol(getColumnCount(cellColStr) - 1);
+                                        wrapsNew.push(
+                                            Object.assign({}, wrapItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    } else if (col! + 1 > getColumnCount(cellColStr)) {
+                                        wrapsNew.push(
+                                            Object.assign({}, wrapItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    }
+                                }
+                            }
+                        } else if (wrapItem.hasOwnProperty('type') && wrapItem.type === 'rows') {
+                            wrapsNew.push(Object.assign({}, wrapItem));
+                        }
+                    });
+                    $vmaFormulaGrid.reactiveData.wraps = wrapsNew;
+                }
+
+                // formats
+                if ($vmaFormulaGrid.reactiveData.formats && $vmaFormulaGrid.reactiveData.formats.length > 0) {
+                    const formatsNew: Record<string, any>[] = [];
+                    $vmaFormulaGrid.reactiveData.formats.forEach((formatItem: any) => {
+                        if (formatItem.hasOwnProperty('type') && (formatItem.type === 'columns' || formatItem.type === 'cells')) {
+                            if (formatItem.type === 'columns' && formatItem.hasOwnProperty('p') && formatItem.p.length > 0) {
+                                const posTemp: any[] = [];
+                                formatItem.p.forEach((formatItemPos: string) => {
+                                    if (formatItemPos.indexOf(':') >= 0) {
+                                        let columnRangeArr: any[] = formatItemPos.split(':');
+                                        columnRangeArr = columnRangeArr.map((col: string) => {
+                                            return getColumnCount(col);
+                                        });
+                                        let columnStart = Math.min(...columnRangeArr);
+                                        let columnEnd = Math.max(...columnRangeArr);
+                                        if (col! + 1 < columnStart) {
+                                            columnStart -= 1;
+                                            columnEnd -= 1;
+                                        } else if (col! + 1 >= columnStart && col! + 1 <= columnEnd) {
+                                            columnEnd -= 1;
+                                        }
+                                        if (columnEnd >= columnStart) {
+                                            posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd));
+                                        }
+                                    } else {
+                                        if (col! + 1 < getColumnCount(formatItemPos)) {
+                                            posTemp.push(getColumnSymbol(getColumnCount(formatItemPos) - 1));
+                                        } else if (col! + 1 > getColumnCount(formatItemPos)) {
+                                            posTemp.push(formatItemPos);
+                                        }
+                                    }
+                                });
+                                if (posTemp.length > 0) {
+                                    formatsNew.push(Object.assign({}, formatItem, { p: posTemp }));
+                                }
+                            }
+                            if (formatItem.type === 'cells' && formatItem.hasOwnProperty('p') && formatItem.p.length > 0) {
+                                if (formatItem.p.indexOf(':') >= 0) {
+                                    let cellRangeArr = formatItem.p.split(':');
+                                    let cellPrev = cellRangeArr[0];
+                                    let cellNext = cellRangeArr[1];
+                                    let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                    let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                    let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                    let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                    if (col! + 1 < Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                        cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) - 1);
+                                        cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1);
+                                    } else if (
+                                        (col! + 1 >= getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) ||
+                                        (col! + 1 >= getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr))
+                                    ) {
+                                        if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
+                                            cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) - 1);
+                                        } else {
+                                            cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) - 1);
+                                        }
+                                    }
+                                    formatsNew.push(
+                                        Object.assign({}, formatItem, {
+                                            p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                        }),
+                                    );
+                                } else {
+                                    let cellColStr = formatItem.p.replace(/[0-9]/g, '');
+                                    let cellRow = parseInt(formatItem.p.replace(/[^0-9]/gi, ''));
+                                    if (col! + 1 < getColumnCount(cellColStr)) {
+                                        cellColStr = getColumnSymbol(getColumnCount(cellColStr) - 1);
+                                        formatsNew.push(
+                                            Object.assign({}, formatItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    } else if (col! + 1 > getColumnCount(cellColStr)) {
+                                        formatsNew.push(
+                                            Object.assign({}, formatItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    }
+                                }
+                            }
+                        } else if (formatItem.hasOwnProperty('type') && formatItem.type === 'rows') {
+                            formatsNew.push(Object.assign({}, formatItem));
+                        }
+                    });
+                    $vmaFormulaGrid.reactiveData.formats = formatsNew;
+                }
+
                 if ($vmaFormulaGrid.reactiveData.currentArea && $vmaFormulaGrid.reactiveData.currentArea.start !== null && $vmaFormulaGrid.reactiveData.currentArea.end != null) {
                     const { start, end } = $vmaFormulaGrid.reactiveData.currentArea;
                     if (start.col === col || end.col === col) {
@@ -2487,6 +2851,350 @@ export default defineComponent({
                     $vmaFormulaGrid.reactiveData.borders = bordersNew;
                 }
 
+                // aligns
+                if ($vmaFormulaGrid.reactiveData.aligns && Object.values($vmaFormulaGrid.reactiveData.aligns).length > 0) {
+                    const alignsNew: {
+                        h: any[];
+                        v: any[];
+                    } = {
+                        h: [],
+                        v: [],
+                    };
+                    if ($vmaFormulaGrid.reactiveData.aligns.h && $vmaFormulaGrid.reactiveData.aligns.h.length > 0) {
+                        const hsNew: Record<string, any>[] = [];
+                        $vmaFormulaGrid.reactiveData.aligns.h.forEach((hItem: any) => {
+                            if (hItem.hasOwnProperty('type') && (hItem.type === 'rows' || hItem.type === 'cells')) {
+                                if (hItem.type === 'rows' && hItem.hasOwnProperty('p') && hItem.p.length > 0) {
+                                    const posTemp: any[] = [];
+                                    hItem.p.forEach((hItemPos: string | number) => {
+                                        if (typeof hItemPos === 'string' && hItemPos.indexOf(':') >= 0) {
+                                            let rowRangeArr: any[] = hItemPos.split(':');
+                                            rowRangeArr = rowRangeArr.map(Number);
+                                            let rowStart = Math.min(...rowRangeArr);
+                                            let rowEnd = Math.max(...rowRangeArr);
+                                            if (row! + 1 < rowStart) {
+                                                rowStart -= 1;
+                                                rowEnd -= 1;
+                                            } else if (row! + 1 >= rowStart && row! + 1 <= rowEnd) {
+                                                rowEnd -= 1;
+                                            }
+                                            if (rowEnd >= rowStart) {
+                                                posTemp.push('' + rowStart + ':' + rowEnd);
+                                            }
+                                        } else if (typeof hItemPos === 'number') {
+                                            if (row! + 1 < hItemPos) {
+                                                posTemp.push(hItemPos - 1);
+                                            } else if (row! + 1 > hItemPos) {
+                                                posTemp.push(hItemPos);
+                                            }
+                                        }
+                                    });
+                                    if (posTemp.length > 0) {
+                                        hsNew.push(Object.assign({}, hItem, { p: posTemp }));
+                                    }
+                                }
+                                if (hItem.type === 'cells' && hItem.hasOwnProperty('p') && hItem.p.length > 0) {
+                                    if (hItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = hItem.p.split(':');
+                                        let cellPrev = cellRangeArr[0];
+                                        let cellNext = cellRangeArr[1];
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                        if (row! + 1 < Math.min(cellPrevRow, cellNextRow)) {
+                                            cellPrevRow -= 1;
+                                            cellNextRow -= 1;
+                                        } else if ((row! + 1 >= cellPrevRow && row! + 1 <= cellNextRow) || (row! + 1 >= cellNextRow && row! + 1 <= cellPrevRow)) {
+                                            if (cellNextRow > cellPrevRow) {
+                                                cellNextRow -= 1;
+                                            } else {
+                                                cellPrevRow -= 1;
+                                            }
+                                        }
+                                        hsNew.push(
+                                            Object.assign({}, hItem, {
+                                                p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                            }),
+                                        );
+                                    } else {
+                                        let cellColStr = hItem.p.replace(/[0-9]/g, '');
+                                        let cellRow = parseInt(hItem.p.replace(/[^0-9]/gi, ''));
+                                        if (row! + 1 < cellRow) {
+                                            cellRow -= 1;
+                                            hsNew.push(
+                                                Object.assign({}, hItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        } else if (row! + 1 > cellRow) {
+                                            hsNew.push(
+                                                Object.assign({}, hItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        }
+                                    }
+                                }
+                            } else if (hItem.hasOwnProperty('type') && hItem.type === 'columns') {
+                                hsNew.push(Object.assign({}, hItem));
+                            }
+                        });
+                        alignsNew.v = hsNew;
+                    }
+                    if ($vmaFormulaGrid.reactiveData.aligns.v && $vmaFormulaGrid.reactiveData.aligns.v.length > 0) {
+                        const vsNew: Record<string, any>[] = [];
+                        $vmaFormulaGrid.reactiveData.aligns.v.forEach((vItem: any) => {
+                            if (vItem.hasOwnProperty('type') && (vItem.type === 'rows' || vItem.type === 'cells')) {
+                                if (vItem.type === 'rows' && vItem.hasOwnProperty('p') && vItem.p.length > 0) {
+                                    const posTemp: any[] = [];
+                                    vItem.p.forEach((hItemPos: string | number) => {
+                                        if (typeof hItemPos === 'string' && hItemPos.indexOf(':') >= 0) {
+                                            let rowRangeArr: any[] = hItemPos.split(':');
+                                            rowRangeArr = rowRangeArr.map(Number);
+                                            let rowStart = Math.min(...rowRangeArr);
+                                            let rowEnd = Math.max(...rowRangeArr);
+                                            if (row! + 1 < rowStart) {
+                                                rowStart -= 1;
+                                                rowEnd -= 1;
+                                            } else if (row! + 1 >= rowStart && row! + 1 <= rowEnd) {
+                                                rowEnd -= 1;
+                                            }
+                                            if (rowEnd >= rowStart) {
+                                                posTemp.push('' + rowStart + ':' + rowEnd);
+                                            }
+                                        } else if (typeof hItemPos === 'number') {
+                                            if (row! + 1 < hItemPos) {
+                                                posTemp.push(hItemPos - 1);
+                                            } else if (row! + 1 > hItemPos) {
+                                                posTemp.push(hItemPos);
+                                            }
+                                        }
+                                    });
+                                    if (posTemp.length > 0) {
+                                        vsNew.push(Object.assign({}, vItem, { p: posTemp }));
+                                    }
+                                }
+                                if (vItem.type === 'cells' && vItem.hasOwnProperty('p') && vItem.p.length > 0) {
+                                    if (vItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = vItem.p.split(':');
+                                        let cellPrev = cellRangeArr[0];
+                                        let cellNext = cellRangeArr[1];
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                        if (row! + 1 < Math.min(cellPrevRow, cellNextRow)) {
+                                            cellPrevRow -= 1;
+                                            cellNextRow -= 1;
+                                        } else if ((row! + 1 >= cellPrevRow && row! + 1 <= cellNextRow) || (row! + 1 >= cellNextRow && row! + 1 <= cellPrevRow)) {
+                                            if (cellNextRow > cellPrevRow) {
+                                                cellNextRow -= 1;
+                                            } else {
+                                                cellPrevRow -= 1;
+                                            }
+                                        }
+                                        vsNew.push(
+                                            Object.assign({}, vItem, {
+                                                p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                            }),
+                                        );
+                                    } else {
+                                        let cellColStr = vItem.p.replace(/[0-9]/g, '');
+                                        let cellRow = parseInt(vItem.p.replace(/[^0-9]/gi, ''));
+                                        if (row! + 1 < cellRow) {
+                                            cellRow -= 1;
+                                            vsNew.push(
+                                                Object.assign({}, vItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        } else if (row! + 1 > cellRow) {
+                                            vsNew.push(
+                                                Object.assign({}, vItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        }
+                                    }
+                                }
+                            } else if (vItem.hasOwnProperty('type') && vItem.type === 'columns') {
+                                vsNew.push(Object.assign({}, vItem));
+                            }
+                        });
+                        alignsNew.v = vsNew;
+                    }
+                    $vmaFormulaGrid.reactiveData.aligns = alignsNew;
+                }
+
+                // wraps
+                if ($vmaFormulaGrid.reactiveData.wraps && $vmaFormulaGrid.reactiveData.wraps.length > 0) {
+                    const wrapsNew: Record<string, any>[] = [];
+                    $vmaFormulaGrid.reactiveData.wraps.forEach((wrapItem: any) => {
+                        if (wrapItem.hasOwnProperty('type') && (wrapItem.type === 'rows' || wrapItem.type === 'cells')) {
+                            if (wrapItem.type === 'rows' && wrapItem.hasOwnProperty('p') && wrapItem.p.length > 0) {
+                                const posTemp: any[] = [];
+                                wrapItem.p.forEach((wrapItemPos: string | number) => {
+                                    if (typeof wrapItemPos === 'string' && wrapItemPos.indexOf(':') >= 0) {
+                                        let rowRangeArr: any[] = wrapItemPos.split(':');
+                                        rowRangeArr = rowRangeArr.map(Number);
+                                        let rowStart = Math.min(...rowRangeArr);
+                                        let rowEnd = Math.max(...rowRangeArr);
+                                        if (row! + 1 < rowStart) {
+                                            rowStart -= 1;
+                                            rowEnd -= 1;
+                                        } else if (row! + 1 >= rowStart && row! + 1 <= rowEnd) {
+                                            rowEnd -= 1;
+                                        }
+                                        if (rowEnd >= rowStart) {
+                                            posTemp.push('' + rowStart + ':' + rowEnd);
+                                        }
+                                    } else if (typeof wrapItemPos === 'number') {
+                                        if (row! + 1 < wrapItemPos) {
+                                            posTemp.push(wrapItemPos - 1);
+                                        } else if (row! + 1 > wrapItemPos) {
+                                            posTemp.push(wrapItemPos);
+                                        }
+                                    }
+                                });
+                                if (posTemp.length > 0) {
+                                    wrapsNew.push(Object.assign({}, wrapItem, { p: posTemp }));
+                                }
+                            }
+                            if (wrapItem.type === 'cells' && wrapItem.hasOwnProperty('p') && wrapItem.p.length > 0) {
+                                if (wrapItem.p.indexOf(':') >= 0) {
+                                    let cellRangeArr = wrapItem.p.split(':');
+                                    let cellPrev = cellRangeArr[0];
+                                    let cellNext = cellRangeArr[1];
+                                    let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                    let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                    let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                    let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                    if (row! + 1 < Math.min(cellPrevRow, cellNextRow)) {
+                                        cellPrevRow -= 1;
+                                        cellNextRow -= 1;
+                                    } else if ((row! + 1 >= cellPrevRow && row! + 1 <= cellNextRow) || (row! + 1 >= cellNextRow && row! + 1 <= cellPrevRow)) {
+                                        if (cellNextRow > cellPrevRow) {
+                                            cellNextRow -= 1;
+                                        } else {
+                                            cellPrevRow -= 1;
+                                        }
+                                    }
+                                    wrapsNew.push(
+                                        Object.assign({}, wrapItem, {
+                                            p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                        }),
+                                    );
+                                } else {
+                                    let cellColStr = wrapItem.p.replace(/[0-9]/g, '');
+                                    let cellRow = parseInt(wrapItem.p.replace(/[^0-9]/gi, ''));
+                                    if (row! + 1 < cellRow) {
+                                        cellRow -= 1;
+                                        wrapsNew.push(
+                                            Object.assign({}, wrapItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    } else if (row! + 1 > cellRow) {
+                                        wrapsNew.push(
+                                            Object.assign({}, wrapItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    }
+                                }
+                            }
+                        } else if (wrapItem.hasOwnProperty('type') && wrapItem.type === 'columns') {
+                            wrapsNew.push(Object.assign({}, wrapItem));
+                        }
+                    });
+                    $vmaFormulaGrid.reactiveData.wraps = wrapsNew;
+                }
+
+                // formats
+                if ($vmaFormulaGrid.reactiveData.formats && $vmaFormulaGrid.reactiveData.formats.length > 0) {
+                    const formatsNew: Record<string, any>[] = [];
+                    $vmaFormulaGrid.reactiveData.formats.forEach((formatItem: any) => {
+                        if (formatItem.hasOwnProperty('type') && (formatItem.type === 'rows' || formatItem.type === 'cells')) {
+                            if (formatItem.type === 'rows' && formatItem.hasOwnProperty('p') && formatItem.p.length > 0) {
+                                const posTemp: any[] = [];
+                                formatItem.p.forEach((formatItemPos: string | number) => {
+                                    if (typeof formatItemPos === 'string' && formatItemPos.indexOf(':') >= 0) {
+                                        let rowRangeArr: any[] = formatItemPos.split(':');
+                                        rowRangeArr = rowRangeArr.map(Number);
+                                        let rowStart = Math.min(...rowRangeArr);
+                                        let rowEnd = Math.max(...rowRangeArr);
+                                        if (row! + 1 < rowStart) {
+                                            rowStart -= 1;
+                                            rowEnd -= 1;
+                                        } else if (row! + 1 >= rowStart && row! + 1 <= rowEnd) {
+                                            rowEnd -= 1;
+                                        }
+                                        if (rowEnd >= rowStart) {
+                                            posTemp.push('' + rowStart + ':' + rowEnd);
+                                        }
+                                    } else if (typeof formatItemPos === 'number') {
+                                        if (row! + 1 < formatItemPos) {
+                                            posTemp.push(formatItemPos - 1);
+                                        } else if (row! + 1 > formatItemPos) {
+                                            posTemp.push(formatItemPos);
+                                        }
+                                    }
+                                });
+                                if (posTemp.length > 0) {
+                                    formatsNew.push(Object.assign({}, formatItem, { p: posTemp }));
+                                }
+                            }
+                            if (formatItem.type === 'cells' && formatItem.hasOwnProperty('p') && formatItem.p.length > 0) {
+                                if (formatItem.p.indexOf(':') >= 0) {
+                                    let cellRangeArr = formatItem.p.split(':');
+                                    let cellPrev = cellRangeArr[0];
+                                    let cellNext = cellRangeArr[1];
+                                    let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                    let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                    let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                    let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                    if (row! + 1 < Math.min(cellPrevRow, cellNextRow)) {
+                                        cellPrevRow -= 1;
+                                        cellNextRow -= 1;
+                                    } else if ((row! + 1 >= cellPrevRow && row! + 1 <= cellNextRow) || (row! + 1 >= cellNextRow && row! + 1 <= cellPrevRow)) {
+                                        if (cellNextRow > cellPrevRow) {
+                                            cellNextRow -= 1;
+                                        } else {
+                                            cellPrevRow -= 1;
+                                        }
+                                    }
+                                    formatsNew.push(
+                                        Object.assign({}, formatItem, {
+                                            p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                        }),
+                                    );
+                                } else {
+                                    let cellColStr = formatItem.p.replace(/[0-9]/g, '');
+                                    let cellRow = parseInt(formatItem.p.replace(/[^0-9]/gi, ''));
+                                    if (row! + 1 < cellRow) {
+                                        cellRow -= 1;
+                                        formatsNew.push(
+                                            Object.assign({}, formatItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    } else if (row! + 1 > cellRow) {
+                                        formatsNew.push(
+                                            Object.assign({}, formatItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    }
+                                }
+                            }
+                        } else if (formatItem.hasOwnProperty('type') && formatItem.type === 'columns') {
+                            formatsNew.push(Object.assign({}, formatItem));
+                        }
+                    });
+                    $vmaFormulaGrid.reactiveData.formats = formatsNew;
+                }
+
                 if ($vmaFormulaGrid.reactiveData.currentArea && $vmaFormulaGrid.reactiveData.currentArea.start !== null && $vmaFormulaGrid.reactiveData.currentArea.end != null) {
                     const { start, end } = $vmaFormulaGrid.reactiveData.currentArea;
                     if (start.row === row || end.row === row) {
@@ -2784,6 +3492,362 @@ export default defineComponent({
                     $vmaFormulaGrid.reactiveData.borders = bordersNew;
                 }
 
+                // aligns
+                if ($vmaFormulaGrid.reactiveData.aligns && Object.values($vmaFormulaGrid.reactiveData.aligns).length > 0) {
+                    const alignsNew: {
+                        h: any[];
+                        v: any[];
+                    } = {
+                        h: [],
+                        v: [],
+                    };
+                    if ($vmaFormulaGrid.reactiveData.aligns.h && $vmaFormulaGrid.reactiveData.aligns.h.length > 0) {
+                        const hsNew: Record<string, any>[] = [];
+                        $vmaFormulaGrid.reactiveData.aligns.h.forEach((hItem: any) => {
+                            if (hItem.hasOwnProperty('type') && (hItem.type === 'columns' || hItem.type === 'cells')) {
+                                if (hItem.type === 'columns' && hItem.hasOwnProperty('p') && hItem.p.length > 0) {
+                                    const posTemp: any[] = [];
+                                    hItem.p.forEach((hItemPos: string) => {
+                                        if (hItemPos.indexOf(':') >= 0) {
+                                            let columnRangeArr: any[] = hItemPos.split(':');
+                                            columnRangeArr = columnRangeArr.map((col: string) => {
+                                                return getColumnCount(col);
+                                            });
+                                            let columnStart = Math.min(...columnRangeArr);
+                                            let columnEnd = Math.max(...columnRangeArr);
+                                            if (col! + 1 <= columnStart) {
+                                                columnStart += 1;
+                                                columnEnd += 1;
+                                            } else if (col! + 1 > columnStart && col! + 1 <= columnEnd) {
+                                                columnEnd += 1;
+                                            }
+                                            posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd));
+                                        } else {
+                                            if (col! + 1 <= getColumnCount(hItemPos)) {
+                                                posTemp.push(getColumnSymbol(getColumnCount(hItemPos) + 1));
+                                            } else {
+                                                posTemp.push(hItemPos);
+                                            }
+                                        }
+                                    });
+                                    if (posTemp.length > 0) {
+                                        hsNew.push(Object.assign({}, hItem, { p: posTemp }));
+                                    }
+                                }
+                                if (hItem.type === 'cells' && hItem.hasOwnProperty('p') && hItem.p.length > 0) {
+                                    if (hItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = hItem.p.split(':');
+                                        let cellPrev = cellRangeArr[0];
+                                        let cellNext = cellRangeArr[1];
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                        if (col! + 1 <= Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                            cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1);
+                                            cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1);
+                                        } else if (
+                                            (col! + 1 > getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) ||
+                                            (col! + 1 > getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr))
+                                        ) {
+                                            if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
+                                                cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1);
+                                            } else {
+                                                cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1);
+                                            }
+                                        }
+                                        hsNew.push(
+                                            Object.assign({}, hItem, {
+                                                p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                            }),
+                                        );
+                                    } else {
+                                        let cellColStr = hItem.p.replace(/[0-9]/g, '');
+                                        let cellRow = parseInt(hItem.p.replace(/[^0-9]/gi, ''));
+                                        if (col! + 1 <= getColumnCount(cellColStr)) {
+                                            cellColStr = getColumnSymbol(getColumnCount(cellColStr) + 1);
+                                            hsNew.push(
+                                                Object.assign({}, hItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        } else {
+                                            hsNew.push(
+                                                Object.assign({}, hItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        }
+                                    }
+                                }
+                            } else if (hItem.hasOwnProperty('type') && hItem.type === 'rows') {
+                                hsNew.push(Object.assign({}, hItem));
+                            }
+                        });
+                        alignsNew.h = hsNew;
+                    }
+                    if ($vmaFormulaGrid.reactiveData.aligns.v && $vmaFormulaGrid.reactiveData.aligns.v.length > 0) {
+                        const vsNew: Record<string, any>[] = [];
+                        $vmaFormulaGrid.reactiveData.aligns.v.forEach((vItem: any) => {
+                            if (vItem.hasOwnProperty('type') && (vItem.type === 'columns' || vItem.type === 'cells')) {
+                                if (vItem.type === 'columns' && vItem.hasOwnProperty('p') && vItem.p.length > 0) {
+                                    const posTemp: any[] = [];
+                                    vItem.p.forEach((hItemPos: string) => {
+                                        if (hItemPos.indexOf(':') >= 0) {
+                                            let columnRangeArr: any[] = hItemPos.split(':');
+                                            columnRangeArr = columnRangeArr.map((col: string) => {
+                                                return getColumnCount(col);
+                                            });
+                                            let columnStart = Math.min(...columnRangeArr);
+                                            let columnEnd = Math.max(...columnRangeArr);
+                                            if (col! + 1 <= columnStart) {
+                                                columnStart += 1;
+                                                columnEnd += 1;
+                                            } else if (col! + 1 > columnStart && col! + 1 <= columnEnd) {
+                                                columnEnd += 1;
+                                            }
+                                            posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd));
+                                        } else {
+                                            if (col! + 1 <= getColumnCount(hItemPos)) {
+                                                posTemp.push(getColumnSymbol(getColumnCount(hItemPos) + 1));
+                                            } else {
+                                                posTemp.push(hItemPos);
+                                            }
+                                        }
+                                    });
+                                    if (posTemp.length > 0) {
+                                        vsNew.push(Object.assign({}, vItem, { p: posTemp }));
+                                    }
+                                }
+                                if (vItem.type === 'cells' && vItem.hasOwnProperty('p') && vItem.p.length > 0) {
+                                    if (vItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = vItem.p.split(':');
+                                        let cellPrev = cellRangeArr[0];
+                                        let cellNext = cellRangeArr[1];
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                        if (col! + 1 <= Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                            cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1);
+                                            cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1);
+                                        } else if (
+                                            (col! + 1 > getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) ||
+                                            (col! + 1 > getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr))
+                                        ) {
+                                            if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
+                                                cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1);
+                                            } else {
+                                                cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1);
+                                            }
+                                        }
+                                        vsNew.push(
+                                            Object.assign({}, vItem, {
+                                                p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                            }),
+                                        );
+                                    } else {
+                                        let cellColStr = vItem.p.replace(/[0-9]/g, '');
+                                        let cellRow = parseInt(vItem.p.replace(/[^0-9]/gi, ''));
+                                        if (col! + 1 <= getColumnCount(cellColStr)) {
+                                            cellColStr = getColumnSymbol(getColumnCount(cellColStr) + 1);
+                                            vsNew.push(
+                                                Object.assign({}, vItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        } else {
+                                            vsNew.push(
+                                                Object.assign({}, vItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        }
+                                    }
+                                }
+                            } else if (vItem.hasOwnProperty('type') && vItem.type === 'rows') {
+                                vsNew.push(Object.assign({}, vItem));
+                            }
+                        });
+                        alignsNew.v = vsNew;
+                    }
+                    $vmaFormulaGrid.reactiveData.aligns = alignsNew;
+                }
+
+                // wraps
+                if ($vmaFormulaGrid.reactiveData.wraps && $vmaFormulaGrid.reactiveData.wraps.length > 0) {
+                    const wrapsNew: Record<string, any>[] = [];
+                    $vmaFormulaGrid.reactiveData.wraps.forEach((wrapItem: any) => {
+                        if (wrapItem.hasOwnProperty('type') && (wrapItem.type === 'columns' || wrapItem.type === 'cells')) {
+                            if (wrapItem.type === 'columns' && wrapItem.hasOwnProperty('p') && wrapItem.p.length > 0) {
+                                const posTemp: any[] = [];
+                                wrapItem.p.forEach((wrapItemPos: string) => {
+                                    if (wrapItemPos.indexOf(':') >= 0) {
+                                        let columnRangeArr: any[] = wrapItemPos.split(':');
+                                        columnRangeArr = columnRangeArr.map((col: string) => {
+                                            return getColumnCount(col);
+                                        });
+                                        let columnStart = Math.min(...columnRangeArr);
+                                        let columnEnd = Math.max(...columnRangeArr);
+                                        if (col! + 1 <= columnStart) {
+                                            columnStart += 1;
+                                            columnEnd += 1;
+                                        } else if (col! + 1 > columnStart && col! + 1 <= columnEnd) {
+                                            columnEnd += 1;
+                                        }
+                                        posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd));
+                                    } else {
+                                        if (col! + 1 <= getColumnCount(wrapItemPos)) {
+                                            posTemp.push(getColumnSymbol(getColumnCount(wrapItemPos) + 1));
+                                        } else {
+                                            posTemp.push(wrapItemPos);
+                                        }
+                                    }
+                                });
+                                if (posTemp.length > 0) {
+                                    wrapsNew.push(Object.assign({}, wrapItem, { p: posTemp }));
+                                }
+                            }
+                            if (wrapItem.type === 'cells' && wrapItem.hasOwnProperty('p') && wrapItem.p.length > 0) {
+                                if (wrapItem.p.indexOf(':') >= 0) {
+                                    let cellRangeArr = wrapItem.p.split(':');
+                                    let cellPrev = cellRangeArr[0];
+                                    let cellNext = cellRangeArr[1];
+                                    let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                    let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                    let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                    let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                    if (col! + 1 <= Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                        cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1);
+                                        cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1);
+                                    } else if (
+                                        (col! + 1 > getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) ||
+                                        (col! + 1 > getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr))
+                                    ) {
+                                        if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
+                                            cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1);
+                                        } else {
+                                            cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1);
+                                        }
+                                    }
+                                    wrapsNew.push(
+                                        Object.assign({}, wrapItem, {
+                                            p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                        }),
+                                    );
+                                } else {
+                                    let cellColStr = wrapItem.p.replace(/[0-9]/g, '');
+                                    let cellRow = parseInt(wrapItem.p.replace(/[^0-9]/gi, ''));
+                                    if (col! + 1 <= getColumnCount(cellColStr)) {
+                                        cellColStr = getColumnSymbol(getColumnCount(cellColStr) + 1);
+                                        wrapsNew.push(
+                                            Object.assign({}, wrapItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    } else {
+                                        wrapsNew.push(
+                                            Object.assign({}, wrapItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    }
+                                }
+                            }
+                        } else if (wrapItem.hasOwnProperty('type') && wrapItem.type === 'rows') {
+                            wrapsNew.push(Object.assign({}, wrapItem));
+                        }
+                    });
+                    $vmaFormulaGrid.reactiveData.wraps = wrapsNew;
+                }
+
+                // formats
+                if ($vmaFormulaGrid.reactiveData.formats && $vmaFormulaGrid.reactiveData.formats.length > 0) {
+                    const formatsNew: Record<string, any>[] = [];
+                    $vmaFormulaGrid.reactiveData.formats.forEach((formatItem: any) => {
+                        if (formatItem.hasOwnProperty('type') && (formatItem.type === 'columns' || formatItem.type === 'cells')) {
+                            if (formatItem.type === 'columns' && formatItem.hasOwnProperty('p') && formatItem.p.length > 0) {
+                                const posTemp: any[] = [];
+                                formatItem.p.forEach((formatItemPos: string) => {
+                                    if (formatItemPos.indexOf(':') >= 0) {
+                                        let columnRangeArr: any[] = formatItemPos.split(':');
+                                        columnRangeArr = columnRangeArr.map((col: string) => {
+                                            return getColumnCount(col);
+                                        });
+                                        let columnStart = Math.min(...columnRangeArr);
+                                        let columnEnd = Math.max(...columnRangeArr);
+                                        if (col! + 1 <= columnStart) {
+                                            columnStart += 1;
+                                            columnEnd += 1;
+                                        } else if (col! + 1 > columnStart && col! + 1 <= columnEnd) {
+                                            columnEnd += 1;
+                                        }
+                                        posTemp.push(getColumnSymbol(columnStart) + ':' + getColumnSymbol(columnEnd));
+                                    } else {
+                                        if (col! + 1 <= getColumnCount(formatItemPos)) {
+                                            posTemp.push(getColumnSymbol(getColumnCount(formatItemPos) + 1));
+                                        } else {
+                                            posTemp.push(formatItemPos);
+                                        }
+                                    }
+                                });
+                                if (posTemp.length > 0) {
+                                    formatsNew.push(Object.assign({}, formatItem, { p: posTemp }));
+                                }
+                            }
+                            if (formatItem.type === 'cells' && formatItem.hasOwnProperty('p') && formatItem.p.length > 0) {
+                                if (formatItem.p.indexOf(':') >= 0) {
+                                    let cellRangeArr = formatItem.p.split(':');
+                                    let cellPrev = cellRangeArr[0];
+                                    let cellNext = cellRangeArr[1];
+                                    let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                    let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                    let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                    let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                    if (col! + 1 <= Math.min(getColumnCount(cellPrevColStr), getColumnCount(cellNextColStr))) {
+                                        cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1);
+                                        cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1);
+                                    } else if (
+                                        (col! + 1 > getColumnCount(cellPrevColStr) && col! + 1 <= getColumnCount(cellNextColStr)) ||
+                                        (col! + 1 > getColumnCount(cellNextColStr) && col! + 1 <= getColumnCount(cellPrevColStr))
+                                    ) {
+                                        if (getColumnCount(cellNextColStr) > getColumnCount(cellPrevColStr)) {
+                                            cellNextColStr = getColumnSymbol(getColumnCount(cellNextColStr) + 1);
+                                        } else {
+                                            cellPrevColStr = getColumnSymbol(getColumnCount(cellPrevColStr) + 1);
+                                        }
+                                    }
+                                    formatsNew.push(
+                                        Object.assign({}, formatItem, {
+                                            p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                        }),
+                                    );
+                                } else {
+                                    let cellColStr = formatItem.p.replace(/[0-9]/g, '');
+                                    let cellRow = parseInt(formatItem.p.replace(/[^0-9]/gi, ''));
+                                    if (col! + 1 <= getColumnCount(cellColStr)) {
+                                        cellColStr = getColumnSymbol(getColumnCount(cellColStr) + 1);
+                                        formatsNew.push(
+                                            Object.assign({}, formatItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    } else {
+                                        formatsNew.push(
+                                            Object.assign({}, formatItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    }
+                                }
+                            }
+                        } else if (formatItem.hasOwnProperty('type') && formatItem.type === 'rows') {
+                            formatsNew.push(Object.assign({}, formatItem));
+                        }
+                    });
+                    $vmaFormulaGrid.reactiveData.formats = formatsNew;
+                }
+
                 const mergesNew: Record<string, any> = {};
                 Object.keys(gridReactiveData.merges).map((key) => {
                     const crArr = key.split(':');
@@ -3065,6 +4129,350 @@ export default defineComponent({
                         }
                     });
                     $vmaFormulaGrid.reactiveData.borders = bordersNew;
+                }
+
+                // aligns
+                if ($vmaFormulaGrid.reactiveData.aligns && Object.values($vmaFormulaGrid.reactiveData.aligns).length > 0) {
+                    const alignsNew: {
+                        h: any[];
+                        v: any[];
+                    } = {
+                        h: [],
+                        v: [],
+                    };
+                    if ($vmaFormulaGrid.reactiveData.aligns.h && $vmaFormulaGrid.reactiveData.aligns.h.length > 0) {
+                        const hsNew: Record<string, any>[] = [];
+                        $vmaFormulaGrid.reactiveData.aligns.h.forEach((hItem: any) => {
+                            if (hItem.hasOwnProperty('type') && (hItem.type === 'rows' || hItem.type === 'cells')) {
+                                if (hItem.type === 'rows' && hItem.hasOwnProperty('p') && hItem.p.length > 0) {
+                                    const posTemp: any[] = [];
+                                    hItem.p.forEach((hItemPos: string | number) => {
+                                        if (typeof hItemPos === 'string' && hItemPos.indexOf(':') >= 0) {
+                                            let rowRangeArr: any[] = hItemPos.split(':');
+                                            rowRangeArr = rowRangeArr.map(Number);
+                                            let rowStart = Math.min(...rowRangeArr);
+                                            let rowEnd = Math.max(...rowRangeArr);
+                                            if (row! + 1 <= rowStart) {
+                                                rowStart += 1;
+                                                rowEnd += 1;
+                                            } else if (row! + 1 > rowStart && row! + 1 <= rowEnd) {
+                                                rowEnd += 1;
+                                            }
+                                            if (rowEnd >= rowStart) {
+                                                posTemp.push('' + rowStart + ':' + rowEnd);
+                                            }
+                                        } else if (typeof hItemPos === 'number') {
+                                            if (row! + 1 <= hItemPos) {
+                                                posTemp.push(hItemPos + 1);
+                                            } else if (row! + 1 > hItemPos) {
+                                                posTemp.push(hItemPos);
+                                            }
+                                        }
+                                    });
+                                    if (posTemp.length > 0) {
+                                        hsNew.push(Object.assign({}, hItem, { p: posTemp }));
+                                    }
+                                }
+                                if (hItem.type === 'cells' && hItem.hasOwnProperty('p') && hItem.p.length > 0) {
+                                    if (hItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = hItem.p.split(':');
+                                        let cellPrev = cellRangeArr[0];
+                                        let cellNext = cellRangeArr[1];
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                        if (row! + 1 <= Math.min(cellPrevRow, cellNextRow)) {
+                                            cellPrevRow += 1;
+                                            cellNextRow += 1;
+                                        } else if ((row! + 1 > cellPrevRow && row! + 1 <= cellNextRow) || (row! + 1 > cellNextRow && row! + 1 <= cellPrevRow)) {
+                                            if (cellNextRow > cellPrevRow) {
+                                                cellNextRow += 1;
+                                            } else {
+                                                cellPrevRow += 1;
+                                            }
+                                        }
+                                        hsNew.push(
+                                            Object.assign({}, hItem, {
+                                                p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                            }),
+                                        );
+                                    } else {
+                                        let cellColStr = hItem.p.replace(/[0-9]/g, '');
+                                        let cellRow = parseInt(hItem.p.replace(/[^0-9]/gi, ''));
+                                        if (row! + 1 <= cellRow) {
+                                            cellRow += 1;
+                                            hsNew.push(
+                                                Object.assign({}, hItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        } else if (row! + 1 > cellRow) {
+                                            hsNew.push(
+                                                Object.assign({}, hItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        }
+                                    }
+                                }
+                            } else if (hItem.hasOwnProperty('type') && hItem.type === 'columns') {
+                                hsNew.push(Object.assign({}, hItem));
+                            }
+                        });
+                        alignsNew.h = hsNew;
+                    }
+                    if ($vmaFormulaGrid.reactiveData.aligns.v && $vmaFormulaGrid.reactiveData.aligns.v.length > 0) {
+                        const vsNew: Record<string, any>[] = [];
+                        $vmaFormulaGrid.reactiveData.aligns.v.forEach((vItem: any) => {
+                            if (vItem.hasOwnProperty('type') && (vItem.type === 'rows' || vItem.type === 'cells')) {
+                                if (vItem.type === 'rows' && vItem.hasOwnProperty('p') && vItem.p.length > 0) {
+                                    const posTemp: any[] = [];
+                                    vItem.p.forEach((hItemPos: string | number) => {
+                                        if (typeof hItemPos === 'string' && hItemPos.indexOf(':') >= 0) {
+                                            let rowRangeArr: any[] = hItemPos.split(':');
+                                            rowRangeArr = rowRangeArr.map(Number);
+                                            let rowStart = Math.min(...rowRangeArr);
+                                            let rowEnd = Math.max(...rowRangeArr);
+                                            if (row! + 1 <= rowStart) {
+                                                rowStart += 1;
+                                                rowEnd += 1;
+                                            } else if (row! + 1 > rowStart && row! + 1 <= rowEnd) {
+                                                rowEnd += 1;
+                                            }
+                                            if (rowEnd >= rowStart) {
+                                                posTemp.push('' + rowStart + ':' + rowEnd);
+                                            }
+                                        } else if (typeof hItemPos === 'number') {
+                                            if (row! + 1 <= hItemPos) {
+                                                posTemp.push(hItemPos + 1);
+                                            } else if (row! + 1 > hItemPos) {
+                                                posTemp.push(hItemPos);
+                                            }
+                                        }
+                                    });
+                                    if (posTemp.length > 0) {
+                                        vsNew.push(Object.assign({}, vItem, { p: posTemp }));
+                                    }
+                                }
+                                if (vItem.type === 'cells' && vItem.hasOwnProperty('p') && vItem.p.length > 0) {
+                                    if (vItem.p.indexOf(':') >= 0) {
+                                        let cellRangeArr = vItem.p.split(':');
+                                        let cellPrev = cellRangeArr[0];
+                                        let cellNext = cellRangeArr[1];
+                                        let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                        let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                        let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                        let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                        if (row! + 1 <= Math.min(cellPrevRow, cellNextRow)) {
+                                            cellPrevRow += 1;
+                                            cellNextRow += 1;
+                                        } else if ((row! + 1 > cellPrevRow && row! + 1 <= cellNextRow) || (row! + 1 > cellNextRow && row! + 1 <= cellPrevRow)) {
+                                            if (cellNextRow > cellPrevRow) {
+                                                cellNextRow += 1;
+                                            } else {
+                                                cellPrevRow += 1;
+                                            }
+                                        }
+                                        vsNew.push(
+                                            Object.assign({}, vItem, {
+                                                p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                            }),
+                                        );
+                                    } else {
+                                        let cellColStr = vItem.p.replace(/[0-9]/g, '');
+                                        let cellRow = parseInt(vItem.p.replace(/[^0-9]/gi, ''));
+                                        if (row! + 1 <= cellRow) {
+                                            cellRow += 1;
+                                            vsNew.push(
+                                                Object.assign({}, vItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        } else if (row! + 1 > cellRow) {
+                                            vsNew.push(
+                                                Object.assign({}, vItem, {
+                                                    p: cellColStr + cellRow,
+                                                }),
+                                            );
+                                        }
+                                    }
+                                }
+                            } else if (vItem.hasOwnProperty('type') && vItem.type === 'columns') {
+                                vsNew.push(Object.assign({}, vItem));
+                            }
+                        });
+                        alignsNew.v = vsNew;
+                    }
+                    $vmaFormulaGrid.reactiveData.aligns = alignsNew;
+                }
+
+                // wraps
+                if ($vmaFormulaGrid.reactiveData.wraps && $vmaFormulaGrid.reactiveData.wraps.length > 0) {
+                    const wrapsNew: Record<string, any>[] = [];
+                    $vmaFormulaGrid.reactiveData.wraps.forEach((wrapItem: any) => {
+                        if (wrapItem.hasOwnProperty('type') && (wrapItem.type === 'rows' || wrapItem.type === 'cells')) {
+                            if (wrapItem.type === 'rows' && wrapItem.hasOwnProperty('p') && wrapItem.p.length > 0) {
+                                const posTemp: any[] = [];
+                                wrapItem.p.forEach((wrapItemPos: string | number) => {
+                                    if (typeof wrapItemPos === 'string' && wrapItemPos.indexOf(':') >= 0) {
+                                        let rowRangeArr: any[] = wrapItemPos.split(':');
+                                        rowRangeArr = rowRangeArr.map(Number);
+                                        let rowStart = Math.min(...rowRangeArr);
+                                        let rowEnd = Math.max(...rowRangeArr);
+                                        if (row! + 1 <= rowStart) {
+                                            rowStart += 1;
+                                            rowEnd += 1;
+                                        } else if (row! + 1 > rowStart && row! + 1 <= rowEnd) {
+                                            rowEnd += 1;
+                                        }
+                                        if (rowEnd >= rowStart) {
+                                            posTemp.push('' + rowStart + ':' + rowEnd);
+                                        }
+                                    } else if (typeof wrapItemPos === 'number') {
+                                        if (row! + 1 <= wrapItemPos) {
+                                            posTemp.push(wrapItemPos + 1);
+                                        } else if (row! + 1 > wrapItemPos) {
+                                            posTemp.push(wrapItemPos);
+                                        }
+                                    }
+                                });
+                                if (posTemp.length > 0) {
+                                    wrapsNew.push(Object.assign({}, wrapItem, { p: posTemp }));
+                                }
+                            }
+                            if (wrapItem.type === 'cells' && wrapItem.hasOwnProperty('p') && wrapItem.p.length > 0) {
+                                if (wrapItem.p.indexOf(':') >= 0) {
+                                    let cellRangeArr = wrapItem.p.split(':');
+                                    let cellPrev = cellRangeArr[0];
+                                    let cellNext = cellRangeArr[1];
+                                    let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                    let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                    let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                    let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                    if (row! + 1 <= Math.min(cellPrevRow, cellNextRow)) {
+                                        cellPrevRow += 1;
+                                        cellNextRow += 1;
+                                    } else if ((row! + 1 > cellPrevRow && row! + 1 <= cellNextRow) || (row! + 1 > cellNextRow && row! + 1 <= cellPrevRow)) {
+                                        if (cellNextRow > cellPrevRow) {
+                                            cellNextRow += 1;
+                                        } else {
+                                            cellPrevRow += 1;
+                                        }
+                                    }
+                                    wrapsNew.push(
+                                        Object.assign({}, wrapItem, {
+                                            p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                        }),
+                                    );
+                                } else {
+                                    let cellColStr = wrapItem.p.replace(/[0-9]/g, '');
+                                    let cellRow = parseInt(wrapItem.p.replace(/[^0-9]/gi, ''));
+                                    if (row! + 1 <= cellRow) {
+                                        cellRow += 1;
+                                        wrapsNew.push(
+                                            Object.assign({}, wrapItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    } else if (row! + 1 > cellRow) {
+                                        wrapsNew.push(
+                                            Object.assign({}, wrapItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    }
+                                }
+                            }
+                        } else if (wrapItem.hasOwnProperty('type') && wrapItem.type === 'columns') {
+                            wrapsNew.push(Object.assign({}, wrapItem));
+                        }
+                    });
+                    $vmaFormulaGrid.reactiveData.wraps = wrapsNew;
+                }
+
+                // formats
+                if ($vmaFormulaGrid.reactiveData.formats && $vmaFormulaGrid.reactiveData.formats.length > 0) {
+                    const formatsNew: Record<string, any>[] = [];
+                    $vmaFormulaGrid.reactiveData.formats.forEach((formatItem: any) => {
+                        if (formatItem.hasOwnProperty('type') && (formatItem.type === 'rows' || formatItem.type === 'cells')) {
+                            if (formatItem.type === 'rows' && formatItem.hasOwnProperty('p') && formatItem.p.length > 0) {
+                                const posTemp: any[] = [];
+                                formatItem.p.forEach((formatItemPos: string | number) => {
+                                    if (typeof formatItemPos === 'string' && formatItemPos.indexOf(':') >= 0) {
+                                        let rowRangeArr: any[] = formatItemPos.split(':');
+                                        rowRangeArr = rowRangeArr.map(Number);
+                                        let rowStart = Math.min(...rowRangeArr);
+                                        let rowEnd = Math.max(...rowRangeArr);
+                                        if (row! + 1 <= rowStart) {
+                                            rowStart += 1;
+                                            rowEnd += 1;
+                                        } else if (row! + 1 > rowStart && row! + 1 <= rowEnd) {
+                                            rowEnd += 1;
+                                        }
+                                        if (rowEnd >= rowStart) {
+                                            posTemp.push('' + rowStart + ':' + rowEnd);
+                                        }
+                                    } else if (typeof formatItemPos === 'number') {
+                                        if (row! + 1 <= formatItemPos) {
+                                            posTemp.push(formatItemPos + 1);
+                                        } else if (row! + 1 > formatItemPos) {
+                                            posTemp.push(formatItemPos);
+                                        }
+                                    }
+                                });
+                                if (posTemp.length > 0) {
+                                    formatsNew.push(Object.assign({}, formatItem, { p: posTemp }));
+                                }
+                            }
+                            if (formatItem.type === 'cells' && formatItem.hasOwnProperty('p') && formatItem.p.length > 0) {
+                                if (formatItem.p.indexOf(':') >= 0) {
+                                    let cellRangeArr = formatItem.p.split(':');
+                                    let cellPrev = cellRangeArr[0];
+                                    let cellNext = cellRangeArr[1];
+                                    let cellPrevColStr = cellPrev.replace(/[0-9]/g, '');
+                                    let cellPrevRow = parseInt(cellPrev.replace(/[^0-9]/gi, ''));
+                                    let cellNextColStr = cellNext.replace(/[0-9]/g, '');
+                                    let cellNextRow = parseInt(cellNext.replace(/[^0-9]/gi, ''));
+                                    if (row! + 1 <= Math.min(cellPrevRow, cellNextRow)) {
+                                        cellPrevRow += 1;
+                                        cellNextRow += 1;
+                                    } else if ((row! + 1 > cellPrevRow && row! + 1 <= cellNextRow) || (row! + 1 > cellNextRow && row! + 1 <= cellPrevRow)) {
+                                        if (cellNextRow > cellPrevRow) {
+                                            cellNextRow += 1;
+                                        } else {
+                                            cellPrevRow += 1;
+                                        }
+                                    }
+                                    formatsNew.push(
+                                        Object.assign({}, formatItem, {
+                                            p: cellPrevColStr + cellPrevRow + ':' + cellNextColStr + cellNextRow,
+                                        }),
+                                    );
+                                } else {
+                                    let cellColStr = formatItem.p.replace(/[0-9]/g, '');
+                                    let cellRow = parseInt(formatItem.p.replace(/[^0-9]/gi, ''));
+                                    if (row! + 1 <= cellRow) {
+                                        cellRow += 1;
+                                        formatsNew.push(
+                                            Object.assign({}, formatItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    } else if (row! + 1 > cellRow) {
+                                        formatsNew.push(
+                                            Object.assign({}, formatItem, {
+                                                p: cellColStr + cellRow,
+                                            }),
+                                        );
+                                    }
+                                }
+                            }
+                        } else if (formatItem.hasOwnProperty('type') && formatItem.type === 'columns') {
+                            formatsNew.push(Object.assign({}, formatItem));
+                        }
+                    });
+                    $vmaFormulaGrid.reactiveData.formats = formatsNew;
                 }
 
                 const mergesNew: Record<string, any> = {};
