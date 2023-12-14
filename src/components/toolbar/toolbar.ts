@@ -2,18 +2,13 @@ import {
     defineComponent,
     h,
     reactive,
-    inject,
-    createCommentVNode,
     ComponentOptions,
     PropType,
     resolveComponent,
     ref,
     computed,
-    watch,
-    watchEffect,
     Ref,
     nextTick,
-    ComponentPublicInstance,
 } from 'vue';
 import { Guid } from '../../utils/guid.ts';
 import {
@@ -27,8 +22,6 @@ import {
     VmaFormulaGridCompTextareaPropTypes,
     VmaFormulaGridInstance,
     SizeType,
-    VmaFormulaGridCompColorPickerConstructor,
-    VmaFormulaGridCompColorPickerInstance,
 } from '../../../types';
 import { checkCellInMerges, getDefaultFontSize, toolbarButtons } from '../../utils';
 import { DomTools, getAbsolutePos } from '../../utils/doms.ts';
@@ -98,7 +91,6 @@ export default defineComponent({
         > = ref('formatGeneral');
 
         let currencyValue: any = ref('');
-        let currencyKey = ref('');
 
         const fontSelectOptions = computed(() => {
             return $vmaFormulaGridConnected.value
@@ -259,7 +251,7 @@ export default defineComponent({
                                     flex: '0 1 auto',
                                 },
                                 options: formatterSelectOptions.value,
-                                onChange: (event: any) => {
+                                onChange: (_: any) => {
                                     if (
                                         !(
                                             $vmaFormulaGridConnected.value &&
@@ -288,7 +280,7 @@ export default defineComponent({
                                     flex: '0 1 auto',
                                 },
                                 options: currencySelectOptions.value,
-                                onChange: (event: any) => {
+                                onChange: (_: any) => {
                                     if (
                                         !(
                                             $vmaFormulaGridConnected.value &&
