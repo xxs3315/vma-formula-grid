@@ -486,6 +486,7 @@ export default defineComponent({
         watch(
             () => gridReactiveData.currentArea,
             () => {
+                console.log(gridReactiveData.currentArea);
                 $vmaFormulaGrid.reCalcCurrentAreaPos();
                 $vmaFormulaGrid.updateCurrentAreaStyle();
             },
@@ -985,6 +986,15 @@ export default defineComponent({
                     gridReactiveData.currentAreaW = w;
                     gridReactiveData.currentAreaStartColIndex = startColIndex;
                     gridReactiveData.currentAreaStartRowIndex = startRowIndex;
+                } else {
+                    gridReactiveData.currentAreaSci = -1;
+                    gridReactiveData.currentAreaEci = -1;
+                    gridReactiveData.currentAreaSri = -1;
+                    gridReactiveData.currentAreaEri = -1;
+                    gridReactiveData.currentAreaH = -1;
+                    gridReactiveData.currentAreaW = -1;
+                    gridReactiveData.currentAreaStartColIndex = -1;
+                    gridReactiveData.currentAreaStartRowIndex = -1;
                 }
             },
             updateCurrentAreaStyle: () => {
