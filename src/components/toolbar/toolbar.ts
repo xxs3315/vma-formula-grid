@@ -81,6 +81,24 @@ export default defineComponent({
 
         let fontValue = ref('');
         let fontSizeValue = ref<number>();
+        let formatterValue: Ref<
+            | 'formatGeneral'
+            | 'formatNumberGeneral'
+            | 'formatNumberPercent'
+            | 'formatNumberScience'
+            | 'formatNumberFraction'
+            | 'formatNumberThousands'
+            | 'formatTime'
+            | 'formatShortDate'
+            | 'formatLongDate'
+            | 'formatCurrencyCNY'
+            | 'formatCurrencyUSD'
+            | 'formatCurrencyEuro'
+            | 'formatCurrencyOthers'
+        > = ref('formatGeneral');
+
+        let currencyValue: any = ref('');
+        let currencyKey = ref('');
 
         const fontSelectOptions = computed(() => {
             return $vmaFormulaGridConnected.value
@@ -107,12 +125,59 @@ export default defineComponent({
                 : [];
         });
 
+        const formatterSelectOptions = computed(() => {
+            return $vmaFormulaGridConnected.value
+                ? $vmaFormulaGridConnected.value.reactiveData.supportedFormatters.map((formatter: any) => {
+                      return {
+                          value: formatter,
+                          label: $vmaFormulaGridLangConnected.value.lang[formatter],
+                          disabled: false,
+                      };
+                  })
+                : [];
+        });
+
+        const currencySelectOptions = computed(() => {
+            const others: any[] = [];
+            if (
+                $vmaFormulaGridConnected.value &&
+                $vmaFormulaGridConnected.value.reactiveData.global &&
+                $vmaFormulaGridConnected.value.reactiveData.global.formats &&
+                $vmaFormulaGridConnected.value.reactiveData.global.formats.c &&
+                $vmaFormulaGridConnected.value.reactiveData.global.formats.c.others &&
+                $vmaFormulaGridConnected.value.reactiveData.global.formats.c.others.length > 0
+            ) {
+                $vmaFormulaGridConnected.value.reactiveData.global.formats.c.others.map((item: any) => {
+                    others.push({
+                        label: item.label,
+                        value: item.value,
+                        disabled: false,
+                    });
+                });
+            }
+            return $vmaFormulaGridConnected.value
+                ? [
+                      { label: $vmaFormulaGridLangConnected.value.lang['formatCurrencyCNY'], value: 'formatCurrencyCNY', disabled: false },
+                      { label: $vmaFormulaGridLangConnected.value.lang['formatCurrencyUSD'], value: 'formatCurrencyUSD', disabled: false },
+                      { label: $vmaFormulaGridLangConnected.value.lang['formatCurrencyEuro'], value: 'formatCurrencyEuro', disabled: false },
+                  ].concat(others)
+                : [];
+        });
+
         const fontSelectPlaceholder = computed(() => {
             return $vmaFormulaGridLangConnected.value ? $vmaFormulaGridLangConnected.value.lang.fontSelect : '';
         });
 
         const fontSizeSelectPlaceholder = computed(() => {
             return $vmaFormulaGridLangConnected.value ? $vmaFormulaGridLangConnected.value.lang.fontSizeSelect : '';
+        });
+
+        const formatterSelectPlaceholder = computed(() => {
+            return $vmaFormulaGridLangConnected.value ? $vmaFormulaGridLangConnected.value.lang.formatterSelect : '';
+        });
+
+        const currencySelectPlaceholder = computed(() => {
+            return $vmaFormulaGridLangConnected.value ? $vmaFormulaGridLangConnected.value.lang.formatterCurrencySelect : '';
         });
 
         const sizes = ['xxx-large', 'xx-large', 'x-large', 'large', 'normal', 'small', 'mini'];
@@ -137,6 +202,17 @@ export default defineComponent({
                                 },
                                 options: fontSelectOptions.value,
                                 onChange: (event: any) => {
+                                    if (
+                                        !(
+                                            $vmaFormulaGridConnected.value &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaSci >= 0 &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaEci >= 0 &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaSri >= 0 &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaEri >= 0
+                                        )
+                                    ) {
+                                        return;
+                                    }
                                     if ($vmaFormulaGridConnected.value) $vmaFormulaGridConnected.value.setFontStyle('cells', 'fontSelect', event.value);
                                 },
                             }),
@@ -155,7 +231,81 @@ export default defineComponent({
                                 },
                                 options: fontSizeSelectOptions.value,
                                 onChange: (event: any) => {
+                                    if (
+                                        !(
+                                            $vmaFormulaGridConnected.value &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaSci >= 0 &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaEci >= 0 &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaSri >= 0 &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaEri >= 0
+                                        )
+                                    ) {
+                                        return;
+                                    }
                                     if ($vmaFormulaGridConnected.value) $vmaFormulaGridConnected.value.setFontStyle('cells', 'fontSizeSelect', event.value);
+                                },
+                            }),
+                        );
+                    } else if (item.is === 'formatterSelect') {
+                        buttons.push(
+                            h(GridCompSelectComponent, {
+                                modelValue: formatterValue.value,
+                                placeholder: formatterSelectPlaceholder.value,
+                                'onUpdate:modelValue': (value: any) => {
+                                    formatterValue.value = value;
+                                },
+                                style: {
+                                    width: '150px',
+                                    flex: '0 1 auto',
+                                },
+                                options: formatterSelectOptions.value,
+                                onChange: (event: any) => {
+                                    if (
+                                        !(
+                                            $vmaFormulaGridConnected.value &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaSci >= 0 &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaEci >= 0 &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaSri >= 0 &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaEri >= 0
+                                        )
+                                    ) {
+                                        return;
+                                    }
+                                    if ($vmaFormulaGridConnected.value) $vmaFormulaGridConnected.value.setCellFormat('cells', formatterValue.value, null);
+                                },
+                            }),
+                        );
+                    } else if (item.is === 'currencySelect') {
+                        buttons.push(
+                            h(GridCompSelectComponent, {
+                                modelValue: currencyValue.value,
+                                placeholder: currencySelectPlaceholder.value,
+                                'onUpdate:modelValue': (value: any) => {
+                                    currencyValue.value = value;
+                                },
+                                style: {
+                                    width: '150px',
+                                    flex: '0 1 auto',
+                                },
+                                options: currencySelectOptions.value,
+                                onChange: (event: any) => {
+                                    if (
+                                        !(
+                                            $vmaFormulaGridConnected.value &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaSci >= 0 &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaEci >= 0 &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaSri >= 0 &&
+                                            $vmaFormulaGridConnected.value.reactiveData.currentAreaEri >= 0
+                                        )
+                                    ) {
+                                        return;
+                                    }
+                                    if ($vmaFormulaGridConnected.value)
+                                        $vmaFormulaGridConnected.value.setCellFormat(
+                                            'cells',
+                                            currencyValue.value.startsWith('formatCurrency') ? currencyValue.value : 'formatCurrencyOthers',
+                                            currencyValue.value,
+                                        );
                                 },
                             }),
                         );

@@ -387,7 +387,7 @@ export default defineComponent({
                                                                                       ),
                                                                                       h(GridCompSelectComponent, {
                                                                                           modelValue: currencyOther.value,
-                                                                                          placeholder: $vmaFormulaGridLang?.lang.formatNumberCurrencyOthers,
+                                                                                          placeholder: $vmaFormulaGridLang?.lang.formatCurrencyOthers,
                                                                                           'onUpdate:modelValue': (value: any) => {
                                                                                               currencyOther.value = value;
                                                                                           },
@@ -398,7 +398,7 @@ export default defineComponent({
                                                                                           options: currencyOthers.value.map((item: any) => {
                                                                                               return {
                                                                                                   value: item.value,
-                                                                                                  label: item.key,
+                                                                                                  label: item.label,
                                                                                                   disabled: false,
                                                                                               };
                                                                                           }),

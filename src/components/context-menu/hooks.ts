@@ -757,17 +757,17 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     param,
                 });
                 subOptions.push({
-                    name: grid.lang().formatNumberCurrencyOthers,
-                    code: 'formatNumberCurrencyOthers',
+                    name: grid.lang().formatCurrencyOthers,
+                    code: 'formatCurrencyOthers',
                     disabled: false,
                     visible: true,
                     param,
                     type: 'formatNumberCurrencyOthersSelect',
                 });
                 options.push({
-                    name: grid.lang().formatNumberCurrency,
+                    name: grid.lang().formatCurrency,
                     prefixIcon: 'info',
-                    code: 'formatNumberCurrency',
+                    code: 'formatCurrency',
                     disabled: false,
                     visible: true,
                     children: subOptions,

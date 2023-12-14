@@ -23,8 +23,10 @@ export default {
     fontUnderline: 'Underline',
     fontSelect: 'Select font',
     fontSizeSelect: 'Select font size',
+    formatterSelect: 'Select formatter',
+    formatterCurrencySelect: 'Select currency formatter',
     fontStyle: 'Font',
-    formatGeneral: 'General',
+    formatGeneral: 'General string',
     formatNumberGeneral: 'General number',
     formatNumberPercent: 'Percent',
     formatNumberFraction: 'Fraction',
@@ -38,8 +40,8 @@ export default {
     formatCurrencyCNY: 'CNY',
     formatCurrencyUSD: 'USD',
     formatCurrencyEuro: 'Euro',
-    formatNumberCurrencyOthers: 'Others',
-    formatNumberCurrency: 'Currency',
+    formatCurrencyOthers: 'Others',
+    formatCurrency: 'Currency formatter',
     align: 'Align',
     alignLeft: 'Align left',
     alignCenter: 'Align center',
@@ -48,4 +50,5 @@ export default {
     alignMiddle: 'Align middle',
     alignBottom: 'Align bottom',
     wrap: 'Wrap',
+    // custom
 };

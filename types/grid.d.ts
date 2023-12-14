@@ -208,6 +208,7 @@ export interface VmaFormulaGridReactiveData {
 
     supportedFonts: any[];
     supportedFontSizes: any[];
+    supportedFormatters: any[];
 }
 
 export interface VmaFormulaGridProps {

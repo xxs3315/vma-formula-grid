@@ -287,6 +287,36 @@ export const getFontFamilyChFromEn = (en: string) => {
 
 export const supportedFontSizes = () => [6, 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 64, 72, 144, 288];
 
+export const supportedFormatters = () => {
+    return [
+        'formatGeneral',
+        'formatNumberGeneral',
+        'formatNumberPercent',
+        'formatNumberScience',
+        'formatNumberFraction',
+        'formatNumberThousands',
+        'formatTime',
+        'formatShortDate',
+        'formatLongDate',
+        'formatCurrencyCNY',
+    ];
+};
+
+export const supportedFormatterOtherCurrencies = () => {
+    return [
+        'formatGeneral',
+        'formatNumberGeneral',
+        'formatNumberPercent',
+        'formatNumberScience',
+        'formatNumberFraction',
+        'formatNumberThousands',
+        'formatTime',
+        'formatShortDate',
+        'formatLongDate',
+        'formatCurrencyCNY',
+    ];
+};
+
 export const predefinedFontFormatter = () => {
     return {
         n: {
@@ -306,8 +336,8 @@ export const predefinedFontFormatter = () => {
             usd: '$#,##0.00',
             euro: '#,##0" €"',
             others: [
-                { key: '英镑', value: '"£ "#,##0.00' },
-                { key: '韩元', value: '"₩ "#,##0.00' },
+                { label: '英镑', value: '"£ "#,##0.00' },
+                { label: '港币', value: '"HK$ "#,##0.00' },
             ],
         },
     };

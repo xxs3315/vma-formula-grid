@@ -72,7 +72,7 @@ import { DepParser, FormulaParser } from '../../formula';
 import GlobalEvent from '../../utils/events.ts';
 import VmaFormulaGrid from '../../v-m-a-formula-grid';
 import { DomTools } from '../../utils/doms.ts';
-import { getFontFamilyChFromEn, predefinedFontFormatter, supportedFonts, supportedFontSizes } from '../../utils/font.ts';
+import { getFontFamilyChFromEn, predefinedFontFormatter, supportedFonts, supportedFontSizes, supportedFormatters } from '../../utils/font.ts';
 import { Locale, type Lang } from '../../lang';
 
 export default defineComponent({
@@ -165,6 +165,7 @@ export default defineComponent({
                 .finally(() => {
                     gridReactiveData.supportedFonts = supportedFonts();
                     gridReactiveData.supportedFontSizes = supportedFontSizes();
+                    gridReactiveData.supportedFormatters = supportedFormatters();
                 });
         });
 
@@ -220,6 +221,7 @@ export default defineComponent({
                         .finally(() => {
                             gridReactiveData.supportedFonts = supportedFonts();
                             gridReactiveData.supportedFontSizes = supportedFontSizes();
+                            gridReactiveData.supportedFormatters = supportedFormatters();
                         });
                 });
             },
@@ -446,6 +448,7 @@ export default defineComponent({
             formats: [],
             supportedFonts: [],
             supportedFontSizes: [],
+            supportedFormatters: [],
         }) as VmaFormulaGridReactiveData;
 
         watch(
