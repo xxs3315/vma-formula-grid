@@ -5150,11 +5150,11 @@ export default defineComponent({
                         });
                     }
 
-                    if (props.data.hasOwnProperty('conf') && props.data.conf.hasOwnProperty('global')) {
-                        if (Object.keys(props.data.conf.global).length > 0) {
+                    if (props.data.hasOwnProperty('conf')) {
+                        if (props.data.conf.hasOwnProperty('global') && Object.keys(props.data.conf.global).length > 0) {
                             gridReactiveData.global = assignDeep({ formats: predefinedFontFormatter() }, props.data.conf.global);
                         } else {
-                            gridReactiveData.global = assignDeep({ formats: predefinedFontFormatter() });
+                            gridReactiveData.global = { formats: predefinedFontFormatter() };
                         }
                     }
 
