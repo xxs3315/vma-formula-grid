@@ -1,15 +1,4 @@
-import {
-    defineComponent,
-    h,
-    reactive,
-    ComponentOptions,
-    PropType,
-    resolveComponent,
-    ref,
-    computed,
-    Ref,
-    nextTick,
-} from 'vue';
+import { defineComponent, h, reactive, ComponentOptions, PropType, resolveComponent, ref, computed, Ref, nextTick } from 'vue';
 import { Guid } from '../../utils/guid.ts';
 import {
     VmaFormulaGridCompToolbarReactiveData,
