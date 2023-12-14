@@ -71,7 +71,7 @@ style="width: 100%; height: 500px;"
   欧元格式
 
 ```others```
-  其他货币格式, 可配置key/value数组
+  其他货币格式, 可配置label/value数组
 
 ---
 
@@ -98,8 +98,8 @@ style="width: 100%; height: 500px;"
           "usd": "$#,##0.00",
           "euro": "#,##0\" €\"",
           "others": [
-            { "key": "英镑", "value": "\"£ \"#,##0.00" },
-            { "key": "韩元", "value": "\"₩ \"#,##0.00" }
+            { "label": "英镑", "value": "\"£ \"#,##0.00" },
+            { "label": "港币", "value": "\"HK$ \"#,##0.00" }
           ]
         }
       }
@@ -148,9 +148,9 @@ import {defineComponent, onMounted, reactive, ref, watch} from "vue";
 export default defineComponent({
   name: "HelloWorld",
   setup() {
-    const datasource = ref('map');
-    const size = ref('normal');
-    const themeType = ref('primary');
+    const datasource = ref("map");
+    const size = ref("normal");
+    const themeType = ref("primary");
 
     onMounted(() => {
       console.log(data)
@@ -158,48 +158,48 @@ export default defineComponent({
 
     const mapData = reactive({
       data: [{
-        p: 'A1',
+        p: "A1",
         v: 1
       }, {
-        p: 'A2',
+        p: "A2",
         v: 2
       }, {
-        p: 'A3',
+        p: "A3",
         v: 3
       }, {
-        p: 'A4',
+        p: "A4",
         v: 4
       }, {
-        p: 'A20',
-        v: '= T20 - 2'
+        p: "A20",
+        v: "= T20 - 2"
       }, {
-        p: 'B1',
-        v: '= SUM(A3, 6)'
+        p: "B1",
+        v: "= SUM(A3, 6)"
       }, {
-        p: 'B2',
-        v: '= A2 + 2 + SQRT(2)'
+        p: "B2",
+        v: "= A2 + 2 + SQRT(2)"
       }, {
-        p: 'B3',
-        v: '= A3 + 2'
+        p: "B3",
+        v: "= A3 + 2"
       }, {
-        p: 'B4',
-        v: '= A4 + 2'
+        p: "B4",
+        v: "= A4 + 2"
       }, {
-        p: 'B5',
-        v: '= SUM(A1:A4)'
+        p: "B5",
+        v: "= SUM(A1:A4)"
       }, {
-        p: 'T20',
-        v: '= A20 + 2'
+        p: "T20",
+        v: "= A20 + 2"
       },]
     });
 
     const arrayData = reactive([
       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
       [
-        '= A1 + 2', '= B1 + 2', '= C1 + 2', '= D1 + 2', '= E1 + 2',
-        '= F1 + 2', '= G1 + 2', '= H1 + 2', '= I1 + 2', '= J1 + 2',
-        '= K1 + 2', '= L1 + 2', '= M1 + 2', '= N1 + 2', '= O1 + 2',
-        '= P1 + 2', '= Q1 + 2', '= R1 + 2', '= S1 + 2', '= T1 + 2'
+        "= A1 + 2", "= B1 + 2", "= C1 + 2", "= D1 + 2", "= E1 + 2",
+        "= F1 + 2", "= G1 + 2", "= H1 + 2", "= I1 + 2", "= J1 + 2",
+        "= K1 + 2", "= L1 + 2", "= M1 + 2", "= N1 + 2", "= O1 + 2",
+        "= P1 + 2", "= Q1 + 2", "= R1 + 2", "= S1 + 2", "= T1 + 2"
       ],
       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
       [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
@@ -230,44 +230,44 @@ export default defineComponent({
       global: {
         formats: {
           n: {
-            general: '0.00',
-            percent: '0.00%',
-            science: '0.00E+0',
-            fraction: '0/0',
-            thousands: '###,###',
+            general: "0.00",
+            percent: "0.00%",
+            science: "0.00E+0",
+            fraction: "0/0",
+            thousands: "###,###",
           },
           d: {
-            time: 'hh:mm:ss AM/PM',
-            shortDate: 'yyyy-mm-dd dddd',
-            longDate: 'yyyy-mm-dd hh:mm:ss AM/PM',
+            time: "hh:mm:ss AM/PM",
+            shortDate: "yyyy-mm-dd dddd",
+            longDate: "yyyy-mm-dd hh:mm:ss AM/PM",
           },
           c: {
-            cny: '#,##0.00" ¥"',
-            usd: '$#,##0.00',
-            euro: '#,##0" €"',
+            cny: "#,##0.00\" ¥\"",
+            usd: "$#,##0.00",
+            euro: "#,##0\" €\"",
             others: [
-               { key: '英镑', value: '"£ "#,##0.00' },
-               { key: '韩元', value: '"₩ "#,##0.00' },
+               { key: "英镑", value: "\"£ \"#,##0.00" },
+               { key: "港币", value: "\"HK$ \"#,##0.00" },
             ],
           },
         },
       },
       formats: [
-        { p: ['A', 'C', 'D', 'o:q'], type: 'columns', details: { type: 'g' } },
-        { p: 'B4:E8', type: 'cells', details: { type: 'n', v: '##.00' } },
-        { p: 'C15:D17', type: 'cells', details: { type: 'n', v: '###,###.00' } },
-        { p: 'J28', type: 'cells', details: { type: 'n', v: '##0/##0' } },
-        { p: 'G7:K26', type: 'cells', details: { type: 'n', v: '0.0%' } },
-        { p: [1, 5, 6, 7, 8], type: 'rows', details: { type: 'c', v: '$#,##0.00' } },
-        { p: 'L61', type: 'cells', details: { type: 'c', v: '#,##0.00" ¥"' } },
-        { p: 'C6:D7', type: 'cells', details: { type: 'd', v: 'yyyy-mm-dd dddd' } },
-        { p: 'E10:F17', type: 'cells', details: { type: 'd', v: 'yyyy-mm-dd hh:mm AM/PM' } },
+        { p: ["A", "C", "D", "o:q"], type: "columns", details: { type: "g" } },
+        { p: "B4:E8", type: "cells", details: { type: "n", v: "##.00" } },
+        { p: "C15:D17", type: "cells", details: { type: "n", v: "###,###.00" } },
+        { p: "J28", type: "cells", details: { type: "n", v: "##0/##0" } },
+        { p: "G7:K26", type: "cells", details: { type: "n", v: "0.0%" } },
+        { p: [1, 5, 6, 7, 8], type: "rows", details: { type: "c", v: "$#,##0.00" } },
+        { p: "L61", type: "cells", details: { type: "c", v: "#,##0.00\" ¥\"" } },
+        { p: "C6:D7", type: "cells", details: { type: "d", v: "yyyy-mm-dd dddd" } },
+        { p: "E10:F17", type: "cells", details: { type: "d", v: "yyyy-mm-dd hh:mm AM/PM" } },
       ],
     });
 
     const data = reactive({
       conf: confs,
-      type: 'map',
+      type: "map",
       arrayData: arrayData,
       mapData: mapData
     });
