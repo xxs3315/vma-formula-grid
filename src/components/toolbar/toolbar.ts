@@ -63,21 +63,7 @@ export default defineComponent({
 
         let fontValue = ref('');
         let fontSizeValue = ref<number>();
-        let formatterValue: Ref<
-            | 'formatGeneral'
-            | 'formatNumberGeneral'
-            | 'formatNumberPercent'
-            | 'formatNumberScience'
-            | 'formatNumberFraction'
-            | 'formatNumberThousands'
-            | 'formatTime'
-            | 'formatShortDate'
-            | 'formatLongDate'
-            | 'formatCurrencyCNY'
-            | 'formatCurrencyUSD'
-            | 'formatCurrencyEuro'
-            | 'formatCurrencyOthers'
-        > = ref('formatGeneral');
+        let formatterValue: Ref<any> = ref('');
 
         let currencyValue: any = ref('');
 
