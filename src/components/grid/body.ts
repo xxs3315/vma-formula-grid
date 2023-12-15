@@ -713,7 +713,7 @@ export default defineComponent({
                                                             $vmaFormulaGrid.reactiveData.currentAreaStatus = true;
                                                             $vmaFormulaGrid.reactiveData.currentArea = {
                                                                 start: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1],
-                                                                end: null,
+                                                                end: $vmaFormulaGrid.reactiveData.currentSheetData[rf.index][cf.index + 1],
                                                             };
                                                             nextTick(() => {
                                                                 resizeCurrentSelectArea(event);

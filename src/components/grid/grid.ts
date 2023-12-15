@@ -486,7 +486,6 @@ export default defineComponent({
         watch(
             () => gridReactiveData.currentArea,
             () => {
-                console.log(gridReactiveData.currentArea);
                 $vmaFormulaGrid.reCalcCurrentAreaPos();
                 $vmaFormulaGrid.updateCurrentAreaStyle();
             },
@@ -1897,10 +1896,10 @@ export default defineComponent({
 
                 const gridColumnsWidthChangedNew: Record<string, number> = {};
                 Object.keys(gridReactiveData.columnWidthsChanged).map((key) => {
-                    if (Number(key) > col!) {
+                    if (Number(key) > col! + 1) {
                         const newKey = Number(key) - 1;
                         gridColumnsWidthChangedNew[newKey] = gridReactiveData.columnWidthsChanged[key];
-                    } else {
+                    } else if (Number(key) < col! + 1) {
                         gridColumnsWidthChangedNew[key] = gridReactiveData.columnWidthsChanged[key];
                     }
                     return null;
@@ -2591,10 +2590,10 @@ export default defineComponent({
 
                 const gridRowsHeightChangedNew: Record<string, number> = {};
                 Object.keys(gridReactiveData.rowHeightsChanged).map((key) => {
-                    if (Number(key) > row!) {
+                    if (Number(key) > row! + 1) {
                         const newKey = Number(key) - 1;
                         gridRowsHeightChangedNew[newKey] = gridReactiveData.rowHeightsChanged[key];
-                    } else {
+                    } else if (Number(key) < row! + 1) {
                         gridRowsHeightChangedNew[key] = gridReactiveData.rowHeightsChanged[key];
                     }
                     return null;
