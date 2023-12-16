@@ -780,6 +780,12 @@ export default defineComponent({
                                             {
                                                 class: ['cell', `${$vmaFormulaGrid.props.type}`],
                                                 style: {
+                                                    position: 'absolute',
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    boxSizing: 'border-box',
+                                                    top: 0,
+                                                    left: 0,
                                                     display: 'flex',
                                                     justifyContent: cell.ah,
                                                     alignItems: cell.av,
