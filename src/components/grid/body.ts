@@ -690,10 +690,6 @@ export default defineComponent({
                                                 width: cell.colSpan! > 1 ? '100%' : 'inherit',
                                                 '--cellBgCustom': cell.bg,
                                                 color: cell.fg,
-                                                fontWeight: cell.b ? 'bold' : 'normal',
-                                                textDecoration: cell.u ? 'underline' : null,
-                                                fontFamily: cell.ff,
-                                                fontSize: cell.fs ? cell.fs + 'px' : null,
                                             },
                                             onMouseup: (_: MouseEvent) => {
                                                 $vmaFormulaGrid.reactiveData.currentAreaStatus = false;
@@ -805,6 +801,10 @@ export default defineComponent({
                                                         maxWidth: cell.tw ? '-webkit-fill-available' : null,
                                                         whiteSpace: cell.tw ? 'pre-line' : null,
                                                         wordBreak: cell.tw ? 'break-all' : null,
+                                                        fontWeight: cell.b ? 'bold' : 'normal',
+                                                        textDecoration: cell.u ? 'underline' : null,
+                                                        fontFamily: cell.ff,
+                                                        fontSize: cell.fs ? cell.fs + 'px' : null,
                                                     },
                                                 },
                                                 getCellContent(cell),
