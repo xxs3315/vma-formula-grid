@@ -35,7 +35,7 @@ export default defineConfig({
             {
                 text: '进阶表格',
                 items: [
-                    { text: '内置公式支持', link: '/basic-components/basic-components-icon' },
+                    { text: '内置公式支持', link: '/advance-grid/advance-grid-formula' },
                     { text: '自定义公式', link: '/item-2' },
                     { text: '远程调用公式', link: '/item-3' },
                     { text: '导入数据', link: '/item-3' },
