@@ -352,7 +352,7 @@ export default defineComponent({
                                                                               ),
                                                                           )
                                                                         : null;
-                                                                } else if (child.type === 'formatNumberCurrencyOthersSelect') {
+                                                                } else if (child.type === 'formatCurrencyOthersSelect') {
                                                                     return child.visible
                                                                         ? h(
                                                                               'li',

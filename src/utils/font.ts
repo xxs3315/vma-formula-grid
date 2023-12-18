@@ -298,22 +298,7 @@ export const supportedFormatters = () => {
         'formatTime',
         'formatShortDate',
         'formatLongDate',
-        'formatCurrencyCNY',
-    ];
-};
-
-export const supportedFormatterOtherCurrencies = () => {
-    return [
-        'formatGeneral',
-        'formatNumberGeneral',
-        'formatNumberPercent',
-        'formatNumberScience',
-        'formatNumberFraction',
-        'formatNumberThousands',
-        'formatTime',
-        'formatShortDate',
-        'formatLongDate',
-        'formatCurrencyCNY',
+        'formatCurrency',
     ];
 };
 

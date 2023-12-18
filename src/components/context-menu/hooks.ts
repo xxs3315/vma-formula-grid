@@ -762,7 +762,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     disabled: false,
                     visible: true,
                     param,
-                    type: 'formatNumberCurrencyOthersSelect',
+                    type: 'formatCurrencyOthersSelect',
                 });
                 options.push({
                     name: grid.lang().formatCurrency,

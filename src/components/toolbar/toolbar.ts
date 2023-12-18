@@ -96,7 +96,7 @@ export default defineComponent({
             return $vmaFormulaGridConnected.value
                 ? $vmaFormulaGridConnected.value.reactiveData.supportedFormatters.map((formatter: any) => {
                       return {
-                          value: formatter,
+                          value: formatter === 'formatCurrency' ? 'formatCurrencyCNY' : formatter,
                           label: $vmaFormulaGridLangConnected.value.lang[formatter],
                           disabled: false,
                       };
