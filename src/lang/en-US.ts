@@ -50,5 +50,7 @@ export default {
     alignMiddle: 'Align middle',
     alignBottom: 'Align bottom',
     wrap: 'Wrap',
+    fixRow: 'Fix row',
+    fixColumn: 'Fix column',
     // custom
 };

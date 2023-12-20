@@ -47,6 +47,21 @@ export interface VmaFormulaGridRefs {
     refGridBodyLeftFixedTable: Ref<HTMLTableElement>;
     refGridBodyLeftFixedScrollWrapperDiv: Ref<HTMLDivElement>;
 
+    refGridBodyLeftTopFixedTable: Ref<HTMLTableElement>;
+    refGridBodyLeftTopFixedScrollWrapperDiv: Ref<HTMLDivElement>;
+    refGridBodyLeftTopFixedTableWrapperDiv: Ref<HTMLDivElement>;
+
+    refGridBodyTopFixedTable: Ref<HTMLTableElement>;
+    refGridBodyTopFixedScrollWrapperDiv: Ref<HTMLDivElement>;
+    refGridBodyTopFixedTableWrapperDiv: Ref<HTMLDivElement>;
+
+    refGridBodyLeftFixedSequenceTable: Ref<HTMLTableElement>;
+    refGridBodyLeftFixedSequenceScrollWrapperDiv: Ref<HTMLDivElement>;
+    refGridBodyLeftFixedSequenceTableWrapperDiv: Ref<HTMLDivElement>;
+    refGridBodyLeftFixedSequenceTableColgroup: Ref<HTMLTableColElement>;
+    refGridBodyLeftFixedSequenceYLineDiv: Ref<HTMLDivElement>;
+    refGridBodyLeftFixedSequenceXLineDiv: Ref<HTMLDivElement>;
+
     refGridBodyYLineDiv: Ref<HTMLDivElement>;
     refGridBodyXLineDiv: Ref<HTMLDivElement>;
     refGridBodyLeftFixedYLineDiv: Ref<HTMLDivElement>;
@@ -241,7 +256,9 @@ export interface VmaFormulaGridPrivateMethods {
     updateRowVisible(type: string, rowStart: number, rowEnd: number): void;
     updateColVisible(type: string, colStart: number, colEnd: number): void;
     insertColumn(col: number): void;
+    fixColumn(col: number): void;
     insertRow(row: number): void;
+    fixRow(row: number): void;
     hideColumn(col: number): void;
     hideRow(row: number): void;
     deleteColumn(col: number): void;
@@ -325,7 +342,7 @@ export interface VmaFormulaGridHeaderConstructor extends VmaComponentInstance, V
     getRefs(): VmaFormulaGridHeaderRefs;
 }
 
-export type VmaFormulaGridBodyFixedType = 'center' | 'left' | 'right' | 'top' | 'bottom' | 'left-top';
+export type VmaFormulaGridBodyFixedType = 'center' | 'left' | 'right' | 'top' | 'bottom' | 'left-top' | 'left-sequence';
 
 export namespace VmaFormulaGridBodyPropTypes {
     export type Fixed = VmaFormulaGridBodyFixedType;

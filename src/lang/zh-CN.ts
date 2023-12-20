@@ -50,5 +50,7 @@ export default {
     alignMiddle: '垂直居中',
     alignBottom: '底端对齐',
     wrap: '自动换行',
+    fixRow: '固定行',
+    fixColumn: '固定列',
     // custom
 };

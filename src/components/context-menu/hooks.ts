@@ -35,8 +35,14 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     if (menu.code === 'insertColumn') {
                         grid.insertColumn(Number(menu.param.col));
                     }
+                    if (menu.code === 'fixColumn') {
+                        grid.fixColumn(Number(menu.param.col));
+                    }
                     if (menu.code === 'insertRow') {
                         grid.insertRow(Number(menu.param.row));
+                    }
+                    if (menu.code === 'fixRow') {
+                        grid.fixRow(Number(menu.param.row));
                     }
                     if (menu.code === 'hideColumn') {
                         grid.hideColumn(Number(menu.param.col));
@@ -327,9 +333,9 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     param,
                 });
                 list.push(options);
-                // options = []
-                // options.push({ name: '固定', code: 'fixedColumn', disabled: false, visible: true, param, })
-                // list.push(options)
+                options = [];
+                options.push({ name: grid.lang().fixColumn, code: 'fixedColumn', disabled: false, visible: true, param });
+                list.push(options);
                 options = [];
                 options.push({
                     name: grid.lang().hideColumn,
@@ -359,9 +365,9 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     param,
                 });
                 list.push(options);
-                // options = []
-                // options.push({ name: '固定', code: 'fixedRow', disabled: false, visible: true, param, })
-                // list.push(options)
+                options = [];
+                options.push({ name: grid.lang().fixRow, code: 'fixedRow', disabled: false, visible: true, param });
+                list.push(options);
                 options = [];
                 options.push({
                     name: grid.lang().hideRow,

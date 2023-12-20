@@ -283,6 +283,21 @@ export default defineComponent({
         const refGridBodyLeftFixedTable = ref() as Ref<HTMLTableElement>;
         const refGridBodyLeftFixedScrollWrapperDiv = ref() as Ref<HTMLDivElement>;
 
+        const refGridBodyLeftFixedSequenceTable = ref() as Ref<HTMLTableElement>;
+        const refGridBodyLeftFixedSequenceScrollWrapperDiv = ref() as Ref<HTMLDivElement>;
+        const refGridBodyLeftFixedSequenceTableWrapperDiv = ref() as Ref<HTMLDivElement>;
+        const refGridBodyLeftFixedSequenceTableColgroup = ref() as Ref<HTMLTableColElement>;
+        const refGridBodyLeftFixedSequenceYLineDiv = ref() as Ref<HTMLDivElement>;
+        const refGridBodyLeftFixedSequenceXLineDiv = ref() as Ref<HTMLDivElement>;
+
+        const refGridBodyTopFixedTable = ref() as Ref<HTMLTableElement>;
+        const refGridBodyTopFixedScrollWrapperDiv = ref() as Ref<HTMLDivElement>;
+        const refGridBodyTopFixedTableWrapperDiv = ref() as Ref<HTMLDivElement>;
+
+        const refGridBodyLeftTopFixedTable = ref() as Ref<HTMLTableElement>;
+        const refGridBodyLeftTopFixedScrollWrapperDiv = ref() as Ref<HTMLDivElement>;
+        const refGridBodyLeftTopFixedTableWrapperDiv = ref() as Ref<HTMLDivElement>;
+
         const refGridBodyYLineDiv = ref() as Ref<HTMLDivElement>;
         const refGridBodyXLineDiv = ref() as Ref<HTMLDivElement>;
 
@@ -504,6 +519,21 @@ export default defineComponent({
             refGridBodyTableWrapperDiv,
             refGridHeaderLeftFixedTableWrapperDiv,
             refGridBodyLeftFixedTableWrapperDiv,
+
+            refGridBodyLeftTopFixedTable,
+            refGridBodyLeftTopFixedScrollWrapperDiv,
+            refGridBodyLeftTopFixedTableWrapperDiv,
+
+            refGridBodyLeftFixedSequenceTable,
+            refGridBodyLeftFixedSequenceScrollWrapperDiv,
+            refGridBodyLeftFixedSequenceTableWrapperDiv,
+            refGridBodyLeftFixedSequenceTableColgroup,
+            refGridBodyLeftFixedSequenceYLineDiv,
+            refGridBodyLeftFixedSequenceXLineDiv,
+
+            refGridBodyTopFixedTable,
+            refGridBodyTopFixedScrollWrapperDiv,
+            refGridBodyTopFixedTableWrapperDiv,
 
             refGridHeaderTable,
             refGridHeaderLeftFixedTable,
@@ -1092,6 +1122,7 @@ export default defineComponent({
                     gridReactiveData.currentCellEditorStyle.display = 'none';
                 }
             },
+            fixColumn: (colNumber: number) => {},
             insertColumn: (colNumber: number) => {
                 updateConfs('insertColumn', colNumber, null);
                 gridReactiveData.colConfs.map((item: Column) => {
@@ -1165,6 +1196,7 @@ export default defineComponent({
                         $vmaFormulaGrid.calc();
                     });
             },
+            fixRow: (rowNumber: number) => {},
             insertRow: (rowNumber: number) => {
                 updateConfs('insertRow', null, rowNumber);
                 gridReactiveData.rowConfs.map((item: Column) => {
@@ -4610,11 +4642,29 @@ export default defineComponent({
                             width: `${gridReactiveData.gridHeaderWidth}px`,
                         },
                     }),
+                    // sequence number left fixed
+                    h(FormulaGridBodyComponent, {
+                        'data-uid': $vmaFormulaGrid.uId,
+                        fixed: 'left-sequence',
+                        class: ['left-sequence'],
+                    }),
                     // body left fixed
                     h(FormulaGridBodyComponent, {
                         'data-uid': $vmaFormulaGrid.uId,
                         fixed: 'left',
                         class: ['left'],
+                    }),
+                    // body top fixed
+                    h(FormulaGridBodyComponent, {
+                        'data-uid': $vmaFormulaGrid.uId,
+                        fixed: 'top',
+                        class: ['top'],
+                    }),
+                    // body left-top fixed
+                    h(FormulaGridBodyComponent, {
+                        'data-uid': $vmaFormulaGrid.uId,
+                        fixed: 'left-top',
+                        class: ['left-top'],
                     }),
                     // body center
                     h(FormulaGridBodyComponent, {
@@ -4797,7 +4847,9 @@ export default defineComponent({
                 refGridBodyTable.value.style.transform = `translateX(${marginLeft}) translateY(${marginTop})`;
                 refGridBodyTable.value.style.width = `${gridReactiveData.gridWidth}px`;
                 refGridBodyLeftFixedTable.value.style.transform = `translateY(${marginTop})`;
+                refGridBodyLeftFixedSequenceTable.value.style.transform = `translateY(${marginTop})`;
                 refGridBodyLeftFixedTable.value.style.width = `${gridReactiveData.gridWidth}px`;
+                refGridBodyLeftFixedSequenceTable.value.style.width = `${gridReactiveData.gridWidth}px`;
             }
             if (refGridHeaderTable.value) {
                 refGridHeaderTable.value.style.transform = `translateX(${marginLeft})`;
@@ -4937,11 +4989,24 @@ export default defineComponent({
                         }px`;
                     }
                 });
+                Array.from(refGridBodyLeftFixedSequenceTableColgroup.value.children).forEach((colgroupElem: any, _: number) => {
+                    const idx = parseInt(colgroupElem.attributes.idx.value);
+                    if (idx === -1) {
+                        colgroupElem.style.width = `${rowIndicatorElWidth.value}px`;
+                    } else if (idx + 1 < colConfs.length) {
+                        colgroupElem.style.width = `${
+                            colConfs[idx + 1].visible ? (typeof colConfs[idx + 1].width === 'string' ? renderDefaultColWidth.value : colConfs[idx + 1].width) : 0
+                        }px`;
+                    }
+                });
             }
 
             refGridHeaderLeftFixedTable.value.style.width = `${gridReactiveData.gridWidth + gridReactiveData.scrollbarWidth}px`;
             refGridBodyLeftFixedTableWrapperDiv.value.style.width = `${gridReactiveData.gridLeftFixedHeaderWidth}px`;
             refGridBodyLeftFixedTableWrapperDiv.value.style.height = `${gridReactiveData.gridBodyHeight - gridReactiveData.scrollbarHeight}px`;
+
+            refGridBodyLeftFixedSequenceTableWrapperDiv.value.style.width = `${gridReactiveData.gridLeftFixedHeaderWidth}px`;
+            refGridBodyLeftFixedSequenceTableWrapperDiv.value.style.height = `${gridReactiveData.gridBodyHeight - gridReactiveData.scrollbarHeight}px`;
 
             refGridBodyLeftFixedXLineDiv.value.style.width = `${getWidth(
                 rowIndicatorElWidth.value,
@@ -4950,6 +5015,7 @@ export default defineComponent({
                 gridReactiveData.columnWidthsChanged,
                 gridReactiveData.columnHidesChanged,
             )}px`;
+            refGridBodyLeftFixedSequenceXLineDiv.value.style.width = refGridBodyLeftFixedXLineDiv.value.style.width;
             refGridHeaderLeftFixedXLineDiv.value.style.width = `${
                 getWidth(
                     rowIndicatorElWidth.value,
@@ -4966,12 +5032,15 @@ export default defineComponent({
                 gridReactiveData.rowHeightsChanged,
                 gridReactiveData.rowHidesChanged,
             )}px`;
+            refGridBodyLeftFixedSequenceYLineDiv.value.style.height = refGridBodyLeftFixedYLineDiv.value.style.height;
             refGridBodyXLineDiv.value.style.width = refGridBodyLeftFixedXLineDiv.value.style.width;
             refGridBodyYLineDiv.value.style.height = refGridBodyLeftFixedYLineDiv.value.style.height;
             refGridBodyLeftFixedTableWrapperDiv.value.style.top = `${gridReactiveData.gridHeaderHeight}px`;
+            refGridBodyLeftFixedSequenceTableWrapperDiv.value.style.top = `${gridReactiveData.gridHeaderHeight}px`;
             if (refGridBodyTable.value) {
                 refGridBodyTable.value.style.width = `${gridReactiveData.gridWidth}px`;
                 refGridBodyLeftFixedTable.value.style.width = `${gridReactiveData.gridWidth}px`;
+                refGridBodyLeftFixedSequenceTable.value.style.width = `${gridReactiveData.gridWidth}px`;
             }
             if (refGridHeaderTable.value) {
                 refGridHeaderTable.value.style.width = `${gridReactiveData.gridWidth + gridReactiveData.scrollbarWidth}px`;
@@ -5057,6 +5126,7 @@ export default defineComponent({
                 };
                 refGridBodyTable.value.style.transform = 'translateX(0) translateY(0)';
                 refGridBodyLeftFixedTable.value.style.transform = 'translateY(0)';
+                refGridBodyLeftFixedSequenceTable.value.style.transform = 'translateY(0)';
                 refGridHeaderTable.value.style.transform = 'translateX(0)';
                 refGridBodyTableWrapperDiv.value.scrollLeft = 0;
                 refGridBodyTableWrapperDiv.value.scrollTop = 0;

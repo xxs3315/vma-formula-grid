@@ -33,12 +33,12 @@ export default defineComponent({
 
         onMounted(() => {
             nextTick(() => {
-                if (props.fixed === 'left') {
+                if (props.fixed === 'left-sequence') {
                     refGridBodyTableWrapperDiv.value.onscroll = null;
-                    refGridBodyLeftFixedScrollWrapperDiv.value.onscroll = scrollEvent;
+                    refGridBodyLeftFixedSequenceScrollWrapperDiv.value.onscroll = scrollEvent;
                 } else if (props.fixed === 'center') {
                     refGridBodyTableWrapperDiv.value.onscroll = scrollEvent;
-                    refGridBodyLeftFixedScrollWrapperDiv.value.onscroll = null;
+                    refGridBodyLeftFixedSequenceScrollWrapperDiv.value.onscroll = null;
                 }
             });
         });
@@ -49,6 +49,9 @@ export default defineComponent({
             }
             if (refGridBodyLeftFixedScrollWrapperDiv && refGridBodyLeftFixedScrollWrapperDiv.value) {
                 refGridBodyLeftFixedScrollWrapperDiv.value.onscroll = null;
+            }
+            if (refGridBodyLeftFixedSequenceScrollWrapperDiv && refGridBodyLeftFixedSequenceScrollWrapperDiv.value) {
+                refGridBodyLeftFixedSequenceScrollWrapperDiv.value.onscroll = null;
             }
         });
 
@@ -80,13 +83,24 @@ export default defineComponent({
             refCurrentAreaBorderLeft,
             refCurrentAreaBorderCorner,
             refRowResizeBarDiv,
+            refGridBodyLeftFixedSequenceTable,
+            refGridBodyLeftFixedSequenceTableWrapperDiv,
+            refGridBodyLeftFixedSequenceScrollWrapperDiv,
+            refGridBodyLeftFixedSequenceTableColgroup,
+            refGridBodyLeftFixedSequenceXLineDiv,
+            refGridBodyLeftFixedSequenceYLineDiv,
         } = $vmaFormulaGrid.getRefs();
 
         const renderVN = () =>
             h(
                 'div',
                 {
-                    ref: props.fixed === 'center' ? refGridBodyTableWrapperDiv : refGridBodyLeftFixedTableWrapperDiv,
+                    ref:
+                        props.fixed === 'center'
+                            ? refGridBodyTableWrapperDiv
+                            : props.fixed === 'left-sequence'
+                            ? refGridBodyLeftFixedSequenceTableWrapperDiv
+                            : refGridBodyLeftFixedTableWrapperDiv,
                     class: ['body-wrapper'],
                     ...{
                         onWheel: wheelEvent,
@@ -338,6 +352,52 @@ export default defineComponent({
                               ),
                           ],
                       )
+                    : props.fixed === 'left-sequence'
+                    ? h(
+                          'div',
+                          {
+                              ref: refGridBodyLeftFixedSequenceScrollWrapperDiv,
+                              class: ['fixed-wrapper'],
+                              style: {
+                                  height: `${$vmaFormulaGrid.reactiveData.gridBodyHeight - $vmaFormulaGrid.reactiveData.scrollbarHeight}px`,
+                              },
+                          },
+                          [
+                              h('div', {
+                                  ref: refGridBodyLeftFixedSequenceYLineDiv,
+                                  style: {
+                                      float: 'left',
+                                      width: `1px`,
+                                      marginLeft: `-1px`,
+                                  },
+                              }),
+                              h('div', {
+                                  ref: refGridBodyLeftFixedSequenceXLineDiv,
+                                  style: {
+                                      float: 'left',
+                                      height: `1px`,
+                                      marginTop: `-1px`,
+                                  },
+                              }),
+                              h(
+                                  'table',
+                                  {
+                                      ref: refGridBodyLeftFixedSequenceTable,
+                                      class: ['body'],
+                                  },
+                                  [
+                                      h(
+                                          'colgroup',
+                                          {
+                                              ref: refGridBodyLeftFixedSequenceTableColgroup,
+                                          },
+                                          renderBodyColgroup(),
+                                      ),
+                                      h('tbody', {}, renderBodyRows()),
+                                  ],
+                              ),
+                          ],
+                      )
                     : createCommentVNode(),
             );
 
@@ -360,7 +420,7 @@ export default defineComponent({
             const domMousemove = document.onmousemove;
             const domMouseup = document.onmouseup;
             const dragBtnElem = event.target as HTMLDivElement;
-            const wrapperElem = refGridBodyLeftFixedTableWrapperDiv.value;
+            const wrapperElem = refGridBodyLeftFixedSequenceTableWrapperDiv.value;
             const pos = DomTools.getOffsetPos(dragBtnElem, wrapperElem);
             const dragBtnHeight = dragBtnElem.clientHeight;
             const rowHeight = getRenderDefaultRowHeight($vmaFormulaGrid.props.defaultRowHeight, $vmaFormulaGrid.reactiveData.size);
@@ -859,8 +919,9 @@ export default defineComponent({
             if (props.fixed === 'center') {
                 refGridHeaderTableWrapperDiv.value.scrollLeft = refGridBodyTableWrapperDiv.value.scrollLeft;
                 refGridBodyLeftFixedScrollWrapperDiv.value.scrollTop = refGridBodyTableWrapperDiv.value.scrollTop;
-            } else if (props.fixed === 'left') {
-                refGridBodyTableWrapperDiv.value.scrollTop = refGridBodyLeftFixedScrollWrapperDiv.value.scrollTop;
+                refGridBodyLeftFixedSequenceScrollWrapperDiv.value.scrollTop = refGridBodyTableWrapperDiv.value.scrollTop;
+            } else if (props.fixed === 'left-sequence') {
+                refGridBodyTableWrapperDiv.value.scrollTop = refGridBodyLeftFixedSequenceScrollWrapperDiv.value.scrollTop;
             }
             $vmaFormulaGrid.triggerScrollXEvent(event);
             $vmaFormulaGrid.triggerScrollYEvent(event);
@@ -869,10 +930,10 @@ export default defineComponent({
         const wheelEvent = (_: WheelEvent) => {
             if (props.fixed === 'center') {
                 refGridBodyTableWrapperDiv.value.onscroll = scrollEvent;
-                refGridBodyLeftFixedScrollWrapperDiv.value.onscroll = null;
-            } else if (props.fixed === 'left') {
+                refGridBodyLeftFixedSequenceScrollWrapperDiv.value.onscroll = null;
+            } else if (props.fixed === 'left-sequence') {
                 refGridBodyTableWrapperDiv.value.onscroll = null;
-                refGridBodyLeftFixedScrollWrapperDiv.value.onscroll = scrollEvent;
+                refGridBodyLeftFixedSequenceScrollWrapperDiv.value.onscroll = scrollEvent;
             }
         };
 

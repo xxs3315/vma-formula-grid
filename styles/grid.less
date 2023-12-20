@@ -492,6 +492,69 @@
             }
         }
 
+        &.left-sequence {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 15;
+            overflow-x: hidden;
+            overflow-y: hidden;
+
+            .fixed-wrapper {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1;
+                overflow-x: hidden;
+                overflow-y: auto;
+                background-color: inherit;
+                border: 0;
+
+                .body {
+                    background: @grid-border-color-dark;
+                }
+
+                .vma-formula-grid--header-wrapper {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: 3;
+                    overflow: hidden;
+                }
+
+                .vma-formula-grid--body-wrapper {
+                    position: absolute;
+                    top: 29px;
+                    left: 0;
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    background-color: var(--vfg-white);
+                }
+
+                &.border--shadow {
+                    box-shadow: 2px 0 4px -2px rgb(0 0 0 / 60%);
+                }
+
+                &.border--full {
+                }
+
+                &.border--normal {
+                    border: none;
+                }
+
+                &.border--outer {
+                    border: none;
+                }
+
+                &.border--inner {
+                }
+
+                &.border--none {
+                    border: none;
+                }
+            }
+        }
+
         &.left-top {
             position: absolute;
             top: 0;
@@ -2666,7 +2729,7 @@
                     left: -1px;
                     transform-origin: 0 0;
                     pointer-events: none;
-                    z-index: -1;
+                    z-index: 0;
                     background-position: left 2px top 2px;
                     background-repeat: no-repeat;
                     background-size: calc(100% - 4px) calc(100% - 4px);
@@ -2713,12 +2776,16 @@
                 }
 
                 .cell {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    z-index: 1;
+                    width: 100%;
+                    height: inherit;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     overflow: hidden;
-                    width: 100%;
-                    height: inherit;
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     word-break: keep-all;
