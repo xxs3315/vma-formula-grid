@@ -2,11 +2,16 @@ import { ComponentOptions, createCommentVNode, defineComponent, h, inject, onMou
 import { Guid } from '../../utils/guid.ts';
 import { VmaFormulaGridCompColorPickerConstructor, VmaFormulaGridConstructor, VmaFormulaGridMethods, VmaFormulaGridPrivateMethods } from '../../../types';
 import { Color } from './utils/color.ts';
+import { assignDeep, getLastZIndex, nextZIndex } from '../../utils';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompColorPicker',
     props: {
         color: Color,
+        baseZIndex: {
+            type: Number,
+            default: 999,
+        },
     },
     emits: ['update:color', 'change', 'advanceChange'],
     setup(props, context) {
@@ -92,7 +97,7 @@ export default defineComponent({
                                     'is--visible': colorPickerStore.visible,
                                 },
                             ],
-                            style: colorPickerStore.style,
+                            style: colorPickerStore.style ? assignDeep(colorPickerStore.style, colorPickerStore.visible ? { zIndex: getLastZIndex() + 20 } : {}) : {},
                         },
                         h(
                             'div',
@@ -123,6 +128,7 @@ export default defineComponent({
                                 !advancePanelShow.value
                                     ? h(VmaFormulaGridCompColorPickerPalette, {
                                           onChange: onCompactChange,
+                                          baseZIndex: props.baseZIndex,
                                       })
                                     : createCommentVNode(),
                                 advancePanelShow.value

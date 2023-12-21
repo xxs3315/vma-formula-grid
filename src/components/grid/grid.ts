@@ -95,6 +95,10 @@ export default defineComponent({
             type: Array as PropType<VmaFormulaGridPropTypes.MinDims>,
             default: [10, 10], // [column, row]
         },
+        baseZIndex: {
+            type: Number as PropType<VmaFormulaGridPropTypes.BaseZIndex>,
+            default: 999,
+        },
         defaultRowHeight: {
             type: Number as PropType<VmaFormulaGridPropTypes.DefaultRowHeight>,
         },
@@ -4569,6 +4573,9 @@ export default defineComponent({
                             'overflow-y': gridReactiveData.isOverflowY,
                         },
                     ],
+                    style: {
+                        zIndex: props.baseZIndex,
+                    },
                 },
                 [
                     props.columnResizable
@@ -4595,6 +4602,7 @@ export default defineComponent({
                         : createCommentVNode(),
                     h(resolveComponent('VmaFormulaGridCompContextMenu') as ComponentOptions, {
                         ref: refGridContextMenu,
+                        baseZIndex: props.baseZIndex,
                     }),
                     h(resolveComponent('VmaFormulaGridCompColorPicker') as ComponentOptions, {
                         ref: refGridColorPicker,
@@ -5462,6 +5470,7 @@ export default defineComponent({
         provide<LangProvider>('$vmaFormulaGridLang', {
             lang: lang.value,
         });
+        provide('$vmaFormulaGridBaseZIndex', props.baseZIndex);
 
         return $vmaFormulaGrid;
     },

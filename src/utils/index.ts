@@ -2787,10 +2787,9 @@ export function floor(num: number | string, digits?: number): number {
     return rest;
 }
 
-let zIndex = 1;
 let lastZIndex = 2;
 
-export function nextZIndex() {
+export function nextZIndex(zIndex: number) {
     lastZIndex = zIndex++;
     return lastZIndex;
 }

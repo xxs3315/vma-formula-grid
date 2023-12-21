@@ -8,7 +8,7 @@ import {
     VmaFormulaGridPrivateMethods,
 } from '../../../types';
 import { ComponentOptions, computed, createCommentVNode, defineComponent, h, inject, PropType, provide, ref, resolveComponent, Teleport } from 'vue';
-import { getDefaultFontSize } from '../../utils';
+import { assignDeep, getDefaultFontSize, getLastZIndex, mergeDeep, nextZIndex } from '../../utils';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompContextMenu',
@@ -20,6 +20,10 @@ export default defineComponent({
         size: {
             type: String as PropType<VmaFormulaGridCompContextMenuPropTypes.Size>,
             default: 'normal',
+        },
+        baseZIndex: {
+            type: Number,
+            default: 999,
         },
     },
     setup(props, context) {
@@ -79,7 +83,7 @@ export default defineComponent({
                                     'is--visible': ctxMenuStore.visible,
                                 },
                             ],
-                            style: ctxMenuStore.style,
+                            style: ctxMenuStore.style ? assignDeep(ctxMenuStore.style, ctxMenuStore.visible ? { zIndex: getLastZIndex() + 15 } : {}) : {},
                         },
                         ctxMenuStore.list.map((options: any, optionsIndex: any) =>
                             h(
@@ -180,6 +184,9 @@ export default defineComponent({
                                                                         'is--show': option === ctxMenuStore.selected,
                                                                     },
                                                                 ],
+                                                                style: {
+                                                                    '--vfg-sub-group-wrapper-is-show': nextZIndex(props.baseZIndex) + 25,
+                                                                },
                                                             },
                                                             option.children.map((child: any, cIndex: any) => {
                                                                 if (child.type === 'fontSelect') {

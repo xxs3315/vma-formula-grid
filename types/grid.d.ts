@@ -26,6 +26,7 @@ export namespace VmaFormulaGridPropTypes {
     export type RowResizable = boolean;
     export type VirtualScrollX = boolean;
     export type VirtualScrollY = boolean;
+    export type BaseZIndex = number;
 }
 
 export type VmaFormulaGridEmits = ['update:data', 'change'];
@@ -237,6 +238,7 @@ export interface VmaFormulaGridProps {
     rowResizable: VmaFormulaGridPropTypes.RowResizable;
     virtualScrollX: VmaFormulaGridPropTypes.VirtualScrollX;
     virtualScrollY: VmaFormulaGridPropTypes.VirtualScrollY;
+    baseZIndex: VmaFormulaGridPropTypes.BaseZIndex;
 }
 
 export type VmaFormulaGridOptions = VmaFormulaGridProps;

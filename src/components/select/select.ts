@@ -40,6 +40,10 @@ export default defineComponent({
         },
         transfer: { type: Boolean, default: false },
         optionKey: Boolean,
+        baseZIndex: {
+            type: Number,
+            default: 999,
+        },
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     emits: ['update:modelValue', 'change', 'clear'] as VmaFormulaGridCompSelectEmits,
@@ -59,7 +63,7 @@ export default defineComponent({
             fullOptionList: [],
             visibleGroupList: [],
             visibleOptionList: [],
-            panelIndex: 999,
+            panelIndex: props.baseZIndex,
             panelStyle: {},
             panelPlacement: null,
             currentValue: null,
@@ -319,8 +323,8 @@ export default defineComponent({
         };
 
         const updateZIndex = () => {
-            if (reactiveData.panelIndex < getLastZIndex()) {
-                reactiveData.panelIndex = nextZIndex();
+            if (reactiveData.panelIndex <= getLastZIndex()) {
+                reactiveData.panelIndex = nextZIndex(props.baseZIndex) + 30;
             }
         };
 

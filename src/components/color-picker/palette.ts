@@ -2,10 +2,16 @@ import { defineComponent, h, provide } from 'vue';
 import { Guid } from '../../utils/guid.ts';
 import { VmaFormulaGridCompColorPickerPaletteConstructor } from '../../../types';
 import tinycolor from 'tinycolor2';
+import { getLastZIndex, nextZIndex } from '../../utils';
 
 export default defineComponent({
     name: 'VmaFormulaGridCompColorPickerPalette',
-    props: {},
+    props: {
+        baseZIndex: {
+            type: Number,
+            default: 999,
+        },
+    },
     emits: ['change'],
     setup(props, context) {
         const { emit } = context;
@@ -63,6 +69,9 @@ export default defineComponent({
                                 {
                                     class: 'vma-formula-grid-compact__color-cube--wrap',
                                     onClick: () => onColorChange(color),
+                                    style: {
+                                        '--vfg-compact__color-cube--wrap-hover-z-index': nextZIndex(props.baseZIndex) + 25,
+                                    },
                                 },
                                 h('div', {
                                     class: [
