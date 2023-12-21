@@ -9,7 +9,7 @@ import {
     VmaFormulaGridPrivateMethods,
 } from '../../../types';
 import { Guid } from '../../utils/guid.ts';
-import { checkCellInMerges, getRealArea, getRenderDefaultRowHeight, getYSpaceFromRowHeights, isNumeric } from '../../utils';
+import { checkCellInMerges, getRealArea, getRenderDefaultRowHeight, getYSpaceFromRowHeights, isNumeric, nextZIndex } from '../../utils';
 import { Cell } from './internals/cell.ts';
 import { DomTools } from '../../utils/doms.ts';
 import { SSF } from '../../all.ts';
@@ -159,6 +159,7 @@ export default defineComponent({
                                   minWidth: $vmaFormulaGrid.reactiveData.currentCellEditorStyle.minWidth,
                                   left: $vmaFormulaGrid.reactiveData.currentCellEditorStyle.left,
                                   top: $vmaFormulaGrid.reactiveData.currentCellEditorStyle.top,
+                                  zIndex: nextZIndex($vmaFormulaGrid.props.baseZIndex) + 10,
                               },
                               onChange: () => {
                                   $vmaFormulaGrid.reactiveData.currentCell.v = isNumeric($vmaFormulaGrid.reactiveData.currentCellEditorContent)

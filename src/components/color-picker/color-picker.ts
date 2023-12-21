@@ -97,7 +97,7 @@ export default defineComponent({
                                     'is--visible': colorPickerStore.visible,
                                 },
                             ],
-                            style: colorPickerStore.style ? assignDeep(colorPickerStore.style, colorPickerStore.visible ? { zIndex: getLastZIndex() + 20 } : {}) : {},
+                            style: colorPickerStore.style,
                         },
                         h(
                             'div',

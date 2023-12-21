@@ -1,7 +1,7 @@
 import { VmaFormulaGridCompContextMenuMethods, VmaFormulaGridCompContextMenuPrivateMethods, VmaFormulaGridGlobalHooksHandlers } from '../../../types';
 import { nextTick } from 'vue';
 import { DomTools, getAbsolutePos } from '../../utils/doms.ts';
-import { checkCellInMerges, getDefaultFontSize } from '../../utils';
+import { checkCellInMerges, getDefaultFontSize, nextZIndex } from '../../utils';
 
 const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
     setupGrid(grid): void | { [p: string]: any } {
@@ -223,6 +223,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                         style: {
                             top: `${top}px`,
                             left: `${left}px`,
+                            zIndex: nextZIndex(grid.props.baseZIndex) + 20,
                         },
                     });
                     nextTick(() => {
@@ -796,6 +797,7 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                 style: {
                     top: `${top}px`,
                     left: `${left}px`,
+                    zIndex: nextZIndex(grid.props.baseZIndex) + 15,
                 },
             });
             nextTick(() => {

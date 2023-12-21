@@ -83,7 +83,7 @@ export default defineComponent({
                                     'is--visible': ctxMenuStore.visible,
                                 },
                             ],
-                            style: ctxMenuStore.style ? assignDeep(ctxMenuStore.style, ctxMenuStore.visible ? { zIndex: getLastZIndex() + 15 } : {}) : {},
+                            style: ctxMenuStore.style,
                         },
                         ctxMenuStore.list.map((options: any, optionsIndex: any) =>
                             h(

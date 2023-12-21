@@ -61,6 +61,7 @@ import {
     getYSpaceFromRowHeights,
     isNumeric,
     isObject,
+    nextZIndex,
     translateAlignValue,
 } from '../../utils';
 import { Column } from './internals/column.ts';
@@ -4585,8 +4586,9 @@ export default defineComponent({
                               style: gridReactiveData.isOverflowX
                                   ? {
                                         height: `calc(100% - ${gridReactiveData.scrollbarHeight}px)`,
+                                        zIndex: nextZIndex(props.baseZIndex) + 8,
                                     }
-                                  : {},
+                                  : { zIndex: nextZIndex(props.baseZIndex) + 8 },
                           })
                         : createCommentVNode(),
                     props.rowResizable
@@ -4596,8 +4598,9 @@ export default defineComponent({
                               style: gridReactiveData.isOverflowY
                                   ? {
                                         width: `calc(100% - ${gridReactiveData.scrollbarWidth}px)`,
+                                        zIndex: nextZIndex(props.baseZIndex) + 8,
                                     }
-                                  : {},
+                                  : { zIndex: nextZIndex(props.baseZIndex) + 8 },
                           })
                         : createCommentVNode(),
                     h(resolveComponent('VmaFormulaGridCompContextMenu') as ComponentOptions, {
@@ -4638,6 +4641,7 @@ export default defineComponent({
                         style: {
                             height: `${gridReactiveData.gridHeaderHeight}px`,
                             width: `${gridReactiveData.gridLeftFixedHeaderWidth}px`,
+                            zIndex: nextZIndex(props.baseZIndex) + 2,
                         },
                     }),
                     // header center
@@ -4655,12 +4659,18 @@ export default defineComponent({
                         'data-uid': $vmaFormulaGrid.uId,
                         fixed: 'left-sequence',
                         class: ['left-sequence'],
+                        style: {
+                            zIndex: nextZIndex($vmaFormulaGrid.props.baseZIndex) + 15,
+                        },
                     }),
                     // body left fixed
                     h(FormulaGridBodyComponent, {
                         'data-uid': $vmaFormulaGrid.uId,
                         fixed: 'left',
                         class: ['left'],
+                        style: {
+                            zIndex: nextZIndex($vmaFormulaGrid.props.baseZIndex) + 12,
+                        },
                     }),
                     // body top fixed
                     h(FormulaGridBodyComponent, {
