@@ -126,6 +126,7 @@
                         :virtual-scroll-x="virtualScrollX"
                         :virtual-scroll-y="virtualScrollY"
                         :functions="customFunctions"
+                        :min-dims="[60, 10]"
                     />
                 </pane>
                 <pane size="20" min-size="10">
