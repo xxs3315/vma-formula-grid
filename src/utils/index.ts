@@ -357,7 +357,7 @@ export const getXSpaceFromColumnWidths = (
         }
         return xSpace;
     }
-    return Math.max(0, (startColIndex - 1) * colWidth);
+    return Math.max(0, startColIndex * colWidth);
 };
 
 export const getYSpaceFromRowHeights = (startIndex: number, rowHeight: number, changedRowHeights: Record<string, number>, changedRowHides: Record<string, number>): number => {
