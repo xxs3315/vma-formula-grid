@@ -1,6 +1,6 @@
 <template>
-    <div style="height: 100%">
-        <div style="height: 30px">
+    <div style="height: calc(100vh - 12px)">
+        <div ref="toolbarDiv">
             <div style="margin: 6px">
                 <vma-formula-grid-comp-toolbar ref="vfgt" />
             </div>
@@ -17,37 +17,37 @@
                 </span>
             </fieldset>
 
-            <fieldset class="fieldset">
-                <legend>Select a size type:</legend>
-                <span>
-                    <input type="radio" id="sizeXXXLarge" v-model="size" value="xxx-large" />
-                    <label for="sizeXXXLarge">XXX-Large</label>
-                </span>
-                <span>
-                    <input type="radio" id="sizeXXLarge" v-model="size" value="xx-large" />
-                    <label for="sizeXXLarge">XX-Large</label>
-                </span>
-                <span>
-                    <input type="radio" id="sizeXLarge" v-model="size" value="x-large" />
-                    <label for="sizeXLarge">X-Large</label>
-                </span>
-                <span>
-                    <input type="radio" id="sizeLarge" v-model="size" value="large" />
-                    <label for="sizeLarge">Large</label>
-                </span>
-                <span>
-                    <input type="radio" id="sizeNormal" v-model="size" value="normal" checked />
-                    <label for="sizeNormal">Normal</label>
-                </span>
-                <span>
-                    <input type="radio" id="sizeSmall" v-model="size" value="small" />
-                    <label for="sizeSmall">Small</label>
-                </span>
-                <span>
-                    <input type="radio" id="sizeMini" v-model="size" value="mini" />
-                    <label for="sizeMini">Mini</label>
-                </span>
-            </fieldset>
+            <!--            <fieldset class="fieldset">-->
+            <!--                <legend>Select a size type:</legend>-->
+            <!--                <span>-->
+            <!--                    <input type="radio" id="sizeXXXLarge" v-model="size" value="xxx-large" />-->
+            <!--                    <label for="sizeXXXLarge">XXX-Large</label>-->
+            <!--                </span>-->
+            <!--                <span>-->
+            <!--                    <input type="radio" id="sizeXXLarge" v-model="size" value="xx-large" />-->
+            <!--                    <label for="sizeXXLarge">XX-Large</label>-->
+            <!--                </span>-->
+            <!--                <span>-->
+            <!--                    <input type="radio" id="sizeXLarge" v-model="size" value="x-large" />-->
+            <!--                    <label for="sizeXLarge">X-Large</label>-->
+            <!--                </span>-->
+            <!--                <span>-->
+            <!--                    <input type="radio" id="sizeLarge" v-model="size" value="large" />-->
+            <!--                    <label for="sizeLarge">Large</label>-->
+            <!--                </span>-->
+            <!--                <span>-->
+            <!--                    <input type="radio" id="sizeNormal" v-model="size" value="normal" checked />-->
+            <!--                    <label for="sizeNormal">Normal</label>-->
+            <!--                </span>-->
+            <!--                <span>-->
+            <!--                    <input type="radio" id="sizeSmall" v-model="size" value="small" />-->
+            <!--                    <label for="sizeSmall">Small</label>-->
+            <!--                </span>-->
+            <!--                <span>-->
+            <!--                    <input type="radio" id="sizeMini" v-model="size" value="mini" />-->
+            <!--                    <label for="sizeMini">Mini</label>-->
+            <!--                </span>-->
+            <!--            </fieldset>-->
 
             <fieldset class="fieldset">
                 <legend>Select a theme type:</legend>
@@ -113,7 +113,7 @@
             </fieldset>
         </div>
 
-        <div style="margin-top: 10px; height: calc(100% - 20px)">
+        <div style="margin-top: 10px" v-bind:style="{ height: gridHeight - 22 + 'px' }">
             <splitpanes class="default-theme" style="height: 100%">
                 <pane min-size="50" size="60">
                     <vma-formula-grid
@@ -172,6 +172,7 @@ import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
 import axios from 'axios';
 import VmaFormulaGridCompToolbar from '../../src/components/toolbar/toolbar';
+import { createResizeEvent } from '../../src/utils/resize';
 
 export default defineComponent({
     name: 'HelloWorld',
@@ -183,15 +184,32 @@ export default defineComponent({
         const virtualScrollX = ref(true);
         const virtualScrollY = ref(true);
         const locale = ref('ZH-cn');
+        const toolbarDiv = ref<HTMLDivElement>();
+        let gridHeight = ref(0);
+
+        let resizeObserver: ResizeObserver;
 
         const vfg = ref<VmaFormulaGridInstance>();
         const vfgt = ref<VmaFormulaGridCompToolbarInstance>();
 
         onMounted(() => {
+            gridHeight.value = window.innerHeight - toolbarDiv.value.clientHeight;
             vfg.value.connectToolbar(vfgt.value);
+
+            const el = document.body;
+            resizeObserver = createResizeEvent(() => {
+                gridHeight.value = window.innerHeight - toolbarDiv.value.clientHeight;
+            });
+            if (el) {
+                resizeObserver.observe(el);
+            }
         });
 
-        onUnmounted(() => {});
+        onUnmounted(() => {
+            if (resizeObserver) {
+                resizeObserver.disconnect();
+            }
+        });
 
         const customFunctions = reactive({
             CUSTOM_FUN_1: (number: any) => {
@@ -693,6 +711,8 @@ export default defineComponent({
             state,
             pathCollapsible,
             getCurrentGridConfData,
+            toolbarDiv,
+            gridHeight,
         };
     },
 });

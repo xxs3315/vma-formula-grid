@@ -15,8 +15,6 @@
 }
 
 body {
-    min-width: 800px;
-    min-height: 100vh;
     margin: 0;
 }
 
@@ -41,7 +39,7 @@ button:focus-visible {
 
 #app {
     width: 100vw;
-    height: 100vh;
+    margin: 0;
 }
 
 @media (prefers-color-scheme: light) {
