@@ -256,6 +256,21 @@ export default defineComponent({
         );
 
         watch(
+            () => props.lang,
+            () => {
+                if ($vmaFormulaGridCompToolbarConnected && $vmaFormulaGrid) {
+                    $vmaFormulaGridCompToolbarConnected.sync(
+                        $vmaFormulaGrid,
+                        {
+                            lang: lang.value,
+                        },
+                        refGridColorPicker,
+                    );
+                }
+            },
+        );
+
+        watch(
             () => props.virtualScrollX,
             () => {
                 $vmaFormulaGrid.recalculate(true);
