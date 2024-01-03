@@ -334,9 +334,9 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     param,
                 });
                 list.push(options);
-                options = [];
-                options.push({ name: grid.lang().fixColumn, code: 'fixedColumn', disabled: false, visible: true, param });
-                list.push(options);
+                // options = [];
+                // options.push({ name: grid.lang().fixColumn, code: 'fixedColumn', disabled: false, visible: true, param });
+                // list.push(options);
                 options = [];
                 options.push({
                     name: grid.lang().hideColumn,
@@ -366,9 +366,9 @@ const gridCtxMenuHook: VmaFormulaGridGlobalHooksHandlers.HookOptions = {
                     param,
                 });
                 list.push(options);
-                options = [];
-                options.push({ name: grid.lang().fixRow, code: 'fixedRow', disabled: false, visible: true, param });
-                list.push(options);
+                // options = [];
+                // options.push({ name: grid.lang().fixRow, code: 'fixedRow', disabled: false, visible: true, param });
+                // list.push(options);
                 options = [];
                 options.push({
                     name: grid.lang().hideRow,
